@@ -1,0 +1,11 @@
+{
+  "name": "ASP.NET",
+  "private": true,
+  "dependencies": {
+    "jquery": "2.2.3",
+    "bootstrap": "3.3.6",
+    "angular": "1.5.5",
+    "js-cookie": "2.1.1",
+    "less": "2.6.1"
+  }
+}

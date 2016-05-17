@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Greenspot.Stall", "Greenspot.Stall\Greenspot.Stall.csproj", "{51ABB2D1-8C5F-4A79-A18C-7451C5EF834C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Greenspot.Stall.Tests", "Greenspot.Stall.Tests\Greenspot.Stall.Tests.csproj", "{4C85B449-5615-45B5-946D-938670883332}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Greenspot.Owin.Security.WeChat", "..\Greenspot.Common\Greenspot.Owin.Security.WeChat\Greenspot.Owin.Security.WeChat.csproj", "{57538BAD-4B83-403C-8E5F-79837E4CEC25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Greenspot.Owin.Security.Vend", "..\Greenspot.Common\Greenspot.Owin.Security.Vend\Greenspot.Owin.Security.Vend.csproj", "{906C0A52-4E0B-4E0B-A13A-7D787F6A77E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Greenspot.Identity", "..\Greenspot.Common\Greenspot.Identity\Greenspot.Identity.csproj", "{4322D1CD-FBF3-42F0-94D8-C86B1C321828}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External Libs", "External Libs", "{1587FACF-72A8-4C93-9279-CB93A009A7B8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{51ABB2D1-8C5F-4A79-A18C-7451C5EF834C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51ABB2D1-8C5F-4A79-A18C-7451C5EF834C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51ABB2D1-8C5F-4A79-A18C-7451C5EF834C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51ABB2D1-8C5F-4A79-A18C-7451C5EF834C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C85B449-5615-45B5-946D-938670883332}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C85B449-5615-45B5-946D-938670883332}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C85B449-5615-45B5-946D-938670883332}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C85B449-5615-45B5-946D-938670883332}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57538BAD-4B83-403C-8E5F-79837E4CEC25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57538BAD-4B83-403C-8E5F-79837E4CEC25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57538BAD-4B83-403C-8E5F-79837E4CEC25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57538BAD-4B83-403C-8E5F-79837E4CEC25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{906C0A52-4E0B-4E0B-A13A-7D787F6A77E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{906C0A52-4E0B-4E0B-A13A-7D787F6A77E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{906C0A52-4E0B-4E0B-A13A-7D787F6A77E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{906C0A52-4E0B-4E0B-A13A-7D787F6A77E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4322D1CD-FBF3-42F0-94D8-C86B1C321828}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4322D1CD-FBF3-42F0-94D8-C86B1C321828}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4322D1CD-FBF3-42F0-94D8-C86B1C321828}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4322D1CD-FBF3-42F0-94D8-C86B1C321828}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{57538BAD-4B83-403C-8E5F-79837E4CEC25} = {1587FACF-72A8-4C93-9279-CB93A009A7B8}
+		{906C0A52-4E0B-4E0B-A13A-7D787F6A77E3} = {1587FACF-72A8-4C93-9279-CB93A009A7B8}
+		{4322D1CD-FBF3-42F0-94D8-C86B1C321828} = {1587FACF-72A8-4C93-9279-CB93A009A7B8}
+	EndGlobalSection
+EndGlobal
