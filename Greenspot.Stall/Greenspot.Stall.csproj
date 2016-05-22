@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.2.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.2.2\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -25,6 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>1.7</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,7 +37,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Test|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
@@ -53,8 +55,20 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.Weixin, Version=4.5.19.36607, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.Weixin.4.5.19\lib\net45\Senparc.Weixin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.Weixin.MP, Version=13.7.9.27026, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.Weixin.MP.13.7.9\lib\net45\Senparc.Weixin.MP.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -164,9 +178,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\OwnerController.cs" />
-    <Compile Include="Controllers\StallController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -174,161 +188,170 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\lib\angular\angular-csp.css" />
-    <Content Include="Content\lib\angular\angular.js" />
-    <Content Include="Content\lib\angular\angular.min.js" />
-    <Content Include="Content\lib\angular\index.js" />
-    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-theme.css" />
-    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-theme.min.css" />
-    <Content Include="Content\lib\bootstrap\dist\css\bootstrap.css" />
-    <Content Include="Content\lib\bootstrap\dist\css\bootstrap.min.css" />
-    <Content Include="Content\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.js" />
-    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.min.js" />
-    <Content Include="Content\lib\bootstrap\dist\js\npm.js" />
-    <Content Include="Content\lib\bootstrap\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\lib\bootstrap\Gruntfile.js" />
-    <Content Include="Content\lib\bootstrap\grunt\bs-commonjs-generator.js" />
-    <Content Include="Content\lib\bootstrap\grunt\bs-glyphicons-data-generator.js" />
-    <Content Include="Content\lib\bootstrap\grunt\bs-lessdoc-parser.js" />
-    <Content Include="Content\lib\bootstrap\grunt\bs-raw-files-generator.js" />
-    <Content Include="Content\lib\bootstrap\js\affix.js" />
-    <Content Include="Content\lib\bootstrap\js\alert.js" />
-    <Content Include="Content\lib\bootstrap\js\button.js" />
-    <Content Include="Content\lib\bootstrap\js\carousel.js" />
-    <Content Include="Content\lib\bootstrap\js\collapse.js" />
-    <Content Include="Content\lib\bootstrap\js\dropdown.js" />
-    <Content Include="Content\lib\bootstrap\js\modal.js" />
-    <Content Include="Content\lib\bootstrap\js\popover.js" />
-    <Content Include="Content\lib\bootstrap\js\scrollspy.js" />
-    <Content Include="Content\lib\bootstrap\js\tab.js" />
-    <Content Include="Content\lib\bootstrap\js\tooltip.js" />
-    <Content Include="Content\lib\bootstrap\js\transition.js" />
-    <Content Include="Content\lib\jquery\AUTHORS.txt" />
-    <Content Include="Content\lib\jquery\dist\jquery.js" />
-    <Content Include="Content\lib\jquery\dist\jquery.min.js" />
-    <Content Include="Content\lib\jquery\dist\jquery.slim.js" />
-    <Content Include="Content\lib\jquery\dist\jquery.slim.min.js" />
-    <Content Include="Content\lib\jquery\LICENSE.txt" />
-    <Content Include="Content\lib\jquery\sizzle\dist\sizzle.js" />
-    <Content Include="Content\lib\jquery\sizzle\dist\sizzle.min.js" />
-    <Content Include="Content\lib\jquery\sizzle\LICENSE.txt" />
-    <Content Include="Content\lib\jquery\src\ajax.js" />
-    <Content Include="Content\lib\jquery\src\ajax\jsonp.js" />
-    <Content Include="Content\lib\jquery\src\ajax\load.js" />
-    <Content Include="Content\lib\jquery\src\ajax\parseJSON.js" />
-    <Content Include="Content\lib\jquery\src\ajax\parseXML.js" />
-    <Content Include="Content\lib\jquery\src\ajax\script.js" />
-    <Content Include="Content\lib\jquery\src\ajax\var\location.js" />
-    <Content Include="Content\lib\jquery\src\ajax\var\nonce.js" />
-    <Content Include="Content\lib\jquery\src\ajax\var\rquery.js" />
-    <Content Include="Content\lib\jquery\src\ajax\xhr.js" />
-    <Content Include="Content\lib\jquery\src\attributes.js" />
-    <Content Include="Content\lib\jquery\src\attributes\attr.js" />
-    <Content Include="Content\lib\jquery\src\attributes\classes.js" />
-    <Content Include="Content\lib\jquery\src\attributes\prop.js" />
-    <Content Include="Content\lib\jquery\src\attributes\support.js" />
-    <Content Include="Content\lib\jquery\src\attributes\val.js" />
-    <Content Include="Content\lib\jquery\src\callbacks.js" />
-    <Content Include="Content\lib\jquery\src\core.js" />
-    <Content Include="Content\lib\jquery\src\core\access.js" />
-    <Content Include="Content\lib\jquery\src\core\DOMEval.js" />
-    <Content Include="Content\lib\jquery\src\core\init.js" />
-    <Content Include="Content\lib\jquery\src\core\parseHTML.js" />
-    <Content Include="Content\lib\jquery\src\core\ready.js" />
-    <Content Include="Content\lib\jquery\src\core\support.js" />
-    <Content Include="Content\lib\jquery\src\core\var\rsingleTag.js" />
-    <Content Include="Content\lib\jquery\src\css.js" />
-    <Content Include="Content\lib\jquery\src\css\addGetHookIf.js" />
-    <Content Include="Content\lib\jquery\src\css\adjustCSS.js" />
-    <Content Include="Content\lib\jquery\src\css\curCSS.js" />
-    <Content Include="Content\lib\jquery\src\css\defaultDisplay.js" />
-    <Content Include="Content\lib\jquery\src\css\hiddenVisibleSelectors.js" />
-    <Content Include="Content\lib\jquery\src\css\showHide.js" />
-    <Content Include="Content\lib\jquery\src\css\support.js" />
-    <Content Include="Content\lib\jquery\src\css\var\cssExpand.js" />
-    <Content Include="Content\lib\jquery\src\css\var\getStyles.js" />
-    <Content Include="Content\lib\jquery\src\css\var\isHidden.js" />
-    <Content Include="Content\lib\jquery\src\css\var\rmargin.js" />
-    <Content Include="Content\lib\jquery\src\css\var\rnumnonpx.js" />
-    <Content Include="Content\lib\jquery\src\css\var\swap.js" />
-    <Content Include="Content\lib\jquery\src\data.js" />
-    <Content Include="Content\lib\jquery\src\data\accepts.js" />
-    <Content Include="Content\lib\jquery\src\data\Data.js" />
-    <Content Include="Content\lib\jquery\src\data\support.js" />
-    <Content Include="Content\lib\jquery\src\data\var\acceptData.js" />
-    <Content Include="Content\lib\jquery\src\data\var\dataPriv.js" />
-    <Content Include="Content\lib\jquery\src\data\var\dataUser.js" />
-    <Content Include="Content\lib\jquery\src\deferred.js" />
-    <Content Include="Content\lib\jquery\src\deferred\exceptionHook.js" />
-    <Content Include="Content\lib\jquery\src\deprecated.js" />
-    <Content Include="Content\lib\jquery\src\dimensions.js" />
-    <Content Include="Content\lib\jquery\src\effects.js" />
-    <Content Include="Content\lib\jquery\src\effects\animatedSelector.js" />
-    <Content Include="Content\lib\jquery\src\effects\support.js" />
-    <Content Include="Content\lib\jquery\src\effects\Tween.js" />
-    <Content Include="Content\lib\jquery\src\event.js" />
-    <Content Include="Content\lib\jquery\src\event\ajax.js" />
-    <Content Include="Content\lib\jquery\src\event\alias.js" />
-    <Content Include="Content\lib\jquery\src\event\focusin.js" />
-    <Content Include="Content\lib\jquery\src\event\support.js" />
-    <Content Include="Content\lib\jquery\src\event\trigger.js" />
-    <Content Include="Content\lib\jquery\src\exports\amd.js" />
-    <Content Include="Content\lib\jquery\src\exports\global.js" />
-    <Content Include="Content\lib\jquery\src\intro.js" />
-    <Content Include="Content\lib\jquery\src\jquery.js" />
-    <Content Include="Content\lib\jquery\src\manipulation.js" />
-    <Content Include="Content\lib\jquery\src\manipulation\buildFragment.js" />
-    <Content Include="Content\lib\jquery\src\manipulation\createSafeFragment.js" />
-    <Content Include="Content\lib\jquery\src\manipulation\getAll.js" />
-    <Content Include="Content\lib\jquery\src\manipulation\setGlobalEval.js" />
-    <Content Include="Content\lib\jquery\src\manipulation\support.js" />
-    <Content Include="Content\lib\jquery\src\manipulation\var\nodeNames.js" />
-    <Content Include="Content\lib\jquery\src\manipulation\var\rcheckableType.js" />
-    <Content Include="Content\lib\jquery\src\manipulation\var\rleadingWhitespace.js" />
-    <Content Include="Content\lib\jquery\src\manipulation\var\rscriptType.js" />
-    <Content Include="Content\lib\jquery\src\manipulation\var\rtagName.js" />
-    <Content Include="Content\lib\jquery\src\manipulation\wrapMap.js" />
-    <Content Include="Content\lib\jquery\src\manipulation\_evalUrl.js" />
-    <Content Include="Content\lib\jquery\src\offset.js" />
-    <Content Include="Content\lib\jquery\src\outro.js" />
-    <Content Include="Content\lib\jquery\src\queue.js" />
-    <Content Include="Content\lib\jquery\src\queue\delay.js" />
-    <Content Include="Content\lib\jquery\src\selector-native.js" />
-    <Content Include="Content\lib\jquery\src\selector-sizzle.js" />
-    <Content Include="Content\lib\jquery\src\selector.js" />
-    <Content Include="Content\lib\jquery\src\serialize.js" />
-    <Content Include="Content\lib\jquery\src\support.js" />
-    <Content Include="Content\lib\jquery\src\traversing.js" />
-    <Content Include="Content\lib\jquery\src\traversing\findFilter.js" />
-    <Content Include="Content\lib\jquery\src\traversing\var\dir.js" />
-    <Content Include="Content\lib\jquery\src\traversing\var\rneedsContext.js" />
-    <Content Include="Content\lib\jquery\src\traversing\var\siblings.js" />
-    <Content Include="Content\lib\jquery\src\var\arr.js" />
-    <Content Include="Content\lib\jquery\src\var\class2type.js" />
-    <Content Include="Content\lib\jquery\src\var\concat.js" />
-    <Content Include="Content\lib\jquery\src\var\deletedIds.js" />
-    <Content Include="Content\lib\jquery\src\var\document.js" />
-    <Content Include="Content\lib\jquery\src\var\documentElement.js" />
-    <Content Include="Content\lib\jquery\src\var\hasOwn.js" />
-    <Content Include="Content\lib\jquery\src\var\indexOf.js" />
-    <Content Include="Content\lib\jquery\src\var\pnum.js" />
-    <Content Include="Content\lib\jquery\src\var\push.js" />
-    <Content Include="Content\lib\jquery\src\var\rcssNum.js" />
-    <Content Include="Content\lib\jquery\src\var\rnotwhite.js" />
-    <Content Include="Content\lib\jquery\src\var\slice.js" />
-    <Content Include="Content\lib\jquery\src\var\support.js" />
-    <Content Include="Content\lib\jquery\src\var\toString.js" />
-    <Content Include="Content\lib\jquery\src\wrap.js" />
-    <Content Include="Content\lib\js-cookie\MIT-LICENSE.txt" />
-    <Content Include="Content\lib\js-cookie\src\js.cookie.js" />
-    <Content Include="Content\lib\less\browser.js" />
-    <Content Include="Content\lib\less\dist\less.js" />
-    <Content Include="Content\lib\less\dist\less.min.js" />
-    <Content Include="Content\lib\less\index.js" />
+    <Content Include="Static\css\material.min.css" />
+    <Content Include="Static\img\comming-soon.png" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
-    <Content Include="Stall\Index.html" />
+    <Content Include="Static\lib\angular\angular-csp.css" />
+    <Content Include="Static\lib\angular\angular.js" />
+    <Content Include="Static\lib\angular\angular.min.js" />
+    <Content Include="Static\lib\angular\index.js" />
+    <Content Include="Static\lib\js-cookie\MIT-LICENSE.txt" />
+    <Content Include="Static\lib\js-cookie\src\js.cookie.js" />
+    <Content Include="Static\lib\less\browser.js" />
+    <Content Include="Static\lib\less\dist\less.js" />
+    <Content Include="Static\lib\less\dist\less.min.js" />
+    <Content Include="Static\lib\less\index.js" />
+    <Content Include="Static\lib\material-design-lite\gulpfile.babel.js" />
+    <Content Include="Static\lib\material-design-lite\material.css" />
+    <Content Include="Static\lib\material-design-lite\material.js" />
+    <Content Include="Static\lib\material-design-lite\material.min.css" />
+    <Content Include="Static\lib\material-design-lite\material.min.js" />
+    <Content Include="Static\lib\material-design-lite\src\animation\demo.css" />
+    <Content Include="Static\lib\material-design-lite\src\animation\demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\animation\demo.js" />
+    <Content Include="Static\lib\material-design-lite\src\badge\snippets\badge-on-icon-icon-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\badge\snippets\badge-on-icon-icon.html" />
+    <Content Include="Static\lib\material-design-lite\src\badge\snippets\badge-on-icon-text-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\badge\snippets\badge-on-icon-text.html" />
+    <Content Include="Static\lib\material-design-lite\src\badge\snippets\badge-on-text-icon-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\badge\snippets\badge-on-text-icon.html" />
+    <Content Include="Static\lib\material-design-lite\src\badge\snippets\badge-on-text-text-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\badge\snippets\badge-on-text-text.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\button.js" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\fab-colored-ripple.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\fab-colored.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\fab-disabled.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\fab-mini-colored.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\fab-mini.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\fab-ripple.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\fab.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\flat-accent.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\flat-disabled.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\flat-primary.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\flat-ripple.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\flat.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\icon-colored.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\icon.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\raised-accent.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\raised-colored.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\raised-disabled.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\raised-ripple-accent.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\raised-ripple.html" />
+    <Content Include="Static\lib\material-design-lite\src\button\snippets\raised.html" />
+    <Content Include="Static\lib\material-design-lite\src\card\snippets\event.html" />
+    <Content Include="Static\lib\material-design-lite\src\card\snippets\image.html" />
+    <Content Include="Static\lib\material-design-lite\src\card\snippets\square.html" />
+    <Content Include="Static\lib\material-design-lite\src\card\snippets\wide.html" />
+    <Content Include="Static\lib\material-design-lite\src\checkbox\checkbox.js" />
+    <Content Include="Static\lib\material-design-lite\src\checkbox\snippets\check-off.html" />
+    <Content Include="Static\lib\material-design-lite\src\checkbox\snippets\check-on.html" />
+    <Content Include="Static\lib\material-design-lite\src\data-table\data-table.js" />
+    <Content Include="Static\lib\material-design-lite\src\data-table\snippets\data-table.html" />
+    <Content Include="Static\lib\material-design-lite\src\demos.css" />
+    <Content Include="Static\lib\material-design-lite\src\footer\snippets\mega-footer.html" />
+    <Content Include="Static\lib\material-design-lite\src\footer\snippets\mini-footer.html" />
+    <Content Include="Static\lib\material-design-lite\src\grid\snippets\codepen-grid.css" />
+    <Content Include="Static\lib\material-design-lite\src\grid\snippets\grid-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\grid\snippets\grid.html" />
+    <Content Include="Static\lib\material-design-lite\src\icon-toggle\icon-toggle.js" />
+    <Content Include="Static\lib\material-design-lite\src\icon-toggle\snippets\icon-off.html" />
+    <Content Include="Static\lib\material-design-lite\src\icon-toggle\snippets\icon-on.html" />
+    <Content Include="Static\lib\material-design-lite\src\images\buffer.svg" />
+    <Content Include="Static\lib\material-design-lite\src\images\tick-mask.svg" />
+    <Content Include="Static\lib\material-design-lite\src\images\tick.svg" />
+    <Content Include="Static\lib\material-design-lite\src\index.html" />
+    <Content Include="Static\lib\material-design-lite\src\layout\layout.js" />
+    <Content Include="Static\lib\material-design-lite\src\layout\snippets\fixed-drawer-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\layout\snippets\fixed-drawer.html" />
+    <Content Include="Static\lib\material-design-lite\src\layout\snippets\fixed-header-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\layout\snippets\fixed-header-drawer-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\layout\snippets\fixed-header-drawer.html" />
+    <Content Include="Static\lib\material-design-lite\src\layout\snippets\fixed-header.html" />
+    <Content Include="Static\lib\material-design-lite\src\layout\snippets\fixed-tabs-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\layout\snippets\fixed-tabs.html" />
+    <Content Include="Static\lib\material-design-lite\src\layout\snippets\scrollable-tabs-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\layout\snippets\scrollable-tabs.html" />
+    <Content Include="Static\lib\material-design-lite\src\layout\snippets\scrolling-header-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\layout\snippets\scrolling-header.html" />
+    <Content Include="Static\lib\material-design-lite\src\layout\snippets\transparent-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\layout\snippets\transparent.html" />
+    <Content Include="Static\lib\material-design-lite\src\layout\snippets\waterfall-header-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\layout\snippets\waterfall-header.html" />
+    <Content Include="Static\lib\material-design-lite\src\list\snippets\action.html" />
+    <Content Include="Static\lib\material-design-lite\src\list\snippets\icon.html" />
+    <Content Include="Static\lib\material-design-lite\src\list\snippets\list-control.html" />
+    <Content Include="Static\lib\material-design-lite\src\list\snippets\list-item.html" />
+    <Content Include="Static\lib\material-design-lite\src\list\snippets\three-line.html" />
+    <Content Include="Static\lib\material-design-lite\src\list\snippets\two-line.html" />
+    <Content Include="Static\lib\material-design-lite\src\mdlComponentHandler.js" />
+    <Content Include="Static\lib\material-design-lite\src\menu\menu.js" />
+    <Content Include="Static\lib\material-design-lite\src\menu\snippets\codepen-lower-buttons.css" />
+    <Content Include="Static\lib\material-design-lite\src\menu\snippets\codepen-top-buttons.css" />
+    <Content Include="Static\lib\material-design-lite\src\menu\snippets\lower-left-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\menu\snippets\lower-left.html" />
+    <Content Include="Static\lib\material-design-lite\src\menu\snippets\lower-right-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\menu\snippets\lower-right.html" />
+    <Content Include="Static\lib\material-design-lite\src\menu\snippets\top-left-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\menu\snippets\top-left.html" />
+    <Content Include="Static\lib\material-design-lite\src\menu\snippets\top-right-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\menu\snippets\top-right.html" />
+    <Content Include="Static\lib\material-design-lite\src\palette\demo.css" />
+    <Content Include="Static\lib\material-design-lite\src\palette\demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\progress\progress.js" />
+    <Content Include="Static\lib\material-design-lite\src\progress\snippets\progress-buffering-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\progress\snippets\progress-buffering.html" />
+    <Content Include="Static\lib\material-design-lite\src\progress\snippets\progress-default-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\progress\snippets\progress-default.html" />
+    <Content Include="Static\lib\material-design-lite\src\progress\snippets\progress-indeterminate-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\progress\snippets\progress-indeterminate.html" />
+    <Content Include="Static\lib\material-design-lite\src\radio\radio.js" />
+    <Content Include="Static\lib\material-design-lite\src\radio\snippets\radio-off.html" />
+    <Content Include="Static\lib\material-design-lite\src\radio\snippets\radio-on.html" />
+    <Content Include="Static\lib\material-design-lite\src\ripple\ripple.js" />
+    <Content Include="Static\lib\material-design-lite\src\shadow\demo.css" />
+    <Content Include="Static\lib\material-design-lite\src\shadow\demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\slider\slider.js" />
+    <Content Include="Static\lib\material-design-lite\src\slider\snippets\demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\slider\snippets\slider-default-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\slider\snippets\slider-default.html" />
+    <Content Include="Static\lib\material-design-lite\src\slider\snippets\slider-starting-value-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\slider\snippets\slider-starting-value.html" />
+    <Content Include="Static\lib\material-design-lite\src\snackbar\snackbar.js" />
+    <Content Include="Static\lib\material-design-lite\src\snackbar\snippets\snackbar.html" />
+    <Content Include="Static\lib\material-design-lite\src\snackbar\snippets\toast.html" />
+    <Content Include="Static\lib\material-design-lite\src\spinner\snippets\spinner-default.html" />
+    <Content Include="Static\lib\material-design-lite\src\spinner\snippets\spinner-single-color.html" />
+    <Content Include="Static\lib\material-design-lite\src\spinner\spinner.js" />
+    <Content Include="Static\lib\material-design-lite\src\switch\snippets\switch-off.html" />
+    <Content Include="Static\lib\material-design-lite\src\switch\snippets\switch-on.html" />
+    <Content Include="Static\lib\material-design-lite\src\switch\switch.js" />
+    <Content Include="Static\lib\material-design-lite\src\tabs\snippets\tabs.html" />
+    <Content Include="Static\lib\material-design-lite\src\tabs\tabs.js" />
+    <Content Include="Static\lib\material-design-lite\src\textfield\snippets\textfield-expanding-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\textfield\snippets\textfield-expanding.html" />
+    <Content Include="Static\lib\material-design-lite\src\textfield\snippets\textfield-floating-numeric-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\textfield\snippets\textfield-floating-numeric.html" />
+    <Content Include="Static\lib\material-design-lite\src\textfield\snippets\textfield-floating-text-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\textfield\snippets\textfield-floating-text.html" />
+    <Content Include="Static\lib\material-design-lite\src\textfield\snippets\textfield-multi-line-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\textfield\snippets\textfield-multi-line.html" />
+    <Content Include="Static\lib\material-design-lite\src\textfield\snippets\textfield-numeric-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\textfield\snippets\textfield-numeric.html" />
+    <Content Include="Static\lib\material-design-lite\src\textfield\snippets\textfield-text-demo.html" />
+    <Content Include="Static\lib\material-design-lite\src\textfield\snippets\textfield-text.html" />
+    <Content Include="Static\lib\material-design-lite\src\textfield\textfield.js" />
+    <Content Include="Static\lib\material-design-lite\src\third_party\rAF.js" />
+    <Content Include="Static\lib\material-design-lite\src\tooltip\snippets\tooltip-large.html" />
+    <Content Include="Static\lib\material-design-lite\src\tooltip\snippets\tooltip-multiline.html" />
+    <Content Include="Static\lib\material-design-lite\src\tooltip\snippets\tooltip-rich.html" />
+    <Content Include="Static\lib\material-design-lite\src\tooltip\snippets\tooltip-simple.html" />
+    <Content Include="Static\lib\material-design-lite\src\tooltip\tooltip.js" />
+    <Content Include="Static\lib\material-design-lite\src\typography\demo.css" />
+    <Content Include="Static\lib\material-design-lite\src\typography\demo.html" />
+    <Content Include="Static\lib\material-design-lite\utils\jscs-rules\closure-camel-case.js" />
+    <Content Include="Static\lib\material-design-lite\utils\uniffe.js" />
+    <Content Include="Static\html\stall\Index.html" />
     <Content Include="Web.config" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -336,25 +359,24 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\css\" />
-    <Folder Include="Content\dist\" />
-    <Folder Include="Content\img\" />
-    <Folder Include="Content\js\" />
-    <Folder Include="Content\less\" />
+    <Folder Include="Configuration\" />
+    <Folder Include="Content\middle-css\" />
+    <Folder Include="Content\middle-js\" />
     <Folder Include="Models\" />
     <Folder Include="Scripts\" />
+    <Folder Include="Static\js\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Greenspot.Common\Greenspot.Common\Greenspot.Common.csproj">
+      <Project>{cef025d7-155c-4953-9888-06ea355ae43b}</Project>
+      <Name>Greenspot.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Greenspot.Common\Greenspot.Identity\Greenspot.Identity.csproj">
       <Project>{4322d1cd-fbf3-42f0-94d8-c86b1c321828}</Project>
       <Name>Greenspot.Identity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Greenspot.Common\Greenspot.Owin.Security.WeChat\Greenspot.Owin.Security.WeChat.csproj">
-      <Project>{57538bad-4b83-403c-8e5f-79837e4cec25}</Project>
-      <Name>Greenspot.Owin.Security.WeChat</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -365,136 +387,146 @@
     <Content Include="bower.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\lib\angular\.bower.json" />
-    <Content Include="Content\lib\angular\angular.min.js.gzip" />
-    <Content Include="Content\lib\angular\angular.min.js.map" />
-    <Content Include="Content\lib\angular\bower.json" />
-    <Content Include="Content\lib\angular\package.json" />
-    <Content Include="Content\lib\angular\README.md" />
-    <Content Include="Content\lib\bootstrap\.bower.json" />
-    <Content Include="Content\lib\bootstrap\bower.json" />
-    <Content Include="Content\lib\bootstrap\CHANGELOG.md" />
-    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-theme.css.map" />
-    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-theme.min.css.map" />
-    <Content Include="Content\lib\bootstrap\dist\css\bootstrap.css.map" />
-    <Content Include="Content\lib\bootstrap\dist\css\bootstrap.min.css.map" />
-    <Content Include="Content\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Content\lib\bootstrap\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\lib\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\lib\bootstrap\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\lib\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Content\lib\bootstrap\grunt\.jshintrc" />
-    <Content Include="Content\lib\bootstrap\grunt\configBridge.json" />
-    <Content Include="Content\lib\bootstrap\grunt\sauce_browsers.yml" />
-    <Content Include="Content\lib\bootstrap\js\.jscsrc" />
-    <Content Include="Content\lib\bootstrap\js\.jshintrc" />
-    <Content Include="Content\lib\bootstrap\less\.csscomb.json" />
-    <Content Include="Content\lib\bootstrap\less\.csslintrc" />
-    <Content Include="Content\lib\bootstrap\less\alerts.less" />
-    <Content Include="Content\lib\bootstrap\less\badges.less" />
-    <Content Include="Content\lib\bootstrap\less\bootstrap.less" />
-    <Content Include="Content\lib\bootstrap\less\breadcrumbs.less" />
-    <Content Include="Content\lib\bootstrap\less\button-groups.less" />
-    <Content Include="Content\lib\bootstrap\less\buttons.less" />
-    <Content Include="Content\lib\bootstrap\less\carousel.less" />
-    <Content Include="Content\lib\bootstrap\less\close.less" />
-    <Content Include="Content\lib\bootstrap\less\code.less" />
-    <Content Include="Content\lib\bootstrap\less\component-animations.less" />
-    <Content Include="Content\lib\bootstrap\less\dropdowns.less" />
-    <Content Include="Content\lib\bootstrap\less\forms.less" />
-    <Content Include="Content\lib\bootstrap\less\glyphicons.less" />
-    <Content Include="Content\lib\bootstrap\less\grid.less" />
-    <Content Include="Content\lib\bootstrap\less\input-groups.less" />
-    <Content Include="Content\lib\bootstrap\less\jumbotron.less" />
-    <Content Include="Content\lib\bootstrap\less\labels.less" />
-    <Content Include="Content\lib\bootstrap\less\list-group.less" />
-    <Content Include="Content\lib\bootstrap\less\media.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\alerts.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\background-variant.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\border-radius.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\buttons.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\center-block.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\clearfix.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\forms.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\gradients.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\grid-framework.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\grid.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\hide-text.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\image.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\labels.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\list-group.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\nav-divider.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\nav-vertical-align.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\opacity.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\pagination.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\panels.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\progress-bar.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\reset-filter.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\reset-text.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\resize.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\responsive-visibility.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\size.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\tab-focus.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\table-row.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\text-emphasis.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\text-overflow.less" />
-    <Content Include="Content\lib\bootstrap\less\mixins\vendor-prefixes.less" />
-    <Content Include="Content\lib\bootstrap\less\modals.less" />
-    <Content Include="Content\lib\bootstrap\less\navbar.less" />
-    <Content Include="Content\lib\bootstrap\less\navs.less" />
-    <Content Include="Content\lib\bootstrap\less\normalize.less" />
-    <Content Include="Content\lib\bootstrap\less\pager.less" />
-    <Content Include="Content\lib\bootstrap\less\pagination.less" />
-    <Content Include="Content\lib\bootstrap\less\panels.less" />
-    <Content Include="Content\lib\bootstrap\less\popovers.less" />
-    <Content Include="Content\lib\bootstrap\less\print.less" />
-    <Content Include="Content\lib\bootstrap\less\progress-bars.less" />
-    <Content Include="Content\lib\bootstrap\less\responsive-embed.less" />
-    <Content Include="Content\lib\bootstrap\less\responsive-utilities.less" />
-    <Content Include="Content\lib\bootstrap\less\scaffolding.less" />
-    <Content Include="Content\lib\bootstrap\less\tables.less" />
-    <Content Include="Content\lib\bootstrap\less\theme.less" />
-    <Content Include="Content\lib\bootstrap\less\thumbnails.less" />
-    <Content Include="Content\lib\bootstrap\less\tooltip.less" />
-    <Content Include="Content\lib\bootstrap\less\type.less" />
-    <Content Include="Content\lib\bootstrap\less\utilities.less" />
-    <Content Include="Content\lib\bootstrap\less\variables.less" />
-    <Content Include="Content\lib\bootstrap\less\wells.less" />
-    <Content Include="Content\lib\bootstrap\LICENSE" />
-    <Content Include="Content\lib\bootstrap\nuget\bootstrap.less.nuspec" />
-    <Content Include="Content\lib\bootstrap\nuget\bootstrap.nuspec" />
-    <Content Include="Content\lib\bootstrap\nuget\MyGet.ps1" />
-    <Content Include="Content\lib\bootstrap\README.md" />
-    <Content Include="Content\lib\jquery\.bower.json" />
-    <Content Include="Content\lib\jquery\bower.json" />
-    <Content Include="Content\lib\jquery\dist\jquery.min.map" />
-    <Content Include="Content\lib\jquery\dist\jquery.slim.min.map" />
-    <Content Include="Content\lib\jquery\README.md" />
-    <Content Include="Content\lib\jquery\sizzle\dist\sizzle.min.map" />
-    <Content Include="Content\lib\jquery\src\.jshintrc" />
-    <Content Include="Content\lib\js-cookie\.bower.json" />
-    <Content Include="Content\lib\js-cookie\bower.json" />
-    <Content Include="Content\lib\js-cookie\CONTRIBUTING.md" />
-    <Content Include="Content\lib\js-cookie\README.md" />
-    <Content Include="Content\lib\js-cookie\SERVER_SIDE.md" />
-    <Content Include="Content\lib\less\.bower.json" />
-    <Content Include="Content\lib\less\bower.json" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Customer\Orders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Owner\Index.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\less\_variables.less" />
+    <Content Include="Content\less\global.less" />
+    <Content Include="Content\less\owner.less" />
+    <None Include="Properties\PublishProfiles\Pub.pubxml" />
+    <Content Include="Views\Auth\Index.cshtml" />
+    <Content Include="Views\Shared\_OwnerLayout.cshtml" />
+    <Content Include="Static\lib\angular\.bower.json" />
+    <Content Include="Static\lib\angular\angular.min.js.gzip" />
+    <Content Include="Static\lib\angular\angular.min.js.map" />
+    <Content Include="Static\lib\angular\bower.json" />
+    <Content Include="Static\lib\angular\package.json" />
+    <Content Include="Static\lib\angular\README.md" />
+    <Content Include="Static\lib\js-cookie\.bower.json" />
+    <Content Include="Static\lib\js-cookie\bower.json" />
+    <Content Include="Static\lib\js-cookie\CONTRIBUTING.md" />
+    <Content Include="Static\lib\js-cookie\README.md" />
+    <Content Include="Static\lib\js-cookie\SERVER_SIDE.md" />
+    <Content Include="Static\lib\less\.bower.json" />
+    <Content Include="Static\lib\less\bower.json" />
+    <Content Include="Static\lib\material-design-lite\.bower.json" />
+    <Content Include="Static\lib\material-design-lite\bower.json" />
+    <Content Include="Static\lib\material-design-lite\LICENSE" />
+    <Content Include="Static\lib\material-design-lite\material.min.css.map" />
+    <Content Include="Static\lib\material-design-lite\material.min.js.map" />
+    <Content Include="Static\lib\material-design-lite\package.json" />
+    <Content Include="Static\lib\material-design-lite\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\animation\_animation.scss" />
+    <Content Include="Static\lib\material-design-lite\src\badge\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\badge\_badge.scss" />
+    <Content Include="Static\lib\material-design-lite\src\button\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\button\_button.scss" />
+    <Content Include="Static\lib\material-design-lite\src\card\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\card\_card.scss" />
+    <Content Include="Static\lib\material-design-lite\src\checkbox\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\checkbox\_checkbox.scss" />
+    <Content Include="Static\lib\material-design-lite\src\data-table\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\data-table\_data-table.scss" />
+    <Content Include="Static\lib\material-design-lite\src\dialog\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\dialog\_dialog.scss" />
+    <Content Include="Static\lib\material-design-lite\src\footer\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\footer\_mega_footer.scss" />
+    <Content Include="Static\lib\material-design-lite\src\footer\_mini_footer.scss" />
+    <Content Include="Static\lib\material-design-lite\src\grid\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\grid\_grid.scss" />
+    <Content Include="Static\lib\material-design-lite\src\icon-toggle\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\icon-toggle\_icon-toggle.scss" />
+    <Content Include="Static\lib\material-design-lite\src\INTRODUCTION.md" />
+    <Content Include="Static\lib\material-design-lite\src\layout\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\layout\_layout.scss" />
+    <Content Include="Static\lib\material-design-lite\src\list\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\list\_list.scss" />
+    <Content Include="Static\lib\material-design-lite\src\material-design-lite-grid.scss" />
+    <Content Include="Static\lib\material-design-lite\src\material-design-lite.scss" />
+    <Content Include="Static\lib\material-design-lite\src\menu\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\menu\_menu.scss" />
+    <Content Include="Static\lib\material-design-lite\src\palette\_palette.scss" />
+    <Content Include="Static\lib\material-design-lite\src\progress\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\progress\_progress.scss" />
+    <Content Include="Static\lib\material-design-lite\src\radio\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\radio\_radio.scss" />
+    <Content Include="Static\lib\material-design-lite\src\resets\_h5bp.scss" />
+    <Content Include="Static\lib\material-design-lite\src\resets\_mobile.scss" />
+    <Content Include="Static\lib\material-design-lite\src\resets\_resets.scss" />
+    <Content Include="Static\lib\material-design-lite\src\ripple\_ripple.scss" />
+    <Content Include="Static\lib\material-design-lite\src\shadow\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\shadow\_shadow.scss" />
+    <Content Include="Static\lib\material-design-lite\src\slider\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\slider\_slider.scss" />
+    <Content Include="Static\lib\material-design-lite\src\snackbar\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\snackbar\_snackbar.scss" />
+    <Content Include="Static\lib\material-design-lite\src\spinner\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\spinner\_spinner.scss" />
+    <Content Include="Static\lib\material-design-lite\src\styleguide.scss" />
+    <Content Include="Static\lib\material-design-lite\src\switch\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\switch\_switch.scss" />
+    <Content Include="Static\lib\material-design-lite\src\tabs\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\tabs\_tabs.scss" />
+    <Content Include="Static\lib\material-design-lite\src\template.scss" />
+    <Content Include="Static\lib\material-design-lite\src\textfield\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\textfield\_textfield.scss" />
+    <Content Include="Static\lib\material-design-lite\src\tooltip\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\tooltip\_tooltip.scss" />
+    <Content Include="Static\lib\material-design-lite\src\typography\README.md" />
+    <Content Include="Static\lib\material-design-lite\src\typography\_typography.scss" />
+    <Content Include="Static\lib\material-design-lite\src\_color-definitions.scss" />
+    <Content Include="Static\lib\material-design-lite\src\_functions.scss" />
+    <Content Include="Static\lib\material-design-lite\src\_mixins.scss" />
+    <Content Include="Static\lib\material-design-lite\src\_variables.scss" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Pub.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Test.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Content\ts\file1.ts" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Pub|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir>Content\middle-js</TypeScriptOutDir>
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">

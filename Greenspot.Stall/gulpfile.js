@@ -11,17 +11,19 @@ var gulp = require("gulp"),
 
 
 var contentPath = "./Content/";
-var lessGroups = [{ src: "less/*.less", dest: "css" }];
-var jsGroups = [{ src: "js/**/*.js", exclude: "js/**/*.min.js", dest: "dist/js/stall-storefront.min.js" }];
+var staticPath = "./Static/";
 
-var cssGroups = [{ src: "css/*.css", exclude: "css/*.min.css", dest: "dist/css/stall-storefront.min.css" }];
+var lessGroups = [{ src: "less/*.less", dest: "middle-css" }];
+var jsGroups = [{ src: "middle-js/**/owner*.js", exclude: "middle-js/**/*.min.js", dest: "js/stall.owner.min.js" }];
+
+var cssGroups = [{ src: "middle-css/+(global|owner)*.css", exclude: "middle-css/*.min.css", dest: "css/stall.owner.min.css" }];
 
 /*clean*/
 gulp.task("clean:css", function (cb) {
-    rimraf(contentPath + "css/*", cb);
+    rimraf(staticPath + "css/*", cb);
 });
 gulp.task("clean:dist", function (cb) {
-    rimraf(contentPath + "dist/*", cb);
+    rimraf(staticPath + "js/*", cb);
 });
 gulp.task("clean", ["clean:css", "clean:dist"]);
 
@@ -39,7 +41,7 @@ gulp.task("less", function () {
 gulp.task("min:js", function () {
     for (var i = 0; i < jsGroups.length; i++) {
         gulp.src([contentPath + jsGroups[i].src, "!" + contentPath + jsGroups[i].exclude])
-                .pipe(concat(contentPath + jsGroups[i].dest))
+                .pipe(concat(staticPath + jsGroups[i].dest))
                 .pipe(uglify())
                 .pipe(gulp.dest("."));
     }
@@ -48,7 +50,7 @@ gulp.task("min:js", function () {
 gulp.task("min:css", function () {
     for (var i = 0; i < cssGroups.length; i++) {
         gulp.src([contentPath + cssGroups[i].src, "!" + contentPath + cssGroups[i].exclude])
-                .pipe(concat(contentPath + cssGroups[i].dest))
+                .pipe(concat(staticPath + cssGroups[i].dest))
                 .pipe(cssmin())
                 .pipe(gulp.dest("."));
     }

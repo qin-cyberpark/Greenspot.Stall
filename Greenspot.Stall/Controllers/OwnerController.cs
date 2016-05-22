@@ -9,6 +9,7 @@ namespace Greenspot.Stall.Controllers
     public class OwnerController : Controller
     {
         // GET: Owner
+        [Authorize]
         public ActionResult Index()
         {
             return View();

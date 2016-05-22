@@ -3,9 +3,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Greenspot.Owin.Security.WeChat;
+using Greenspot.Identity.OAuth.WeChat;
+using Greenspot.Configuration;
 using Owin;
 using Greenspot.Identity;
+
 
 namespace Greenspot.Stall
 {
@@ -19,13 +21,14 @@ namespace Greenspot.Stall
             app.CreatePerOwinContext<GreenspotUserManager>(GreenspotUserManager.Create);
             app.CreatePerOwinContext<GreenspotSignInManager>(GreenspotSignInManager.Create);
 
+
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
             // Configure the sign in cookie
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login"),
+                LoginPath = new PathString("/auth/WeChatMpLogin"),
                 Provider = new CookieAuthenticationProvider
                 {
                     // Enables the application to validate the security stamp when the user logs in.
@@ -34,7 +37,7 @@ namespace Greenspot.Stall
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
@@ -46,7 +49,12 @@ namespace Greenspot.Stall
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
             // Uncomment the following lines to enable logging in with third party login providers
-            app.UseWeChatAuthentication(appId: "wx4965c136969ac3bd", appSecret: "03fc1d6e4c140aac3a81a5803303dac5");
+            app.UseWeChatAuthentication(new WeChatAuthenticationOptions(ApplicationTypes.MP, ScopeTypes.Base,
+                GreenspotConfiguration.AccessAccounts["wechat"].Id,
+                GreenspotConfiguration.AccessAccounts["wechat"].Secret)
+            {
+                UnionCallbackPath = GreenspotConfiguration.AppSettings["wechatAuthUrl"].Value
+            });
 
             //app.UseMicrosoftAccountAuthentication(
             //    clientId: "",
@@ -65,6 +73,7 @@ namespace Greenspot.Stall
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+            
         }
     }
 }

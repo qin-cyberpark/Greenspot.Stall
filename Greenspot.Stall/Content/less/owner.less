@@ -1,0 +1,40 @@
+﻿@import "_variables.less";
+
+.stall-owner {
+    & .top-bar {
+        height: @owner-top-bar-height;
+        width: 100%;
+        padding-left: 10px;
+
+        & .btn-menu {
+            position: relative;
+            top: -3px;
+        }
+
+
+        & .owner-id {
+            margin-left: 10px;
+            line-height: @owner-top-bar-height;
+        }
+    }
+
+    & #add {
+        z-index: 999;
+    }
+
+
+    & .stall-card-list {
+        width: auto;
+        padding: 10px;
+
+        & .stall-card {
+            width: 100%;
+            margin-top:10px;
+
+            & > .mdl-card__title {
+                color:#fff;
+                background: url('../assets/demos/dog.png') bottom right 15% no-repeat;
+            }
+        }
+    }
+}
