@@ -1,0 +1,12 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_OwnerLayout.cshtml";
+    bool _connected = (bool)ViewBag.Connected;
+}
+@if (_connected)
+{
+    <text>Connected</text>
+}else
+{
+    <a href="@StallApplication.GetAuthorisationCodeUri("STATE")">Connect</a>
+}
+

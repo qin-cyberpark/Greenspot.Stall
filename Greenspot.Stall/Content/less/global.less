@@ -3,13 +3,46 @@
 
 html, body {
     margin: 0px auto;
-    padding: 0px;
-    height: 100%;
     max-width: @app-max-width;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    font-family: 'Roboto', 'Helvetica', sans-serif;
+}
+
+
+.gs-process-bar {
+    width: 100%;
+    background: @background-color-major;
+
+    & .gs-process-bar-caption {
+        margin: 10px;
+    }
+
+    & .gs-process-bar-steps {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        font-size: 11px;
+
+        & .gs-process-step {
+            vertical-align: middle;
+            flex-basis: 1;
+
+            & .gs-process-step-spot {
+                display: inline-block;
+                height: 12px;
+                width: 12px;
+                border-radius: 13px 13px;
+                background-color: gray;
+                color: white;
+
+                &.finished {
+                    background-color: orange;
+                }
+            }
+
+            & .gs-process-step-text {
+                display: inline;
+            }
+        }
+    }
 }

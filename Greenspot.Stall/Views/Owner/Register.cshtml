@@ -1,0 +1,77 @@
+﻿@{ 
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html lang="en" ng-app="greenspotStall" ng-cloak>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Stall@Greenspot">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <base href="/">
+    <title>注册小铺</title>
+
+    <link rel="shortcut icon" href="content/img/favicon.png">
+    <!-- 3rd party stylesheet -->
+    <link rel="stylesheet" href="/static/lib/angular-material/angular-material.min.css">
+    <!-- owner stylesheet -->
+    <link rel="stylesheet/less" href="/Content/less/global.less">
+    <link rel="stylesheet/less" href="/Content/less/owner.less">
+</head>
+<body ng-controller="greenspotStall.OwnerRegisterController as regCtrl">
+    <md-toolbar id="stall-toolbar" class="md-primary" layout="row" layout-align="center center">
+        <div class="stall-logo">
+            <img src="/Static/img/stall-logo.png" />
+        </div>
+        <div class="stall-text">
+            <div class="stall-text-line-1">
+                小铺
+            </div>
+            <div class="stall-text-line-2">
+                绿点家园
+            </div>
+        </div>
+    </md-toolbar>
+    <md-content class="gs-process-bar">
+        <div class="gs-process-bar-steps">
+            <div class="gs-process-step">
+                <div class="gs-process-step-spot">
+                </div>
+                <span class="gs-process-step-text">
+                    联系信息
+                </span>
+            </div>
+            <div class="gs-process-step">
+                <div class="gs-process-step-spot">
+                </div>
+                <span class="gs-process-step-text">
+                    连接Vend
+                </span>
+            </div>
+            <div class="gs-process-step">
+                <div class="gs-process-step-spot">
+                </div>
+                <div class="gs-process-step-text">
+                    完成
+                </div>
+            </div>
+        </div>
+    </md-content>
+    <md-content layout-padding>
+        <div ng-view></div>
+    </md-content>
+    <!-- 3rd party libraries -->
+    <script type="text/javascript" src="/Static/lib/less/dist/less.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-aria/angular-aria.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-animate/angular-animate.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-messages/angular-messages.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-material/angular-material.min.js"></script>
+
+    <!-- owner scripts -->
+    <script type="text/javascript" src="/Content/middle-js/app.module.js"></script>
+    <script type="text/javascript" src="/Content/middle-js/app.route.js"></script>
+    <script type="text/javascript" src="/Content/middle-js/controller/owner-register.controller.js"></script>
+</body>
+</html>

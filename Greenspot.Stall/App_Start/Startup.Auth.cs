@@ -28,7 +28,7 @@ namespace Greenspot.Stall
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/auth/WeChatMpLogin"),
+                LoginPath = new PathString("/account/WeChatMpLogin"),
                 Provider = new CookieAuthenticationProvider
                 {
                     // Enables the application to validate the security stamp when the user logs in.
@@ -49,9 +49,8 @@ namespace Greenspot.Stall
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
             // Uncomment the following lines to enable logging in with third party login providers
-            app.UseWeChatAuthentication(new WeChatAuthenticationOptions(ApplicationTypes.MP, ScopeTypes.Base,
-                GreenspotConfiguration.AccessAccounts["wechat"].Id,
-                GreenspotConfiguration.AccessAccounts["wechat"].Secret)
+            app.UseWeChatAuthentication(new WeChatAuthenticationOptions(GreenspotConfiguration.AccessAccounts["wechat"].Id,
+                GreenspotConfiguration.AccessAccounts["wechat"].Secret, ApplicationTypes.MP, ScopeTypes.Base, false, false)
             {
                 UnionCallbackPath = GreenspotConfiguration.AppSettings["wechatAuthUrl"].Value
             });
@@ -73,7 +72,7 @@ namespace Greenspot.Stall
             //    ClientId = "",
             //    ClientSecret = ""
             //});
-            
+
         }
     }
 }

@@ -17,17 +17,15 @@
     <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
 
     <link rel="shortcut icon" href="content/img/favicon.png">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="~/static/lib/angular-material/angular-material.css">
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
-        <link rel="stylesheet" href="~/Content/css/global.material.css">
         <link rel="stylesheet/less" href="~/Content/less/global.less">
         <link rel="stylesheet/less" href="~/Content/less/owner.less">
     }
     else
     {
-        <link rel="stylesheet" href="~/Content/dist/css/stall.owner.min.css">
+        <link rel="stylesheet" href="~/static/css/stall.owner.min.css">
     }
     @RenderSection("head", required: false)
 </head>
@@ -43,9 +41,12 @@
             </div>
         </header>
         <main class="mdl-layout__content">
-            asdfsdaf
+            @RenderBody()
         </main>
     </div>
-    @RenderBody()
+    <script type="text/javascript" src="~/Static/lib/angular/angular.min.js"></script>
+    <script type="text/javascript" src="~/Static/lib/angular-aria/angular-aria.min.js"></script>
+    <script type="text/javascript" src="~/Static/lib/angular-animate/angular-animate.min.js"></script>
+    <script type="text/javascript" src="~/Static/lib/angular-material/angular-material.min.js"></script>
 </body>
 </html>
