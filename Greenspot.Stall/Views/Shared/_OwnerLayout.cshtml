@@ -1,52 +1,49 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" ng-app="greenspotStall" ng-cloak>
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Stall@Greenspot">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <base href="/">
     <title>@Page.Title</title>
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="192x192" href="content/img/android-desktop.png">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
-    <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
 
     <link rel="shortcut icon" href="content/img/favicon.png">
-    <link rel="stylesheet" href="~/static/lib/angular-material/angular-material.css">
-    @if (HttpContext.Current.IsDebuggingEnabled)
-    {
-        <link rel="stylesheet/less" href="~/Content/less/global.less">
-        <link rel="stylesheet/less" href="~/Content/less/owner.less">
-    }
-    else
-    {
-        <link rel="stylesheet" href="~/static/css/stall.owner.min.css">
-    }
-    @RenderSection("head", required: false)
+    <!-- 3rd party stylesheet -->
+    <link rel="stylesheet" href="/static/lib/angular-material/angular-material.min.css">
+    <!-- owner stylesheet -->
+    <link rel="stylesheet/less" href="/Content/less/global.less">
+    <link rel="stylesheet/less" href="/Content/less/owner.less">
 </head>
 <body>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <header class="mdl-layout__header mdl-color--primary">
-            <div class="mdl-layout__header-row">
+    <md-toolbar id="stall-toolbar" class="md-primary" layout="row" layout-align="center center">
+        <div class="stall-logo">
+            <img src="/Static/img/stall-logo.png" />
+        </div>
+        <div class="stall-text">
+            <div class="stall-text-line-1">
+                小铺
             </div>
-            <div class="mdl-layout--large-screen-only mdl-layout__header-row mdl-color--accent">
-                <h3>Name &amp; Title</h3>
+            <div class="stall-text-line-2">
+                绿点家园
             </div>
-            <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-            </div>
-        </header>
-        <main class="mdl-layout__content">
-            @RenderBody()
-        </main>
-    </div>
-    <script type="text/javascript" src="~/Static/lib/angular/angular.min.js"></script>
-    <script type="text/javascript" src="~/Static/lib/angular-aria/angular-aria.min.js"></script>
-    <script type="text/javascript" src="~/Static/lib/angular-animate/angular-animate.min.js"></script>
-    <script type="text/javascript" src="~/Static/lib/angular-material/angular-material.min.js"></script>
+        </div>
+    </md-toolbar>
+    @RenderBody()
+    <!-- 3rd party libraries -->
+    <script type="text/javascript" src="~/Static/lib/jQuery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/less/dist/less.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-aria/angular-aria.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-animate/angular-animate.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-messages/angular-messages.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-material/angular-material.min.js"></script>
+
+    <!-- owner scripts -->
+    <script type="text/javascript" src="/Content/middle-js/app.js"></script>
+    <script type="text/javascript" src="/Content/middle-js/controller/owner-register.controller.js"></script>
+
+    @RenderSection("ScriptSection", false)
 </body>
 </html>

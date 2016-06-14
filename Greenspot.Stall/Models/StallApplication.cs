@@ -36,6 +36,10 @@ namespace Greenspot.Stall
         {
             return _instance._vendApplication.GetAuthorisationCodeUri(state);
         }
+        public static string GetAuthorisationCodeUri(string prefix, string state)
+        {
+            return _instance._vendApplication.GetAuthorisationCodeUri(prefix, state);
+        }
 
         public static async Task<string> GetAccessTokenAsync(string prefix)
         {
@@ -45,6 +49,13 @@ namespace Greenspot.Stall
         public static async Task<string> GetAccessTokenAsync(string prefix, string authCode)
         {
             return await _instance._vendAccessTokenManager.GetAccessTokenAsync(prefix, authCode);
+        }
+        public static string VendClientId
+        {
+            get
+            {
+                return _instance._vendApplication.ClientId;
+            }
         }
         #endregion
     }

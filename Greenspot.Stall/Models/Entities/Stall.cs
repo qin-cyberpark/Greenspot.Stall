@@ -12,7 +12,7 @@ namespace Greenspot.Stall.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Stall()
         {
-            Contacts = new HashSet<Contact>();
+            Contacts = new HashSet<StallContact>();
             Products = new HashSet<Product>();
             Webhooks = new HashSet<VendWebhook>();
         }
@@ -67,12 +67,14 @@ namespace Greenspot.Stall.Models
         public bool? Approved { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contact> Contacts { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VendWebhook> Webhooks { get; set; }
+
+        public virtual ICollection<StallContact> Contacts { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; }
     }
 }

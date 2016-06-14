@@ -1,19 +1,25 @@
-var greenspotStall;
-(function (greenspotStall) {
-    var OwnerRegisterInfo = (function () {
-        function OwnerRegisterInfo() {
-        }
-        return OwnerRegisterInfo;
-    }());
-    var OwnerRegisterController = (function () {
-        function OwnerRegisterController() {
-            this.OwnerInfo = new OwnerRegisterInfo();
-        }
-        OwnerRegisterController.prototype.SubmitContact = function () {
-            console.debug(this.OwnerInfo.FirstName);
+(function () {
+    'use strict';
+    var module = angular.module('greenspotStall');
+    module.controller('OwnerRegisterController', OwnerRegisterController);
+
+    OwnerRegisterController.$inject = ['$http', '$location'];
+    function OwnerRegisterController($http, $location) {
+        var vm = this;
+        //step 1 - submit info
+        vm.SubmitInfo = function () {
+            //load items
+            $http.post('/owner/Register', this.OwnerInfo).success(function (result) {
+                if (result.Succeeded) {
+                    //redirect to vent page
+                    window.location.href=result.Data;
+                }
+                else {
+                    console.log(result.Message);
+                }
+            }).error(function (error) {
+                console.log(error);
+            });
         };
-        return OwnerRegisterController;
-    }());
-    angular.module('greenspotStall').controller('greenspotStall.OwnerRegisterController', OwnerRegisterController);
-})(greenspotStall || (greenspotStall = {}));
-//# sourceMappingURL=owner-register.controller.js.map
+    }
+})();

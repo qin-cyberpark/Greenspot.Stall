@@ -27,7 +27,7 @@ namespace Greenspot.Stall.Models
         [StringLength(100)]
         public string SourceVariantId { get; set; }
 
-        [StringLength(50)]
+        [StringLength(100)]
         public string Handle { get; set; }
 
         [StringLength(50)]
@@ -63,7 +63,7 @@ namespace Greenspot.Stall.Models
         [StringLength(100)]
         public string Name { get; set; }
 
-        [StringLength(10)]
+        [StringLength(100)]
         public string BaseName { get; set; }
 
         [Column(TypeName = "text")]
@@ -126,8 +126,10 @@ namespace Greenspot.Stall.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Variants { get; set; }
 
+        [ForeignKey("VariantParentId")]
         public virtual Product ParentProduct { get; set; }
 
-        public virtual Stall Stall { get; set; }
+        //[ForeignKey("StallId")]
+        //public virtual Stall Stall { get; set; }
     }
 }

@@ -28,28 +28,28 @@ namespace Greenspot.SDK.Vend
         public VendContact Contact { get; set; }
 
         [JsonProperty("email")]
-        public object Email { get; set; }
+        public string Email { get; set; }
 
         [JsonProperty("physical_address1")]
-        public object PhysicalAddress1 { get; set; }
+        public string PhysicalAddress1 { get; set; }
 
         [JsonProperty("physical_address2")]
-        public object PhysicalAddress2 { get; set; }
+        public string PhysicalAddress2 { get; set; }
 
         [JsonProperty("physical_suburb")]
-        public object PhysicalSuburb { get; set; }
+        public string PhysicalSuburb { get; set; }
 
         [JsonProperty("physical_city")]
-        public object PhysicalCity { get; set; }
+        public string PhysicalCity { get; set; }
 
         [JsonProperty("physical_postcode")]
-        public object PhysicalPostcode { get; set; }
+        public string PhysicalPostcode { get; set; }
 
         [JsonProperty("physical_state")]
-        public object PhysicalState { get; set; }
+        public string PhysicalState { get; set; }
 
         [JsonProperty("physical_country_id")]
-        public object PhysicalCountryId { get; set; }
+        public string PhysicalCountryId { get; set; }
     }
 
     public class VendOutletApiResult

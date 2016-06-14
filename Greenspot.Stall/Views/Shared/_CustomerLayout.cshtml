@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" ng-app="greenspotStall" ng-cloak>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Stall@Greenspot">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <base href="/">
+    <title>@Page.Title</title>
+
+    <link rel="shortcut icon" href="content/img/favicon.png">
+    <!-- 3rd party stylesheet -->
+    <link rel="stylesheet" href="/static/lib/angular-material/angular-material.min.css">
+    <!-- owner stylesheet -->
+    <link rel="stylesheet/less" href="/Content/less/global.less">
+    <link rel="stylesheet/less" href="/Content/less/owner.less">
+</head>
+<body>
+    <md-toolbar id="stall-toolbar" class="md-primary" layout="row" layout-align="center center">
+        <div class="stall-logo">
+            <img src="/Static/img/stall-logo.png" />
+        </div>
+        <div class="stall-text">
+            <div class="stall-text-line-1">
+                小铺
+            </div>
+            <div class="stall-text-line-2">
+                绿点家园
+            </div>
+        </div>
+    </md-toolbar>
+    @RenderBody()
+    <!-- 3rd party libraries -->
+    <script type="text/javascript" src="~/Static/lib/jQuery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/less/dist/less.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-aria/angular-aria.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-animate/angular-animate.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-messages/angular-messages.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-material/angular-material.min.js"></script>
+
+    <!-- owner scripts -->
+    <script type="text/javascript" src="/Content/middle-js/app.js"></script>
+    <script type="text/javascript" src="/Content/middle-js/controller/owner-register.controller.js"></script>
+
+    @RenderSection("ScriptSection", false)
+</body>
+</html>

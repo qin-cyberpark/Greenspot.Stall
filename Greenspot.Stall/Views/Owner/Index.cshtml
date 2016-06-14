@@ -1,4 +1,22 @@
 ﻿@{
     Layout = "~/Views/Shared/_OwnerLayout.cshtml";
-    Page.Title = "Connect";
+    Page.Title = "我的小铺";
+    var _stalls = (IList<Greenspot.Stall.Models.Stall>)ViewBag.Stalls;
 }
+<md-content layout-padding>
+    @foreach (var s in _stalls)
+    {
+        <md-card>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">@s.Name</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <p>
+                    @string.Format("{0}, {1}", s.PhysicalAddress1, @s.PhysicalCity);
+                </p>
+            </md-card-content>
+        </md-card>
+    }
+</md-content>

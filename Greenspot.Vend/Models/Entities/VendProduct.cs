@@ -204,7 +204,7 @@ namespace Greenspot.SDK.Vend
         public string SupplierCode { get; set; }
 
         [JsonProperty("supply_price")]
-        public string SupplyPrice { get; set; }
+        public decimal SupplyPrice { get; set; }
 
         [JsonProperty("account_code_purchase")]
         public string AccountCodePurchase { get; set; }
@@ -222,16 +222,16 @@ namespace Greenspot.SDK.Vend
         public IList<VendPriceBookEntry> PriceBookEntries { get; set; }
 
         [JsonProperty("price")]
-        public double Price { get; set; }
+        public decimal? Price { get; set; }
 
         [JsonProperty("tax")]
-        public double Tax { get; set; }
+        public decimal? Tax { get; set; }
 
         [JsonProperty("tax_id")]
         public string TaxId { get; set; }
 
         [JsonProperty("tax_rate")]
-        public double TaxRate { get; set; }
+        public decimal? TaxRate { get; set; }
 
         [JsonProperty("tax_name")]
         public string TaxName { get; set; }
@@ -243,10 +243,10 @@ namespace Greenspot.SDK.Vend
         public int DisplayRetailPriceTaxInclusive { get; set; }
 
         [JsonProperty("updated_at")]
-        public string UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
         [JsonProperty("deleted_at")]
-        public string DeletedAt { get; set; }
+        public DateTime? DeletedAt { get; set; }
     }
 
     public class VendProductApiResult 
