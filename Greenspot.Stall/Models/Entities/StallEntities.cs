@@ -15,10 +15,11 @@ namespace Greenspot.Stall.Models
         public virtual DbSet<StallContact> Contacts { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Stall> Stalls { get; set; }
+        public virtual DbSet<Register> Registers { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<VendAccessToken> VendAccessTokens { get; set; }
         public virtual DbSet<VendWebhook> VendWebhooks { get; set; }
-
+        public virtual DbSet<Order> Orders { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

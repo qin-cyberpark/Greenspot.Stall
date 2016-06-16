@@ -1,0 +1,108 @@
+﻿/* global */
+@import "_variables.less";
+
+html, body {
+    margin: 0px auto;
+    max-width: @app-max-width;
+    padding: 0px;
+    height: 100%;
+    overflow: auto;
+    -webkit-touch-callout: none;
+    /*-webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;*/
+}
+
+#main-toolbar {
+    height: @top-toolbar-height;
+    min-height: @top-toolbar-height;
+    max-width: @app-max-width;
+    position: fixed;
+    top: 0px;
+
+
+    & md-button {
+        height: 32px;
+    }
+
+    & md-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    & .btn-back {
+        margin: 0px;
+        padding: 0px;
+        width: 40px;
+        min-width: 40px;
+    }
+
+    & .search-text {
+        height: @top-toolbar-height;
+
+        & input[type="text"] {
+            color: white;
+            font-size: 14px;
+            font-weight: normal;
+            height: 28px;
+        }
+    }
+
+    & .text-caption {
+        text-align: center;
+    }
+
+    & .btn-search {
+        margin: 0px;
+        padding: 0px;
+        width: 40px;
+        min-width: 40px;
+    }
+
+    & .btn-cart {
+        margin: 0px;
+        padding: 0px;
+        width: 40px;
+        min-width: 40px;
+
+        & .cart-amount {
+            position: absolute;
+            padding: 0px;
+            margin: 0px;
+            left: 20px;
+            top: 3px;
+            width: 18px;
+            height: 18px;
+            color: black;
+            background-color: @color-accent;
+            border-radius: 10px 10px;
+            line-height: 20px;
+            font-size: 11px;
+        }
+    }
+}
+
+#main-content {
+    position: fixed;
+    width: 100%;
+    max-width: @app-max-width;
+    top: @bottom-toobar-height;
+    bottom: 0px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#bottom-toolbar {
+    height: @bottom-toobar-height;
+    min-height: @bottom-toobar-height;
+    max-width: @app-max-width;
+    position: fixed;
+    bottom: 0px;
+    background-color: rgba(0,0,0,0.15);
+    width: 100%;
+
+    & md-button {
+        height: 45px;
+    }
+}

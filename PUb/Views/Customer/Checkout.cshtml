@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" ng-app="greenspotStall" ng-cloak>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Stall@Greenspot">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <base href="/">
+    <title>确认订单</title>
+
+    <link rel="shortcut icon" href="/static/img/favicon.png">
+
+    <!-- 3rd party stylesheet -->
+    <link rel="stylesheet" href="/static/lib/angular-material/angular-material.min.css">
+    <!-- platform stylesheet -->
+
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <link rel="stylesheet/less" href="/Content/less/global.less">
+        <link rel="stylesheet/less" href="/Content/less/customer.less">
+    }
+    else
+    {
+        <link rel="stylesheet" href="/Static/css/stall.min.css">
+    }
+</head>
+<body ng-controller="MainController as mainCtrl" ng-init="mainCtrl.init()">
+    <md-content id="checkout-content">
+        <div class="checkout-stall" ng-repeat="stall in mainCtrl.cart.stls track by stall.i">
+            <div class="stall-name">{{stall.n}}</div>
+            <div class="checkout-item" ng-repeat="item in stall.itms track by item.i">
+                <div class="checkout-item-desc">
+                    <div class="desc-name">{{item.n}}</div>
+                    <span class="desc-option">{{item.v}}</span>
+                    <span class="desc-unit-price">{{item.p|currency:$}}</span>
+                    <span class="desc-qty">x{{item.q}}</span>
+                </div>
+                <div class="checkout-item-total-price">{{item.p*item.q|currency:$}}</div>
+            </div>
+            <div class="checkout-total">
+                <span class="desc-name">订单金额</span>
+                <div class="total-price">{{stall.amt|currency:$}}</div>
+            </div>
+        </div>
+    </md-content>
+    <div id="bottom-toolbar" ng-if="mainCtrl.cart.qty>0" layout="row" layout-align="end center">
+        <span class="cart-amount" flex>总金额: {{mainCtrl.cart.amt|currency:$}}</span>
+        <form action="/customer/pay" method="post">
+            <!--a href="#" class="btn btn-danger" ng-click="storeCtrl.cart.empty()">Empty</a-->
+            <md-button type="submit" class="md-raised md-primary" flex>确认付款</md-button>
+        </form>
+    </div>
+    <!-- 3rd party libraries -->
+    <script type="text/javascript" src="/Static/lib/jQuery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-aria/angular-aria.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-animate/angular-animate.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-messages/angular-messages.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-material/angular-material.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/js-cookie/src/js.cookie.js"></script>
+
+    <!-- owner scripts -->
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <script type="text/javascript" src="/Static/lib/less/dist/less.min.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/app.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/controller/main.controller.js"></script>
+    }
+    else
+    {
+        <script type="text/javascript" src="/Static/js/stall.min.js"></script>
+    }
+</body>
+</html>

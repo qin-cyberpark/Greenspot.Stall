@@ -1,0 +1,90 @@
+﻿@{
+    var _product = (Greenspot.Stall.Models.Product)ViewBag.Product;
+    Page.Title = _product?.BaseName ?? "商品不存在";
+}
+<!DOCTYPE html>
+
+<html lang="en" ng-app="greenspotStall" ng-cloak>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Stall@Greenspot">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <base href="/">
+    <title>@Page.Title</title>
+
+    <link rel="shortcut icon" href="/static/img/favicon.png">
+
+    <!-- 3rd party stylesheet -->
+    <link rel="stylesheet" href="/static/lib/angular-material/angular-material.min.css">
+    <!-- platform stylesheet -->
+
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <link rel="stylesheet/less" href="/Content/less/global.less">
+        <link rel="stylesheet/less" href="/Content/less/product.less">
+    }
+    else
+    {
+        <link rel="stylesheet" href="/Static/css/stall.min.css">
+    }
+
+</head>
+<body ng-controller="MainController as mainCtrl" ng-init="mainCtrl.init()">
+    <md-content id="detail-content">
+        @if (_product != null)
+        {
+            <img ng-src="@_product.ImageLarge" class="md-card-image" alt="Washed Out">
+            <div class="text-info">
+                <div class="text-name">
+                    @_product.BaseName
+                </div>
+                <div class="text-price">
+                    @string.Format("{0:0.00}", _product.TotalPrice)
+                </div>
+                <div class="text-description">
+                    <text>
+                        @Html.Raw(_product.Description)
+                    </text>
+                </div>
+            </div>
+        }
+    </md-content>
+    @if (_product != null)
+    {
+        <div id="bottom-toolbar" layout="row">
+            <md-button class="btn-cart" flex="5" aria-label="Cart" ng-click="mainCtrl.gotoUrl('/customer/cart')">
+                <span class="cart-amount" ng-if="mainCtrl.cart.qty>0">{{mainCtrl.cart.qty}}</span>
+                <md-icon class="cart-icon" md-svg-icon="cart"></md-icon>
+            </md-button>
+            <md-button flex class="md-raised md-accent"
+                       ng-click="mainCtrl.cart.add({stallId:'@_product.StallId', stallName:'@_product.Stall.Name',
+                       id:'@_product.Id',price:@_product.TotalPrice,
+                       name:'@_product.BaseName',variant:'@_product.VariantDescription'})">
+                加入购物车
+            </md-button>
+            <md-button flex class="md-raised md-primary" ng-click="mainCtrl.gotoUrl('@string.Format("/stall/detail/{0}", _product.StallId)')">商铺</md-button>
+        </div>
+    }
+    <!-- 3rd party libraries -->
+    <script type="text/javascript" src="/Static/lib/jQuery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-aria/angular-aria.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-animate/angular-animate.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-messages/angular-messages.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-material/angular-material.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/js-cookie/src/js.cookie.js"></script>
+
+    <!-- owner scripts -->
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <script type="text/javascript" src="/Static/lib/less/dist/less.min.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/app.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/controller/main.controller.js"></script>
+    }
+    else
+    {
+        <script type="text/javascript" src="/Static/js/stall.min.js"></script>
+    }
+</body>
+</html>

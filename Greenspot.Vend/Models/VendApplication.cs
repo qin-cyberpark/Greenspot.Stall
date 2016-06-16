@@ -29,7 +29,7 @@ namespace Greenspot.SDK.Vend
         public string GetAuthorisationCodeUri(string prefix, string state)
         {
             return string.Format(@"https://{0}.vendhq.com/connect?response_type=code&client_id={1}&redirect_uri={2}&state={3}",
-                                prefix, ClientId, RedirectUri, state);
+                                "secure", ClientId, RedirectUri, state);
         }
     }
 }

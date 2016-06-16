@@ -1,0 +1,46 @@
+﻿@import "_variables.less";
+.RecommendProductList {
+    padding: 5px;
+
+    & md-grid-tile-footer {
+        height: 20px;
+    }
+}
+
+.SearchResultProductList {
+    & md-list-item {
+        height: @search-item-height;
+        margin-top: 5px;
+    }
+
+    & IMG {
+        width: @search-item-height;
+    }
+
+    & .md-list-item-text {
+        box-shadow: inset 0px -1px #eee;
+        margin: 0px 0px 0px 15px;
+        width: 100%;
+
+        & .item-name {
+            width: 100%;
+            padding: 0px;
+            height: 60px;
+            font-size: 16px;
+        }
+
+        & .item-price {
+            width: 100%;
+            height: 20px;
+            line-height: 20px;
+            padding: 0px;
+            font-size: 16px;
+            color: @color-primary;
+
+            &:before {
+                content: "$";
+                font-size: 12px;
+            }
+        }
+    }
+}

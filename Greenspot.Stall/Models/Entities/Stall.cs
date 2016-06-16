@@ -14,6 +14,7 @@ namespace Greenspot.Stall.Models
         {
             Contacts = new HashSet<StallContact>();
             Products = new HashSet<Product>();
+            Registers = new HashSet<Register>();
             Webhooks = new HashSet<VendWebhook>();
         }
 
@@ -35,6 +36,9 @@ namespace Greenspot.Stall.Models
 
         [StringLength(100)]
         public string Name { get; set; }
+
+        [StringLength(50)]
+        public string PaymentTypeId { get; set; }
 
         [StringLength(100)]
         public string PhysicalAddress1 { get; set; }
@@ -73,6 +77,7 @@ namespace Greenspot.Stall.Models
         public virtual ICollection<VendWebhook> Webhooks { get; set; }
 
         public virtual ICollection<StallContact> Contacts { get; set; }
+        public virtual ICollection<Register> Registers { get; set; }
 
         [ForeignKey("UserId")]
         public virtual User User { get; set; }

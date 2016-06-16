@@ -1,12 +1,13 @@
 namespace Greenspot.Stall.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("greenspot_stall.products")]
+    [Table("products")]
     public partial class Product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -129,7 +130,7 @@ namespace Greenspot.Stall.Models
         [ForeignKey("VariantParentId")]
         public virtual Product ParentProduct { get; set; }
 
-        //[ForeignKey("StallId")]
-        //public virtual Stall Stall { get; set; }
+        [ForeignKey("StallId")]
+        public virtual Stall Stall { get; set; }
     }
 }

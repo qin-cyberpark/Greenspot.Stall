@@ -14,9 +14,9 @@ var contentPath = "./Content/";
 var staticPath = "./Static/";
 
 var lessGroups = [{ src: "less/*.less", dest: "middle-css" }];
-var jsGroups = [{ src: "middle-js/**/owner*.js", exclude: "middle-js/**/*.min.js", dest: "js/stall.owner.min.js" }];
+var jsGroups = [{ src: "middle-js/**/*.js", exclude: "middle-js/**/*.min.js", dest: "js/stall.min.js" }];
 
-var cssGroups = [{ src: "middle-css/+(global|owner)*.css", exclude: "middle-css/*.min.css", dest: "css/stall.owner.min.css" }];
+var cssGroups = [{ src: "middle-css/*.css", exclude: "middle-css/*.min.css", dest: "css/stall.min.css" }];
 
 /*clean*/
 gulp.task("clean:css", function (cb) {

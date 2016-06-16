@@ -10,6 +10,7 @@ namespace Greenspot.SDK.Vend
     public static class HttpUtility
     {
         private static HttpClient _httpClient = new HttpClient();
+        //POST URL ENCODED FORM
         public static async Task<T> PostUrlencodedFormAsync<T>(string requestUri, KeyValuePair<string, string>[] data)
         {
             var content = new FormUrlEncodedContent(data);
@@ -18,14 +19,40 @@ namespace Greenspot.SDK.Vend
             var responseBody = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<T>(responseBody);
         }
+        //POST JSON
+        public static async Task<T> PostJSONencodedAsync<T>(string requestUri, string accessToken, object data)
+        {
+            return await PostJSONencodedAsync<T>(requestUri, new KeyValuePair<string, string>[] {
+                                    new KeyValuePair<string, string>("Authorization",
+                                    string.Format("Bearer {0}",accessToken))}, data);
+        }
 
+        //POST JSON
+        public static async Task<T> PostJSONencodedAsync<T>(
+            string requestUri, KeyValuePair<string, string>[] headers, object data)
+        {
+            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
+            foreach (var h in headers)
+            {
+                requestMessage.Headers.Add(h.Key, h.Value);
+            }
+            var jsonBody = JsonConvert.SerializeObject(data).ToString();
+            requestMessage.Content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            var response = await _httpClient.SendAsync(requestMessage);
+            response.EnsureSuccessStatusCode();    // Throw if not a success code.
+            var responseBody = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(responseBody);
+        }
+
+        //GET
         public static async Task<T> GetAsync<T>(string requestUri, string accessToken)
         {
             return await GetAsync<T>(requestUri, new KeyValuePair<string, string>[] {
-                                    new KeyValuePair<string, string>("Authorization", 
+                                    new KeyValuePair<string, string>("Authorization",
                                     string.Format("Bearer {0}",accessToken))});
         }
 
+        //GET WITH HEADER
         public static async Task<T> GetAsync<T>(string requestUri, KeyValuePair<string, string>[] headers)
         {
             HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);

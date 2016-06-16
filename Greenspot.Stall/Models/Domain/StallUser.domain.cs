@@ -63,7 +63,8 @@ namespace Greenspot.Stall.Models
             using (var db = new StallEntities())
             {
                 db.Set<User>().AddOrUpdate(this);
-                return db.SaveChanges() == 1;
+                db.SaveChanges();
+                return true;
             }
         }
         #endregion

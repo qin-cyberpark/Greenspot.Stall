@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace Greenspot.Stall.Models
 {
@@ -37,16 +38,28 @@ namespace Greenspot.Stall.Models
             return db.Stalls.FirstOrDefault(x => x.Name.Equals(name));
         }
 
+        public static Stall FindById(string id, StallEntities db)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
+
+            return db.Stalls.Include(x=>x.Products).FirstOrDefault(x => x.Id.Equals(id));
+        }
+
         public static OperationResult<Stall> CraeteStall(string userId, string name, string prefix, StallEntities db)
         {
             var result = new OperationResult<Stall>(false);
             if (string.IsNullOrEmpty(userId))
             {
                 result.Message = string.Format("UserId不能为空", prefix);
-            }else if (string.IsNullOrEmpty(name))
+            }
+            else if (string.IsNullOrEmpty(name))
             {
                 result.Message = string.Format("铺名不能为空", prefix);
-            }else if (string.IsNullOrEmpty(prefix))
+            }
+            else if (string.IsNullOrEmpty(prefix))
             {
                 result.Message = string.Format("Vend前缀不能为空", prefix);
             }else if (Stall.FindByName(name, db) != null)

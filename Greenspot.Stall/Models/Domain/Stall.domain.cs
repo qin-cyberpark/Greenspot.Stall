@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Data.Entity.Migrations;
 using Greenspot.SDK.Vend;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Greenspot.Stall.Models
 {
     public partial class Stall
@@ -85,6 +87,51 @@ namespace Greenspot.Stall.Models
                 PostalSuburb = outlet.Contact.PostalSuburb
             });
 
+            //load payment types
+            var paytypeResult = await VendPaymentType.GetPaymentTypetsAsync(Prefix, await StallApplication.GetAccessTokenAsync(Prefix));
+            if (paytypeResult?.PaymentTypes == null || paytypeResult.PaymentTypes.Count == 0)
+            {
+                result.Message = "无法同步VEND PAYMENT TYPE信息";
+                return result;
+            }
+
+            //set payment type
+            string stallPaymentTypeName = "CASH";
+            string stallPaymentTypeId = null;
+            foreach (var pt in paytypeResult.PaymentTypes)
+            {
+                if (pt.Name.ToUpper().Equals(stallPaymentTypeName))
+                {
+                    stallPaymentTypeId = pt.Id;
+                    break;
+                }
+            }
+
+            if (string.IsNullOrEmpty(stallPaymentTypeId))
+            {
+                result.Message = string.Format("找不到名为{0}的VEND PAYMENT TYPE", stallPaymentTypeName);
+                return result;
+            }
+            PaymentTypeId = stallPaymentTypeId;
+
+            //load registers
+            var registerResult = await VendRegister.GetRegistersAsync(Prefix, await StallApplication.GetAccessTokenAsync(Prefix));
+            if (registerResult?.Registers == null || registerResult.Registers.Count == 0)
+            {
+                result.Message = "无法同步VEND REGISTER信息";
+                return result;
+            }
+
+            //set registers
+            Registers.Clear();
+            var reg = registerResult.Registers[0];
+            Registers.Add(new Register()
+            {
+                Id = reg.Id,
+                Name = reg.Name,
+                StallId = Id
+            });
+
             result.Succeeded = true;
             return result;
         }
@@ -160,10 +207,40 @@ namespace Greenspot.Stall.Models
             using (var db = new StallEntities())
             {
                 db.Set<Stall>().AddOrUpdate(this);
+                db.Set<StallContact>().AddOrUpdate(Contacts.ToArray());
+                db.Set<Register>().AddOrUpdate(Registers.ToArray());
                 db.Set<Product>().AddOrUpdate(Products.ToArray());
                 db.SaveChanges();
                 return true;
             }
         }
+
+        #region extend properties
+        [NotMapped]
+        public IList<Product> BaseProducts
+        {
+            get
+            {
+                if (Products == null)
+                {
+                    return null;
+                }
+
+                return GetProducts(delegate (Product x)
+                {
+                    return string.IsNullOrEmpty(x.VariantParentId);
+                }).ToList();
+            }
+        }
+
+        private IEnumerable<Product> GetProducts(Func<Product, bool> condition)
+        {
+            if (Products == null)
+            {
+                return null;
+            }
+            return Products.Where(condition).Where(x => !x.Handle.Equals("vend-discount") && (x.Active ?? false));
+        }
+        #endregion
     }
 }
