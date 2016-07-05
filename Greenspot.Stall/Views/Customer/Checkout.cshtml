@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var _addrs = (IList<Greenspot.Stall.Models.DeliveryAddress>)ViewBag.Addresses;
+}
+<!DOCTYPE html>
 
 <html lang="en" ng-app="greenspotStall" ng-cloak>
 <head>
@@ -24,27 +27,38 @@
         <link rel="stylesheet" href="/Static/css/stall.min.css">
     }
 </head>
-<body ng-controller="MainController as mainCtrl" ng-init="mainCtrl.init()">
+<body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init()">
     <md-content id="checkout-content">
-        <div class="checkout-stall" ng-repeat="stall in mainCtrl.cart.stls track by stall.i">
-            <div class="stall-name">{{stall.n}}</div>
-            <div class="checkout-item" ng-repeat="item in stall.itms track by item.i">
-                <div class="checkout-item-desc">
-                    <div class="desc-name">{{item.n}}</div>
-                    <span class="desc-option">{{item.v}}</span>
-                    <span class="desc-unit-price">{{item.p|currency:$}}</span>
-                    <span class="desc-qty">x{{item.q}}</span>
-                </div>
-                <div class="checkout-item-total-price">{{item.p*item.q|currency:$}}</div>
+        送货地址：
+        <div class="delivery-info">
+            @foreach (var addr in _addrs)
+            {
+                <p>
+                    <div>@string.Format("{0} {1}, {2}", addr.FirstName, addr.LastName, addr.Mobile)</div>
+                    <div>@string.Format("{0}, {1}", addr.Address1 + " " + addr.Address2, addr.City)</div>
+                </p>
+            }
+        </div>
+        送货时间：
+        <div class="delivery-info">
+        </div>
+        <div class="stall-name">{{custCtrl.cart.currentStall.n}}</div>
+        <div class="checkout-item" ng-repeat="item in custCtrl.cart.currentStall.itms track by item.i">
+            <div class="checkout-item-desc">
+                <div class="desc-name">{{item.n}}</div>
+                <span class="desc-option">{{item.v}}</span>
+                <span class="desc-unit-price">{{item.p|currency:$}}</span>
+                <span class="desc-qty">x{{item.q}}</span>
             </div>
-            <div class="checkout-total">
-                <span class="desc-name">订单金额</span>
-                <div class="total-price">{{stall.amt|currency:$}}</div>
-            </div>
+            <div class="checkout-item-total-price">{{item.p*item.q|currency:$}}</div>
+        </div>
+        <div class="checkout-total">
+            <span class="desc-name">订单金额</span>
+            <div class="total-price">{{custCtrl.cart.currentStall.amt|currency:$}}</div>
         </div>
     </md-content>
-    <div id="bottom-toolbar" ng-if="mainCtrl.cart.qty>0" layout="row" layout-align="end center">
-        <span class="cart-amount" flex>总金额: {{mainCtrl.cart.amt|currency:$}}</span>
+    <div id="bottom-toolbar" ng-if="custCtrl.cart.currentStall.qty>0" layout="row" layout-align="end center">
+        <span class="cart-amount" flex>总金额: {{custCtrl.cart.currentStall.amt|currency:$}}</span>
         <form action="/customer/pay" method="post">
             <!--a href="#" class="btn btn-danger" ng-click="storeCtrl.cart.empty()">Empty</a-->
             <md-button type="submit" class="md-raised md-primary" flex>确认付款</md-button>
@@ -65,7 +79,7 @@
     {
         <script type="text/javascript" src="/Static/lib/less/dist/less.min.js"></script>
         <script type="text/javascript" src="/Content/middle-js/app.js"></script>
-        <script type="text/javascript" src="/Content/middle-js/controller/main.controller.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/controller/customer.controller.js"></script>
     }
     else
     {

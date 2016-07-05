@@ -33,6 +33,11 @@ namespace Greenspot.SDK.Vend
 
     public class VendInventory
     {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("product_id")]
+        public string ProductId { get; set; }
 
         [JsonProperty("outlet_id")]
         public string OutletId { get; set; }
@@ -41,7 +46,7 @@ namespace Greenspot.SDK.Vend
         public string OutletName { get; set; }
 
         [JsonProperty("count")]
-        public string Count { get; set; }
+        public float Count { get; set; }
 
         [JsonProperty("reorder_point")]
         public string ReorderPoint { get; set; }
@@ -127,6 +132,9 @@ namespace Greenspot.SDK.Vend
     {
         [JsonProperty("id")]
         public string Id { get; set; }
+
+        [JsonProperty("retailer_id")]
+        public string RetailerId { get; set; }
 
         [JsonProperty("source_id")]
         public string SourceId { get; set; }

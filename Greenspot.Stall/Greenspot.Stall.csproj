@@ -184,16 +184,23 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\API\WebhookController.cs" />
     <Compile Include="Controllers\MVC\HomeController.cs" />
     <Compile Include="Controllers\MVC\ProductController.cs" />
     <Compile Include="Controllers\MVC\StallController.cs" />
-    <Compile Include="Models\Cart.cs" />
+    <Compile Include="Controllers\MVC\TestController.cs" />
     <Compile Include="Models\Domain\Contact.domain.cs" />
+    <Compile Include="Models\Domain\DeliveryAddress.domain.cs" />
+    <Compile Include="Models\Domain\DeliverySchedule.domain.cs" />
     <Compile Include="Models\Domain\Order.domain.cs" />
     <Compile Include="Models\Domain\Product.domain.cs" />
     <Compile Include="Models\Domain\Stall.domain.cs" />
+    <Compile Include="Models\Entities\DeliveryAddress.cs" />
+    <Compile Include="Models\Entities\DeliveryFee.cs" />
+    <Compile Include="Models\Entities\DeliverySchedule.cs" />
+    <Compile Include="Models\Entities\Area.cs" />
+    <Compile Include="Models\Entities\Suburb.cs" />
     <Compile Include="Models\Entities\Order.cs" />
-    <Compile Include="Models\Entities\Register.cs" />
     <Compile Include="Models\Common\OperationResult.cs" />
     <Compile Include="Controllers\MVC\AccountController.cs" />
     <Compile Include="Controllers\MVC\CustomerController.cs" />
@@ -208,9 +215,11 @@
     <Compile Include="Models\Entities\Product.cs" />
     <Compile Include="Models\Entities\Stall.cs" />
     <Compile Include="Models\Entities\StallEntities.cs" />
+    <Compile Include="Models\Entities\SuburbDistance.cs" />
     <Compile Include="Models\Entities\User.cs" />
     <Compile Include="Models\Entities\VendWebhook.cs" />
-    <Compile Include="Models\StallApplication.cs" />
+    <Compile Include="Models\StallApplication.VendToken.cs" />
+    <Compile Include="Utilities\SuburbMatrix.cs" />
     <Compile Include="Utilities\WeChatHelper.cs" />
     <Compile Include="Models\Vend\VendAccessTokenStore.cs" />
     <Compile Include="Models\Entities\VendAccessToken.cs" />
@@ -228,15 +237,14 @@
     <Content Include="Content\middle-css\product.css" />
     <Content Include="Content\middle-css\_variables.css" />
     <Content Include="Content\middle-js\app.js" />
-    <Content Include="Content\middle-js\controller\main.controller.js" />
-    <Content Include="Content\middle-js\controller\owner-register.controller.js" />
+    <Content Include="Content\middle-js\controller\customer.controller.js" />
+    <Content Include="Content\middle-js\controller\owner.controller.js" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
     <Content Include="Static\css\stall.min.css" />
     <Content Include="Static\img\background.jpg" />
     <Content Include="Static\img\icon\core-icons.svg">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Static\img\loading.gif" />
     <Content Include="Static\img\favicon.png" />
@@ -993,7 +1001,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\API\" />
     <Folder Include="Static\font\" />
     <Folder Include="Static\html\" />
   </ItemGroup>
@@ -1033,6 +1040,8 @@
     <Content Include="Content\less\owner.less" />
     <Content Include="tsconfig.json" />
     <Content Include="Content\less\customer.less" />
+    <Content Include="Content\delivery-fee-templte.json" />
+    <Content Include="Content\delivery-schedule-templte.json" />
     <None Include="Content\less\home.less" />
     <Content Include="Content\less\product.less" />
     <None Include="Properties\PublishProfiles\Pub.pubxml" />
@@ -1102,11 +1111,11 @@
     <Content Include="Static\lib\jQuery\test\data\support\csp.log" />
     <Content Include="Static\lib\jQuery\test\node_smoke_tests\.jshintrc" />
     <Content Include="Views\Customer\Index.cshtml" />
-    <Content Include="Views\Shared\_HomeLayout.cshtml" />
+    <Content Include="Views\Shared\_CustomerLayout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Product\detail.cshtml" />
-    <Content Include="Views\Stall\Detail.cshtml" />
+    <Content Include="Views\Stall\Index.cshtml" />
     <Content Include="Views\Customer\Cart.cshtml" />
     <Content Include="Views\Customer\Checkout.cshtml" />
     <Content Include="Static\lib\angular-material\.bower.json" />
@@ -1166,6 +1175,8 @@
     <Content Include="Static\lib\angular-material\modules\js\virtualRepeat\bower.json" />
     <Content Include="Static\lib\angular-material\modules\js\whiteframe\bower.json" />
     <Content Include="Static\lib\angular-material\README.md" />
+    <Content Include="Views\Test\Distance.cshtml" />
+    <Content Include="Views\Owner\Setting.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

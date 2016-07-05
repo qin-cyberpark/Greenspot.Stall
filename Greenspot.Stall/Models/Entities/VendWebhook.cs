@@ -9,6 +9,7 @@ namespace Greenspot.Stall.Models
     [Table("vend_webhooks")]
     public partial class VendWebhook
     {
+
         [StringLength(50)]
         public string Id { get; set; }
 

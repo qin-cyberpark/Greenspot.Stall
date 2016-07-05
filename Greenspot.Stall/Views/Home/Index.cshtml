@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
     Page.Title = "小铺";
     var _products = (IList<Greenspot.Stall.Models.Product>)ViewBag.Products;
 }
@@ -10,7 +10,7 @@
 
         @foreach (var p in _products)
         {
-            <md-grid-tile ng-click="mainCtrl.gotoUrl('@string.Format("/product/detail/{0}",p.Id)')">
+            <md-grid-tile ng-click="custCtrl.gotoUrl('@string.Format("../product/detail/{0}",p.Id)')">
                 <img src="@p.ImageLarge" style="width:100%;height:100%" />
                 <md-grid-tile-footer>
                     @p.BaseName

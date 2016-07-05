@@ -17,6 +17,9 @@ namespace Greenspot.Stall.Controllers.MVC
 {
     public class OwnerController : Controller
     {
+        private static readonly log4net.ILog _sysLogger = log4net.LogManager.GetLogger("SysLogger");
+        private static readonly log4net.ILog _bizLogger = log4net.LogManager.GetLogger("BizLogger");
+
         private StallEntities _db = new StallEntities();
         private GreenspotUserManager _userManager;
         private GreenspotUser _currentUser;
@@ -52,7 +55,7 @@ namespace Greenspot.Stall.Controllers.MVC
             if (!Models.User.CurrentUser.HasName)
             {
                 //have not registered
-                return Redirect("/owner/register");
+                return Redirect("~/owner/register");
             }
 
             var stalls = Models.Stall.FindByUserId(CurrentUser.Id, _db);
@@ -77,7 +80,7 @@ namespace Greenspot.Stall.Controllers.MVC
             user.FirstName = ownerInfo.FirstName;
             user.LastName = ownerInfo.LastName;
             OperationResult<string> result = new OperationResult<string>(true);
-            if (!user.Save())
+            if (!user.Save(_db))
             {
                 result.Message = "无法保存商户信息";
                 result.Succeeded = false;
@@ -125,22 +128,54 @@ namespace Greenspot.Stall.Controllers.MVC
         [HttpPost]
         public async Task<ActionResult> InitStall()
         {
-            var prefex = Request["prefix"];
-            var stall = Models.Stall.FindByVendPrefix(prefex, _db);
-            if (stall == null || !stall.UserId.Equals(CurrentUser.Id))
+            try
             {
+                var prefex = Request["prefix"];
+                var stall = Models.Stall.FindByVendPrefix(prefex, _db);
+                if (stall == null)
+                {
+                    _sysLogger.ErrorFormat("stall {0} not exist", prefex);
+                    return View("Error");
+                }
+
+                if (!stall.UserId.Equals(CurrentUser.Id))
+                {
+                    _sysLogger.ErrorFormat("user id not match {0} <> {1}", stall.UserId, CurrentUser.Id);
+                    return View("Error");
+                }
+
+                var initResult = await stall.Init();
+                if (initResult.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    _sysLogger.ErrorFormat("Failed to init stall, {0}", initResult.Message);
+                    return View("Error");
+                }
+            }catch(Exception ex){
+                _sysLogger.Error("Failed to init stall", ex);
+                return View("Error");
+            }
+        }
+        #endregion
+
+        #region Setting
+        [Authorize]
+        public ActionResult Setting(string id)
+        {
+            var user = Models.User.CurrentUser;
+            var stall = Models.Stall.FindById(id, _db);
+            if (!stall.UserId.Equals(CurrentUser.Id))
+            {
+                _sysLogger.ErrorFormat("user id not match {0} <> {1}", stall.UserId, CurrentUser.Id);
                 return View("Error");
             }
 
-            var initResult =  await stall.Init();
-            if (initResult.Succeeded)
-            {
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                return View("Error");
-            }
+            ViewBag.Stall = stall;
+
+            return View();
         }
         #endregion
     }

@@ -7,7 +7,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAahT9R9c/LEChnCB54JIH+wAAAAACAAAAAAAQZgAAAAEAACAAAAARkLkQ+sANG8Ezz2xtD3voFP69RlQaf5kVDpUtRh6E4AAAAAAOgAAAAAIAACAAAACCkzA/PuKwmZe1BSEkOWTw6sw0XLzZpziEC8Juk9UVsyAAAACgxgnikrrrWM0vOjm36adLUZFH3W775tu8OTtg5bwQq0AAAAAjF71lEcjJS/bh51uT4G65PWk6QavxUMoLzCdyiXl8ENc89O+X1dUTjyP5hDD81qz4deJniprWHQEJCtyE7emJ</EncryptedPassword>
-    <_PublishTargetUrl>D:\works\Greenspot\Greenspot.Stall\PUb</_PublishTargetUrl>
+    <_PublishTargetUrl>D:\works\Greenspot\Greenspot.Stall\Published</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include=".bowerrc">
@@ -44,16 +44,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/18/2016 09:22:05</publishTime>
     </File>
     <File Include="bin/Greenspot.SDK.Vend.dll">
-      <publishTime>06/17/2016 07:32:57</publishTime>
+      <publishTime>06/23/2016 03:34:05</publishTime>
     </File>
     <File Include="bin/Greenspot.SDK.Vend.pdb">
-      <publishTime>06/17/2016 07:32:57</publishTime>
+      <publishTime>06/23/2016 03:34:05</publishTime>
     </File>
     <File Include="bin/Greenspot.Stall.dll">
-      <publishTime>06/17/2016 07:33:04</publishTime>
+      <publishTime>06/23/2016 03:34:13</publishTime>
     </File>
     <File Include="bin/Greenspot.Stall.pdb">
-      <publishTime>06/17/2016 07:33:04</publishTime>
+      <publishTime>06/23/2016 03:34:13</publishTime>
     </File>
     <File Include="bin/log4net.dll">
       <publishTime>05/17/2016 20:31:16</publishTime>
@@ -1070,13 +1070,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/17/2016 04:29:22</publishTime>
     </File>
     <File Include="Content/middle-js/app.js">
-      <publishTime>06/16/2016 15:07:17</publishTime>
+      <publishTime>06/22/2016 22:16:01</publishTime>
     </File>
     <File Include="Content/middle-js/controller/main.controller.js">
       <publishTime>06/17/2016 04:01:50</publishTime>
     </File>
     <File Include="Content/middle-js/controller/owner-register.controller.js">
-      <publishTime>06/14/2016 20:09:41</publishTime>
+      <publishTime>06/23/2016 02:03:14</publishTime>
     </File>
     <File Include="Global.asax">
       <publishTime>05/17/2016 23:40:17</publishTime>
@@ -1100,7 +1100,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/18/2016 17:49:43</publishTime>
     </File>
     <File Include="Static/css/stall.min.css">
-      <publishTime>06/17/2016 04:33:32</publishTime>
+      <publishTime>06/23/2016 02:03:40</publishTime>
     </File>
     <File Include="Static/img/background.jpg">
       <publishTime>06/09/2016 22:22:46</publishTime>
@@ -1109,7 +1109,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/16/2016 10:09:24</publishTime>
     </File>
     <File Include="Static/img/icon/core-icons.svg">
-      <publishTime>06/16/2016 19:20:07</publishTime>
+      <publishTime>06/22/2016 21:59:58</publishTime>
     </File>
     <File Include="Static/img/loading.gif">
       <publishTime>06/14/2016 21:12:52</publishTime>
@@ -1118,7 +1118,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/09/2016 23:07:49</publishTime>
     </File>
     <File Include="Static/js/stall.min.js">
-      <publishTime>06/17/2016 04:33:32</publishTime>
+      <publishTime>06/23/2016 02:03:40</publishTime>
     </File>
     <File Include="Static/lib/angular-animate/.bower.json">
       <publishTime>06/09/2016 18:21:07</publishTime>
@@ -3719,7 +3719,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/18/2016 17:46:09</publishTime>
     </File>
     <File Include="Views/Customer/Cart.cshtml">
-      <publishTime>06/17/2016 04:47:15</publishTime>
+      <publishTime>06/22/2016 22:14:16</publishTime>
     </File>
     <File Include="Views/Customer/Checkout.cshtml">
       <publishTime>06/17/2016 04:47:15</publishTime>
@@ -3734,13 +3734,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/16/2016 20:27:13</publishTime>
     </File>
     <File Include="Views/Home/Search.cshtml">
-      <publishTime>06/16/2016 16:26:31</publishTime>
+      <publishTime>06/17/2016 07:35:48</publishTime>
     </File>
     <File Include="Views/Owner/Index.cshtml">
       <publishTime>06/16/2016 10:26:36</publishTime>
     </File>
     <File Include="Views/Owner/InitStall.cshtml">
-      <publishTime>06/16/2016 15:18:33</publishTime>
+      <publishTime>06/23/2016 02:15:01</publishTime>
     </File>
     <File Include="Views/Owner/Register.cshtml">
       <publishTime>06/17/2016 00:13:12</publishTime>
@@ -3752,16 +3752,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/14/2016 21:46:28</publishTime>
     </File>
     <File Include="Views/Shared/_HomeLayout.cshtml">
-      <publishTime>06/17/2016 04:47:15</publishTime>
+      <publishTime>06/22/2016 22:11:24</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
       <publishTime>05/18/2016 17:35:42</publishTime>
     </File>
     <File Include="Views/Shared/_OwnerLayout.cshtml">
-      <publishTime>06/17/2016 04:47:15</publishTime>
+      <publishTime>06/22/2016 22:10:53</publishTime>
     </File>
     <File Include="Views/Stall/Detail.cshtml">
       <publishTime>06/17/2016 04:47:10</publishTime>
+    </File>
+    <File Include="Views/Test/Distance.cshtml">
+      <publishTime>06/22/2016 19:54:04</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>05/18/2016 00:02:22</publishTime>
@@ -3770,7 +3773,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/17/2016 18:36:43</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>06/17/2016 07:33:15</publishTime>
+      <publishTime>06/23/2016 03:14:40</publishTime>
     </File>
   </ItemGroup>
 </Project>

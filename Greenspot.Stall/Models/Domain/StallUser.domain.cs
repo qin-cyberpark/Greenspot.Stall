@@ -8,6 +8,7 @@ using Greenspot.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Migrations;
+using System.Data.Entity;
 
 namespace Greenspot.Stall.Models
 {
@@ -52,7 +53,7 @@ namespace Greenspot.Stall.Models
             }
         }
 
-        public bool Save()
+        public bool Save(StallEntities db)
         {
             var result = UserManager.Update(_greenspotUser);
             if (!result.Succeeded)
@@ -60,12 +61,9 @@ namespace Greenspot.Stall.Models
                 return false;
             }
 
-            using (var db = new StallEntities())
-            {
-                db.Set<User>().AddOrUpdate(this);
-                db.SaveChanges();
-                return true;
-            }
+            db.Set<User>().AddOrUpdate(this);
+            db.SaveChanges();
+            return true;
         }
         #endregion
 

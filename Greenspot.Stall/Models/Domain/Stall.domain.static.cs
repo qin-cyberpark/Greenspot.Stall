@@ -48,6 +48,16 @@ namespace Greenspot.Stall.Models
             return db.Stalls.Include(x=>x.Products).FirstOrDefault(x => x.Id.Equals(id));
         }
 
+        public static Stall FindByRetailerId(string id, StallEntities db)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
+
+            return db.Stalls.Include(x => x.Products).FirstOrDefault(x => x.RetailerId.Equals(id));
+        }
+
         public static OperationResult<Stall> CraeteStall(string userId, string name, string prefix, StallEntities db)
         {
             var result = new OperationResult<Stall>(false);

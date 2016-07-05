@@ -29,8 +29,8 @@
     }
 
 </head>
-<body ng-controller="MainController as mainCtrl" ng-init="mainCtrl.init()">
-    <md-content id="detail-content">
+<body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init()">
+    <md-content id="detail-content" >
         @if (_product != null)
         {
             <img ng-src="@_product.ImageLarge" class="md-card-image" alt="Washed Out">
@@ -46,23 +46,31 @@
                         @Html.Raw(_product.Description)
                     </text>
                 </div>
+                @if (_product.TrackInventory??false)
+                {
+                    <div>
+                        <text>
+                            库存: @_product.Stock
+                        </text>
+                    </div>
+                }
             </div>
         }
     </md-content>
     @if (_product != null)
     {
         <div id="bottom-toolbar" layout="row">
-            <md-button class="btn-cart" flex="5" aria-label="Cart" ng-click="mainCtrl.gotoUrl('/customer/cart')">
-                <span class="cart-amount" ng-if="mainCtrl.cart.qty>0">{{mainCtrl.cart.qty}}</span>
+            <md-button class="btn-cart" flex="5" aria-label="Cart" ng-click="custCtrl.gotoUrl('/customer/cart')">
+                <span class="cart-amount" ng-if="custCtrl.cart.qty>0">{{custCtrl.cart.qty}}</span>
                 <md-icon class="cart-icon" md-svg-icon="cart"></md-icon>
             </md-button>
             <md-button flex class="md-raised md-accent"
-                       ng-click="mainCtrl.cart.add({stallId:'@_product.StallId', stallName:'@_product.Stall.Name',
+                       ng-click="custCtrl.cart.add({stallId:'@_product.StallId', stallName:'@_product.Stall.Name',
                        id:'@_product.Id',price:@_product.TotalPrice,
                        name:'@_product.BaseName',variant:'@_product.VariantDescription'})">
                 加入购物车
             </md-button>
-            <md-button flex class="md-raised md-primary" ng-click="mainCtrl.gotoUrl('@string.Format("/stall/detail/{0}", _product.StallId)')">商铺</md-button>
+            <md-button flex class="md-raised md-primary" ng-click="custCtrl.gotoUrl('@string.Format("/stall/index/{0}", _product.StallId)')">商铺</md-button>
         </div>
     }
     <!-- 3rd party libraries -->
@@ -80,7 +88,7 @@
     {
         <script type="text/javascript" src="/Static/lib/less/dist/less.min.js"></script>
         <script type="text/javascript" src="/Content/middle-js/app.js"></script>
-        <script type="text/javascript" src="/Content/middle-js/controller/main.controller.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/controller/customer.controller.js"></script>
     }
     else
     {

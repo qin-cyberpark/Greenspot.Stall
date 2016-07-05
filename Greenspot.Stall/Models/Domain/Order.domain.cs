@@ -33,7 +33,7 @@ namespace Greenspot.Stall.Models
         {
             //create vend api object
             var vendSale = new VendRegisterSaleRequest();
-            vendSale.RegisterId = Stall.Registers.ElementAt(0).Id;
+            vendSale.RegisterId = Stall.RegisterId;
             vendSale.SaleDate = CreateTime.ToString("yyyy-MM-dd HH:mm:ss");
             vendSale.Status = OrderStatus.CLOSED;
             vendSale.TotalPrice = (double)TotalPriceExcludeTax;

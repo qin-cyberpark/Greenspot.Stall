@@ -14,7 +14,6 @@ namespace Greenspot.Stall.Models
         {
             Contacts = new HashSet<StallContact>();
             Products = new HashSet<Product>();
-            Registers = new HashSet<Register>();
             Webhooks = new HashSet<VendWebhook>();
         }
 
@@ -27,9 +26,12 @@ namespace Greenspot.Stall.Models
 
         [StringLength(50)]
         public string Prefix { get; set; }
+        
+        [StringLength(50)]
+        public string RetailerId { get; set; }
 
         [StringLength(50)]
-        public string VendId { get; set; }
+        public string OutletId { get; set; }
 
         [StringLength(100)]
         public string Email { get; set; }
@@ -62,13 +64,22 @@ namespace Greenspot.Stall.Models
         public string PhysicalSuburb { get; set; }
 
         [StringLength(50)]
-        public string RetailerId { get; set; }
+        public string RegisterName { get; set; }
+
+        [StringLength(50)]
+        public string RegisterId { get; set; }
 
         [StringLength(100)]
         public string TimeZone { get; set; }
 
         [Column(TypeName = "bit")]
         public bool? Approved { get; set; }
+
+        [Column(TypeName = "text")]
+        public string DeliveryFeeJsonString { get; set; }
+
+        [Column(TypeName = "text")]
+        public string DeliveryScheduleJsonString { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
@@ -77,7 +88,6 @@ namespace Greenspot.Stall.Models
         public virtual ICollection<VendWebhook> Webhooks { get; set; }
 
         public virtual ICollection<StallContact> Contacts { get; set; }
-        public virtual ICollection<Register> Registers { get; set; }
 
         [ForeignKey("UserId")]
         public virtual User User { get; set; }

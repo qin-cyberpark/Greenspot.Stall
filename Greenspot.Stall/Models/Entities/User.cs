@@ -15,6 +15,7 @@ namespace Greenspot.Stall.Models
         public User()
         {
             Stalls = new HashSet<Stall>();
+            DeliveryAddresses = new HashSet<DeliveryAddress>();
         }
 
         [Key]
@@ -28,5 +29,7 @@ namespace Greenspot.Stall.Models
         public string LastName { get; set; }
 
         public virtual ICollection<Stall> Stalls { get; set; }
+
+        public virtual ICollection<DeliveryAddress> DeliveryAddresses { get; set; }
     }
 }

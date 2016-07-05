@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" ng-app="greenspotStall" ng-cloak>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Stall@Greenspot">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <base href="/">
+    <title>购物车</title>
+
+    <link rel="shortcut icon" href="~/static/img/favicon.png">
+
+    <!-- 3rd party stylesheet -->
+    <link rel="stylesheet" href="~/static/lib/angular-material/angular-material.min.css">
+    <!-- platform stylesheet -->
+
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <link rel="stylesheet/less" href="~/Content/less/global.less">
+        <link rel="stylesheet/less" href="~/Content/less/customer.less">
+    }
+    else
+    {
+        <link rel="stylesheet" href="~/static/css/stall.min.css">
+    }
+</head>
+<body ng-controller="MainController as mainCtrl" ng-init="mainCtrl.init()">
+    <md-content id="cart-content">
+        <div ng-if="mainCtrl.cart.qty<=0">
+            <h3>Empty</h3>
+        </div>
+        <div class="cart-stall" ng-repeat="stall in mainCtrl.cart.stls track by stall.i">
+            <div class="stall-name">{{stall.n}}</div>
+            <div class="cart-item" ng-repeat="item in stall.itms track by item.i" layout="row" layout-align="none center">
+                <div class="cart-item-desc" flex>
+                    <span class="desc-name">{{item.n}}</span>
+                    <span class="desc-variant">{{item.v}}</span>
+                    <span class="desc-unit-price">{{item.p|currency:$}}</span>
+                </div>
+                <div layout="row" layout-align="end center" flex>
+                    <md-button ng-click="mainCtrl.cart.minusOne(item.i)" ng-disabled="item.q<=1" aria-label="minus">
+                        <md-icon md-svg-icon="arrow-left"></md-icon>
+                    </md-button>
+                    <span class="qty-lbl">{{item.q}}</span>
+                    <md-button ng-click="mainCtrl.cart.plusOne(item.i)" aria-label="plus">
+                        <md-icon md-svg-icon="arrow-right"></md-icon>
+                    </md-button>
+                    <md-button ng-click="mainCtrl.cart.remove(item.i)" aria-label="删除">
+                        <md-icon md-svg-icon="delete"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+        </div>
+    </md-content>
+    <div id="bottom-toolbar" ng-if="mainCtrl.cart.qty>0" layout="row" layout-align="none center">
+        <span class="cart-amount" flex="40">{{mainCtrl.cart.amt|currency:$}}</span>
+        <!--a href="#" class="btn btn-danger" ng-click="storeCtrl.cart.empty()">Empty</a-->
+        <md-button ng-click="mainCtrl.cart.empty()" class="md-raised md-accent" flex="30">清空</md-button>
+        <md-button ng-click="mainCtrl.gotoUrl('/customer/checkout');" class="md-raised md-primary" flex="30">结账</md-button>
+    </div>
+    <!-- 3rd party libraries -->
+    <script type="text/javascript" src="~/static/lib/jQuery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="~/static/lib/angular/angular.min.js"></script>
+    <script type="text/javascript" src="~/static/lib/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="~/static/lib/angular-aria/angular-aria.min.js"></script>
+    <script type="text/javascript" src="~/static/lib/angular-animate/angular-animate.min.js"></script>
+    <script type="text/javascript" src="~/static/lib/angular-messages/angular-messages.min.js"></script>
+    <script type="text/javascript" src="~/static/lib/angular-material/angular-material.min.js"></script>
+    <script type="text/javascript" src="~/static/lib/js-cookie/src/js.cookie.js"></script>
+
+    <!-- owner scripts -->
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <script type="text/javascript" src="~/static/lib/less/dist/less.min.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/app.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/controller/main.controller.js"></script>
+    }
+    else
+    {
+        <script type="text/javascript" src="~/static/js/stall.min.js"></script>
+    }
+</body>
+</html>

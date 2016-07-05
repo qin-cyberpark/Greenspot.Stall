@@ -6,6 +6,8 @@ using System.Web;
 using System.Data.Entity.Migrations;
 using Greenspot.SDK.Vend;
 using System.ComponentModel.DataAnnotations.Schema;
+using Greenspot.Configuration;
+using Newtonsoft.Json;
 
 namespace Greenspot.Stall.Models
 {
@@ -28,6 +30,13 @@ namespace Greenspot.Stall.Models
                 return productResult;
             }
 
+            ////create webhook
+            //var webhookResult = await CreateWebhook();
+            //if (!webhookResult.Succeeded)
+            //{
+            //    return webhookResult;
+            //}
+
             result.Succeeded = Save();
             return result;
         }
@@ -45,7 +54,8 @@ namespace Greenspot.Stall.Models
 
             //set stall info
             var outlet = outletResult.Outlets[0];
-            VendId = outlet.Id;
+            RetailerId = outlet.RetailerId;
+            OutletId = outlet.Id;
             Email = outlet.Email;
             PhysicalAddress1 = outlet.PhysicalAddress1;
             PhysicalAddress2 = outlet.PhysicalAddress2;
@@ -54,7 +64,6 @@ namespace Greenspot.Stall.Models
             PhysicalPostcode = outlet.PhysicalPostcode;
             PhysicalState = outlet.PhysicalState;
             PhysicalSuburb = outlet.PhysicalSuburb;
-            RetailerId = outlet.RetailerId;
             TimeZone = outlet.TimeZone;
 
             //set contact info
@@ -123,14 +132,9 @@ namespace Greenspot.Stall.Models
             }
 
             //set registers
-            Registers.Clear();
             var reg = registerResult.Registers[0];
-            Registers.Add(new Register()
-            {
-                Id = reg.Id,
-                Name = reg.Name,
-                StallId = Id
-            });
+            RegisterName = reg.Name;
+            RegisterId = reg.Id;
 
             result.Succeeded = true;
             return result;
@@ -150,55 +154,106 @@ namespace Greenspot.Stall.Models
 
             //set products
             Products.Clear();
+
             //var products = productResult?.Products.OrderBy(x => x.VariantParentId).ToList();
-            var products = productResult?.Products;
-            foreach (var p in products)
+            var vProducts = productResult?.Products;
+            foreach (var vP in vProducts)
             {
-                Products.Add(new Product()
-                {
-                    Id = p.Id,
-                    StallId = Id,
-                    SourceId = p.SourceId,
-                    SourceVariantId = p.VariantSourceId,
-                    Handle = p.Handle,
-                    Type = p.Type,
-                    HasVariants = p.HasVariants,
-                    VariantParentId = string.IsNullOrEmpty(p.VariantParentId) ? null : p.VariantParentId,
-                    VariantOptionOneName = p.VariantOptionOneName,
-                    VariantOptionOneValue = p.VariantOptionOneValue,
-                    VariantOptionTwoName = p.VariantOptionTwoName,
-                    VariantOptionTwoValue = p.VariantOptionTwoValue,
-                    VariantOptionThreeName = p.VariantOptionThreeName,
-                    VariantOptionThreeValue = p.VariantOptionThreeValue,
-                    Active = p.Active,
-                    Name = p.Name,
-                    BaseName = p.BaseName,
-                    Description = p.Description,
-                    Image = p.Image,
-                    ImageLarge = p.ImageLarge,
-                    Sku = p.Sku,
-                    Tags = p.Tags,
-                    BrandId = p.BrandId,
-                    BrandName = p.BrandName,
-                    SupplierName = p.SupplierName,
-                    SupplierCode = p.SupplierCode,
-                    SupplierPrice = p.SupplyPrice,
-                    AccountCodePurchase = p.AccountCodePurchase,
-                    AccountCodeSales = p.AccountCodeSales,
-                    TrackInventory = p.TrackInventory,
-                    Price = p.Price,
-                    Tax = p.Tax,
-                    TaxId = p.TaxId,
-                    TaxRate = p.TaxRate,
-                    TaxName = p.TaxName,
-                    DisplayRetailPriceTaxInclusive = p.DisplayRetailPriceTaxInclusive,
-                    UpdatedAt = p.UpdatedAt,
-                    DeletedAt = p.DeletedAt
-                });
+                Products.Add(Product.ConvertFrom(vP, Id));
             }
 
             //set data
             result.Succeeded = true;
+            return result;
+        }
+
+        private async Task<OperationResult<bool>> CreateWebhook()
+        {
+            var result = new OperationResult(false);
+
+            //create product update webhook
+            var pdtUpdate = new SDK.Vend.VendWebhookRequest()
+            {
+                Type = SDK.Vend.VendWebhook.VendWebhookTypes.ProductUpdate,
+                Url = GreenspotConfiguration.AppSettings["webhook.product.update"].Value
+            };
+            var pdtResp = await SDK.Vend.VendWebhook.CreateVendWebhookAsync(pdtUpdate, Prefix, await StallApplication.GetAccessTokenAsync(Prefix));
+            if (pdtResp != null)
+            {
+                //save
+                Webhooks.Add(new VendWebhook()
+                {
+                    Id = pdtResp.Id,
+                    StallId = Id,
+                    Prefix = Prefix,
+                    RetailerId = pdtResp.RetailerId,
+                    Type = pdtResp.Type,
+                    Url = pdtResp.Url,
+                    Active = pdtResp.Active
+                });
+            }
+            else
+            {
+                result.Message = "无法创建商品更新WEBHOOK";
+                return result;
+            }
+
+            //create inventory update webhook
+            var stockUpdate = new SDK.Vend.VendWebhookRequest()
+            {
+                Type = SDK.Vend.VendWebhook.VendWebhookTypes.InventoryUpdate,
+                Url = GreenspotConfiguration.AppSettings["webhook.inventory.update"].Value
+            };
+            var stockResp = await SDK.Vend.VendWebhook.CreateVendWebhookAsync(pdtUpdate, Prefix, await StallApplication.GetAccessTokenAsync(Prefix));
+            if (stockResp != null)
+            {
+                //save
+                Webhooks.Add(new VendWebhook()
+                {
+                    Id = pdtResp.Id,
+                    StallId = Id,
+                    Prefix = Prefix,
+                    RetailerId = pdtResp.RetailerId,
+                    Type = pdtResp.Type,
+                    Url = pdtResp.Url,
+                    Active = pdtResp.Active
+                });
+            }
+            else
+            {
+                result.Message = "无法创建库存更新WEBHOOK";
+                return result;
+            }
+
+            //set data
+            result.Succeeded = true;
+            return result;
+        }
+
+        public async Task<OperationResult<bool>> UpdateProductById(string id, StallEntities db)
+        {
+            var result = new OperationResult(false);
+
+            //load product
+            var productResult = await VendProduct.GetProductByIdAsync(id, Prefix, await StallApplication.GetAccessTokenAsync(Prefix));
+            if (productResult?.Products == null)
+            {
+                result.Message = string.Format("无法获取商品[{0}]信息", id);
+                return result;
+            }
+
+            //set products
+            var vProducts = productResult?.Products;
+            foreach (var vP in vProducts)
+            {
+                if (vP.Id.Equals(id))
+                {
+                    var p = Product.ConvertFrom(vP, Id);
+                    return (p.Save(db));
+                }
+            }
+
+            result.Message = string.Format("无法获取商品[{0}]信息", id);
             return result;
         }
 
@@ -208,8 +263,8 @@ namespace Greenspot.Stall.Models
             {
                 db.Set<Stall>().AddOrUpdate(this);
                 db.Set<StallContact>().AddOrUpdate(Contacts.ToArray());
-                db.Set<Register>().AddOrUpdate(Registers.ToArray());
                 db.Set<Product>().AddOrUpdate(Products.ToArray());
+                db.Set<VendWebhook>().AddOrUpdate(Webhooks.ToArray());
                 db.SaveChanges();
                 return true;
             }
@@ -233,6 +288,61 @@ namespace Greenspot.Stall.Models
             }
         }
 
+        [NotMapped]
+        private DeliveryFee _deliveryFee = null;
+        public DeliveryFee DeliveryFee
+        {
+            get
+            {
+                if (_deliveryFee == null)
+                {
+                    if (string.IsNullOrEmpty(DeliveryFeeJsonString))
+                    {
+                        return null;
+                    }
+                    try
+                    {
+                        _deliveryFee = JsonConvert.DeserializeObject<DeliveryFee>(DeliveryFeeJsonString);
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                }
+
+                return _deliveryFee;
+
+            }
+        }
+
+        [NotMapped]
+        private DeliverySchedule _deliverySchedule = null;
+        public DeliverySchedule DeliverySchedule
+        {
+            get
+            {
+                if (_deliverySchedule == null)
+                {
+                    if (string.IsNullOrEmpty(DeliveryScheduleJsonString))
+                    {
+                        return null;
+                    }
+
+                    try
+                    {
+                        _deliverySchedule = JsonConvert.DeserializeObject<DeliverySchedule>(DeliveryScheduleJsonString);
+
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                }
+
+                return _deliverySchedule;
+            }
+        }
+
         private IEnumerable<Product> GetProducts(Func<Product, bool> condition)
         {
             if (Products == null)
@@ -241,6 +351,7 @@ namespace Greenspot.Stall.Models
             }
             return Products.Where(condition).Where(x => !x.Handle.Equals("vend-discount") && (x.Active ?? false));
         }
+
         #endregion
     }
 }

@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
     Page.Title = "小铺";
     var _products = (IList<Greenspot.Stall.Models.Product>)ViewBag.Products;
 }
@@ -7,7 +7,7 @@
     <md-list>
         @foreach (var p in _products)
         {
-            <md-list-item ng-click="mainCtrl.gotoUrl('@string.Format("/product/detail/{0}",p.Id)')">
+            <md-list-item ng-click="custCtrl.gotoUrl('@string.Format("/product/detail/{0}",p.Id)')">
                 <img ng-src="@p.Image"/>
                 <div class="md-list-item-text">
                     <div class="item-name">@p.BaseName</div>

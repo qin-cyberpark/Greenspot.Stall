@@ -2,10 +2,10 @@
     Layout = "~/Views/Shared/_OwnerLayout.cshtml";
     Page.Title = "初始化小铺";
 }
-<md-content layout="column" layout-padding layout-align="center center" ng-controller="OwnerRegisterController as regCtrl">
+<md-content layout="column" layout-padding layout-align="center center">
     初始化商铺中
     <img src="~/Static/img/loading.gif" />
-    <form id="formInitStall" action="/owner/InitStall" method="post">
+    <form id="formInitStall" action="~/owner/InitStall" method="post">
         <input type="hidden" name="prefix" value="@ViewBag.Prefix" />
     </form>
 </md-content>

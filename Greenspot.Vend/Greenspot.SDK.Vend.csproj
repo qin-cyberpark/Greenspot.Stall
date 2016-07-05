@@ -62,7 +62,8 @@
     <Compile Include="Models\Domain\VendPaymentType.domain.cs" />
     <Compile Include="Models\Domain\VendProduct.domian.cs" />
     <Compile Include="Models\Domain\VendRegister.domain.cs" />
-    <Compile Include="Models\Domain\VendRegisterSale.cs" />
+    <Compile Include="Models\Domain\VendRegisterSale.domain.cs" />
+    <Compile Include="Models\Domain\VendWebhook.domain.cs" />
     <Compile Include="Models\Entities\VendPaymentType.cs" />
     <Compile Include="Models\Entities\VendProduct.cs" />
     <Compile Include="Models\Entities\VendRegister.cs" />

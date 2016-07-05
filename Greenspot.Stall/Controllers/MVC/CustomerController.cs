@@ -62,6 +62,8 @@ namespace Greenspot.Stall.Controllers.MVC
         [Authorize]
         public ActionResult Checkout()
         {
+            var addresses = DeliveryAddress.FindByUserId(CurrentUser.Id, _db);
+            ViewBag.Addresses = addresses;
             return View();
         }
 
@@ -73,43 +75,40 @@ namespace Greenspot.Stall.Controllers.MVC
 
             //create order object
             var cart = JsonConvert.DeserializeObject<CartVM>(orderRawData);
-            foreach (var s in cart.Stalls)
+            var stall = Models.Stall.FindById(cart.CurrentStall.Id, _db);
+
+            //separate stalls
+            var order = new Order();
+            order.Id = Guid.NewGuid().ToString();
+            order.Stall = stall;
+            order.UserId = CurrentUser.Id;
+            foreach (var i in cart.CurrentStall.Items)
             {
-                var stall = Models.Stall.FindById(s.Id, _db);
-
-                //separate stalls
-                var order = new Order();
-                order.Id = Guid.NewGuid().ToString();
-                order.Stall = stall;
-                order.UserId = CurrentUser.Id;
-                foreach (var i in s.Items)
+                var product = Product.FindById(i.Id, _db);
+                order.Items.Add(new OrderItem()
                 {
-                    var product = Product.FindById(i.Id, _db);
-                    order.Items.Add(new OrderItem()
-                    {
-                        Product = product,
-                        Quantity = i.Quantity
-                    });
-                }
+                    Product = product,
+                    Quantity = i.Quantity
+                });
+            }
 
-                //
-                await order.Save(_db);
+            //
+            await order.Save(_db);
 
-                //send message
-                try
+            //send message
+            try
+            {
+                var owner = UserManager.FindById(order.Stall.UserId);
+                var openId = owner?.SnsInfos[WeChatClaimTypes.OpenId].InfoValue;
+                if (!string.IsNullOrEmpty(openId))
                 {
-                    var owner = UserManager.FindById(order.Stall.UserId);
-                    var openId = owner?.SnsInfos[WeChatClaimTypes.OpenId].InfoValue;
-                    if (!string.IsNullOrEmpty(openId))
-                    {
-                        var msg = string.Format("店铺[{0}]有一个新订单，金额[{1:0.00}]", order.Stall.Name, order.Total);
-                        WeChatHelper.SendMessage(openId, msg);
-                    }
+                    var msg = string.Format("店铺[{0}]有一个新订单，金额[{1:C}]", order.Stall.Name, order.Total);
+                    WeChatHelper.SendMessage(openId, msg);
                 }
-                catch
-                {
+            }
+            catch
+            {
 
-                }
             }
 
             //clear cookie

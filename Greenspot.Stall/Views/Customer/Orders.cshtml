@@ -50,12 +50,7 @@
             }
         }
     </md-content>
-    <div id="bottom-toolbar" ng-if="mainCtrl.cart.qty>0" layout="row" layout-align="none center">
-        <span class="cart-amount" flex="40">{{mainCtrl.cart.amt|currency:$}}</span>
-        <!--a href="#" class="btn btn-danger" ng-click="storeCtrl.cart.empty()">Empty</a-->
-        <md-button ng-click="mainCtrl.cart.empty()" class="md-raised md-accent" flex="30">清空</md-button>
-        <md-button ng-click="mainCtrl.gotoUrl('/customer/checkout');" class="md-raised md-primary" flex="30">结账</md-button>
-    </div>
+    
     <!-- 3rd party libraries -->
     <script type="text/javascript" src="/Static/lib/jQuery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="/Static/lib/angular/angular.min.js"></script>
@@ -71,7 +66,7 @@
     {
         <script type="text/javascript" src="/Static/lib/less/dist/less.min.js"></script>
         <script type="text/javascript" src="/Content/middle-js/app.js"></script>
-        <script type="text/javascript" src="/Content/middle-js/controller/main.controller.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/controller/customer.controller.js"></script>
     }
     else
     {

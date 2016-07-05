@@ -1,0 +1,34 @@
+﻿@{
+ 
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test - Distance</title>
+    <script src="/Static/lib/jQuery/dist/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap" async defer></script>
+
+</head>
+<body>
+    <p>
+        From: <input type="text" id="txtFrom" />
+    </p>
+    <p>
+        To: <input type="text" id="txtTo" />
+    </p>
+    <script>
+        function initMap() {
+            var input = document.getElementById('txtFrom');
+            var autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.addListener('place_changed', fillInAddress);
+
+            function fillInAddress() {
+                // Get the place details from the autocomplete object.
+                var place = autocomplete.getPlace();
+                input.value = place.formatted_address;
+                console.log(place);
+            }
+        }
+    </script>
+</body>
+</html>

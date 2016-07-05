@@ -70,7 +70,7 @@ namespace Greenspot.SDK.Vend
 
             if (VendApplication == null)
             {
-                throw new NullApplicationException();
+                throw new NullApplicationException();   
             }
 
             var data = new KeyValuePair<string, string>[] {

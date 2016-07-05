@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    Page.Title = "小铺";
+    var _products = (IList<Greenspot.Stall.Models.Product>)ViewBag.Products;
+}
+<div class="SearchResultProductList">
+    <md-list>
+        @foreach (var p in _products)
+        {
+            <md-list-item ng-click="mainCtrl.gotoUrl('@string.Format("/product/detail/{0}",p.Id)')">
+                <img ng-src="@p.Image"/>
+                <div class="md-list-item-text">
+                    <div class="item-name">@p.BaseName</div>
+                    <div class="item-price md-primary">@string.Format("{0:0.00}",p.TotalPrice)</div>
+                </div>
+            </md-list-item>
+        }
+    </md-list>
+</div>

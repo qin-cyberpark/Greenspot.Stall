@@ -106,6 +106,8 @@ namespace Greenspot.Stall.Models
         [Column(TypeName = "bit")]
         public bool? TrackInventory { get; set; }
 
+        public float? Stock { get; set; }
+
         public decimal? Price { get; set; }
 
         public decimal? Tax { get; set; }

@@ -5,6 +5,9 @@ using System.Data.Entity;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading.Tasks;
+using Greenspot.SDK.Vend;
+using System.Data.Entity.Migrations;
 
 namespace Greenspot.Stall.Models
 {
@@ -16,7 +19,7 @@ namespace Greenspot.Stall.Models
         {
             get
             {
-                return (Price??0.0M) + (Tax??0.0M);
+                return (Price ?? 0.0M) + (Tax ?? 0.0M);
             }
         }
 
@@ -52,10 +55,23 @@ namespace Greenspot.Stall.Models
         }
         #endregion
 
+        public OperationResult<bool> Save(StallEntities db)
+        {
+            db.Set<Product>().AddOrUpdate(this);
+            return new OperationResult<bool>(db.SaveChanges() > 0);
+        }
+
+        public OperationResult<bool> Delete(StallEntities db)
+        {
+            db.Products.Remove(this);
+            return new OperationResult<bool>(db.SaveChanges() > 0);
+        }
+
+        #region Static
         public static IList<Product> GetHomepageProducts(StallEntities db)
         {
             Func<Product, bool> condition = delegate (Product p) { return string.IsNullOrEmpty(p.VariantParentId); };
-            return GetProducts(condition, db).Take(10).ToList();
+            return GetProducts(condition, db).Take(50).ToList();
         }
 
         public static IList<Product> Search(string keyworkd, StallEntities db, int takeAmount = 50)
@@ -69,7 +85,23 @@ namespace Greenspot.Stall.Models
 
         public static Product FindById(string id, StallEntities db)
         {
-            return db.Products.Include(x=>x.Stall).FirstOrDefault(x => x.Id.Equals(id));
+            return db.Products.Include(x => x.Stall).FirstOrDefault(x => x.Id.Equals(id));
+        }
+
+        public static bool SetInventoryById(string id, float count, StallEntities db)
+        {
+            var p = FindById(id, db);
+            if (p == null) { return false; }
+            p.Stock = count;
+            return db.SaveChanges() > 0;
+        }
+
+        public static bool DeleteById(string id, StallEntities db)
+        {
+            var p = FindById(id, db);
+            if (p == null) { return false; }
+            db.Products.Remove(p);
+            return db.SaveChanges() > 0;
         }
 
         private static IEnumerable<Product> GetProducts(Func<Product, bool> condition, StallEntities db)
@@ -77,5 +109,51 @@ namespace Greenspot.Stall.Models
             return db.Products.Where(condition).Where(x => !x.Handle.Equals("vend-discount"));
         }
 
+        public static Product ConvertFrom(VendProduct p, string stallId)
+        {
+            return new Product()
+            {
+                Id = p.Id,
+                StallId = stallId,
+                SourceId = p.SourceId,
+                SourceVariantId = p.VariantSourceId,
+                Handle = p.Handle,
+                Type = p.Type,
+                HasVariants = p.HasVariants,
+                VariantParentId = string.IsNullOrEmpty(p.VariantParentId) ? null : p.VariantParentId,
+                VariantOptionOneName = p.VariantOptionOneName,
+                VariantOptionOneValue = p.VariantOptionOneValue,
+                VariantOptionTwoName = p.VariantOptionTwoName,
+                VariantOptionTwoValue = p.VariantOptionTwoValue,
+                VariantOptionThreeName = p.VariantOptionThreeName,
+                VariantOptionThreeValue = p.VariantOptionThreeValue,
+                Active = p.Active,
+                Name = p.Name,
+                BaseName = p.BaseName,
+                Description = p.Description,
+                Image = p.Image,
+                ImageLarge = p.ImageLarge,
+                Sku = p.Sku,
+                Tags = p.Tags,
+                BrandId = p.BrandId,
+                BrandName = p.BrandName,
+                SupplierName = p.SupplierName,
+                SupplierCode = p.SupplierCode,
+                SupplierPrice = p.SupplyPrice,
+                AccountCodePurchase = p.AccountCodePurchase,
+                AccountCodeSales = p.AccountCodeSales,
+                TrackInventory = p.TrackInventory,
+                Stock = (p.TrackInventory && p.Inventory.Count > 0) ? p.Inventory[0].Count : 0,
+                Price = p.Price,
+                Tax = p.Tax,
+                TaxId = p.TaxId,
+                TaxRate = p.TaxRate,
+                TaxName = p.TaxName,
+                DisplayRetailPriceTaxInclusive = p.DisplayRetailPriceTaxInclusive,
+                UpdatedAt = p.UpdatedAt,
+                DeletedAt = p.DeletedAt
+            };
+        }
+        #endregion
     }
 }

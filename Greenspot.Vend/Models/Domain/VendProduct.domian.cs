@@ -13,5 +13,18 @@ namespace Greenspot.SDK.Vend
             var uri = HttpUtility.GetRequestUri(prefix, "products");
             return await HttpUtility.GetAsync<VendProductApiResult>(uri, accessToken);
         }
+
+        public static async Task<VendProductApiResult> GetProductByIdAsync(string productId, string prefix, string accessToken)
+        {
+            if (string.IsNullOrEmpty(productId))
+            {
+                return new VendProductApiResult()
+                {
+                    Products = null
+                };
+            }
+            var uri = HttpUtility.GetRequestUri(prefix, "products/" + productId);
+            return await HttpUtility.GetAsync<VendProductApiResult>(uri, accessToken);
+        }
     }
 }

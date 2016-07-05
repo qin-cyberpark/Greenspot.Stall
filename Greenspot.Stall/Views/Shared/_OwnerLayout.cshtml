@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    var _stall = (Greenspot.Stall.Models.Stall)ViewBag.Stall;
+}
+<!DOCTYPE html>
 
 <html lang="en" ng-app="greenspotStall" ng-cloak>
 <head>
@@ -8,56 +11,56 @@
     <base href="/">
     <title>@Page.Title</title>
 
-    <link rel="shortcut icon" href="content/img/favicon.png">
+    <link rel="shortcut icon" href="~/static/img/favicon.png">
     <!-- 3rd party stylesheet -->
-    <link rel="stylesheet" href="/static/lib/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="~/static/lib/angular-material/angular-material.min.css">
     <!-- owner stylesheet -->
 
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
-        <link rel="stylesheet/less" href="/Content/less/global.less">
-        <link rel="stylesheet/less" href="/Content/less/owner.less">
+        <link rel="stylesheet/less" href="~/Content/less/global.less">
+        <link rel="stylesheet/less" href="~/Content/less/owner.less">
     }
     else
     {
-        <link rel="stylesheet" href="/Static/css/stall.min.css">
+        <link rel="stylesheet" href="~/static/css/stall.min.css">
     }
 </head>
-<body>
+<body ng-controller="OwnerController as ownerCtrl">
     <md-toolbar id="stall-toolbar" class="md-primary" layout="row" layout-align="center center">
         <div class="stall-logo">
-            <img src="/Static/img/stall-logo.png" />
+            <img src="~/static/img/stall-logo.png" />
         </div>
         <div class="stall-text">
             <div class="stall-text-line-1">
-                小铺
+                @(_stall!=null?_stall.Name:"小铺")
             </div>
             <div class="stall-text-line-2">
-                绿点家园
+                @(_stall != null ? "" : "绿点家园")
             </div>
         </div>
     </md-toolbar>
     @RenderBody()
     <!-- 3rd party libraries -->
-    <script type="text/javascript" src="/Static/lib/jQuery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/angular/angular.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/angular-route/angular-route.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/angular-aria/angular-aria.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/angular-animate/angular-animate.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/angular-messages/angular-messages.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/angular-material/angular-material.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/js-cookie/src/js.cookie.js"></script>
+    <script type="text/javascript" src="~/static/lib/jQuery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="~/static/lib/angular/angular.min.js"></script>
+    <script type="text/javascript" src="~/static/lib/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="~/static/lib/angular-aria/angular-aria.min.js"></script>
+    <script type="text/javascript" src="~/static/lib/angular-animate/angular-animate.min.js"></script>
+    <script type="text/javascript" src="~/static/lib/angular-messages/angular-messages.min.js"></script>
+    <script type="text/javascript" src="~/static/lib/angular-material/angular-material.min.js"></script>
+    <script type="text/javascript" src="~/static/lib/js-cookie/src/js.cookie.js"></script>
 
     <!-- owner scripts -->
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
-        <script type="text/javascript" src="/Static/lib/less/dist/less.min.js"></script>
-        <script type="text/javascript" src="/Content/middle-js/app.js"></script>
-        <script type="text/javascript" src="/Content/middle-js/controller/owner-register.controller.js"></script>
+        <script type="text/javascript" src="~/static/lib/less/dist/less.min.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/app.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/controller/owner.controller.js"></script>
     }
     else
     {
-        <script type="text/javascript" src="/Static/js/stall.min.js"></script>
+        <script type="text/javascript" src="~/static/js/stall.min.js"></script>
     }
 
     @RenderSection("ScriptSection", false)

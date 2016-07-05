@@ -1,0 +1,25 @@
+﻿{
+  "Type": "Flex",
+  "Flex": [
+    {
+      "From": "5/7/2016 13:00",
+      "To": "5/7/2016 17:00",
+      "Areas": [ "NZ-Auckland-Central Auckland", "NZ-Auckland-East Auckland" ]
+    },
+    {
+      "From": "6/7/2016 13:00",
+      "To": "6/7/2016 17:00",
+      "Areas": [ "NZ-Auckland-Central Auckland", "NZ-Auckland-West Auckland" ]
+    },
+    {
+      "From": "7/9/2016 13:00",
+      "To": "7/7/2016 17:00",
+      "Areas": [ "NZ-Auckland-Central Auckland", "NZ-Auckland-North Shore" ]
+    },
+    {
+      "From": "7/7/2016 10:00",
+      "To": "8/7/2016 11:00",
+      "Areas": [ "NZ-Auckland-Central Auckland", "NZ-Auckland-South Auckland" ]
+    }
+  ]
+}
