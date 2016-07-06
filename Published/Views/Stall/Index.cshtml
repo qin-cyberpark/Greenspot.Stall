@@ -1,6 +1,6 @@
-﻿@using Newtonsoft.Json;
-@{
-    var _orders = (IList<Greenspot.Stall.Models.Order>)ViewBag.Orders;
+﻿@{
+    var _stall = (Greenspot.Stall.Models.Stall)ViewBag.Stall;
+    Page.Title = _stall?.Name ?? "商铺不存在";
 }
 <!DOCTYPE html>
 
@@ -10,7 +10,7 @@
     <meta name="description" content="Stall@Greenspot">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <base href="/">
-    <title>订单</title>
+    <title>@Page.Title</title>
 
     <link rel="shortcut icon" href="/static/img/favicon.png">
 
@@ -21,7 +21,7 @@
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
         <link rel="stylesheet/less" href="/Content/less/global.less">
-        <link rel="stylesheet/less" href="/Content/less/customer.less">
+        <link rel="stylesheet/less" href="/Content/less/product.less">
     }
     else
     {
@@ -29,28 +29,28 @@
     }
 
 </head>
-<body>
-    <md-content id="cart-content">
-        @if (_orders == null || _orders.Count == 0)
+<body ng-controller="MainController as mainCtrl">
+    <md-content>
+        @if (_stall != null)
         {
-            <div>
-                <h3>Empty</h3>
+            <div class="RecommendProductList">
+                <md-grid-list md-cols-xs="2" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="4"
+                              md-row-height-gt-md="1:1" md-row-height="2:2"
+                              md-gutter="5px">
+
+                    @foreach (var p in _stall.BaseProducts)
+                    {
+                        <md-grid-tile ng-click="mainCtrl.gotoUrl('@string.Format("/product/detail/{0}",p.Id)')">
+                            <img src="@p.ImageLarge" style="width:100%;height:100%" />
+                            <md-grid-tile-footer>
+                                @p.BaseName
+                            </md-grid-tile-footer>
+                        </md-grid-tile>
+                    }
+                </md-grid-list>
             </div>
         }
-        else
-        {
-            foreach(var o in _orders)
-            {
-                var vendO = JsonConvert.DeserializeObject<Greenspot.SDK.Vend.VendRegisterSaleApiResult>(o.VendResponse);
-                <div layout="row">
-                    <span flex>@vendO.RegisterSale.ShortCode.ToUpper()</span>
-                    <span flex>@o.Stall.Name</span>
-                    <span flex>@vendO.RegisterSale.Totals.TotalPayment.ToString("$0.00")</span>
-                </div>
-            }
-        }
     </md-content>
-    
     <!-- 3rd party libraries -->
     <script type="text/javascript" src="/Static/lib/jQuery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="/Static/lib/angular/angular.min.js"></script>
@@ -66,7 +66,7 @@
     {
         <script type="text/javascript" src="/Static/lib/less/dist/less.min.js"></script>
         <script type="text/javascript" src="/Content/middle-js/app.js"></script>
-        <script type="text/javascript" src="/Content/middle-js/controller/customer.controller.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/controller/main.controller.js"></script>
     }
     else
     {

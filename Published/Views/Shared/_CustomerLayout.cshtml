@@ -1,7 +1,4 @@
-﻿@{ 
-    var _stall = (Greenspot.Stall.Models.Stall)ViewBag.Stall;
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="en" ng-app="greenspotStall" ng-cloak>
 <head>
@@ -9,38 +6,44 @@
     <meta name="description" content="Stall@Greenspot">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <base href="/">
-    <title>@Page.Title</title>
+    <title>小铺</title>
 
     <link rel="shortcut icon" href="~/static/img/favicon.png">
+
     <!-- 3rd party stylesheet -->
     <link rel="stylesheet" href="~/static/lib/angular-material/angular-material.min.css">
-    <!-- owner stylesheet -->
+    <!-- platform stylesheet -->
 
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
         <link rel="stylesheet/less" href="~/Content/less/global.less">
-        <link rel="stylesheet/less" href="~/Content/less/owner.less">
+        <link rel="stylesheet/less" href="~/Content/less/home.less">
     }
     else
     {
         <link rel="stylesheet" href="~/static/css/stall.min.css">
     }
+
 </head>
-<body ng-controller="OwnerController as ownerCtrl">
-    <md-toolbar id="stall-toolbar" class="md-primary" layout="row" layout-align="center center">
-        <div class="stall-logo">
-            <img src="~/static/img/stall-logo.png" />
-        </div>
-        <div class="stall-text">
-            <div class="stall-text-line-1">
-                @(_stall!=null?_stall.Name:"小铺")
-            </div>
-            <div class="stall-text-line-2">
-                @(_stall != null ? "" : "绿点家园")
-            </div>
-        </div>
-    </md-toolbar>
-    @RenderBody()
+<body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init()">
+    <form action="home/search" method="get">
+        <md-toolbar id="main-toolbar" class="md-primary" layout="row" layout-align="none center">
+            <md-input-container md-no-float class="md-block search-text" flex="90">
+                <input type="text" name="keyword" placeholder="搜索">
+            </md-input-container>
+            <md-button type="submit" class="btn-search md-dark" flex="5" aria-label="Search">
+                <md-icon md-svg-icon="search"></md-icon>
+            </md-button>
+            <md-button class="btn-cart" flex="5" aria-label="Cart" ng-click="custCtrl.gotoUrl('/customer/cart')">
+                <span class="cart-amount" ng-if="custCtrl.cart.qty>0">{{custCtrl.cart.qty}}</span>
+                <md-icon md-svg-icon="cart"></md-icon>
+            </md-button>
+        </md-toolbar>
+    </form>
+    <md-content id="main-content">
+        @RenderBody()
+    </md-content>
+
     <!-- 3rd party libraries -->
     <script type="text/javascript" src="~/static/lib/jQuery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="~/static/lib/angular/angular.min.js"></script>
@@ -56,13 +59,11 @@
     {
         <script type="text/javascript" src="~/static/lib/less/dist/less.min.js"></script>
         <script type="text/javascript" src="~/Content/middle-js/app.js"></script>
-        <script type="text/javascript" src="~/Content/middle-js/controller/owner.controller.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/controller/customer.controller.js"></script>
     }
     else
     {
         <script type="text/javascript" src="~/static/js/stall.min.js"></script>
     }
-
-    @RenderSection("ScriptSection", false)
 </body>
 </html>

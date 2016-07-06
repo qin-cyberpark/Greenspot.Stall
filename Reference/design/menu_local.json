@@ -6,17 +6,17 @@
         {
           "type": "view",
           "name": "逛一逛",
-          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f0f03f3f09da028&redirect_uri=http://101.98.78.44/auth/YKTP/&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f0f03f3f09da028&redirect_uri=http://shanghu.kiwinetcom.com/auth/YKTP/&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
         },
         {
           "type": "view",
           "name": "我的订单",
-          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f0f03f3f09da028&redirect_uri=http://101.98.78.44/auth/YKTP/customer/orders&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f0f03f3f09da028&redirect_uri=http://shanghu.kiwinetcom.com/auth/YKTP/customer/orders&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
         },
         {
           "type": "view",
           "name": "我的小铺",
-          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f0f03f3f09da028&redirect_uri=http://101.98.78.44/auth/YKTP/owner&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f0f03f3f09da028&redirect_uri=http://shanghu.kiwinetcom.com/auth/YKTP/owner&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
         }
       ]
     },
@@ -26,17 +26,17 @@
         {
           "type": "view",
           "name": "逛一逛",
-          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f0f03f3f09da028&redirect_uri=http://101.98.78.44/auth/I8UE/&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f0f03f3f09da028&redirect_uri=http://shanghu.kiwinetcom.com/auth/I8UE/&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
         },
         {
           "type": "view",
           "name": "我的订单",
-          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f0f03f3f09da028&redirect_uri=http://101.98.78.44/auth/I8UE/customer/orders&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f0f03f3f09da028&redirect_uri=http://shanghu.kiwinetcom.com/auth/I8UE/customer/orders&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
         },
         {
           "type": "view",
           "name": "我的小铺",
-          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f0f03f3f09da028&redirect_uri=http://101.98.78.44/auth/I8UE/owner&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f0f03f3f09da028&redirect_uri=http://shanghu.kiwinetcom.com/auth/I8UE/owner&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
         }
       ]
     },

@@ -351,7 +351,19 @@ namespace Greenspot.Stall.Models
             }
             return Products.Where(condition).Where(x => !x.Handle.Equals("vend-discount") && (x.Active ?? false));
         }
+        #endregion
 
+        #region operation
+        public IList<DeliverySchedule.DeliveryScheduleItem> GetSchedule(string countryId, string city, string area,
+                                                                         int nextDays = 7)
+        {
+            return DeliverySchedule.GetSchedule(countryId, city, area, DefaultOrderAdvancedMinutes ?? 0, nextDays);
+        }
+
+        public decimal? GetDeliveryFee(string destCountryId, string destCity, string destSuburb, decimal orderAmount = 0)
+        {
+            return DeliveryFee.Get(PhysicalCountryId, PhysicalCity, PhysicalSuburb, destCountryId, destCity, destSuburb, orderAmount);
+        }
         #endregion
     }
 }

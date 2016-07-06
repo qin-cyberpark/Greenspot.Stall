@@ -6,7 +6,7 @@
 <md-content layout-padding>
     @foreach (var s in _stalls)
     {
-        <md-card>
+        <md-card ng-click="ownerCtrl.gotoUrl('@string.Format("/owner/setting/{0}", @s.Id)')">
             <md-card-title>
                 <md-card-title-text>
                     <span class="md-headline">@s.Name</span>

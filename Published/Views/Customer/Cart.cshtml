@@ -24,39 +24,44 @@
         <link rel="stylesheet" href="~/static/css/stall.min.css">
     }
 </head>
-<body ng-controller="MainController as mainCtrl" ng-init="mainCtrl.init()">
+<body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init()">
     <md-content id="cart-content">
-        <div ng-if="mainCtrl.cart.qty<=0">
+        <div ng-if="custCtrl.cart.qty<=0">
             <h3>Empty</h3>
         </div>
-        <div class="cart-stall" ng-repeat="stall in mainCtrl.cart.stls track by stall.i">
-            <div class="stall-name">{{stall.n}}</div>
-            <div class="cart-item" ng-repeat="item in stall.itms track by item.i" layout="row" layout-align="none center">
+        <div class="cart-stall">
+            店铺：
+            <div class="stall-name" flex ng-repeat="stall in custCtrl.cart.stls" ng-click="custCtrl.cart.selectStall(stall)">
+                <div ng-class="{'selected':stall.i == custCtrl.order.stall.i}">
+                    {{stall.n}}
+                </div>
+            </div>
+            货物：
+            <div class="cart-item" ng-repeat="item in custCtrl.order.stall.itms track by item.i" layout="row" layout-align="none center">
                 <div class="cart-item-desc" flex>
                     <span class="desc-name">{{item.n}}</span>
                     <span class="desc-variant">{{item.v}}</span>
                     <span class="desc-unit-price">{{item.p|currency:$}}</span>
                 </div>
                 <div layout="row" layout-align="end center" flex>
-                    <md-button ng-click="mainCtrl.cart.minusOne(item.i)" ng-disabled="item.q<=1" aria-label="minus">
+                    <md-button ng-click="custCtrl.cart.minusOne(custCtrl.order.stall, item.i)" ng-disabled="item.q<=1" aria-label="minus">
                         <md-icon md-svg-icon="arrow-left"></md-icon>
                     </md-button>
                     <span class="qty-lbl">{{item.q}}</span>
-                    <md-button ng-click="mainCtrl.cart.plusOne(item.i)" aria-label="plus">
+                    <md-button ng-click="custCtrl.cart.plusOne(custCtrl.order.stall, item.i)" aria-label="plus">
                         <md-icon md-svg-icon="arrow-right"></md-icon>
                     </md-button>
-                    <md-button ng-click="mainCtrl.cart.remove(item.i)" aria-label="删除">
+                    <md-button ng-click="custCtrl.cart.remove(custCtrl.order.stall, item.i)" aria-label="删除">
                         <md-icon md-svg-icon="delete"></md-icon>
                     </md-button>
                 </div>
             </div>
         </div>
     </md-content>
-    <div id="bottom-toolbar" ng-if="mainCtrl.cart.qty>0" layout="row" layout-align="none center">
-        <span class="cart-amount" flex="40">{{mainCtrl.cart.amt|currency:$}}</span>
-        <!--a href="#" class="btn btn-danger" ng-click="storeCtrl.cart.empty()">Empty</a-->
-        <md-button ng-click="mainCtrl.cart.empty()" class="md-raised md-accent" flex="30">清空</md-button>
-        <md-button ng-click="mainCtrl.gotoUrl('/customer/checkout');" class="md-raised md-primary" flex="30">结账</md-button>
+    <div id="bottom-toolbar" ng-if="custCtrl.cart.qty>0" layout="row" layout-align="none center">
+        <span class="cart-amount" flex="40">{{custCtrl.order.stall.amt|currency:$}}</span>
+        <md-button ng-click="custCtrl.cart.empty()" class="md-raised md-accent" flex="30">清空</md-button>
+        <md-button ng-click="custCtrl.checkOut();" class="md-raised md-primary" flex="30">结账</md-button>
     </div>
     <!-- 3rd party libraries -->
     <script type="text/javascript" src="~/static/lib/jQuery/dist/jquery.min.js"></script>
@@ -73,7 +78,7 @@
     {
         <script type="text/javascript" src="~/static/lib/less/dist/less.min.js"></script>
         <script type="text/javascript" src="~/Content/middle-js/app.js"></script>
-        <script type="text/javascript" src="~/Content/middle-js/controller/main.controller.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/controller/customer.controller.js"></script>
     }
     else
     {

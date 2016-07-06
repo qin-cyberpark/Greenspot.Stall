@@ -1,5 +1,6 @@
 ﻿namespace Greenspot.Stall.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -42,13 +43,18 @@
         [StringLength(20)]
         public string Postcode { get; set; }
 
-        [StringLength(50)]
+        [StringLength(100)]
         public string State { get; set; }
+
+
+        [StringLength(100)]
+        public string Area { get; set; }
 
         [StringLength(50)]
         public string Suburb { get; set; }
 
         [ForeignKey("UserId")]
+        [JsonIgnore]
         public virtual User User { get; set; }
     }
 }

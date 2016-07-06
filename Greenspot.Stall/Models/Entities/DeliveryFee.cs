@@ -3,11 +3,19 @@ using System.Collections.Generic;
 
 namespace Greenspot.Stall.Models
 {
-    public class DeliveryFee
+    public partial class DeliveryFee
     {
+        public class Types
+        {
+            private Types()
+            {
+
+            }
+            public const string ByRange = "ByRange";
+        }
 
         [JsonProperty("Default")]
-        public double Default { get; set; }
+        public decimal Default { get; set; }
 
         [JsonProperty("FreeDeliveryOrderAmount")]
         public int FreeDeliveryOrderAmount { get; set; }
@@ -28,7 +36,7 @@ namespace Greenspot.Stall.Models
             public int To { get; set; }
 
             [JsonProperty("Fee")]
-            public double Fee { get; set; }
+            public decimal Fee { get; set; }
         }
         #endregion
     }

@@ -72,14 +72,16 @@ namespace Greenspot.Stall.Models
         [StringLength(100)]
         public string TimeZone { get; set; }
 
-        [Column(TypeName = "bit")]
-        public bool? Approved { get; set; }
+        public int? DefaultOrderAdvancedMinutes { get; set; }
 
         [Column(TypeName = "text")]
         public string DeliveryFeeJsonString { get; set; }
 
         [Column(TypeName = "text")]
         public string DeliveryScheduleJsonString { get; set; }
+
+        [Column(TypeName = "bit")]
+        public bool? Approved { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }

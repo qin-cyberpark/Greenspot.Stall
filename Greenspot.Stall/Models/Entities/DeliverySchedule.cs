@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,25 +10,35 @@ namespace Greenspot.Stall.Models
 {
     public partial class DeliverySchedule
     {
+        public class Types
+        {
+            private Types()
+            {
 
+            }
+            public const string Directly = "Directly";
+        }
         [JsonProperty("Type")]
         public string Type { get; set; }
 
-        [JsonProperty("Flex")]
-        public IList<FlexItem> FlexItems { get; set; }
+        [JsonProperty("Directly")]
+        public IList<DeliveryScheduleItem> DirectlyItems { get; set; }
 
-        #region Flex Mode
-        public partial class FlexItem
+        public partial class DeliveryScheduleItem
         {
             [JsonProperty("From")]
+            [JsonConverter(typeof(CustomDateTimeConverter), "dd/MM/yyyy HH:mm:ss")]
             public DateTime From { get; set; }
 
             [JsonProperty("To")]
+            [JsonConverter(typeof(CustomDateTimeConverter), "dd/MM/yyyy HH:mm:ss")]
             public DateTime To { get; set; }
 
             [JsonProperty("Areas")]
             public string[] Areas { get; set; }
+
+            [JsonProperty("PickUp")]
+            public string PickUpAddress { get; set; }
         }
-        #endregion
     }
 }

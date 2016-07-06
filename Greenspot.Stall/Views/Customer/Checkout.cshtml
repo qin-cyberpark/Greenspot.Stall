@@ -1,5 +1,6 @@
 ﻿@{
-    var _addrs = (IList<Greenspot.Stall.Models.DeliveryAddress>)ViewBag.Addresses;
+    var _order = (Greenspot.Stall.Models.ViewModels.OrderViewModel)ViewBag.Order;
+    var _orderJson = Newtonsoft.Json.JsonConvert.SerializeObject(_order);
 }
 <!DOCTYPE html>
 
@@ -27,43 +28,71 @@
         <link rel="stylesheet" href="/Static/css/stall.min.css">
     }
 </head>
-<body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init()">
+<body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init_checkout(@_orderJson)">
     <md-content id="checkout-content">
-        送货地址：
         <div class="delivery-info">
-            @foreach (var addr in _addrs)
-            {
-                <p>
-                    <div>@string.Format("{0} {1}, {2}", addr.FirstName, addr.LastName, addr.Mobile)</div>
-                    <div>@string.Format("{0}, {1}", addr.Address1 + " " + addr.Address2, addr.City)</div>
-                </p>
-            }
-        </div>
-        送货时间：
-        <div class="delivery-info">
-        </div>
-        <div class="stall-name">{{custCtrl.cart.currentStall.n}}</div>
-        <div class="checkout-item" ng-repeat="item in custCtrl.cart.currentStall.itms track by item.i">
-            <div class="checkout-item-desc">
-                <div class="desc-name">{{item.n}}</div>
-                <span class="desc-option">{{item.v}}</span>
-                <span class="desc-unit-price">{{item.p|currency:$}}</span>
-                <span class="desc-qty">x{{item.q}}</span>
+            送货地址
+            <a href="#" class="button address-mng-btn">添加</a>
+
+            <div class="address-option" ng-repeat="addr in custCtrl.deliveryAddresses">
+                <div class="address-radio">
+                    <input type="radio" ng-model="custCtrl.order.deliveryAddress" ng-value="addr"
+                           ng-change="custCtrl.SelectDeliveryAddress()" />
+                </div>
+                <div class="address-text">
+                    <div>{{addr.FirstName}} {{addr.LastName}}, {{addr.Mobile}}</div>
+                    <div>{{addr.Address1}}  {{addr.Address2}}, {{addr.City}}</div>
+                </div>
             </div>
-            <div class="checkout-item-total-price">{{item.p*item.q|currency:$}}</div>
+            <div class="address-option" ng-if="custCtrl.deliveryAddresses.length==0">
+                请<a href="#" class="button address-mng-btn">添加</a>送货地址
+            </div>
+            配送时间
+            <div>
+                <div class="address-option" ng-repeat="opt in custCtrl.deliverySchedule">
+                    <div class="address-radio">
+                        <input type="radio" ng-model="custCtrl.order.deliveryOption" ng-value="opt"
+                               ng-change="custCtrl.SelectDeliveryOption()" />
+                    </div>
+                    <div class="address-text">
+                        <div><span ng-if="opt.IsPickUp">[自提]</span>{{opt.From|date:'EEE dMMM h:mma'}}-{{opt.To|date:'h:mma'}}</div>
+                        <div ng-if="opt.IsPickUp">{{opt.PickUpAddress}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="checkout-stall">
+            <div class="stall-name">{{custCtrl.order.stall.n}}</div>
+            <div class="checkout-item" ng-repeat="item in custCtrl.order.stall.itms track by item.i">
+                <div class="checkout-item-desc">
+                    <div class="desc-name">{{item.n}}</div>
+                    <span class="desc-option">{{item.v}}</span>
+                    <span class="desc-unit-price">{{item.p|currency:$}}</span>
+                    <span class="desc-qty">x{{item.q}}</span>
+                </div>
+                <div class="checkout-item-total-price">{{item.p*item.q|currency:$}}</div>
+            </div>
+            <div class="checkout-item" ng-if="custCtrl.order.deliveryFee>0">
+                <div class="checkout-item-desc">
+                    <div class="desc-name">运费</div>
+                </div>
+                <div class="checkout-item-total-price">{{custCtrl.order.deliveryFee|currency:$}}</div>
+            </div>
         </div>
         <div class="checkout-total">
             <span class="desc-name">订单金额</span>
-            <div class="total-price">{{custCtrl.cart.currentStall.amt|currency:$}}</div>
+            <div class="total-price">{{custCtrl.order.amount|currency:$}}</div>
         </div>
     </md-content>
-    <div id="bottom-toolbar" ng-if="custCtrl.cart.currentStall.qty>0" layout="row" layout-align="end center">
-        <span class="cart-amount" flex>总金额: {{custCtrl.cart.currentStall.amt|currency:$}}</span>
-        <form action="/customer/pay" method="post">
-            <!--a href="#" class="btn btn-danger" ng-click="storeCtrl.cart.empty()">Empty</a-->
-            <md-button type="submit" class="md-raised md-primary" flex>确认付款</md-button>
-        </form>
+    <div id="bottom-toolbar" ng-if="custCtrl.order.stall.qty>0" layout="row" layout-align="end center">
+        <span class="cart-amount" flex>总金额: {{custCtrl.order.amount|currency:$}}</span>
+        <!--a href="#" class="btn btn-danger" ng-click="storeCtrl.cart.empty()">Empty</a-->
+        <md-button ng-click="custCtrl.pay()" class="md-raised md-primary" flex
+                   ng-disabled="!custCtrl.order.deliveryAddress || !custCtrl.order.deliveryOption || !custCtrl.order.deliveryFee">
+            确认付款
+        </md-button>
     </div>
+
     <!-- 3rd party libraries -->
     <script type="text/javascript" src="/Static/lib/jQuery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="/Static/lib/angular/angular.min.js"></script>

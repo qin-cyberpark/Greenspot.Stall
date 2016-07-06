@@ -7,24 +7,21 @@ using System.Threading.Tasks;
 
 namespace Greenspot.Stall.Models.ViewModels
 {
-    public class CartVM
+    public class CartViewModel
     {
         [JsonProperty(PropertyName = "stls")]
-        public IList<CartStallVM> Stalls { get; set; }
+        public IList<CartStallViewModel> Stalls { get; set; }
 
-        [JsonProperty(PropertyName = "CurrentStall")]
-        public CartStallVM CurrentStall { get; set; }
-
-        public class CartStallVM
+        public class CartStallViewModel
         {
             [JsonProperty(PropertyName = "i")]
             public string Id { get; set; }
 
             [JsonProperty(PropertyName = "itms")]
-            public IList<CartItemVM> Items { get; set; }
+            public IList<CartItemViewModel> Items { get; set; }
         }
 
-        public class CartItemVM
+        public class CartItemViewModel
         {
             [JsonProperty(PropertyName = "i")]
             public string Id { get; set; }

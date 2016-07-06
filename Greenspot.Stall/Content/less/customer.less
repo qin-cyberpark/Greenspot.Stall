@@ -70,6 +70,22 @@
 #checkout-content {
     padding: 5px 15px 0px 15px;
 
+    & .delivery-info{
+        & .address-mng-btn{
+            color:@color-primary;
+        }
+        & .address-option{
+            & .address-radio{
+                display:inline-block;
+                vertical-align:top;
+            }
+
+            & .address-text{
+                display:inline-block;
+            }
+        }
+    }
+
     & .checkout-stall {
         &:nth-child(n+2) {
             margin-top: 5px;
@@ -149,7 +165,7 @@
     }
 
     & .cart-amount {
-        font-size: 24px;
+        font-size: 20px;
         text-align: center;
         color: @color-primary;
     }

@@ -184,13 +184,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\API\StallController.cs" />
     <Compile Include="Controllers\API\WebhookController.cs" />
     <Compile Include="Controllers\MVC\HomeController.cs" />
     <Compile Include="Controllers\MVC\ProductController.cs" />
     <Compile Include="Controllers\MVC\StallController.cs" />
     <Compile Include="Controllers\MVC\TestController.cs" />
+    <Compile Include="Models\Common\CustomDateTimeConverter .cs" />
     <Compile Include="Models\Domain\Contact.domain.cs" />
     <Compile Include="Models\Domain\DeliveryAddress.domain.cs" />
+    <Compile Include="Models\Domain\DeliveryFee.domain.cs" />
     <Compile Include="Models\Domain\DeliverySchedule.domain.cs" />
     <Compile Include="Models\Domain\Order.domain.cs" />
     <Compile Include="Models\Domain\Product.domain.cs" />
@@ -219,6 +222,8 @@
     <Compile Include="Models\Entities\User.cs" />
     <Compile Include="Models\Entities\VendWebhook.cs" />
     <Compile Include="Models\StallApplication.VendToken.cs" />
+    <Compile Include="Models\ViewModels\DeliveryTimeViewModel.cs" />
+    <Compile Include="Models\ViewModels\OrderViewModel.cs" />
     <Compile Include="Utilities\SuburbMatrix.cs" />
     <Compile Include="Utilities\WeChatHelper.cs" />
     <Compile Include="Models\Vend\VendAccessTokenStore.cs" />
@@ -1038,7 +1043,6 @@
     <Content Include="Content\less\_variables.less" />
     <Content Include="Content\less\global.less" />
     <Content Include="Content\less\owner.less" />
-    <Content Include="tsconfig.json" />
     <Content Include="Content\less\customer.less" />
     <Content Include="Content\delivery-fee-templte.json" />
     <Content Include="Content\delivery-schedule-templte.json" />
@@ -1235,7 +1239,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>64686</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://192.168.2.235:80/</IISUrl>
+          <IISUrl>http://localhost:80/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -2,26 +2,26 @@
     Layout = "~/Views/Shared/_OwnerLayout.cshtml";
     Page.Title = "注册小铺";
 }
-<md-content layout-padding ng-controller="OwnerRegisterController as regCtrl">
-    <form name="formOwnerInfo" novalidate ng-submit="formOwnerInfo.$valid && regCtrl.SubmitInfo()">
+<md-content layout-padding>
+    <form name="formOwnerInfo" novalidate ng-submit="formOwnerInfo.$valid && ownerCtrl.Register()">
         <div layout="row">
             <md-input-container flex>
                 <label>姓</label>
-                <input name="lastName" required ng-model="regCtrl.OwnerInfo.LastName" ng-maxlength="50">
+                <input name="lastName" required ng-model="ownerCtrl.OwnerInfo.LastName" ng-maxlength="50">
                 <div ng-messages="formOwnerInfo.lastName.$error">
                     <div ng-message="required">请输入姓</div>
                 </div>
             </md-input-container>
             <md-input-container flex>
                 <label>名</label>
-                <input name="firstName" required ng-model="regCtrl.OwnerInfo.FirstName" ng-maxlength="50">
+                <input name="firstName" required ng-model="ownerCtrl.OwnerInfo.FirstName" ng-maxlength="50">
                 <div ng-messages="formOwnerInfo.firstName.$error">
                     <div ng-message="required">请输入名</div>
                 </div>
             </md-input-container>
             <md-input-container flex="50">
                 <label>手机</label>
-                <input name="mobile" required ng-model="regCtrl.OwnerInfo.Mobile" ng-pattern="/^02\d{6,8}$/">
+                <input name="mobile" required ng-model="ownerCtrl.OwnerInfo.Mobile" ng-pattern="/^02\d{6,8}$/">
                 <div ng-messages="formOwnerInfo.mobile.$error" role="alert">
                     <div ng-message-exp="['required', 'pattern']">
                         请检查手机号码
@@ -31,7 +31,7 @@
         </div>
         <md-input-container class="md-block">
             <label>邮箱</label>
-            <input type="email" name="email" required="" ng-model="regCtrl.OwnerInfo.Email" ng-pattern="@Html.Display(@"/^.+@.+\..+$/")">
+            <input type="email" name="email" required="" ng-model="ownerCtrl.OwnerInfo.Email" ng-pattern="@Html.Display(@"/^.+@.+\..+$/")">
             <div ng-messages="formOwnerInfo.email.$error" role="alert">
                 <div ng-message-exp="['required', 'pattern']">
                     请检查邮箱地址
@@ -41,14 +41,14 @@
         <div layout="row">
             <md-input-container flex>
                 <label>铺名</label>
-                <input name="stallName" required ng-model="regCtrl.OwnerInfo.StallName" ng-maxlength="50">
+                <input name="stallName" required ng-model="ownerCtrl.OwnerInfo.StallName" ng-maxlength="50">
                 <div ng-messages="formOwnerInfo.StallName.$error">
                     <div ng-message="required">请输入铺名</div>
                 </div>
             </md-input-container>
             <md-input-container flex>
                 <label>Vend地址前缀</label>
-                <input name="vendPrefix" required ng-model="regCtrl.OwnerInfo.VendPrefix" ng-maxlength="50">
+                <input name="vendPrefix" required ng-model="ownerCtrl.OwnerInfo.VendPrefix" ng-maxlength="50">
                 <div ng-messages="formOwnerInfo.VendPrefix.$error">
                     <div ng-message="required">请输入Vend地址前缀</div>
                 </div>
