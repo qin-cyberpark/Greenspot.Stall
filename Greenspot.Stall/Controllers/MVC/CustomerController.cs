@@ -15,6 +15,7 @@ using Greenspot.Identity.OAuth.WeChat;
 using Greenspot.Stall.Utilities;
 using System.IO;
 using System.Net;
+using Greenspot.Configuration;
 
 namespace Greenspot.Stall.Controllers.MVC
 {
@@ -75,7 +76,7 @@ namespace Greenspot.Stall.Controllers.MVC
                 order = JsonConvert.DeserializeObject<OrderViewModel>(json);
             }
 
-            catch (Exception ex)
+            catch
             {
                 // Try and handle malformed POST body
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -88,11 +89,45 @@ namespace Greenspot.Stall.Controllers.MVC
 
 
         [Authorize]
+        [HttpPost]
+        public ActionResult AddAddress()
+        {
+            Stream req = Request.InputStream;
+            req.Seek(0, System.IO.SeekOrigin.Begin);
+            string json = new StreamReader(req).ReadToEnd();
+
+            DeliveryAddress addr = null;
+            try
+            {
+                addr = JsonConvert.DeserializeObject<DeliveryAddress>(json);
+                var suburb = Suburb.Find(addr.Suburb, addr.City, "NZ", _db);
+                addr.Area = suburb.Area;
+                addr.UserId = CurrentUser.Id;
+                addr.Save(_db);
+            }
+
+            catch
+            {
+                // Try and handle malformed POST body
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            OperationResult<bool> result = new OperationResult<bool>(true);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [Authorize]
         [HttpGet]
         public ActionResult Checkout()
         {
             ViewBag.Order = (OrderViewModel)Session["CURRENT_ORDER"];
-            Session.Remove("CURRENT_ORDER");
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult Addresses()
+        {
             return View();
         }
 
@@ -117,20 +152,66 @@ namespace Greenspot.Stall.Controllers.MVC
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> Pay()
+        public ActionResult Pay()
         {
             Stream req = Request.InputStream;
             req.Seek(0, System.IO.SeekOrigin.Begin);
             string json = new StreamReader(req).ReadToEnd();
 
-            OrderViewModel order = null;
+            OrderViewModel orderVM = null;
+
+            OperationResult<string> result = new OperationResult<string>(true);
+
             try
             {
-                order = JsonConvert.DeserializeObject<OrderViewModel>(json);
-            }
+                orderVM = JsonConvert.DeserializeObject<OrderViewModel>(json);
+                var order = new Order();
+                order.StallId = orderVM.Stall.Id;
+                order.UserId = CurrentUser.Id;
+                foreach (var i in orderVM.Stall.Items)
+                {
+                    var product = Product.FindById(i.Id, _db);
+                    if (product.Stock < i.Quantity)
+                    {
+                        //check stock
+                    }
+                    order.Items.Add(new OrderItem()
+                    {
+                        Product = product,
+                        Quantity = i.Quantity
+                    });
+                }
 
-            catch (Exception ex)
-             {
+
+                //create order
+                if (!order.Create(_db))
+                {
+                    result.Succeeded = false;
+                    result.Message = "fail to create order";
+                }
+
+                //return payment url
+                string payUrl = null;
+                string urlSuccess = string.Format("{0}/Customer/PxPay/{1}?paid=SUCCESS", GreenspotConfiguration.RootUrl, order.Id);
+                string urlFail = string.Format("{0}/Customer/PxPay/{1}?paid=FAIL", GreenspotConfiguration.RootUrl, order.Id);
+
+                try
+                {
+                    payUrl = Accountant.GeneratePayURL(order, urlFail, urlSuccess);
+                    StallApplication.BizInfoFormat("[PAY]go to payment url:{0}", payUrl);
+                    result.Data = payUrl;
+                }
+                catch (Exception ex)
+                {
+                    StallApplication.SysError("[PAY]", ex);
+                    result.Succeeded = false;
+                    result.Message = "fail to generate payment url";
+                }
+
+                return Json(result, JsonRequestBehavior.AllowGet); ;
+            }
+            catch
+            {
                 // Try and handle malformed POST body
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -182,7 +263,49 @@ namespace Greenspot.Stall.Controllers.MVC
             //    Response.Cookies.Add(myCookie);
             //}
 
-            return RedirectToAction("Orders");
+            //return RedirectToAction("Orders");
         }
+
+        public ActionResult PxPay(int id)
+        {
+            string paidFlag = Request["paid"];
+            if (paidFlag == null)
+            {
+                StallApplication.SysError("[MSG]pxpay callback without paid parameter");
+                return Redirect("~/ErrorPage");
+            }
+            StallApplication.SysInfoFormat("[MSG]PxPay call back [{0}]:{1}", paidFlag, Request.Url.ToString());
+            bool isSuccess = "SUCCESS".Equals(paidFlag.ToUpper());
+
+            string payResultId = Request["result"];
+            if (string.IsNullOrEmpty(payResultId))
+            {
+                StallApplication.SysError("[MSG]pxpay callback without result id");
+                return Redirect("~/ErrorPage");
+            }
+
+            int paidOrderId = 0;
+            if (!Accountant.VerifyPxPayPayment(payResultId, isSuccess, out paidOrderId))
+            {
+                StallApplication.BizErrorFormat("[MSG]PxPay not verified, result id={0}", payResultId);
+                return Redirect("~/ErrorPage");
+            }
+
+            if (paidOrderId != id)
+            {
+                StallApplication.BizErrorFormat("[MSG]transaction not matched, px {0} <> url {1}", paidOrderId, id);
+                return Redirect("~/ErrorPage");
+            }
+
+            if (isSuccess)
+            {
+                return Redirect("/customer/paid/" + id);
+            }
+            else
+            {
+                return Redirect("/customer/repay/" + id);
+            }
+        }
+
     }
 }

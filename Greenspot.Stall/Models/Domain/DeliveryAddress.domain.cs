@@ -15,5 +15,11 @@ namespace Greenspot.Stall.Models
             }
             return db.DeliveryAddresses.Where(x => x.UserId.Equals(id)).ToList();
         }
+
+        public bool Save(StallEntities db)
+        {
+            db.DeliveryAddresses.Add(this);
+            return db.SaveChanges() >= 0;
+        }
     }
 }

@@ -32,7 +32,7 @@
     <md-content id="checkout-content">
         <div class="delivery-info">
             送货地址
-            <a href="#" class="button address-mng-btn">添加</a>
+            <a href="/customer/addresses" class="button address-mng-btn">添加</a>
 
             <div class="address-option" ng-repeat="addr in custCtrl.deliveryAddresses">
                 <div class="address-radio">
@@ -41,7 +41,8 @@
                 </div>
                 <div class="address-text">
                     <div>{{addr.FirstName}} {{addr.LastName}}, {{addr.Mobile}}</div>
-                    <div>{{addr.Address1}}  {{addr.Address2}}, {{addr.City}}</div>
+                    <div>{{addr.Address1}}  {{addr.Address2}}</div>
+                    <div>{{addr.Suburb}}, {{addr.City}}</div>
                 </div>
             </div>
             <div class="address-option" ng-if="custCtrl.deliveryAddresses.length==0">
@@ -59,6 +60,13 @@
                         <div ng-if="opt.IsPickUp">{{opt.PickUpAddress}}</div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="checkout-note">
+            留言|备注
+            <div class="note-text">
+                <textarea ng-model="custCtrl.order.note"></textarea>
             </div>
         </div>
         <div class="checkout-stall">
@@ -79,16 +87,12 @@
                 <div class="checkout-item-total-price">{{custCtrl.order.deliveryFee|currency:$}}</div>
             </div>
         </div>
-        <div class="checkout-total">
-            <span class="desc-name">订单金额</span>
-            <div class="total-price">{{custCtrl.order.amount|currency:$}}</div>
-        </div>
     </md-content>
     <div id="bottom-toolbar" ng-if="custCtrl.order.stall.qty>0" layout="row" layout-align="end center">
         <span class="cart-amount" flex>总金额: {{custCtrl.order.amount|currency:$}}</span>
         <!--a href="#" class="btn btn-danger" ng-click="storeCtrl.cart.empty()">Empty</a-->
         <md-button ng-click="custCtrl.pay()" class="md-raised md-primary" flex
-                   ng-disabled="!custCtrl.order.deliveryAddress || !custCtrl.order.deliveryOption || !custCtrl.order.deliveryFee">
+                   ng-disabled="!custCtrl.order.deliveryAddress || !custCtrl.order.deliveryOption || custCtrl.order.deliveryFee==null">
             确认付款
         </md-button>
     </div>

@@ -9,7 +9,7 @@ using Greenspot.Stall.Models;
 
 namespace Greenspot.Stall
 {
-    public class StallApplication
+    public partial class StallApplication
     {
         private VendApplication _vendApplication;
         private AccessTokenManager _vendAccessTokenManager;

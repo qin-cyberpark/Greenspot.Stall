@@ -7,11 +7,10 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("delivery_addresses")]
+    [Table("customer_delivery_addresses")]
     public partial class DeliveryAddress
     {
-        [StringLength(50)]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [StringLength(50)]
         public string UserId { get; set; }

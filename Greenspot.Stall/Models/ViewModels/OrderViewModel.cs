@@ -20,6 +20,9 @@ namespace Greenspot.Stall.Models.ViewModels
         [JsonProperty(PropertyName = "deliveryFee")]
         public decimal DeliveryFee { get; set; }
 
+        [JsonProperty(PropertyName = "note")]
+        public string Note { get; set; }
+
         public class OrderStallViewModel
         {
             [JsonProperty(PropertyName = "i")]
@@ -36,8 +39,6 @@ namespace Greenspot.Stall.Models.ViewModels
 
             [JsonProperty(PropertyName = "itms")]
             public IList<OrdeItemViewModel> Items { get; set; }
-
-
 
         }
 

@@ -23,11 +23,14 @@ namespace Greenspot.Stall.Models
         {
             get
             {
-                return _greenspotUser.Email;
+                return _greenspotUser?.Email;
             }
             set
             {
-                _greenspotUser.Email = value;
+                if (_greenspotUser != null)
+                {
+                    _greenspotUser.Email = value;
+                }
             }
         }
 
@@ -36,11 +39,14 @@ namespace Greenspot.Stall.Models
         {
             get
             {
-                return _greenspotUser.PhoneNumber;
+                return _greenspotUser?.PhoneNumber;
             }
             set
             {
-                _greenspotUser.PhoneNumber = value;
+                if (_greenspotUser != null)
+                {
+                    _greenspotUser.PhoneNumber = value;
+                }
             }
         }
 

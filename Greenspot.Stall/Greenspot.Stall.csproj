@@ -191,6 +191,8 @@
     <Compile Include="Controllers\MVC\StallController.cs" />
     <Compile Include="Controllers\MVC\TestController.cs" />
     <Compile Include="Models\Common\CustomDateTimeConverter .cs" />
+    <Compile Include="Models\Common\Definitions.cs" />
+    <Compile Include="Models\Domain\Accountant.cs" />
     <Compile Include="Models\Domain\Contact.domain.cs" />
     <Compile Include="Models\Domain\DeliveryAddress.domain.cs" />
     <Compile Include="Models\Domain\DeliveryFee.domain.cs" />
@@ -198,6 +200,8 @@
     <Compile Include="Models\Domain\Order.domain.cs" />
     <Compile Include="Models\Domain\Product.domain.cs" />
     <Compile Include="Models\Domain\Stall.domain.cs" />
+    <Compile Include="Models\Domain\Suburb.domain.cs" />
+    <Compile Include="Models\Entities\CreditCard.cs" />
     <Compile Include="Models\Entities\DeliveryAddress.cs" />
     <Compile Include="Models\Entities\DeliveryFee.cs" />
     <Compile Include="Models\Entities\DeliverySchedule.cs" />
@@ -221,9 +225,11 @@
     <Compile Include="Models\Entities\SuburbDistance.cs" />
     <Compile Include="Models\Entities\User.cs" />
     <Compile Include="Models\Entities\VendWebhook.cs" />
+    <Compile Include="Models\StallApplication.Log.cs" />
     <Compile Include="Models\StallApplication.VendToken.cs" />
     <Compile Include="Models\ViewModels\DeliveryTimeViewModel.cs" />
     <Compile Include="Models\ViewModels\OrderViewModel.cs" />
+    <Compile Include="Utilities\PxPay.cs" />
     <Compile Include="Utilities\SuburbMatrix.cs" />
     <Compile Include="Utilities\WeChatHelper.cs" />
     <Compile Include="Models\Vend\VendAccessTokenStore.cs" />
@@ -242,6 +248,7 @@
     <Content Include="Content\middle-css\product.css" />
     <Content Include="Content\middle-css\_variables.css" />
     <Content Include="Content\middle-js\app.js" />
+    <Content Include="Content\middle-js\autoCompleteAddress.js" />
     <Content Include="Content\middle-js\controller\customer.controller.js" />
     <Content Include="Content\middle-js\controller\owner.controller.js" />
     <Content Include="Global.asax" />
@@ -1181,6 +1188,7 @@
     <Content Include="Static\lib\angular-material\README.md" />
     <Content Include="Views\Test\Distance.cshtml" />
     <Content Include="Views\Owner\Setting.cshtml" />
+    <Content Include="Views\Customer\Addresses.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

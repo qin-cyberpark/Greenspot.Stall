@@ -16,6 +16,7 @@ namespace Greenspot.Stall.Models
         {
             Stalls = new HashSet<Stall>();
             DeliveryAddresses = new HashSet<DeliveryAddress>();
+            CreditCards = new HashSet<CreditCard>();
         }
 
         [Key]
@@ -31,5 +32,6 @@ namespace Greenspot.Stall.Models
         public virtual ICollection<Stall> Stalls { get; set; }
 
         public virtual ICollection<DeliveryAddress> DeliveryAddresses { get; set; }
+        public virtual ICollection<CreditCard> CreditCards { get; set; }
     }
 }

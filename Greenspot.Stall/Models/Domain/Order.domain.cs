@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using Newtonsoft.Json;
+using Greenspot.Configuration;
 
 namespace Greenspot.Stall.Models
 {
@@ -17,17 +18,18 @@ namespace Greenspot.Stall.Models
             {
                 return null;
             }
-            return db.Orders.Include(x=>x.Stall).Where(x => x.UserId.Equals(id))
-                                            .OrderByDescending(x=>x.CreateTime).ToList();
+            return db.Orders.Include(x => x.Stall).Where(x => x.UserId.Equals(id))
+                                            .OrderByDescending(x => x.CreateTime).ToList();
         }
-        public async Task<bool> Save(StallEntities db)
-        {
-            if (await SaveToVend())
-            {
-                return SaveToDB(db);
-            }
-            return false;
-        }
+
+        //public async Task<bool> Save(StallEntities db)
+        //{
+        //    if (await SaveToVend())
+        //    {
+        //        return SaveToDB(db);
+        //    }
+        //    return false;
+        //}
 
         private async Task<bool> SaveToVend()
         {
@@ -36,8 +38,8 @@ namespace Greenspot.Stall.Models
             vendSale.RegisterId = Stall.RegisterId;
             vendSale.SaleDate = CreateTime.ToString("yyyy-MM-dd HH:mm:ss");
             vendSale.Status = OrderStatus.CLOSED;
-            vendSale.TotalPrice = (double)TotalPriceExcludeTax;
-            vendSale.TotalTax = (double)TotalTax;
+            vendSale.TotalPrice = (double)CalcTotalPriceExcludeTax();
+            vendSale.TotalTax = (double)CalcTotalTax();
             vendSale.TaxName = Items[0].Product.TaxName;
             vendSale.RegisterSaleProducts = new List<VendRegisterSaleRequest.RegisterSaleProduct>();
             vendSale.RegisterSalePayments = new List<VendRegisterSaleRequest.RegisterSalePayment>();
@@ -59,7 +61,7 @@ namespace Greenspot.Stall.Models
             {
                 RetailerPaymentTypeId = Stall.PaymentTypeId,
                 PaymentDate = PaidTime.Value.ToString("yyyy-MM-dd HH:mm:ss"),
-                Amount = (double)Total
+                Amount = (double)TotalCharge
             });
 
             //do reqeust
@@ -70,51 +72,53 @@ namespace Greenspot.Stall.Models
             return !string.IsNullOrEmpty(response.RegisterSale.Id) && OrderStatus.CLOSED.Equals(response.RegisterSale.Status);
         }
 
-        private bool SaveToDB(StallEntities db)
+        public bool Create(StallEntities db)
         {
-            //JsonString = JsonConvert.SerializeObject(this, new JsonSerializerSettings()
-            //                                                {
-            //                                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            //                                                });
+            var jsonString = JsonConvert.SerializeObject(this, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+
+            //set total price
+            if (GreenspotConfiguration.Payment.IsFullCharge)
+            {
+                TotalCharge = CalcTotal();
+            }
+            else
+            {
+                TotalCharge = 0.01M;
+            }
+
             db.Orders.Add(this);
             return db.SaveChanges() > 0;
         }
 
         #region properties
-        public decimal TotalPriceExcludeTax
+        public decimal CalcTotalPriceExcludeTax()
         {
-            get
+            decimal ttl = 0;
+            foreach (var item in Items)
             {
-                decimal ttl = 0;
-                foreach (var item in Items)
-                {
-                    ttl += (item.Product.Price ?? 0.0M) * item.Quantity;
-                }
-
-                return ttl;
+                ttl += (item.Product.Price ?? 0.0M) * item.Quantity;
             }
+
+            return ttl;
         }
 
-        public decimal TotalTax
+        public decimal CalcTotalTax()
         {
-            get
+            decimal ttl = 0;
+            foreach (var item in Items)
             {
-                decimal ttl = 0;
-                foreach (var item in Items)
-                {
-                    ttl += (item.Product.Tax ?? 0.0M) * item.Quantity;
-                }
-
-                return ttl;
+                ttl += (item.Product.Tax ?? 0.0M) * item.Quantity;
             }
+
+            return ttl;
         }
 
-        public decimal Total
+        public decimal CalcTotal()
         {
-            get
-            {
-                return TotalPriceExcludeTax + TotalTax;
-            }
+            return CalcTotalPriceExcludeTax() + CalcTotalTax();
         }
         #endregion
     }

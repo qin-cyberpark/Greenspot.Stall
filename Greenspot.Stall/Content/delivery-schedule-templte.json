@@ -2,33 +2,33 @@
   "Type": "Directly",
   "Directly": [
     {
-      "From": "05/07/2016 13:00:00",
-      "To": "05/07/2016 17:00:00",
+      "From": "19/07/2016 13:00:00",
+      "To": "19/07/2016 17:00:00",
       "Areas": [ "NZ-Auckland-Central Auckland", "NZ-Auckland-East Auckland" ]
     },
     {
-      "From": "06/07/2016 13:00:00",
-      "To": "06/07/2016 17:00:00",
+      "From": "20/07/2016 13:00:00",
+      "To": "20/07/2016 17:00:00",
       "Areas": [ "NZ-Auckland-Central Auckland", "NZ-Auckland-West Auckland" ]
     },
     {
-      "From": "07/07/2016 13:00:00",
-      "To": "07/07/2016 17:00:00",
+      "From": "21/07/2016 13:00:00",
+      "To": "21/07/2016 17:00:00",
       "Areas": [ "NZ-Auckland-Central Auckland", "NZ-Auckland-North Shore" ]
     },
     {
-      "From": "08/07/2016 10:00:00",
-      "To": "08/07/2016 11:00:00",
+      "From": "22/07/2016 10:00:00",
+      "To": "22/07/2016 11:00:00",
       "PickUp": "Sky Tower"
     },
     {
-      "From": "09/07/2016 13:00:00",
-      "To": "09/07/2016 14:00:00",
+      "From": "22/07/2016 13:00:00",
+      "To": "22/07/2016 14:00:00",
       "PickUp": "Sky Tower"
     },
     {
-      "From": "09/07/2016 13:00:00",
-      "To": "09/07/2016 15:00:00",
+      "From": "22/07/2016 13:00:00",
+      "To": "22/07/2016 15:00:00",
       "Areas": [ "NZ-Auckland-Central Auckland", "NZ-Auckland-East Auckland" ]
     }
   ]

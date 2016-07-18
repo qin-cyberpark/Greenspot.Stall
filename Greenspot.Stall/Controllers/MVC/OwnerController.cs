@@ -17,9 +17,6 @@ namespace Greenspot.Stall.Controllers.MVC
 {
     public class OwnerController : Controller
     {
-        private static readonly log4net.ILog _sysLogger = log4net.LogManager.GetLogger("SysLogger");
-        private static readonly log4net.ILog _bizLogger = log4net.LogManager.GetLogger("BizLogger");
-
         private StallEntities _db = new StallEntities();
         private GreenspotUserManager _userManager;
         private GreenspotUser _currentUser;
@@ -134,13 +131,13 @@ namespace Greenspot.Stall.Controllers.MVC
                 var stall = Models.Stall.FindByVendPrefix(prefex, _db);
                 if (stall == null)
                 {
-                    _sysLogger.ErrorFormat("stall {0} not exist", prefex);
+                    StallApplication.BizErrorFormat("stall {0} not exist", prefex);
                     return View("Error");
                 }
 
                 if (!stall.UserId.Equals(CurrentUser.Id))
                 {
-                    _sysLogger.ErrorFormat("user id not match {0} <> {1}", stall.UserId, CurrentUser.Id);
+                    StallApplication.BizErrorFormat("user id not match {0} <> {1}", stall.UserId, CurrentUser.Id);
                     return View("Error");
                 }
 
@@ -151,11 +148,11 @@ namespace Greenspot.Stall.Controllers.MVC
                 }
                 else
                 {
-                    _sysLogger.ErrorFormat("Failed to init stall, {0}", initResult.Message);
+                    StallApplication.BizErrorFormat("Failed to init stall, {0}", initResult.Message);
                     return View("Error");
                 }
             }catch(Exception ex){
-                _sysLogger.Error("Failed to init stall", ex);
+                StallApplication.BizError("Failed to init stall", ex);
                 return View("Error");
             }
         }
@@ -169,7 +166,7 @@ namespace Greenspot.Stall.Controllers.MVC
             var stall = Models.Stall.FindById(id, _db);
             if (!stall.UserId.Equals(CurrentUser.Id))
             {
-                _sysLogger.ErrorFormat("user id not match {0} <> {1}", stall.UserId, CurrentUser.Id);
+                StallApplication.SysErrorFormat("user id not match {0} <> {1}", stall.UserId, CurrentUser.Id);
                 return View("Error");
             }
 

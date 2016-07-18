@@ -146,11 +146,15 @@
             });
         }
 
-   
 
         /* checkout init */
         vm.init_checkout = function (orderJson) {
             vm.order = orderJson;
+            vm.loadDeliveryAddress(vm.loadDeliverySchedule);
+        }
+
+        /* address management */
+        vm.init_address = function () {
             vm.loadDeliveryAddress();
         }
 
@@ -159,7 +163,7 @@
         }
 
         /* load address */
-        vm.loadDeliveryAddress = function () {
+        vm.loadDeliveryAddress = function (callback) {
             //load address
             $http.get('/customer/DeliveryAddresses').success(function (result) {
                 if (result.Succeeded) {
@@ -167,8 +171,9 @@
    
                     vm.order.deliveryAddress = vm.deliveryAddresses[0];
 
-                    //load schedule
-                    vm.loadDeliverySchedule();
+                    if (callback) {
+                        callback();
+                    }
                 }
                 else {
                     console.log(result.Message);
@@ -235,6 +240,27 @@
         vm.SelectDeliveryOption = function () {
             vm.getDeliveryFee();
         }
+        
+
+        /*new address*/
+        vm.newAddress = {
+            Suburb: "Auckland Central",
+            City:"Auckland"
+        }
+
+        vm.addAddress = function () {
+            //load items
+            $http.post('/customer/addAddress', vm.newAddress).success(function (result) {
+                if (result.Succeeded) {
+                    vm.loadDeliveryAddress();
+                }
+                else {
+                    console.log(result.Message);
+                }
+            }).error(function (error) {
+                console.log(error);
+            });
+        }
 
         /* pay */
         vm.pay = function () {
@@ -243,7 +269,8 @@
             $http.post('/customer/Pay', vm.order).success(function (result) {
                 if (result.Succeeded) {
                     //redirect to vent page
-                    window.location.href = "/customer/orders";
+                    console.log(result);
+                    window.location.href = result.Data;
                 }
                 else {
                     console.log(result.Message);
