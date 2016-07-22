@@ -33,7 +33,7 @@ namespace Greenspot.SDK.Vend
             {
                 return new VendProductApiResult()
                 {
-                    Products = null
+                    Product = null
                 };
             }
 

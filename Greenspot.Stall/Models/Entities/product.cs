@@ -3,6 +3,7 @@ namespace Greenspot.Stall.Models
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
+    using System.Collections.Specialized;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -126,6 +127,9 @@ namespace Greenspot.Stall.Models
 
         public DateTime? DeletedAt { get; set; }
 
+        [NotMapped]
+        public string LineNote { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Variants { get; set; }
 
@@ -134,5 +138,6 @@ namespace Greenspot.Stall.Models
 
         [ForeignKey("StallId")]
         public virtual Stall Stall { get; set; }
+
     }
 }

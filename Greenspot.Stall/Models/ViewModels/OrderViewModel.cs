@@ -72,6 +72,17 @@ namespace Greenspot.Stall.Models.ViewModels
 
             [JsonProperty(PropertyName = "PickUpAddress")]
             public string PickUpAddress { get; set; }
+
+            public override string ToString()
+            {
+                if (IsPickUp)
+                {
+                    return string.Format("Pickup {0:ddd dMMM h:mmtt}-{1:h:mmtt} {2}", From, To, PickUpAddress);
+                }else
+                {
+                    return string.Format("Delivery {0:ddd dMMM h:mmtt}-{1:h:mmtt}", From, To);
+                }
+            }
         }
 
         public class DeliveryAddressViewModel

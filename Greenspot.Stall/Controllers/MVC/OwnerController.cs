@@ -48,14 +48,14 @@ namespace Greenspot.Stall.Controllers.MVC
         [Authorize]
         public ActionResult Index()
         {
-
-            if (!Models.User.CurrentUser.HasName)
+            //
+            var stalls = Models.Stall.FindByUserId(CurrentUser.Id, _db);
+            if (stalls.Count == 0)
             {
                 //have not registered
                 return Redirect("~/owner/register");
             }
 
-            var stalls = Models.Stall.FindByUserId(CurrentUser.Id, _db);
             ViewBag.Stalls = stalls;
 
             return View();
@@ -108,7 +108,8 @@ namespace Greenspot.Stall.Controllers.MVC
             var accessToken = await StallApplication.GetAccessTokenAsync(prefix, code);
             if (!string.IsNullOrEmpty(accessToken) && CurrentUser.Id.Equals(userId))
             {
-                return RedirectToAction("InitStall", new { id = prefix });
+                //return RedirectToAction("InitStall", new { id = prefix });
+                return RedirectToAction("Index");
             }
             else
             {
@@ -151,7 +152,9 @@ namespace Greenspot.Stall.Controllers.MVC
                     StallApplication.BizErrorFormat("Failed to init stall, {0}", initResult.Message);
                     return View("Error");
                 }
-            }catch(Exception ex){
+            }
+            catch (Exception ex)
+            {
                 StallApplication.BizError("Failed to init stall", ex);
                 return View("Error");
             }

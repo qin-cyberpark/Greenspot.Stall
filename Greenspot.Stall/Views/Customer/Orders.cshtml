@@ -41,11 +41,10 @@
         {
             foreach(var o in _orders)
             {
-                var vendO = JsonConvert.DeserializeObject<Greenspot.SDK.Vend.VendRegisterSaleApiResult>(o.VendResponse);
                 <div layout="row">
-                    <span flex>@vendO.RegisterSale.ShortCode.ToUpper()</span>
+                    <span flex>@o.Id</span>
                     <span flex>@o.Stall.Name</span>
-                    <span flex>@vendO.RegisterSale.Totals.TotalPayment.ToString("$0.00")</span>
+                    <span flex>@o.TotalCharge.ToString("$0.00")</span>
                 </div>
             }
         }

@@ -16,10 +16,20 @@ namespace Greenspot.Stall.Models
             return db.DeliveryAddresses.Where(x => x.UserId.Equals(id)).ToList();
         }
 
+        public static DeliveryAddress FindById(int id, StallEntities db)
+        {
+            return db.DeliveryAddresses.FirstOrDefault(x => x.Id == id);
+        }
+
         public bool Save(StallEntities db)
         {
             db.DeliveryAddresses.Add(this);
             return db.SaveChanges() >= 0;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} {1}, {2}, {3} , {4}, {5}", FirstName, LastName, Mobile, Address1, Area, City);
         }
     }
 }

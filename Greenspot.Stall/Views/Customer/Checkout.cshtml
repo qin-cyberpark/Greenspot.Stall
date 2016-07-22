@@ -1,6 +1,7 @@
 ﻿@{
     var _order = (Greenspot.Stall.Models.ViewModels.OrderViewModel)ViewBag.Order;
     var _orderJson = Newtonsoft.Json.JsonConvert.SerializeObject(_order);
+    var _isAdmin = User.IsInRole("Admin");
 }
 <!DOCTYPE html>
 
@@ -95,6 +96,11 @@
                    ng-disabled="!custCtrl.order.deliveryAddress || !custCtrl.order.deliveryOption || custCtrl.order.deliveryFee==null">
             确认付款
         </md-button>
+        @if (_isAdmin)
+        {
+            <a ng-click="custCtrl.fakePay()">Success</a>
+            <a href="">Pay Fail</a>
+        }
     </div>
 
     <!-- 3rd party libraries -->

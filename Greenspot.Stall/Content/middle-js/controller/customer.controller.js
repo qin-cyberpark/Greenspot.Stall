@@ -279,6 +279,23 @@
                 console.log(error);
             });
         }
+
+        vm.fakePay = function () {
+            //load items
+            console.log(vm.order);
+            $http.post('/customer/fakePay', vm.order).success(function (result) {
+                if (result.Succeeded) {
+                    //redirect to vent page
+                    console.log(result);
+                    window.location.href = result.Data;
+                }
+                else {
+                    console.log(result.Message);
+                }
+            }).error(function (error) {
+                console.log(error);
+            });
+        }
     }
 
     function StallCart(stallId, stallName) {

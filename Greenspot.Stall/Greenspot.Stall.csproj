@@ -187,6 +187,7 @@
     <Compile Include="Controllers\API\StallController.cs" />
     <Compile Include="Controllers\API\WebhookController.cs" />
     <Compile Include="Controllers\MVC\HomeController.cs" />
+    <Compile Include="Controllers\MVC\ManageController.cs" />
     <Compile Include="Controllers\MVC\ProductController.cs" />
     <Compile Include="Controllers\MVC\StallController.cs" />
     <Compile Include="Controllers\MVC\TestController.cs" />
@@ -1189,6 +1190,7 @@
     <Content Include="Views\Test\Distance.cshtml" />
     <Content Include="Views\Owner\Setting.cshtml" />
     <Content Include="Views\Customer\Addresses.cshtml" />
+    <Content Include="Views\Manage\Stall.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

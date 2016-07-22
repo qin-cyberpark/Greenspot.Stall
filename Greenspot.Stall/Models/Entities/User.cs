@@ -30,7 +30,6 @@ namespace Greenspot.Stall.Models
         public string LastName { get; set; }
 
         public virtual ICollection<Stall> Stalls { get; set; }
-
         public virtual ICollection<DeliveryAddress> DeliveryAddresses { get; set; }
         public virtual ICollection<CreditCard> CreditCards { get; set; }
     }

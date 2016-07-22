@@ -22,14 +22,14 @@ namespace Greenspot.Stall.Models
         {
             RequestInput reqInput = new RequestInput();
 
-            if (!string.IsNullOrEmpty(dpsBillingId))
-            {
-                reqInput.DpsBillingId = dpsBillingId;
-            }
-            else if (enableAddBillCard)
-            {
-                reqInput.EnableAddBillCard = "1";
-            }
+            //if (!string.IsNullOrEmpty(dpsBillingId))
+            //{
+            //    reqInput.DpsBillingId = dpsBillingId;
+            //}
+            //else if (enableAddBillCard)
+            //{
+            //    reqInput.EnableAddBillCard = "1";
+            //}
 
             reqInput.AmountInput = amount.ToString("F2");
             reqInput.CurrencyInput = CurrencyType.NZD;
@@ -109,7 +109,6 @@ namespace Greenspot.Stall.Models
                         return false;
                     }
 
-                    order = JsonConvert.DeserializeObject<Order>(order.JsonString);
                     outOrderId = orderId;
                     if (!isSuccess)
                     {

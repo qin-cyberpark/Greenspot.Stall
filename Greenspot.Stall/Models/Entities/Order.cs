@@ -55,8 +55,8 @@ namespace Greenspot.Stall.Models
         [NotMapped]
         public string Note { get; set; }
 
-        [JsonIgnore]
-        public string JsonString { get; set; }
+        //[JsonIgnore]
+        //public string JsonString { get; set; }
 
         [JsonIgnore]
         public string VendResponse { get; set; }

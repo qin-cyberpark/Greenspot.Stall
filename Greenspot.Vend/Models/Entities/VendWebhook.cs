@@ -21,6 +21,9 @@ namespace Greenspot.SDK.Vend
 
         [JsonProperty("url")]
         public string Url { get; set; }
+
+        [JsonProperty("active")]
+        public bool Active { get; set; }
     }
 
     public partial class VendWebhook
@@ -32,10 +35,10 @@ namespace Greenspot.SDK.Vend
             public const string InventoryUpdate = "inventory.update";
         }
 
-        [JsonProperty("id")]
+        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public string Id { get; set; }
 
-        [JsonProperty("retailer_id")]
+        [JsonProperty("retailer_id", NullValueHandling = NullValueHandling.Ignore)]
         public string RetailerId { get; set; }
 
         [JsonProperty("type")]

@@ -101,6 +101,7 @@ namespace Greenspot.Stall.Controllers.MVC
             {
                 addr = JsonConvert.DeserializeObject<DeliveryAddress>(json);
                 var suburb = Suburb.Find(addr.Suburb, addr.City, "NZ", _db);
+                addr.CountryId = "NZ";
                 addr.Area = suburb.Area;
                 addr.UserId = CurrentUser.Id;
                 addr.Save(_db);
@@ -150,38 +151,70 @@ namespace Greenspot.Stall.Controllers.MVC
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        private Order ConvertToOrder(string jsonString)
+        {
+            var orderVM = JsonConvert.DeserializeObject<OrderViewModel>(jsonString);
+            var order = new Order();
+            order.StallId = orderVM.Stall.Id;
+            order.UserId = CurrentUser.Id;
+
+            //product
+            foreach (var i in orderVM.Stall.Items)
+            {
+                var product = Product.FindById(i.Id, _db);
+                if (product.Stock < i.Quantity)
+                {
+                    //check stock
+                }
+                order.Items.Add(new OrderItem()
+                {
+                    Product = product,
+                    Quantity = i.Quantity
+                });
+            }
+
+            //delivery
+            var stall = Models.Stall.FindById(orderVM.Stall.Id, _db);
+            var deliveryProduct = Product.FindById(stall.DeliveryProductId, _db);
+            deliveryProduct.DisplayRetailPriceTaxInclusive = orderVM.DeliveryFee;
+            if (orderVM.DeliveryOption.IsPickUp)
+            {
+                var devAddr = DeliveryAddress.FindById(int.Parse(orderVM.DeliveryAddress.Id), _db);
+                deliveryProduct.LineNote = orderVM.DeliveryOption.ToString() + " " + devAddr.ToString();
+
+            }
+            else
+            {
+                deliveryProduct.LineNote = orderVM.DeliveryOption.ToString();
+                deliveryProduct.DisplayRetailPriceTaxInclusive = orderVM.DeliveryFee;
+            }
+
+
+            order.Items.Add(new OrderItem()
+            {
+                Product = deliveryProduct,
+                Quantity = 1
+            });
+
+            order.Note = orderVM.Note + "\n" + deliveryProduct.LineNote;
+
+            //discount
+            return order;
+        }
+
         [Authorize]
         [HttpPost]
-        public ActionResult Pay()
+        public async Task<ActionResult> Pay()
         {
+            OperationResult<string> result = new OperationResult<string>(true);
+
             Stream req = Request.InputStream;
             req.Seek(0, System.IO.SeekOrigin.Begin);
             string json = new StreamReader(req).ReadToEnd();
 
-            OrderViewModel orderVM = null;
-
-            OperationResult<string> result = new OperationResult<string>(true);
-
             try
             {
-                orderVM = JsonConvert.DeserializeObject<OrderViewModel>(json);
-                var order = new Order();
-                order.StallId = orderVM.Stall.Id;
-                order.UserId = CurrentUser.Id;
-                foreach (var i in orderVM.Stall.Items)
-                {
-                    var product = Product.FindById(i.Id, _db);
-                    if (product.Stock < i.Quantity)
-                    {
-                        //check stock
-                    }
-                    order.Items.Add(new OrderItem()
-                    {
-                        Product = product,
-                        Quantity = i.Quantity
-                    });
-                }
-
+                var order = ConvertToOrder(json);
 
                 //create order
                 if (!order.Create(_db))
@@ -207,66 +240,47 @@ namespace Greenspot.Stall.Controllers.MVC
                     result.Succeeded = false;
                     result.Message = "fail to generate payment url";
                 }
+            }
+            catch (Exception ex)
+            {
+                // Try and handle malformed POST body
+                StallApplication.SysError("[PAY]", ex);
+                result.Succeeded = false;
+                result.Message = "fail to pay";
+            }
 
-                return Json(result, JsonRequestBehavior.AllowGet); ;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorize(Roles ="Admin")]
+        [HttpPost]
+        public async Task<ActionResult> FakePay()
+        {
+            OperationResult<string> result = new OperationResult<string>(true);
+
+            Stream req = Request.InputStream;
+            req.Seek(0, System.IO.SeekOrigin.Begin);
+            string json = new StreamReader(req).ReadToEnd();
+
+            try
+            {
+                //save to vend
+                var order = ConvertToOrder(json);
+
+                //create order
+                if (order.Create(_db))
+                {
+                    await order.Save(_db);
+                }
             }
             catch
             {
-                // Try and handle malformed POST body
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             }
-            //var orderRawData = System.Web.HttpUtility.UrlDecode(Request.Cookies["cart"].Value);
 
-            ////create order object
-            //var cart = JsonConvert.DeserializeObject<CartViewModel>(orderRawData);
-            //var stall = Models.Stall.FindById(cart.CurrentStall.Id, _db);
-
-            ////separate stalls
-            //var order = new Order();
-            //order.Id = Guid.NewGuid().ToString();
-            //order.Stall = stall;
-            //order.UserId = CurrentUser.Id;
-            //foreach (var i in cart.CurrentStall.Items)
-            //{
-            //    var product = Product.FindById(i.Id, _db);
-            //    order.Items.Add(new OrderItem()
-            //    {
-            //        Product = product,
-            //        Quantity = i.Quantity
-            //    });
-            //}
-
-            ////
-            //await order.Save(_db);
-
-            ////send message
-            //try
-            //{
-            //    var owner = UserManager.FindById(order.Stall.UserId);
-            //    var openId = owner?.SnsInfos[WeChatClaimTypes.OpenId].InfoValue;
-            //    if (!string.IsNullOrEmpty(openId))
-            //    {
-            //        var msg = string.Format("店铺[{0}]有一个新订单，金额[{1:C}]", order.Stall.Name, order.Total);
-            //        WeChatHelper.SendMessage(openId, msg);
-            //    }
-            //}
-            //catch
-            //{
-
-            //}
-
-            ////clear cookie
-            //if (Request.Cookies["cart"] != null)
-            //{
-            //    HttpCookie myCookie = new HttpCookie("cart");
-            //    myCookie.Expires = DateTime.Now.AddDays(-1d);
-            //    Response.Cookies.Add(myCookie);
-            //}
-
-            //return RedirectToAction("Orders");
+            return Redirect("/customer/orders");
         }
-
-        public ActionResult PxPay(int id)
+        public async Task<ActionResult> PxPay(int id)
         {
             string paidFlag = Request["paid"];
             if (paidFlag == null)
@@ -299,13 +313,40 @@ namespace Greenspot.Stall.Controllers.MVC
 
             if (isSuccess)
             {
-                return Redirect("/customer/paid/" + id);
+                //save to vend
+                var order = Order.FindById(id, _db);
+                await order.Save(_db);
+
+                //send message
+                try
+                {
+                    var owner = UserManager.FindById(order.Stall.UserId);
+                    var openId = owner?.SnsInfos[WeChatClaimTypes.OpenId].InfoValue;
+                    if (!string.IsNullOrEmpty(openId))
+                    {
+                        var msg = string.Format("店铺[{0}]有一个新订单 [{1}]", order.Stall.Name, order.Id);
+                        WeChatHelper.SendMessage(openId, msg);
+                    }
+                }
+                catch
+                {
+
+                }
+
+                ////clear cookie
+                //if (Request.Cookies["cart"] != null)
+                //{
+                //    HttpCookie myCookie = new HttpCookie("cart");
+                //    myCookie.Expires = DateTime.Now.AddDays(-1d);
+                //    Response.Cookies.Add(myCookie);
+                //}
+
+                return Redirect("/customer/orders");
             }
             else
             {
-                return Redirect("/customer/repay/" + id);
+                return Redirect("~/ErrorPage");
             }
         }
-
     }
 }

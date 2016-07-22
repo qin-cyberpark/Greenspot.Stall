@@ -25,12 +25,10 @@ namespace Greenspot.Stall.Models
         [StringLength(50)]
         public string Type { get; set; }
 
-        [StringLength(150)]
+        [StringLength(250)]
         public string Url { get; set; }
 
         [Column(TypeName = "bit")]
         public bool? Active { get; set; }
-
-        public virtual Stall Stall { get; set; }
     }
 }

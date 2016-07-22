@@ -100,7 +100,7 @@ namespace Greenspot.SDK.Vend
                             new KeyValuePair<string, string>("refresh_token",refreshToken),
                             new KeyValuePair<string, string>("client_id",VendApplication.ClientId),
                             new KeyValuePair<string, string>("client_secret",VendApplication.ClientSecret),
-                            new KeyValuePair<string, string>("grant_type","authorization_code")};
+                            new KeyValuePair<string, string>("grant_type","refresh_token")};
 
             return await HttpUtility.PostUrlencodedFormAsync<AccessTokenBag>(GetRequestUri(prefix, "1.0/token"), data);
         }

@@ -39,9 +39,6 @@ namespace Greenspot.Stall.Models
         [StringLength(100)]
         public string Name { get; set; }
 
-        [StringLength(50)]
-        public string PaymentTypeId { get; set; }
-
         [StringLength(100)]
         public string PhysicalAddress1 { get; set; }
 
@@ -71,6 +68,15 @@ namespace Greenspot.Stall.Models
 
         [StringLength(100)]
         public string TimeZone { get; set; }
+
+        [StringLength(250)]
+        public string QrCodeImage { get; set; }
+
+        [StringLength(50)]
+        public string DeliveryProductId { get; set; }
+
+        [StringLength(50)]
+        public string PaymentTypeId { get; set; }
 
         public int? DefaultOrderAdvancedMinutes { get; set; }
 

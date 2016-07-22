@@ -41,7 +41,7 @@ namespace Greenspot.SDK.Vend
             public double TaxTotal { get; set; }
 
             [JsonProperty("attributes")]
-            public IList<Attribute> Attributes { get; set; }
+            public IList<Attribute> Attributes { get; set; } = new List<Attribute>();
         }
 
         public class RegisterSalePayment

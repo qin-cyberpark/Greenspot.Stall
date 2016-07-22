@@ -67,7 +67,7 @@ namespace Greenspot.Stall.Models
             }
 
             var result = new List<DeliveryScheduleItem>();
-            var options = DirectlyItems.Where(x => x.From.Date.Subtract(DateTime.Now.Date).TotalDays <= nextDays).OrderBy(x => x.From).ToList();
+            var options = DirectlyItems.Where(x => x.From.Date.Subtract(DateTime.Now.Date).TotalDays < nextDays).OrderBy(x => x.From).ToList();
             foreach (var opt in options)
             {
                 if (opt.From.Subtract(DateTime.Now).TotalMinutes >= defaultOrderAdvancedMinutes &&

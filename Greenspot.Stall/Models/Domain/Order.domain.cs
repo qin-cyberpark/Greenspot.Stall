@@ -22,63 +22,82 @@ namespace Greenspot.Stall.Models
                                             .OrderByDescending(x => x.CreateTime).ToList();
         }
 
-        //public async Task<bool> Save(StallEntities db)
-        //{
-        //    if (await SaveToVend())
-        //    {
-        //        return SaveToDB(db);
-        //    }
-        //    return false;
-        //}
-
-        private async Task<bool> SaveToVend()
+        public static Order FindById(int id, StallEntities db)
         {
-            //create vend api object
-            var vendSale = new VendRegisterSaleRequest();
-            vendSale.RegisterId = Stall.RegisterId;
-            vendSale.SaleDate = CreateTime.ToString("yyyy-MM-dd HH:mm:ss");
-            vendSale.Status = OrderStatus.CLOSED;
-            vendSale.TotalPrice = (double)CalcTotalPriceExcludeTax();
-            vendSale.TotalTax = (double)CalcTotalTax();
-            vendSale.TaxName = Items[0].Product.TaxName;
-            vendSale.RegisterSaleProducts = new List<VendRegisterSaleRequest.RegisterSaleProduct>();
-            vendSale.RegisterSalePayments = new List<VendRegisterSaleRequest.RegisterSalePayment>();
-            foreach (var item in Items)
+            return db.Orders.FirstOrDefault(x => x.Id == id);
+        }
+
+        public async Task<bool> Save(StallEntities db)
+        {
+            if (await SaveToVend(db))
             {
-                vendSale.RegisterSaleProducts.Add(new VendRegisterSaleRequest.RegisterSaleProduct()
-                {
-                    ProductId = item.Product.Id,
-                    Quantity = item.Quantity,
-                    Price = (double)item.Product.Price,
-                    Tax = (double)item.Product.Tax,
-                    TaxId = item.Product.TaxId,
-                    TaxTotal = (double)item.Product.Tax
-                });
+                return SaveToDB(db);
             }
+            return false;
+        }
 
-            PaidTime = DateTime.Now;
-            vendSale.RegisterSalePayments.Add(new VendRegisterSaleRequest.RegisterSalePayment()
+        private async Task<bool> SaveToVend(StallEntities db)
+        {
+            try
             {
-                RetailerPaymentTypeId = Stall.PaymentTypeId,
-                PaymentDate = PaidTime.Value.ToString("yyyy-MM-dd HH:mm:ss"),
-                Amount = (double)TotalCharge
-            });
+                //var tmpOrder = JsonConvert.DeserializeObject<Order>(JsonString);
+                //var tmpStall = Models.Stall.FindById(StallId, db);
+                //create vend api object
+                var vendSale = new VendRegisterSaleRequest();
+                vendSale.InvoiceNumber = Id.ToString();
+                vendSale.RegisterId = Stall.RegisterId;
+                vendSale.SaleDate = CreateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                vendSale.Status = OrderStatus.CLOSED;
+                vendSale.TotalPrice = (double)CalcTotalPriceExcludeTax();
+                vendSale.TotalTax = (double)CalcTotalTax();
+                vendSale.TaxName = Items[0].Product.TaxName;
+                vendSale.RegisterSaleProducts = new List<VendRegisterSaleRequest.RegisterSaleProduct>();
+                vendSale.RegisterSalePayments = new List<VendRegisterSaleRequest.RegisterSalePayment>();
+                vendSale.Note = Note;
+                foreach (var item in Items)
+                {
+                    var salePdt = new VendRegisterSaleRequest.RegisterSaleProduct()
+                    {
+                        ProductId = item.Product.Id,
+                        Quantity = item.Quantity,
+                        Price = (double)item.Product.Price,
+                        Tax = (double)item.Product.Tax,
+                        TaxId = item.Product.TaxId,
+                        TaxTotal = (double)item.Product.Tax
+                    };
 
-            //do reqeust
-            var response = await VendRegisterSale.CreateVendRegisterSalesAsync(vendSale, Stall.Prefix, await StallApplication.GetAccessTokenAsync(Stall.Prefix));
-            VendResponse = JsonConvert.SerializeObject(response);
-            VendSaleId = response?.RegisterSale?.Id;
+                    salePdt.Attributes.Add(new VendRegisterSaleRequest.Attribute()
+                    {
+                        Name = "line_note",
+                        Value = item.Product.LineNote
+                    });
 
-            return !string.IsNullOrEmpty(response.RegisterSale.Id) && OrderStatus.CLOSED.Equals(response.RegisterSale.Status);
+                    vendSale.RegisterSaleProducts.Add(salePdt);
+                }
+
+                PaidTime = DateTime.Now;
+                vendSale.RegisterSalePayments.Add(new VendRegisterSaleRequest.RegisterSalePayment()
+                {
+                    RetailerPaymentTypeId = Stall.PaymentTypeId,
+                    PaymentDate = PaidTime.Value.ToString("yyyy-MM-dd HH:mm:ss"),
+                    Amount = (double)TotalCharge
+                });
+
+                //do reqeust
+                var response = await VendRegisterSale.CreateVendRegisterSalesAsync(vendSale, Stall.Prefix, await StallApplication.GetAccessTokenAsync(Stall.Prefix));
+                VendResponse = JsonConvert.SerializeObject(response);
+                VendSaleId = response?.RegisterSale?.Id;
+
+                return !string.IsNullOrEmpty(response.RegisterSale.Id) && OrderStatus.CLOSED.Equals(response.RegisterSale.Status);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public bool Create(StallEntities db)
         {
-            var jsonString = JsonConvert.SerializeObject(this, new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            });
-
             //set total price
             if (GreenspotConfiguration.Payment.IsFullCharge)
             {
@@ -90,6 +109,13 @@ namespace Greenspot.Stall.Models
             }
 
             db.Orders.Add(this);
+            return db.SaveChanges() > 0;
+        }
+
+        private bool SaveToDB(StallEntities db)
+        {
+            db.Orders.Attach(this);
+            db.Entry(this).State = EntityState.Modified;
             return db.SaveChanges() > 0;
         }
 

@@ -8,6 +8,7 @@ using Greenspot.SDK.Vend;
 using System.ComponentModel.DataAnnotations.Schema;
 using Greenspot.Configuration;
 using Newtonsoft.Json;
+using System.Data.Entity;
 
 namespace Greenspot.Stall.Models
 {
@@ -30,12 +31,17 @@ namespace Greenspot.Stall.Models
                 return productResult;
             }
 
-            ////create webhook
-            //var webhookResult = await CreateWebhook();
-            //if (!webhookResult.Succeeded)
-            //{
-            //    return webhookResult;
-            //}
+            //now manually create delivery product
+
+            //now manually create payment
+
+
+            //create webhook
+            var webhookResult = await CreateWebhook();
+            if (!webhookResult.Succeeded)
+            {
+                return webhookResult;
+            }
 
             result.Succeeded = Save();
             return result;
@@ -100,34 +106,32 @@ namespace Greenspot.Stall.Models
             var paytypeResult = await VendPaymentType.GetPaymentTypetsAsync(Prefix, await StallApplication.GetAccessTokenAsync(Prefix));
             if (paytypeResult?.PaymentTypes == null || paytypeResult.PaymentTypes.Count == 0)
             {
-                result.Message = "无法同步VEND PAYMENT TYPE信息";
+                result.Message = "无法获取VEND PAYMENT TYPE信息";
                 return result;
             }
 
             //set payment type
-            string stallPaymentTypeName = "CASH";
-            string stallPaymentTypeId = null;
+            PaymentTypeId = null;
             foreach (var pt in paytypeResult.PaymentTypes)
             {
-                if (pt.Name.ToUpper().Equals(stallPaymentTypeName))
+                if (pt.Name.ToUpper().Equals("GS PAY"))
                 {
-                    stallPaymentTypeId = pt.Id;
+                    PaymentTypeId = pt.Id;
                     break;
                 }
             }
 
-            if (string.IsNullOrEmpty(stallPaymentTypeId))
+            if (string.IsNullOrEmpty(PaymentTypeId))
             {
-                result.Message = string.Format("找不到名为{0}的VEND PAYMENT TYPE", stallPaymentTypeName);
+                result.Message = "无法获取名为GS PAY的VEND PAYMENT TYPE";
                 return result;
             }
-            PaymentTypeId = stallPaymentTypeId;
 
             //load registers
             var registerResult = await VendRegister.GetRegistersAsync(Prefix, await StallApplication.GetAccessTokenAsync(Prefix));
             if (registerResult?.Registers == null || registerResult.Registers.Count == 0)
             {
-                result.Message = "无法同步VEND REGISTER信息";
+                result.Message = "无法获取VEND REGISTER信息";
                 return result;
             }
 
@@ -148,7 +152,7 @@ namespace Greenspot.Stall.Models
             var productResult = await VendProduct.GetProductsAsync(Prefix, await StallApplication.GetAccessTokenAsync(Prefix));
             if (productResult?.Products == null)
             {
-                result.Message = "无法同步VEND商品信息";
+                result.Message = "无法获取VEND商品信息";
                 return result;
             }
 
@@ -159,7 +163,17 @@ namespace Greenspot.Stall.Models
             var vProducts = productResult?.Products;
             foreach (var vP in vProducts)
             {
-                Products.Add(Product.ConvertFrom(vP, Id));
+                var p = Product.ConvertFrom(vP, Id);
+                if (p.Handle.ToLower().Equals("vend-discount"))
+                {
+                    p.Active = false;
+                }
+                else if (p.Handle.ToLower().Equals("gs-delivery"))
+                {
+                    DeliveryProductId = p.Id;
+                    p.Active = false;
+                }
+                Products.Add(p);
             }
 
             //set data
@@ -167,62 +181,114 @@ namespace Greenspot.Stall.Models
             return result;
         }
 
+        //public async Task<OperationResult<bool>> CreateDelivery()
+        //{
+        //    var result = new OperationResult(false);
+
+        //    //create delivery product
+        //    var pdtDelivery = new SDK.Vend.VendProduct()
+        //    {
+        //        Name = "运费",
+        //        BaseName = "运费",
+        //        Handle = "gs-delivery",
+        //        Sku = "gs-delivery",
+        //        Price = 0.0M,
+        //        Active = true
+        //    };
+
+        //    var pdtResp = await SDK.Vend.VendProduct.AddProduct(Prefix, await StallApplication.GetAccessTokenAsync(Prefix), pdtDelivery);
+        //    if (pdtResp == null || pdtResp.Product == null || string.IsNullOrEmpty(pdtResp.Product.Id))
+        //    {
+        //        result.Message = "无法创建运费";
+        //        return result;
+        //    }
+
+        //    //set data
+        //    result.Succeeded = true;
+        //    return result;
+        //}
+
         private async Task<OperationResult<bool>> CreateWebhook()
         {
             var result = new OperationResult(false);
-
-            //create product update webhook
-            var pdtUpdate = new SDK.Vend.VendWebhookRequest()
+            //load webhooks
+            var webhooks = await SDK.Vend.VendWebhook.GetWebhooksAsync(Prefix, await StallApplication.GetAccessTokenAsync(Prefix));
+            Webhooks.Clear();
+            foreach(var h in webhooks)
             {
-                Type = SDK.Vend.VendWebhook.VendWebhookTypes.ProductUpdate,
-                Url = GreenspotConfiguration.AppSettings["webhook.product.update"].Value
-            };
-            var pdtResp = await SDK.Vend.VendWebhook.CreateVendWebhookAsync(pdtUpdate, Prefix, await StallApplication.GetAccessTokenAsync(Prefix));
-            if (pdtResp != null)
-            {
-                //save
                 Webhooks.Add(new VendWebhook()
                 {
-                    Id = pdtResp.Id,
+                    Id = h.Id,
                     StallId = Id,
                     Prefix = Prefix,
-                    RetailerId = pdtResp.RetailerId,
-                    Type = pdtResp.Type,
-                    Url = pdtResp.Url,
-                    Active = pdtResp.Active
+                    RetailerId = h.RetailerId,
+                    Type = h.Type,
+                    Url = h.Url,
+                    Active = h.Active
                 });
-            }
-            else
-            {
-                result.Message = "无法创建商品更新WEBHOOK";
-                return result;
             }
 
-            //create inventory update webhook
-            var stockUpdate = new SDK.Vend.VendWebhookRequest()
+            if (!webhooks.Any(x => SDK.Vend.VendWebhook.VendWebhookTypes.ProductUpdate.Equals(x.Type)))
             {
-                Type = SDK.Vend.VendWebhook.VendWebhookTypes.InventoryUpdate,
-                Url = GreenspotConfiguration.AppSettings["webhook.inventory.update"].Value
-            };
-            var stockResp = await SDK.Vend.VendWebhook.CreateVendWebhookAsync(pdtUpdate, Prefix, await StallApplication.GetAccessTokenAsync(Prefix));
-            if (stockResp != null)
-            {
-                //save
-                Webhooks.Add(new VendWebhook()
+                //create product update webhook
+                var pdtUpdate = new SDK.Vend.VendWebhook()
                 {
-                    Id = pdtResp.Id,
-                    StallId = Id,
-                    Prefix = Prefix,
-                    RetailerId = pdtResp.RetailerId,
-                    Type = pdtResp.Type,
-                    Url = pdtResp.Url,
-                    Active = pdtResp.Active
-                });
+                    Type = SDK.Vend.VendWebhook.VendWebhookTypes.ProductUpdate,
+                    Url = GreenspotConfiguration.AppSettings["webhook.product.update"].Value,
+                    Active = true
+                };
+                var pdtResp = await SDK.Vend.VendWebhook.CreateVendWebhookAsync(pdtUpdate, Prefix, await StallApplication.GetAccessTokenAsync(Prefix));
+                if (pdtResp != null)
+                {
+                    //save
+                    Webhooks.Add(new VendWebhook()
+                    {
+                        Id = pdtResp.Id,
+                        StallId = Id,
+                        Prefix = Prefix,
+                        RetailerId = pdtResp.RetailerId,
+                        Type = pdtResp.Type,
+                        Url = pdtResp.Url,
+                        Active = pdtResp.Active
+                    });
+                }
+                else
+                {
+                    result.Message = "无法创建商品更新WEBHOOK";
+                    return result;
+                }
             }
-            else
+
+
+            if (!webhooks.Any(x => SDK.Vend.VendWebhook.VendWebhookTypes.InventoryUpdate.Equals(x.Type)))
             {
-                result.Message = "无法创建库存更新WEBHOOK";
-                return result;
+                //create inventory update webhook
+                var stockUpdate = new SDK.Vend.VendWebhook()
+                {
+                    Type = SDK.Vend.VendWebhook.VendWebhookTypes.InventoryUpdate,
+                    Url = GreenspotConfiguration.AppSettings["webhook.inventory.update"].Value,
+                    Active = true
+                };
+                var stockResp = await SDK.Vend.VendWebhook.CreateVendWebhookAsync(stockUpdate, Prefix, await StallApplication.GetAccessTokenAsync(Prefix));
+                if (stockResp != null)
+                {
+                    //save
+                    Webhooks.Add(new VendWebhook()
+                    {
+                        Id = stockUpdate.Id,
+                        StallId = Id,
+                        Prefix = Prefix,
+                        RetailerId = stockUpdate.RetailerId,
+                        Type = stockUpdate.Type,
+                        Url = stockUpdate.Url,
+                        Active = stockUpdate.Active
+                    });
+                }
+                else
+                {
+                    result.Message = "无法创建库存更新WEBHOOK";
+                    return result;
+                }
             }
 
             //set data
@@ -283,7 +349,7 @@ namespace Greenspot.Stall.Models
 
                 return GetProducts(delegate (Product x)
                 {
-                    return string.IsNullOrEmpty(x.VariantParentId);
+                    return string.IsNullOrEmpty(x.VariantParentId) && x.Active == true;
                 }).ToList();
             }
         }
@@ -342,6 +408,9 @@ namespace Greenspot.Stall.Models
                 return _deliverySchedule;
             }
         }
+        #endregion
+
+        #region operation
 
         private IEnumerable<Product> GetProducts(Func<Product, bool> condition)
         {
@@ -349,11 +418,9 @@ namespace Greenspot.Stall.Models
             {
                 return null;
             }
-            return Products.Where(condition).Where(x => !x.Handle.Equals("vend-discount") && (x.Active ?? false));
+            return Products.Where(condition);
         }
-        #endregion
 
-        #region operation
         public IList<DeliverySchedule.DeliveryScheduleItem> GetSchedule(string countryId, string city, string area,
                                                                          int nextDays = 7)
         {
@@ -364,6 +431,8 @@ namespace Greenspot.Stall.Models
         {
             return DeliveryFee.Get(PhysicalCountryId, PhysicalCity, PhysicalSuburb, destCountryId, destCity, destSuburb, orderAmount);
         }
+
+
         #endregion
     }
 }

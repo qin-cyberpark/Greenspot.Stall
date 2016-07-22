@@ -50,14 +50,6 @@ namespace Greenspot.Stall.Models
             }
         }
 
-        [NotMapped]
-        public bool HasName
-        {
-            get
-            {
-                return !string.IsNullOrEmpty(FirstName);
-            }
-        }
 
         public bool Save(StallEntities db)
         {

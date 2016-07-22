@@ -261,5 +261,8 @@ namespace Greenspot.SDK.Vend
     {
         [JsonProperty("products")]
         public IList<VendProduct> Products { get; set; }
+
+        [JsonProperty("product")]
+        public VendProduct Product { get; set; }
     }
 }

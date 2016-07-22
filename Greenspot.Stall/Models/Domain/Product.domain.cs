@@ -70,7 +70,7 @@ namespace Greenspot.Stall.Models
         #region Static
         public static IList<Product> GetHomepageProducts(StallEntities db)
         {
-            Func<Product, bool> condition = delegate (Product p) { return string.IsNullOrEmpty(p.VariantParentId); };
+            Func<Product, bool> condition = delegate (Product p) { return string.IsNullOrEmpty(p.VariantParentId) && p.Active == true; };
             return GetProducts(condition, db).Take(50).ToList();
         }
 
@@ -85,7 +85,7 @@ namespace Greenspot.Stall.Models
 
         public static Product FindById(string id, StallEntities db)
         {
-            return db.Products.Include(x => x.Stall).FirstOrDefault(x => x.Id.Equals(id));
+            return db.Products.FirstOrDefault(x => x.Id.Equals(id));
         }
 
         public static bool SetInventoryById(string id, float count, StallEntities db)
@@ -106,7 +106,7 @@ namespace Greenspot.Stall.Models
 
         private static IEnumerable<Product> GetProducts(Func<Product, bool> condition, StallEntities db)
         {
-            return db.Products.Where(condition).Where(x => !x.Handle.Equals("vend-discount"));
+            return db.Products.Include(x=>x.Stall).Where(x=>x.Stall.Approved == true).Where(condition);
         }
 
         public static Product ConvertFrom(VendProduct p, string stallId)
