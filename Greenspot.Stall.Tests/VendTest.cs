@@ -48,5 +48,12 @@ namespace Greenspot.Stall.Tests
                 }
             }
         }
+
+        [TestMethod]
+        public void DistanceTest()
+        {
+            var result = Greenspot.Stall.Utilities.DistanceMatrix.GetSuburbDistaince("NZ","Auckland", "New Windsor", "nz", "Auckland","Mt Raskial");
+            Assert.IsNotNull(result);
+        }
     }
 }

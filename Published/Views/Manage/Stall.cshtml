@@ -1,0 +1,46 @@
+﻿@model Greenspot.Stall.Models.Stall
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body style="width:800px;margin:0 auto;">
+    <h1>@Model.Prefix</h1> <a href="/manage/init/@Model.Id">初始化</a>
+    <p>
+        小铺名称：@Model.Name
+    </p>
+    <p>
+        地址:@Model.PhysicalAddress1, @Model.PhysicalAddress2, @Model.PhysicalSuburb, @Model.PhysicalCity, @Model.PhysicalPostcode
+    </p>
+    <p>
+        gs-delivery ID：@Model.DeliveryProductId
+    </p>
+    <p>
+        订单提前分钟:@Model.DefaultOrderAdvancedMinutes
+    </p>
+    <p>
+        运费：@Model.DeliveryFeeJsonString
+    </p>
+    <p>
+        配送时间:@Model.DeliveryScheduleJsonString
+    </p>
+    <p>
+        GS PAY ID：@Model.PaymentTypeId
+    </p>
+    <p>
+        Webhooks:
+        @foreach(var hook in Model.Webhooks)
+        {
+            <div>
+                @hook.Type, @hook.Url, @hook.Active
+            </div>
+        }
+    </p>
+</body>
+</html>

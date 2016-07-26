@@ -1,22 +1,27 @@
 ﻿{
   "Default": 20.00,
-  "FreeDeliveryOrderAmount":39, 
+  "FreeDeliveryOrderAmount":9999, 
   "Type": "ByRange",
   "Ranges": [
     {
       "From": 0,
+      "To": 5,
+      "Fee": 3.00
+    },
+    {
+      "From": 5,
       "To": 10,
-      "Fee": 5.00
+      "Fee": 6.00
     },
     {
       "From": 10,
-      "To": 20,
+      "To": 25,
       "Fee": 10.00
     },
     {
-      "From": 20,
+      "From": 25,
       "To": 30,
-      "Fee": 20.00
+      "Fee": 12.00
     }
   ]
 }

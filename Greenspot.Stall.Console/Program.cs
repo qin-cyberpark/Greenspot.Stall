@@ -10,7 +10,7 @@ namespace Greenspot.Stall.Console
     {
         static void Main(string[] args)
         {
-            Greenspot.Stall.Utilities.DistanceMatrix.InitDB();
+            //Greenspot.Stall.Utilities.DistanceMatrix.InitDB();
         }
     }
 }

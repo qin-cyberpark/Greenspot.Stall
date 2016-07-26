@@ -19,6 +19,7 @@ namespace Greenspot.Stall.Models
         public virtual DbSet<VendAccessToken> VendAccessTokens { get; set; }
         public virtual DbSet<VendWebhook> VendWebhooks { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderItem> OrderItems { get; set; }
         public virtual DbSet<Area> Areas { get; set; }
         public virtual DbSet<Suburb> Suburbs { get; set; }
         public virtual DbSet<SuburbDistance> SuburbDistances { get; set; }

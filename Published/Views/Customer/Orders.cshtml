@@ -30,22 +30,29 @@
 
 </head>
 <body>
+    <md-toolbar id="stall-toolbar" class="md-primary" layout="row" layout-align="center center">
+        <div class="stall-text">
+            <div class="stall-text-line-1">
+                我的订单
+            </div>
+        </div>
+    </md-toolbar>
     <md-content id="cart-content">
         @if (_orders == null || _orders.Count == 0)
         {
             <div>
-                <h3>Empty</h3>
+                <h3>没有订单</h3>
             </div>
         }
         else
         {
             foreach(var o in _orders)
             {
-                var vendO = JsonConvert.DeserializeObject<Greenspot.SDK.Vend.VendRegisterSaleApiResult>(o.VendResponse);
                 <div layout="row">
-                    <span flex>@vendO.RegisterSale.ShortCode.ToUpper()</span>
-                    <span flex>@o.Stall.Name</span>
-                    <span flex>@vendO.RegisterSale.Totals.TotalPayment.ToString("$0.00")</span>
+                    <span flex>@o.Id</span>
+                    <span flex>@string.Format("{0:HH:mm ddMMM}",o.PaidTime)</span>
+                    <span flex>@(o.Stall?.Name)</span>
+                    <span flex>@o.TotalCharge.ToString("$0.00")</span>
                 </div>
             }
         }

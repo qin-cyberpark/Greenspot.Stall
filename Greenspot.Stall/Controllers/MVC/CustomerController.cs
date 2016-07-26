@@ -21,6 +21,7 @@ namespace Greenspot.Stall.Controllers.MVC
 {
     public class CustomerController : Controller
     {
+        private static object _locker = new object();
         private StallEntities _db = new StallEntities();
         private GreenspotUserManager _userManager;
         private GreenspotUser _currentUser;
@@ -45,6 +46,35 @@ namespace Greenspot.Stall.Controllers.MVC
                     _userManager = HttpContext.GetOwinContext().GetUserManager<GreenspotUserManager>();
                 }
                 return _userManager;
+            }
+        }
+
+        private bool HasPxPayResultUsed(string resultId)
+        {
+            lock (_locker)
+            {
+                IList<string> results;
+                if (Session["USED_PXPAY_RESULT"] == null)
+                {
+                    results = new List<string>();
+                    results.Add(resultId);
+                    Session["USED_PXPAY_RESULT"] = results;
+                    return false;
+                }
+                else
+                {
+                    results = (IList<string>)Session["USED_PXPAY_RESULT"];
+                    if (!results.Contains(resultId))
+                    {
+                        results.Add(resultId);
+                        Session["USED_PXPAY_RESULT"] = results;
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
             }
         }
 
@@ -92,28 +122,49 @@ namespace Greenspot.Stall.Controllers.MVC
         [HttpPost]
         public ActionResult AddAddress()
         {
+            OperationResult<bool> result = new OperationResult<bool>(true);
+
             Stream req = Request.InputStream;
             req.Seek(0, System.IO.SeekOrigin.Begin);
             string json = new StreamReader(req).ReadToEnd();
 
-            DeliveryAddress addr = null;
+            DeliveryAddress addr = new DeliveryAddress();
             try
             {
-                addr = JsonConvert.DeserializeObject<DeliveryAddress>(json);
-                var suburb = Suburb.Find(addr.Suburb, addr.City, "NZ", _db);
-                addr.CountryId = "NZ";
-                addr.Area = suburb.Area;
+                var clntObj = JsonConvert.DeserializeObject<dynamic>(json);
                 addr.UserId = CurrentUser.Id;
-                addr.Save(_db);
-            }
+                addr.FirstName = clntObj.FirstName;
+                addr.LastName = clntObj.LastName;
+                addr.Mobile = clntObj.Mobile;
+                addr.Address1 = clntObj.AddressObject.address_components[0].short_name + " ";
+                addr.Address1 += clntObj.AddressObject.address_components[1].short_name;
+                addr.Suburb = clntObj.AddressObject.address_components[2].short_name;
+                addr.City = clntObj.AddressObject.address_components[3].short_name;
+                addr.State = clntObj.AddressObject.address_components[4].short_name;
+                addr.CountryId = clntObj.AddressObject.address_components[5].short_name;
+                addr.Postcode = clntObj.AddressObject.address_components[6].short_name;
+                addr.FullAddress = clntObj.AddressObject.formatted_address;
 
-            catch
+                //get surburb
+                var suburb = Suburb.Find(addr.Suburb, addr.City, addr.CountryId, _db);
+                if (suburb != null)
+                {
+                    addr.Area = suburb.Area;
+                    addr.Save(_db);
+                }
+                else
+                {
+                    result.Succeeded = false;
+                    result.Message = "不能识别Suburb";
+                }
+            }
+            catch (Exception ex)
             {
                 // Try and handle malformed POST body
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                result.Succeeded = false;
+                result.Message = ex.Message;
             }
 
-            OperationResult<bool> result = new OperationResult<bool>(true);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -122,8 +173,27 @@ namespace Greenspot.Stall.Controllers.MVC
         [HttpGet]
         public ActionResult Checkout()
         {
-            ViewBag.Order = (OrderViewModel)Session["CURRENT_ORDER"];
-            return View();
+            var order = (OrderViewModel)Session["CURRENT_ORDER"];
+            var stockMsgs = new List<string>();
+            //check stock
+            foreach (var item in order.Stall.Items)
+            {
+                var pdt = Product.FindById(item.Id, _db);
+                if (pdt.Stock < item.Quantity)
+                {
+                    stockMsgs.Add(string.Format("{0}仅剩{1}件(份)", pdt.Name, pdt.Stock));
+                }
+            }
+            if (stockMsgs.Count > 0)
+            {
+                ViewBag.StockMsgs = stockMsgs;
+                return View("Cart");
+            }
+            else
+            {
+                ViewBag.Order = order;
+                return View();
+            }
         }
 
         [Authorize]
@@ -166,9 +236,8 @@ namespace Greenspot.Stall.Controllers.MVC
                 {
                     //check stock
                 }
-                order.Items.Add(new OrderItem()
+                order.Items.Add(new OrderItem(product)
                 {
-                    Product = product,
                     Quantity = i.Quantity
                 });
             }
@@ -176,23 +245,13 @@ namespace Greenspot.Stall.Controllers.MVC
             //delivery
             var stall = Models.Stall.FindById(orderVM.Stall.Id, _db);
             var deliveryProduct = Product.FindById(stall.DeliveryProductId, _db);
-            deliveryProduct.DisplayRetailPriceTaxInclusive = orderVM.DeliveryFee;
-            if (orderVM.DeliveryOption.IsPickUp)
-            {
-                var devAddr = DeliveryAddress.FindById(int.Parse(orderVM.DeliveryAddress.Id), _db);
-                deliveryProduct.LineNote = orderVM.DeliveryOption.ToString() + " " + devAddr.ToString();
 
-            }
-            else
-            {
-                deliveryProduct.LineNote = orderVM.DeliveryOption.ToString();
-                deliveryProduct.DisplayRetailPriceTaxInclusive = orderVM.DeliveryFee;
-            }
+            var devAddr = DeliveryAddress.FindById(int.Parse(orderVM.DeliveryAddress.Id), _db);
+            deliveryProduct.LineNote = orderVM.DeliveryOption.ToString() + "\n" + devAddr.ToString();
+            deliveryProduct.Price = orderVM.DeliveryFee;
 
-
-            order.Items.Add(new OrderItem()
+            order.Items.Add(new OrderItem(deliveryProduct)
             {
-                Product = deliveryProduct,
                 Quantity = 1
             });
 
@@ -252,7 +311,7 @@ namespace Greenspot.Stall.Controllers.MVC
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult> FakePay()
         {
@@ -273,9 +332,9 @@ namespace Greenspot.Stall.Controllers.MVC
                     await order.Save(_db);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                StallApplication.SysError("[MSG]fake pay failed", ex);
             }
 
             return Redirect("/customer/orders");
@@ -288,6 +347,7 @@ namespace Greenspot.Stall.Controllers.MVC
                 StallApplication.SysError("[MSG]pxpay callback without paid parameter");
                 return Redirect("~/ErrorPage");
             }
+
             StallApplication.SysInfoFormat("[MSG]PxPay call back [{0}]:{1}", paidFlag, Request.Url.ToString());
             bool isSuccess = "SUCCESS".Equals(paidFlag.ToUpper());
 
@@ -296,6 +356,11 @@ namespace Greenspot.Stall.Controllers.MVC
             {
                 StallApplication.SysError("[MSG]pxpay callback without result id");
                 return Redirect("~/ErrorPage");
+            }
+
+            if (HasPxPayResultUsed(payResultId))
+            {
+                return Redirect("/customer/orders");
             }
 
             int paidOrderId = 0;
@@ -313,24 +378,28 @@ namespace Greenspot.Stall.Controllers.MVC
 
             if (isSuccess)
             {
+
                 //save to vend
                 var order = Order.FindById(id, _db);
-                await order.Save(_db);
-
-                //send message
-                try
+                if (string.IsNullOrEmpty(order.VendSaleId))
                 {
-                    var owner = UserManager.FindById(order.Stall.UserId);
-                    var openId = owner?.SnsInfos[WeChatClaimTypes.OpenId].InfoValue;
-                    if (!string.IsNullOrEmpty(openId))
+                    await order.Save(_db);
+
+                    //send message
+                    try
                     {
-                        var msg = string.Format("店铺[{0}]有一个新订单 [{1}]", order.Stall.Name, order.Id);
-                        WeChatHelper.SendMessage(openId, msg);
+                        var owner = UserManager.FindById(order.Stall.UserId);
+                        var openId = owner?.SnsInfos[WeChatClaimTypes.OpenId].InfoValue;
+                        if (!string.IsNullOrEmpty(openId))
+                        {
+                            var msg = string.Format("店铺[{0}]有一个新订单 [{1}]", order.Stall.Name, order.Id);
+                            WeChatHelper.SendMessage(openId, msg);
+                        }
                     }
-                }
-                catch
-                {
+                    catch
+                    {
 
+                    }
                 }
 
                 ////clear cookie

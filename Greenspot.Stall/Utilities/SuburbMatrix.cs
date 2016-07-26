@@ -14,101 +14,73 @@ namespace Greenspot.Stall.Utilities
 {
     public static class DistanceMatrix
     {
-        private static string BuildKey(string region, string ori, string dest, string countryCode = "NZ")
+        private static string BuildKey(string depCountry, string depCity, string depSuburb,
+                                        string destCountry, string destCity, string destSuburb)
         {
-            if (string.IsNullOrEmpty(countryCode) || string.IsNullOrEmpty(region)
-                || string.IsNullOrEmpty(ori) || string.IsNullOrEmpty(dest))
+            if (string.IsNullOrEmpty(depCountry) || string.IsNullOrEmpty(destCountry)
+                || string.IsNullOrEmpty(depCity) || string.IsNullOrEmpty(depSuburb)
+                || string.IsNullOrEmpty(destCity) || string.IsNullOrEmpty(destSuburb))
             {
                 return null;
             }
 
-            var bigger = string.Compare(ori, dest, true);
+            var dep = string.Format("{0}::{1}::{2}", depCountry, depCity, depSuburb);
+            var dest = string.Format("{0}::{1}::{2}", destCountry, destCity, destSuburb);
+            var bigger = string.Compare(dep, dest, true);
 
-            return string.Format("{0}::{1}::{2}|{3}", countryCode, region, bigger > 0 ? ori : dest, bigger > 0 ? dest : ori).ToUpper();
+            //return string.Format("{0}-{1}", bigger > 0 ? dep : dest, bigger > 0 ? dest : dep).ToLower();
+            return string.Format("{0}-{1}", dep, dest).ToLower();
         }
 
-        public static void InitDB()
+
+        public static int? GetSuburbDistaince(string depCountry, string depCity, string depSuburb,
+                                                string destCountry, string destCity, string destSuburb)
         {
-            while (true)
+            //get from db
+            var dbResult = GetSuburbDistanceFromDB(depCountry, depCity, depSuburb, destCountry, destCity, destSuburb);
+            if (dbResult != null)
             {
-                using (var db = new StallEntities())
-                {
-                    var pairs = db.SuburbDistances.Where(x => x.Meters == null && !x.OriginSuburb.Equals(x.DestinationSuburb)).Take(100).ToList();
-                    if (pairs == null || pairs.Count == 0)
-                    {
-                        return;
-                    }
+                return dbResult;
+            }
 
-                    foreach (var p in pairs)
-                    {
-                        p.Meters = GetSuburbDistanceFromGoogleMapApi(p.City, p.OriginSuburb, p.DestinationSuburb);
-                        if (p.Meters != null)
-                        {
-                            //store distance
-                            Console.WriteLine("{0},{1}", p.OriginSuburb, p.DestinationSuburb);
-                        }else
-                        {
-                            Task.Delay(5000);
-                            break;
-                        }
-                    }
-                    db.SaveChanges();
-                }
+            //call google map api
+            var glResult = GetSuburbDistanceFromGoogleMapApi(depCountry, depCity, depSuburb, destCountry, destCity, destSuburb);
+            if (glResult == null)
+            {
+                return null;
+            }
+
+            //save to db
+            using (var db = new StallEntities())
+            {
+                var distance = new SuburbDistance()
+                {
+                    ID = BuildKey(depCountry, depCity, depSuburb, destCountry, destCity, destSuburb),
+                    DepartureCountryCode = depCountry,
+                    DepartureCity = depCity,
+                    DepartureSuburb = depSuburb,
+
+                    DestinationCountryCode = destCountry,
+                    DestinationCity = destCity,
+                    DestinationSuburb = destSuburb,
+
+                    Meters = glResult.Value
+                };
+
+                db.SuburbDistances.Add(distance);
+                db.SaveChanges();
+
+                return glResult.Value;
             }
         }
 
-        public static int? GetSuburbDistaince(bool isGoogleApi, string city, string ori, string dest, string countryCode = "NZ")
-        {
-            if (!isGoogleApi)
-            {
-
-                return GetSuburbDistanceFromDB(city, ori, dest, countryCode);
-            }
-            else
-            {
-                //get from google map
-                //check whether suburbs are exist
-                using (var db = new StallEntities())
-                {
-                    //check ori
-                    var oriSub = db.Suburbs.FirstOrDefault(x => x.CountryCode.ToUpper().Equals(countryCode.ToUpper())
-                                                    && x.City.ToUpper().Equals(city.ToUpper())
-                                                    && x.Name.ToUpper().Equals(ori.ToUpper()));
-                    if (oriSub == null)
-                    {
-                        return null;
-                    }
-
-                    //check dest
-                    var destSub = db.Suburbs.FirstOrDefault(x => x.CountryCode.ToUpper().Equals(countryCode.ToUpper())
-                                                       && x.City.ToUpper().Equals(city.ToUpper())
-                                                       && x.Name.ToUpper().Equals(dest.ToUpper()));
-                    if (destSub == null)
-                    {
-                        return null;
-                    }
-
-                    //call google map api
-                    var distance = GetSuburbDistanceFromGoogleMapApi(city, ori, dest, countryCode);
-                    if (distance == null)
-                    {
-                        return null;
-                    }
-
-                    return distance.Value;
-                }
-            }
-
-        }
-
-        public static int? GetSuburbDistanceFromDB(string city, string ori, string dest, string countryCode = "NZ")
+        public static int? GetSuburbDistanceFromDB(string depCountry, string depCity, string depSuburb,
+                                                    string destCountry, string destCity, string destSuburb)
         {
             using (var db = new StallEntities())
             {
-                var rec = db.SuburbDistances.FirstOrDefault(x => x.CountryCode.ToUpper().Equals(countryCode.ToUpper())
-                                                    && x.City.ToUpper().Equals(city.ToUpper())
-                                                    && x.OriginSuburb.ToUpper().Equals(ori.ToUpper())
-                                                    && x.DestinationSuburb.ToUpper().Equals(dest.ToUpper()));
+                var key = BuildKey(depCountry, depCity, depSuburb, destCountry, destCity, destSuburb);
+                var rec = db.SuburbDistances.FirstOrDefault(x => x.ID.Equals(key));
                 if (rec != null && rec.Meters != null)
                 {
                     return rec.Meters;
@@ -120,16 +92,39 @@ namespace Greenspot.Stall.Utilities
             }
         }
 
-        public static int? GetSuburbDistanceFromGoogleMapApi(string region, string ori, string dest, string countryCode = "NZ")
+        public static int? GetSuburbDistanceFromGoogleMapApi(string depCountry, string depCity, string depSuburb,
+                                                    string destCountry, string destCity, string destSuburb, string key = null)
         {
+            depCountry = depCountry.ToLower();
+            depCity = depCity.ToLower();
+            depSuburb = depSuburb.ToLower();
+
+            destCountry = destCountry.ToLower();
+            destCity = destCity.ToLower();
+            destSuburb = destSuburb.ToLower();
+
             string reqUrlPattern = "https://maps.googleapis.com/maps/api/directions/json?origin={0}&destination={1}&key={2}";
-            var reqUrl = string.Format(reqUrlPattern, HttpUtility.UrlEncode(string.Format("{0},{1},{2}", ori, region, countryCode)),
-                HttpUtility.UrlEncode(string.Format("{0},{1},{2}", dest, region, countryCode)), "");
+            var reqUrl = string.Format(reqUrlPattern, HttpUtility.UrlEncode(string.Format("{0},{1},{2}", depSuburb, depCity, depCountry)),
+                HttpUtility.UrlEncode(string.Format("{0},{1},{2}", destSuburb, destCity, destCountry)), key);
             using (var client = new WebClient())
             {
                 var resp = JsonConvert.DeserializeObject<DirectionResponse>(client.DownloadString(reqUrl));
                 if (resp.Status.Equals("OK") && resp.Routes.Count > 0)
                 {
+                    //check start address
+                    var startAddress = resp.Routes[0].Legs[0].StartAddress.ToLower();
+                    if (!startAddress.Contains(depCity) || !startAddress.Contains(depSuburb))
+                    {
+                        return null;
+                    }
+
+                    //check start address
+                    var endAddress = resp.Routes[0].Legs[0].EndAddress.ToLower();
+                    if (!endAddress.Contains(destCity) || !endAddress.Contains(destSuburb))
+                    {
+                        return null;
+                    }
+
                     return resp.Routes[0].Legs[0].Distance.Value;
                 }
                 else

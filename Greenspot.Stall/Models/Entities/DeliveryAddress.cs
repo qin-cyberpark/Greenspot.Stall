@@ -52,6 +52,9 @@
         [StringLength(50)]
         public string Suburb { get; set; }
 
+        [StringLength(200)]
+        public string FullAddress { get; set; }
+
         [ForeignKey("UserId")]
         [JsonIgnore]
         public virtual User User { get; set; }

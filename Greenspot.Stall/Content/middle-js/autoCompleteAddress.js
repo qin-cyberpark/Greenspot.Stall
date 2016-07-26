@@ -1,33 +1,28 @@
-﻿var autocomplete;
+﻿(function () {
+    'use strict';
+    var module = angular.module('greenspotStall');
 
-function initAutocomplete() {
-    // Create the autocomplete object, restricting the search to geographical
-    // location types.
-    autocomplete = new google.maps.places.Autocomplete(
-        /** @type {!HTMLInputElement} */(document.getElementById('address')),
-        { types: ['address'] });
-    // When the user selects an address from the dropdown, populate the address
-    // fields in the form.
-    autocomplete.addListener('place_changed', fillInAddress);
-}
+    //directive
+    module.directive('googleplace', function () {
+        return {
+            scope: {
+                addrObj: '=addressObject',
+                placeOnSelect: '&'
+            },
+            link: function (scope, element, attrs, model) {
 
-function fillInAddress() {
-    // Get the place details from the autocomplete object.
-    var place = autocomplete.getPlace();
-
-    //for (var component in componentForm) {
-    //    document.getElementById(component).value = '';
-    //    document.getElementById(component).disabled = false;
-    //}
-
-    //// Get each component of the address from the place details
-    //// and fill the corresponding field on the form.
-    //for (var i = 0; i < place.address_components.length; i++) {
-    //    var addressType = place.address_components[i].types[0];
-    //    if (componentForm[addressType]) {
-    //        var val = place.address_components[i][componentForm[addressType]];
-    //        document.getElementById(addressType).value = val;
-    //    }
-    //}
-    console.log(place);
-}
+                var options = {
+                    types: ['address'],
+                    componentRestrictions: { country: 'nz' }
+                };
+                scope.googlePlaceAutocomplete = new google.maps.places.Autocomplete(element[0], options);
+                google.maps.event.addListener(scope.googlePlaceAutocomplete, 'place_changed', function () {
+                    scope.$apply(function () {
+                        scope.addrObj = scope.googlePlaceAutocomplete.getPlace();
+                    });
+                    scope.placeOnSelect();
+                });
+            }
+        };
+    });
+})();

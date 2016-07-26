@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using Newtonsoft.Json;
 using Greenspot.Configuration;
+using System.Data.Entity.Migrations;
 
 namespace Greenspot.Stall.Models
 {
@@ -24,7 +25,7 @@ namespace Greenspot.Stall.Models
 
         public static Order FindById(int id, StallEntities db)
         {
-            return db.Orders.FirstOrDefault(x => x.Id == id);
+            return db.Orders.Include(x=>x.Items).FirstOrDefault(x => x.Id == id);
         }
 
         public async Task<bool> Save(StallEntities db)
@@ -50,7 +51,7 @@ namespace Greenspot.Stall.Models
                 vendSale.Status = OrderStatus.CLOSED;
                 vendSale.TotalPrice = (double)CalcTotalPriceExcludeTax();
                 vendSale.TotalTax = (double)CalcTotalTax();
-                vendSale.TaxName = Items[0].Product.TaxName;
+                //vendSale.TaxName = Items[0].Product.TaxName;
                 vendSale.RegisterSaleProducts = new List<VendRegisterSaleRequest.RegisterSaleProduct>();
                 vendSale.RegisterSalePayments = new List<VendRegisterSaleRequest.RegisterSalePayment>();
                 vendSale.Note = Note;
@@ -58,28 +59,27 @@ namespace Greenspot.Stall.Models
                 {
                     var salePdt = new VendRegisterSaleRequest.RegisterSaleProduct()
                     {
-                        ProductId = item.Product.Id,
+                        ProductId = item.ProductId,
                         Quantity = item.Quantity,
-                        Price = (double)item.Product.Price,
-                        Tax = (double)item.Product.Tax,
-                        TaxId = item.Product.TaxId,
-                        TaxTotal = (double)item.Product.Tax
+                        Price = (double)item.Price,
+                        Tax = (double)item.Tax,
+                        TaxId = item.TaxId,
+                        TaxTotal = (double)item.Tax
                     };
 
                     salePdt.Attributes.Add(new VendRegisterSaleRequest.Attribute()
                     {
                         Name = "line_note",
-                        Value = item.Product.LineNote
+                        Value = item.LineNote
                     });
 
                     vendSale.RegisterSaleProducts.Add(salePdt);
                 }
 
-                PaidTime = DateTime.Now;
                 vendSale.RegisterSalePayments.Add(new VendRegisterSaleRequest.RegisterSalePayment()
                 {
                     RetailerPaymentTypeId = Stall.PaymentTypeId,
-                    PaymentDate = PaidTime.Value.ToString("yyyy-MM-dd HH:mm:ss"),
+                    PaymentDate = string.Format("{0:yyyy-MM-dd HH:mm:ss}", PaidTime),
                     Amount = (double)TotalCharge
                 });
 
@@ -92,6 +92,7 @@ namespace Greenspot.Stall.Models
             }
             catch (Exception ex)
             {
+                StallApplication.SysError("[MSG]fail to save to vend", ex);
                 return false;
             }
         }
@@ -108,7 +109,7 @@ namespace Greenspot.Stall.Models
                 TotalCharge = 0.01M;
             }
 
-            db.Orders.Add(this);
+            db.Set<Order>().AddOrUpdate(this);
             return db.SaveChanges() > 0;
         }
 
@@ -125,7 +126,7 @@ namespace Greenspot.Stall.Models
             decimal ttl = 0;
             foreach (var item in Items)
             {
-                ttl += (item.Product.Price ?? 0.0M) * item.Quantity;
+                ttl += (item.Price ?? 0.0M) * item.Quantity;
             }
 
             return ttl;
@@ -136,7 +137,7 @@ namespace Greenspot.Stall.Models
             decimal ttl = 0;
             foreach (var item in Items)
             {
-                ttl += (item.Product.Tax ?? 0.0M) * item.Quantity;
+                ttl += (item.Tax ?? 0.0M) * item.Quantity;
             }
 
             return ttl;

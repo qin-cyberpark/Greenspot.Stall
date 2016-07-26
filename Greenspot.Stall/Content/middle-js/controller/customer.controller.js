@@ -168,7 +168,6 @@
             $http.get('/customer/DeliveryAddresses').success(function (result) {
                 if (result.Succeeded) {
                     vm.deliveryAddresses = result.Data;
-   
                     vm.order.deliveryAddress = vm.deliveryAddresses[0];
 
                     if (callback) {
@@ -243,12 +242,25 @@
         
 
         /*new address*/
-        vm.newAddress = {
-            Suburb: "Auckland Central",
-            City:"Auckland"
+        vm.newAddress = {};
+
+        //select address
+        vm.addressSelected = function () {
+            vm.newAddress.Address = vm.newAddress.AddressObject.formatted_address;
         }
 
+        vm.addressChanged = function () {
+            vm.newAddress.AddressObject = null;
+        }
+
+        //
         vm.addAddress = function () {
+            //console.log(vm.newAddress.AddressObject);
+            if (!vm.newAddress.AddressObject) {
+                alert("请确认地址");
+                return;
+            }
+
             //load items
             $http.post('/customer/addAddress', vm.newAddress).success(function (result) {
                 if (result.Succeeded) {

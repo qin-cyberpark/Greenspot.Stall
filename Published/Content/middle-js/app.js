@@ -13,6 +13,6 @@
                       .defaultIconSet('/static/img/icon/core-icons.svg', 24);
 
                    //location
-                   $locationProvider.html5Mode(true);
+                   //$locationProvider.html5Mode(true);
                }]);
 })();

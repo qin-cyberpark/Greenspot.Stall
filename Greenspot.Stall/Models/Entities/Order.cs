@@ -29,6 +29,12 @@ namespace Greenspot.Stall.Models
             public const string VOIDED = "VOIDED";
         }
 
+        public Order()
+        {
+            Items = new HashSet<OrderItem>();
+        }
+
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [StringLength(50)]
@@ -52,7 +58,6 @@ namespace Greenspot.Stall.Models
         [NotMapped]
         public CreditCard SelectedCard { get; set; } = null;
 
-        [NotMapped]
         public string Note { get; set; }
 
         //[JsonIgnore]
@@ -68,13 +73,6 @@ namespace Greenspot.Stall.Models
         [JsonIgnore]
         public virtual Stall Stall { get; set; }
 
-        [NotMapped]
-        public IList<OrderItem> Items { get; set; } = new List<OrderItem>();
-    }
-
-    public class OrderItem
-    {
-        public Product Product { get; set; }
-        public int Quantity { get; set; }
+        public virtual ICollection<OrderItem> Items { get; set; }
     }
 }

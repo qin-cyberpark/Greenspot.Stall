@@ -194,11 +194,11 @@
     <Compile Include="Models\Common\CustomDateTimeConverter .cs" />
     <Compile Include="Models\Common\Definitions.cs" />
     <Compile Include="Models\Domain\Accountant.cs" />
-    <Compile Include="Models\Domain\Contact.domain.cs" />
     <Compile Include="Models\Domain\DeliveryAddress.domain.cs" />
     <Compile Include="Models\Domain\DeliveryFee.domain.cs" />
     <Compile Include="Models\Domain\DeliverySchedule.domain.cs" />
     <Compile Include="Models\Domain\Order.domain.cs" />
+    <Compile Include="Models\Domain\OrderItem.domain.cs" />
     <Compile Include="Models\Domain\Product.domain.cs" />
     <Compile Include="Models\Domain\Stall.domain.cs" />
     <Compile Include="Models\Domain\Suburb.domain.cs" />
@@ -207,6 +207,7 @@
     <Compile Include="Models\Entities\DeliveryFee.cs" />
     <Compile Include="Models\Entities\DeliverySchedule.cs" />
     <Compile Include="Models\Entities\Area.cs" />
+    <Compile Include="Models\Entities\OrderItems.cs" />
     <Compile Include="Models\Entities\Suburb.cs" />
     <Compile Include="Models\Entities\Order.cs" />
     <Compile Include="Models\Common\OperationResult.cs" />

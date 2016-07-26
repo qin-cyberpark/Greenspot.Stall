@@ -73,34 +73,34 @@ namespace Greenspot.Stall.Models
             TimeZone = outlet.TimeZone;
 
             //set contact info
-            Contacts.Clear();
-            Contacts.Add(new StallContact()
-            {
-                Id = Guid.NewGuid().ToString(),
-                CompanyName = outlet.Contact.CompanyName,
-                Email = outlet.Contact.Email,
-                Fax = outlet.Contact.Fax,
-                FirstName = outlet.Contact.FirstName,
-                LastName = outlet.Contact.LastName,
-                Mobile = outlet.Contact.Mobile,
-                Phone = outlet.Contact.Phone,
-                //physical address
-                PhysicalAddress1 = outlet.Contact.PhysicalAddress1,
-                PhysicalAddress2 = outlet.Contact.PhysicalAddress2,
-                PhysicalCity = outlet.Contact.PhysicalCity,
-                PhysicalCountryId = outlet.Contact.PhysicalCountryId,
-                PhysicalPostcode = outlet.Contact.PhysicalPostcode,
-                PhysicalState = outlet.Contact.PhysicalState,
-                PhysicalSuburb = outlet.Contact.PhysicalSuburb,
-                //postal address
-                PostalAddress1 = outlet.Contact.PostalAddress1,
-                PostalAddress2 = outlet.Contact.PostalAddress2,
-                PostalCity = outlet.Contact.PostalCity,
-                PostalCountryId = outlet.Contact.PostalCountryId,
-                PostalPostcode = outlet.Contact.PostalPostcode,
-                PostalState = outlet.Contact.PostalState,
-                PostalSuburb = outlet.Contact.PostalSuburb
-            });
+            //Contacts.Clear();
+            //Contacts.Add(new StallContact()
+            //{
+            //    Id = Guid.NewGuid().ToString(),
+            //    CompanyName = outlet.Contact.CompanyName,
+            //    Email = outlet.Contact.Email,
+            //    Fax = outlet.Contact.Fax,
+            //    FirstName = outlet.Contact.FirstName,
+            //    LastName = outlet.Contact.LastName,
+            //    Mobile = outlet.Contact.Mobile,
+            //    Phone = outlet.Contact.Phone,
+            //    //physical address
+            //    PhysicalAddress1 = outlet.Contact.PhysicalAddress1,
+            //    PhysicalAddress2 = outlet.Contact.PhysicalAddress2,
+            //    PhysicalCity = outlet.Contact.PhysicalCity,
+            //    PhysicalCountryId = outlet.Contact.PhysicalCountryId,
+            //    PhysicalPostcode = outlet.Contact.PhysicalPostcode,
+            //    PhysicalState = outlet.Contact.PhysicalState,
+            //    PhysicalSuburb = outlet.Contact.PhysicalSuburb,
+            //    //postal address
+            //    PostalAddress1 = outlet.Contact.PostalAddress1,
+            //    PostalAddress2 = outlet.Contact.PostalAddress2,
+            //    PostalCity = outlet.Contact.PostalCity,
+            //    PostalCountryId = outlet.Contact.PostalCountryId,
+            //    PostalPostcode = outlet.Contact.PostalPostcode,
+            //    PostalState = outlet.Contact.PostalState,
+            //    PostalSuburb = outlet.Contact.PostalSuburb
+            //});
 
             //load payment types
             var paytypeResult = await VendPaymentType.GetPaymentTypetsAsync(Prefix, await StallApplication.GetAccessTokenAsync(Prefix));
@@ -214,7 +214,7 @@ namespace Greenspot.Stall.Models
             //load webhooks
             var webhooks = await SDK.Vend.VendWebhook.GetWebhooksAsync(Prefix, await StallApplication.GetAccessTokenAsync(Prefix));
             Webhooks.Clear();
-            foreach(var h in webhooks)
+            foreach (var h in webhooks)
             {
                 Webhooks.Add(new VendWebhook()
                 {
@@ -325,15 +325,24 @@ namespace Greenspot.Stall.Models
 
         public bool Save()
         {
+
             using (var db = new StallEntities())
             {
-                db.Set<Stall>().AddOrUpdate(this);
-                db.Set<StallContact>().AddOrUpdate(Contacts.ToArray());
-                db.Set<Product>().AddOrUpdate(Products.ToArray());
-                db.Set<VendWebhook>().AddOrUpdate(Webhooks.ToArray());
-                db.SaveChanges();
-                return true;
+                try
+                {
+                    db.Set<Stall>().AddOrUpdate(this);
+                    //db.Set<StallContact>().AddOrUpdate(Contacts.ToArray());
+                    db.Set<Product>().AddOrUpdate(Products.ToArray());
+                    db.Set<VendWebhook>().AddOrUpdate(Webhooks.ToArray());
+                    db.SaveChanges();
+                    return true;
+                }
+                catch(Exception ex)
+                {
+                    return false;
+                }
             }
+
         }
 
         #region extend properties

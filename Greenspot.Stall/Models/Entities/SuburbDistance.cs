@@ -11,27 +11,32 @@ namespace Greenspot.Stall.Models
     [Table("suburb_distances")]
     public class SuburbDistance
     {
-        [StringLength(50)]
+        [StringLength(200)]
         public string ID { get; set; }
 
-        [StringLength(50)]
-        public string CountryCode { get; set; }
+        [StringLength(3)]
+        public string DepartureCountryCode { get; set; }
 
         [StringLength(100)]
-        public string City { get; set; }
+        public string DepartureCity { get; set; }
 
         [StringLength(100)]
-        public string OriginSubRegion { get; set; }
+        public string DepartureSuburb { get; set; }
+
+        [StringLength(20)]
+        public string DeparturePostcode { get; set; }
+
+        [StringLength(3)]
+        public string DestinationCountryCode { get; set; }
 
         [StringLength(100)]
-        public string OriginSuburb { get; set; }
-
-
-        [StringLength(100)]
-        public string DestinationSubRegion { get; set; }
+        public string DestinationCity { get; set; }
 
         [StringLength(100)]
         public string DestinationSuburb { get; set; }
+
+        [StringLength(20)]
+        public string DestinationPostcode { get; set; }
 
         public int? Meters { get; set; }
     }

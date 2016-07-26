@@ -1,0 +1,109 @@
+﻿@{
+}
+<!DOCTYPE html>
+
+<html lang="en" ng-app="greenspotStall" ng-cloak>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Stall@Greenspot">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <base href="/">
+    <title>管理地址</title>
+
+    <link rel="shortcut icon" href="/static/img/favicon.png">
+
+    <!-- 3rd party stylesheet -->
+    <link rel="stylesheet" href="/static/lib/angular-material/angular-material.min.css">
+    <!-- platform stylesheet -->
+
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <link rel="stylesheet/less" href="/Content/less/global.less">
+        <link rel="stylesheet/less" href="/Content/less/customer.less">
+    }
+    else
+    {
+        <link rel="stylesheet" href="/Static/css/stall.min.css">
+    }
+
+</head>
+<body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init_address()">
+    <form id="formNewAddress" name="formNewAddress" novalidate ng-submit="formNewAddress.$valid && custCtrl.addAddress()">
+        <div layout="row">
+            <md-input-container flex>
+                <label>地址</label>
+                <input id="address" name="address" required ng-model="custCtrl.newAddress.Address" ng-maxlength="200"  placeholder="" rows="2"
+                       ng-change="custCtrl.addressChanged()"
+                       googleplace place-on-select="custCtrl.addressSelected()" address-object="custCtrl.newAddress.AddressObject">
+                <div ng-messages="formNewAddress.address.$error">
+                    <div ng-message="required">请输入地址</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div layout="row">
+            <md-input-container flex>
+                <label>姓</label>
+                <input name="lastName" required ng-model="custCtrl.newAddress.LastName" ng-maxlength="50">
+                <div ng-messages="formNewAddress.lastName.$error">
+                    <div ng-message="required">请输入姓</div>
+                </div>
+            </md-input-container>
+            <md-input-container flex>
+                <label>名</label>
+                <input name="firstName" required ng-model="custCtrl.newAddress.FirstName" ng-maxlength="50">
+                <div ng-messages="formNewAddress.firstName.$error">
+                    <div ng-message="required">请输入名</div>
+                </div>
+            </md-input-container>
+            <md-input-container flex="50">
+                <label>手机</label>
+                <input name="mobile" required ng-model="custCtrl.newAddress.Mobile" ng-pattern="/^02\d{6,8}$/">
+                <div ng-messages="formNewAddress.mobile.$error" role="alert">
+                    <div ng-message-exp="['required', 'pattern']">
+                        请检查手机号码
+                    </div>
+                </div>
+            </md-input-container>
+        </div>
+        <div layout="column" layout-align="center center">
+            <md-button type="submit" class="md-raised md-primary" ng-disabled="!formNewAddress.$valid">添加</md-button>
+        </div>
+    </form>
+    <md-content id="checkout-content">
+        <div class="delivery-info">
+            <div class="address-option" ng-repeat="addr in custCtrl.deliveryAddresses">
+                <hr />
+                <div class="address-text">
+                    <div>{{addr.FirstName}} {{addr.LastName}} {{addr.Mobile}}</div>
+                    <div>{{addr.FullAddress}}</div>
+                </div>
+            </div>
+        </div>
+
+    </md-content>
+    <div id="map_canvas" style="width:720px;height:600px;display:none;"></div>
+    <!-- 3rd party libraries -->
+    <script type="text/javascript" src="/Static/lib/jQuery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-aria/angular-aria.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-animate/angular-animate.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-messages/angular-messages.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/angular-material/angular-material.min.js"></script>
+    <script type="text/javascript" src="/Static/lib/js-cookie/src/js.cookie.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjEOQEyT7eErvq_HReBOlB-vFbcgCiR34&libraries=places"></script>
+
+    <!-- owner scripts -->
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <script type="text/javascript" src="/Static/lib/less/dist/less.min.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/app.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/autoCompleteAddress.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/controller/customer.controller.js"></script>
+    }
+    else
+    {
+        <script type="text/javascript" src="/Static/js/stall.min.js"></script>
+    }
+</body>
+</html>

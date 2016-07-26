@@ -110,13 +110,11 @@ namespace Greenspot.Stall.Models
                     }
 
                     outOrderId = orderId;
+                    bool result = true;
                     if (!isSuccess)
                     {
                         //pay fail
                         StallApplication.BizErrorFormat("[ACCOUNT-PAPAY]pay failed order id={0}", order.Id);
-                        order.PxPayResponse = output.ToString();
-                        db.SaveChanges();
-                        return true;
                     }
                     else
                     {
@@ -124,13 +122,17 @@ namespace Greenspot.Stall.Models
                         if (order.TotalCharge != amount)
                         {
                             StallApplication.BizErrorFormat("[ACCOUNT-PAPAY]pxpay amount {0} <> transaction amount {1}", amount, order.TotalCharge);
-                            return false;
+                            result = false;
+                        }
+                        else
+                        {
+                            order.PaidTime = DateTime.Now;
                         }
 
-                        order.PaidTime = DateTime.Now;
-                        db.SaveChanges();
-                        return true;
                     }
+                    order.PxPayResponse = output.ToString();
+                    db.SaveChanges();
+                    return result;
                 }
             }
             catch (Exception ex)
