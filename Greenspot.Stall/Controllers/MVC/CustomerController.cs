@@ -21,7 +21,6 @@ namespace Greenspot.Stall.Controllers.MVC
 {
     public class CustomerController : Controller
     {
-        private static object _locker = new object();
         private StallEntities _db = new StallEntities();
         private GreenspotUserManager _userManager;
         private GreenspotUser _currentUser;
@@ -49,40 +48,13 @@ namespace Greenspot.Stall.Controllers.MVC
             }
         }
 
-        private bool HasPxPayResultUsed(string resultId)
-        {
-            lock (_locker)
-            {
-                IList<string> results;
-                if (Session["USED_PXPAY_RESULT"] == null)
-                {
-                    results = new List<string>();
-                    results.Add(resultId);
-                    Session["USED_PXPAY_RESULT"] = results;
-                    return false;
-                }
-                else
-                {
-                    results = (IList<string>)Session["USED_PXPAY_RESULT"];
-                    if (!results.Contains(resultId))
-                    {
-                        results.Add(resultId);
-                        Session["USED_PXPAY_RESULT"] = results;
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
+
 
         // GET: Account
         [Authorize]
         public ActionResult Orders()
         {
-            ViewBag.Orders = Order.FindByUserId(CurrentUser.Id, _db);
+            ViewBag.Orders = Order.FindByUserId(CurrentUser.Id, _db).Where(x => x.HasVendSaleCreated).ToList();
             return View();
         }
 
@@ -133,36 +105,27 @@ namespace Greenspot.Stall.Controllers.MVC
             {
                 var clntObj = JsonConvert.DeserializeObject<dynamic>(json);
                 addr.UserId = CurrentUser.Id;
-                addr.FirstName = clntObj.FirstName;
-                addr.LastName = clntObj.LastName;
+                addr.Name = clntObj.FullName;
                 addr.Mobile = clntObj.Mobile;
-                addr.Address1 = clntObj.AddressObject.address_components[0].short_name + " ";
-                addr.Address1 += clntObj.AddressObject.address_components[1].short_name;
-                addr.Suburb = clntObj.AddressObject.address_components[2].short_name;
-                addr.City = clntObj.AddressObject.address_components[3].short_name;
-                addr.State = clntObj.AddressObject.address_components[4].short_name;
-                addr.CountryId = clntObj.AddressObject.address_components[5].short_name;
-                addr.Postcode = clntObj.AddressObject.address_components[6].short_name;
-                addr.FullAddress = clntObj.AddressObject.formatted_address;
+                addr.Address1 = clntObj.AddressObject.AddressLine1;
+                addr.Address2 = clntObj.Address2;
+                addr.Suburb = clntObj.AddressObject.Suburb;
+                addr.City = clntObj.AddressObject.CityTown;
+                addr.State = "";
+                addr.CountryId = "NZ";
+                addr.Postcode = clntObj.AddressObject.Postcode;
+                addr.FullAddress = (string.IsNullOrEmpty(addr.Address2) ? "" : addr.Address2 + ", ") + clntObj.AddressObject.FullAddress;
+                addr.Area = clntObj.Area;
 
-                //get surburb
-                var suburb = Suburb.Find(addr.Suburb, addr.City, addr.CountryId, _db);
-                if (suburb != null)
-                {
-                    addr.Area = suburb.Area;
-                    addr.Save(_db);
-                }
-                else
-                {
-                    result.Succeeded = false;
-                    result.Message = "不能识别Suburb";
-                }
+                addr.Save(_db);
             }
             catch (Exception ex)
             {
                 // Try and handle malformed POST body
                 result.Succeeded = false;
                 result.Message = ex.Message;
+                StallApplication.SysError("[ADD ADDR]failed to address", ex);
+
             }
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -358,11 +321,6 @@ namespace Greenspot.Stall.Controllers.MVC
                 return Redirect("~/ErrorPage");
             }
 
-            if (HasPxPayResultUsed(payResultId))
-            {
-                return Redirect("/customer/orders");
-            }
-
             int paidOrderId = 0;
             if (!Accountant.VerifyPxPayPayment(payResultId, isSuccess, out paidOrderId))
             {
@@ -378,28 +336,45 @@ namespace Greenspot.Stall.Controllers.MVC
 
             if (isSuccess)
             {
+                if (StallApplication.IsOrderOperating(id))
+                {
+                    StallApplication.BizErrorFormat("[MSG]order {0} is operating", id);
+                    return Redirect("/customer/orders");
+                }
 
                 //save to vend
                 var order = Order.FindById(id, _db);
-                if (string.IsNullOrEmpty(order.VendSaleId))
+
+                //
+                if (order.HasVendSaleCreated)
                 {
+                    StallApplication.BizErrorFormat("[MSG]vend sale for order {0} is exist", id);
+                    return Redirect("/customer/orders");
+                }
+
+                try
+                {
+                    //save order
+                    StallApplication.AddOperatingOrder(order.Id);
                     await order.Save(_db);
 
                     //send message
-                    try
+                    var owner = UserManager.FindById(order.Stall.UserId);
+                    var openId = owner?.SnsInfos[WeChatClaimTypes.OpenId].InfoValue;
+                    if (!string.IsNullOrEmpty(openId))
                     {
-                        var owner = UserManager.FindById(order.Stall.UserId);
-                        var openId = owner?.SnsInfos[WeChatClaimTypes.OpenId].InfoValue;
-                        if (!string.IsNullOrEmpty(openId))
-                        {
-                            var msg = string.Format("店铺[{0}]有一个新订单 [{1}]", order.Stall.Name, order.Id);
-                            WeChatHelper.SendMessage(openId, msg);
-                        }
+                        var msg = string.Format("店铺[{0}]有一个新订单 [{1}]", order.Stall.StallName, order.Id);
+                        WeChatHelper.SendMessage(openId, msg);
                     }
-                    catch
-                    {
-
-                    }
+                }
+                catch (Exception ex)
+                {
+                    StallApplication.SysError("[MSG]failed to save order", ex);
+                    return Redirect("~/ErrorPage");
+                }
+                finally
+                {
+                    StallApplication.RemoveOperatingOrder(order.Id);
                 }
 
                 ////clear cookie

@@ -27,13 +27,12 @@
     {
         <link rel="stylesheet" href="/Static/css/stall.min.css">
     }
-
 </head>
 <body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init()">
-    <md-content id="detail-content" >
-        @if (_product != null)
-        {
-            <img ng-src="@_product.ImageLarge" class="md-card-image" alt="Washed Out">
+    @if (_product != null)
+    {
+        <md-content id="detail-content">
+            <img ng-src="@_product.Image" class="md-card-image" alt="Washed Out">
             <div class="text-info">
                 <div class="text-name">
                     @_product.BaseName
@@ -46,7 +45,7 @@
                         @Html.Raw(_product.Description)
                     </text>
                 </div>
-                @if (_product.TrackInventory??false)
+                @if (_product.TrackInventory ?? false)
                 {
                     <div>
                         <text>
@@ -55,10 +54,8 @@
                     </div>
                 }
             </div>
-        }
-    </md-content>
-    @if (_product != null)
-    {
+        </md-content>
+
         <div id="bottom-toolbar" layout="row">
             <md-button class="btn-cart" flex="5" aria-label="Cart" ng-click="custCtrl.gotoUrl('/customer/cart')">
                 <span class="cart-amount" ng-if="custCtrl.cart.qty>0">{{custCtrl.cart.qty}}</span>

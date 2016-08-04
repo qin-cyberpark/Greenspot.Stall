@@ -26,7 +26,7 @@ namespace Greenspot.Stall.Models.ViewModels
         public class OrderStallViewModel
         {
             [JsonProperty(PropertyName = "i")]
-            public string Id { get; set; }
+            public int Id { get; set; }
 
             [JsonProperty(PropertyName = "n")]
             public string Name { get; set; }

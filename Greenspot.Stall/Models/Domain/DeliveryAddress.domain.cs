@@ -29,7 +29,7 @@ namespace Greenspot.Stall.Models
 
         public override string ToString()
         {
-            return string.Format("{0} {1} {2}\n{3}", FirstName, LastName, Mobile, FullAddress);
+            return string.Format("{0} {1}\n{2}", Name, Mobile, FullAddress);
         }
     }
 }

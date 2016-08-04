@@ -39,12 +39,12 @@ namespace Greenspot.Stall.Tests
         [TestMethod]
         public async Task DeleteWebHookTest()
         {
-            var result = await SDK.Vend.VendWebhook.GetWebhooksAsync("qincyber", "5OtjwgBqfHJZgkkjCrzrP:hELHuupEA7GkGDlz9E");
+            var result = await SDK.Vend.VendWebhook.GetWebhooksAsync("qincyber", "5OtjwgBqfHJZgkkjCrzrP:fCnfop7yJDuFys9x52");
             if(result != null)
             {
                 foreach(var hook in result)
                 {
-                    var status = await SDK.Vend.VendWebhook.DeleteWebhookAsync("qincyber", hook.Id, "5OtjwgBqfHJZgkkjCrzrP:hELHuupEA7GkGDlz9E");
+                    var status = await SDK.Vend.VendWebhook.DeleteWebhookAsync("qincyber", hook.Id, "5OtjwgBqfHJZgkkjCrzrP:fCnfop7yJDuFys9x52");
                 }
             }
         }

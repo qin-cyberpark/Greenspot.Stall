@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Greenspot.Stall.Models
 {
-    [Table("users")]
+    [Table("greenspot_users")]
     public partial class User
     {
         public User()
@@ -22,12 +22,6 @@ namespace Greenspot.Stall.Models
         [Key]
         [StringLength(50)]
         public string Id { get; set; }
-
-        [StringLength(50)]
-        public string FirstName { get; set; }
-
-        [StringLength(50)]
-        public string LastName { get; set; }
 
         public virtual ICollection<Stall> Stalls { get; set; }
         public virtual ICollection<DeliveryAddress> DeliveryAddresses { get; set; }

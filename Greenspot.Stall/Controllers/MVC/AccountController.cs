@@ -77,7 +77,7 @@ namespace Greenspot.Stall.Controllers.MVC
             // Request a redirect to the external login provider
             return new ChallengeResult(WeChatAuthenticationTypes.MP, Url.Action("WeChatMpLoginCallback", "Account", new { ReturnUrl = returnUrl }));
 #else
-            //UserManager.AddPassword("8cc08fba-bdc5-4d26-8ab3-9cfd0f0f3f07", "testtest");
+            //UserManager.AddPassword("f2c0021f-5165-439d-b5e4-72a61be7aed7", "testtest");
             var stattus = SignInManager.PasswordSignIn("test", "testtest", false, false);
             return RedirectToLocal(returnUrl);
 #endif
@@ -89,7 +89,8 @@ namespace Greenspot.Stall.Controllers.MVC
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
-                return RedirectToAction("Login");
+                StallApplication.BizErrorFormat("[MSG]failed to get login info");
+                return Redirect("~/ErrorPage");
             }
 
             // Sign in the user with this external login provider if the user already has a login

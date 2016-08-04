@@ -3,16 +3,16 @@
     var module = angular.module('greenspotStall');
     module.controller('CustomerController', CustomerController);
 
-    CustomerController.$inject = ['$http', '$location','$window'];
-    function CustomerController($http, $location, $window) {
+    CustomerController.$inject = ['$scope', '$http', '$location', '$window', '$mdDialog'];
+    function CustomerController($scope, $http, $location, $window, $mdDialog) {
         var vm = this;
 
         /* redirect */
         vm.gotoUrl = function (url) {
             window.location.href = url;
         }
-        
-        
+
+
         /* init */
         vm.init = function () {
             vm.cart.loadFromCookie();
@@ -209,10 +209,10 @@
             vm.order.deliveryFee = null;
             if (!vm.order.deliveryOption.IsPickUp) {
                 //get delivery fee
-                var url = '/api/stall/CalcDeliveryFee/' + vm.order.stall.i + "?country=" + vm.order.deliveryAddress.CountryId;
-                url += "&city=" + vm.order.deliveryAddress.City;
-                url += "&suburb=" + vm.order.deliveryAddress.Suburb;
-                url += "&amount=" + vm.order.stall.amt;
+                var url = '/api/stall/CalcDeliveryFee/' + vm.order.stall.i + '?country=' + vm.order.deliveryAddress.CountryId;
+                url += '&city=' + vm.order.deliveryAddress.City;
+                url += '&suburb=' + vm.order.deliveryAddress.Suburb;
+                url += '&amount=' + vm.order.stall.amt;
 
                 $http.get(url).success(function (result) {
                     if (result.Succeeded) {
@@ -231,7 +231,7 @@
                 vm.order.amount = vm.order.stall.amt + vm.order.deliveryFee
             }
         }
-        
+
         vm.SelectDeliveryAddress = function () {
             vm.loadDeliverySchedule();
         }
@@ -239,38 +239,83 @@
         vm.SelectDeliveryOption = function () {
             vm.getDeliveryFee();
         }
-        
+
 
         /*new address*/
-        vm.newAddress = {};
+        vm.editAddress = {};
 
         //select address
         vm.addressSelected = function () {
-            vm.newAddress.Address = vm.newAddress.AddressObject.formatted_address;
+            //update address
+            $scope.$apply(function () {
+                vm.editAddress.Address = vm.editAddress.AddressObject.FullAddress;
+            });
         }
 
-        vm.addressChanged = function () {
-            vm.newAddress.AddressObject = null;
+        //select area
+        vm.selectArea = function (ev) {
+            //got potential address
+
+            //show dialog
+            $mdDialog.show({
+                controller: DialogController,
+                controllerAs: 'ctrl',
+                templateUrl: '/SelectArea.tmpl.html',
+                parent: angular.element(document.body),
+                targetEvent: ev
+            })
+            .then(function (answer) {
+                console.log(answer);
+                vm.editAddress.Area = answer.en;
+                vm.editAddress.SelectedAreaName = answer.cn;
+            });
         }
 
         //
-        vm.addAddress = function () {
-            //console.log(vm.newAddress.AddressObject);
-            if (!vm.newAddress.AddressObject) {
-                alert("请确认地址");
-                return;
+        vm.addAddress = function (ev) {
+
+            if (!vm.editAddress.AddressObject) {
+                alert("请选择地址");
+                return false;
             }
 
-            //load items
-            $http.post('/customer/addAddress', vm.newAddress).success(function (result) {
+            //get area of address
+            if (!vm.editAddress.Area) {
+                var url = '/api/address/Suburb2Area?country=NZ&city=' + vm.editAddress.AddressObject.CityTown;
+                url += "&suburb=" + vm.editAddress.AddressObject.Suburb;
+                $http.get(url).success(function (result) {
+                    if (result.Succeeded) {
+                        vm.editAddress.Area = result.Data;
+                        //add address
+                        vm.submitAddress();
+                    }
+                    else {
+                        //select area
+                        vm.selectArea(ev);
+                    }
+                }).error(function (error) {
+                    //select area
+                    vm.selectArea(ev);
+                });
+            } else {
+                //add address
+                vm.submitAddress();
+            }
+        }
+
+        //submit address
+        vm.submitAddress = function () {
+            console.log(vm.editAddress);
+            $http.post('/customer/addAddress', vm.editAddress).success(function (result) {
                 if (result.Succeeded) {
                     vm.loadDeliveryAddress();
+                    vm.gotoUrl('/customer/checkout');
                 }
                 else {
-                    console.log(result.Message);
+                    alert(result.Message);
                 }
             }).error(function (error) {
-                console.log(error);
+                alert(error);
             });
         }
 
@@ -308,6 +353,18 @@
                 console.log(error);
             });
         }
+    }
+
+    function DialogController($scope, $mdDialog) {
+        $scope.hide = function () {
+            $mdDialog.hide();
+        };
+        $scope.cancel = function () {
+            $mdDialog.cancel();
+        };
+        $scope.answer = function (answer) {
+            $mdDialog.hide(answer);
+        };
     }
 
     function StallCart(stallId, stallName) {

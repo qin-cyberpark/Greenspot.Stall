@@ -184,6 +184,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\API\AddressController.cs" />
     <Compile Include="Controllers\API\StallController.cs" />
     <Compile Include="Controllers\API\WebhookController.cs" />
     <Compile Include="Controllers\MVC\HomeController.cs" />
@@ -219,8 +220,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Domain\Stall.domain.static.cs" />
-    <Compile Include="Models\Domain\StallUser.domain.cs" />
-    <Compile Include="Models\Entities\StallContact.cs" />
+    <Compile Include="Models\Domain\User.domain.cs" />
     <Compile Include="Models\Entities\Product.cs" />
     <Compile Include="Models\Entities\Stall.cs" />
     <Compile Include="Models\Entities\StallEntities.cs" />
@@ -228,9 +228,11 @@
     <Compile Include="Models\Entities\User.cs" />
     <Compile Include="Models\Entities\VendWebhook.cs" />
     <Compile Include="Models\StallApplication.Log.cs" />
+    <Compile Include="Models\StallApplication.Operating.cs" />
     <Compile Include="Models\StallApplication.VendToken.cs" />
     <Compile Include="Models\ViewModels\DeliveryTimeViewModel.cs" />
     <Compile Include="Models\ViewModels\OrderViewModel.cs" />
+    <Compile Include="Utilities\OwinLogger.cs" />
     <Compile Include="Utilities\PxPay.cs" />
     <Compile Include="Utilities\SuburbMatrix.cs" />
     <Compile Include="Utilities\WeChatHelper.cs" />
@@ -249,13 +251,15 @@
     <Content Include="Content\middle-css\owner.css" />
     <Content Include="Content\middle-css\product.css" />
     <Content Include="Content\middle-css\_variables.css" />
+    <Content Include="Content\middle-js\addressAutoComplete.nzpost.js" />
     <Content Include="Content\middle-js\app.js" />
-    <Content Include="Content\middle-js\autoCompleteAddress.js" />
+    <Content Include="Content\middle-js\addressAutoComplete.google.js" />
     <Content Include="Content\middle-js\controller\customer.controller.js" />
     <Content Include="Content\middle-js\controller\owner.controller.js" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
     <Content Include="Static\css\stall.min.css" />
+    <Content Include="Static\html\SelectArea.tmpl.html" />
     <Content Include="Static\img\background.jpg" />
     <Content Include="Static\img\icon\core-icons.svg">
       <SubType>Designer</SubType>
@@ -1010,13 +1014,14 @@
     <Content Include="Static\lib\less\dist\less.js" />
     <Content Include="Static\lib\less\dist\less.min.js" />
     <Content Include="Static\lib\less\index.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Static\font\" />
-    <Folder Include="Static\html\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1188,7 +1193,7 @@
     <Content Include="Static\lib\angular-material\modules\js\virtualRepeat\bower.json" />
     <Content Include="Static\lib\angular-material\modules\js\whiteframe\bower.json" />
     <Content Include="Static\lib\angular-material\README.md" />
-    <Content Include="Views\Test\Distance.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Owner\Setting.cshtml" />
     <Content Include="Views\Customer\Addresses.cshtml" />
     <Content Include="Views\Manage\Stall.cshtml" />

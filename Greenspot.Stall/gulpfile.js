@@ -14,9 +14,11 @@ var contentPath = "./Content/";
 var staticPath = "./Static/";
 
 var lessGroups = [{ src: "less/*.less", dest: "middle-css" }];
-var jsGroups = [{ src: "middle-js/**/*.js", exclude: "middle-js/**/*.min.js", dest: "js/stall.min.js" }];
+var jsGroups = [{ src: "middle-js/**/*.js", exclude: "middle-js/**/*.min.js", dest: "js/stall.min.js" },
+                { src: "semantic-components/**/*.js", exclude: "", dest: "js/semantic-components.min.js" }];
 
-var cssGroups = [{ src: "middle-css/*.css", exclude: "middle-css/*.min.css", dest: "css/stall.min.css" }];
+var cssGroups = [{ src: "middle-css/*.css", exclude: "middle-css/*.min.css", dest: "css/stall.min.css" },
+                  { src: "semantic-components/*.css", exclude: "", dest: "css/semantic-components.min.css" }];
 
 /*clean*/
 gulp.task("clean:css", function (cb) {

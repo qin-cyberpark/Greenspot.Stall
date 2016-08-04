@@ -265,12 +265,13 @@
             $http.post('/customer/addAddress', vm.newAddress).success(function (result) {
                 if (result.Succeeded) {
                     vm.loadDeliveryAddress();
+                    vm.gotoUrl('/customer/checkout');
                 }
                 else {
-                    console.log(result.Message);
+                    alert(result.Message);
                 }
             }).error(function (error) {
-                console.log(error);
+                alert(error);
             });
         }
 

@@ -35,17 +35,13 @@ namespace Greenspot.Stall.Models
                 return null;
             }
 
-            return db.Stalls.FirstOrDefault(x => x.Name.Equals(name));
+            return db.Stalls.FirstOrDefault(x => x.StallName.Equals(name));
         }
 
-        public static Stall FindById(string id, StallEntities db)
+        public static Stall FindById(int id, StallEntities db)
         {
-            if (string.IsNullOrEmpty(id))
-            {
-                return null;
-            }
-
-            return db.Stalls.Include(x=>x.Products).FirstOrDefault(x => x.Id.Equals(id));
+         
+            return db.Stalls.Include(x=>x.Products).FirstOrDefault(x => x.Id == id);
         }
 
         public static Stall FindByRetailerId(string id, StallEntities db)
@@ -80,7 +76,7 @@ namespace Greenspot.Stall.Models
                 result.Message = string.Format("{0}.vendhq.com 已注册", prefix);
             }else
             {
-                var stall = new Stall() { Id = Guid.NewGuid().ToString(), UserId = userId, Name = name, Prefix = prefix };
+                var stall = new Stall() { UserId = userId, StallName = name, Prefix = prefix };
                 result.Data = db.Stalls.Add(stall);
                 db.SaveChanges();
             }

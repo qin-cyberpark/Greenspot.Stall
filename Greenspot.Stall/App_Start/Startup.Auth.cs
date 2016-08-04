@@ -7,7 +7,8 @@ using Greenspot.Identity.OAuth.WeChat;
 using Greenspot.Configuration;
 using Owin;
 using Greenspot.Identity;
-
+using Microsoft.Owin.Logging;
+using Greenspot.Stall.Utilities;
 
 namespace Greenspot.Stall
 {
@@ -21,6 +22,9 @@ namespace Greenspot.Stall
             app.CreatePerOwinContext<GreenspotUserManager>(GreenspotUserManager.Create);
             app.CreatePerOwinContext<GreenspotSignInManager>(GreenspotSignInManager.Create);
 
+
+            //set logger
+            app.SetLoggerFactory(new OwinLoggerFactory());
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider

@@ -84,6 +84,7 @@ namespace Greenspot.Stall.Models
                 });
 
                 //do reqeust
+
                 var response = await VendRegisterSale.CreateVendRegisterSalesAsync(vendSale, Stall.Prefix, await StallApplication.GetAccessTokenAsync(Stall.Prefix));
                 VendResponse = JsonConvert.SerializeObject(response);
                 VendSaleId = response?.RegisterSale?.Id;
@@ -121,6 +122,13 @@ namespace Greenspot.Stall.Models
         }
 
         #region properties
+        public bool HasVendSaleCreated
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(VendSaleId);
+            }
+        }
         public decimal CalcTotalPriceExcludeTax()
         {
             decimal ttl = 0;

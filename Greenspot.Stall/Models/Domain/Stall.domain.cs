@@ -62,45 +62,15 @@ namespace Greenspot.Stall.Models
             var outlet = outletResult.Outlets[0];
             RetailerId = outlet.RetailerId;
             OutletId = outlet.Id;
-            Email = outlet.Email;
-            PhysicalAddress1 = outlet.PhysicalAddress1;
-            PhysicalAddress2 = outlet.PhysicalAddress2;
-            PhysicalCity = outlet.PhysicalCity;
-            PhysicalCountryId = outlet.PhysicalCountryId;
-            PhysicalPostcode = outlet.PhysicalPostcode;
-            PhysicalState = outlet.PhysicalState;
-            PhysicalSuburb = outlet.PhysicalSuburb;
+            //Email = outlet.Email;
+            Address1 = outlet.PhysicalAddress1;
+            Address2 = outlet.PhysicalAddress2;
+            City = outlet.PhysicalCity;
+            CountryId = outlet.PhysicalCountryId;
+            Postcode = outlet.PhysicalPostcode;
+            State = outlet.PhysicalState;
+            Suburb = outlet.PhysicalSuburb;
             TimeZone = outlet.TimeZone;
-
-            //set contact info
-            //Contacts.Clear();
-            //Contacts.Add(new StallContact()
-            //{
-            //    Id = Guid.NewGuid().ToString(),
-            //    CompanyName = outlet.Contact.CompanyName,
-            //    Email = outlet.Contact.Email,
-            //    Fax = outlet.Contact.Fax,
-            //    FirstName = outlet.Contact.FirstName,
-            //    LastName = outlet.Contact.LastName,
-            //    Mobile = outlet.Contact.Mobile,
-            //    Phone = outlet.Contact.Phone,
-            //    //physical address
-            //    PhysicalAddress1 = outlet.Contact.PhysicalAddress1,
-            //    PhysicalAddress2 = outlet.Contact.PhysicalAddress2,
-            //    PhysicalCity = outlet.Contact.PhysicalCity,
-            //    PhysicalCountryId = outlet.Contact.PhysicalCountryId,
-            //    PhysicalPostcode = outlet.Contact.PhysicalPostcode,
-            //    PhysicalState = outlet.Contact.PhysicalState,
-            //    PhysicalSuburb = outlet.Contact.PhysicalSuburb,
-            //    //postal address
-            //    PostalAddress1 = outlet.Contact.PostalAddress1,
-            //    PostalAddress2 = outlet.Contact.PostalAddress2,
-            //    PostalCity = outlet.Contact.PostalCity,
-            //    PostalCountryId = outlet.Contact.PostalCountryId,
-            //    PostalPostcode = outlet.Contact.PostalPostcode,
-            //    PostalState = outlet.Contact.PostalState,
-            //    PostalSuburb = outlet.Contact.PostalSuburb
-            //});
 
             //load payment types
             var paytypeResult = await VendPaymentType.GetPaymentTypetsAsync(Prefix, await StallApplication.GetAccessTokenAsync(Prefix));
@@ -438,7 +408,7 @@ namespace Greenspot.Stall.Models
 
         public decimal? GetDeliveryFee(string destCountryId, string destCity, string destSuburb, decimal orderAmount = 0)
         {
-            return DeliveryFee.Get(PhysicalCountryId, PhysicalCity, PhysicalSuburb, destCountryId, destCity, destSuburb, orderAmount);
+            return DeliveryFee.Get(CountryId, City, Suburb, destCountryId, destCity, destSuburb, orderAmount);
         }
 
 

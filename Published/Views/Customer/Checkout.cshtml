@@ -42,8 +42,7 @@
                 </div>
                 <div class="address-text">
                     <div>{{addr.FirstName}} {{addr.LastName}}, {{addr.Mobile}}</div>
-                    <div>{{addr.Address1}}  {{addr.Address2}}</div>
-                    <div>{{addr.Suburb}}, {{addr.City}}</div>
+                    <div>{{addr.FullAddress}}</div>
                 </div>
             </div>
             <div class="address-option" ng-if="custCtrl.deliveryAddresses.length==0">

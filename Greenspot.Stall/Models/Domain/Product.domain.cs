@@ -109,7 +109,7 @@ namespace Greenspot.Stall.Models
             return db.Products.Include(x=>x.Stall).Where(x=>x.Stall.Approved == true).Where(condition);
         }
 
-        public static Product ConvertFrom(VendProduct p, string stallId)
+        public static Product ConvertFrom(VendProduct p, int stallId)
         {
             return new Product()
             {

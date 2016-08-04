@@ -27,7 +27,7 @@ namespace Greenspot.Stall.Controllers.MVC
             return View(stall);
         }
 
-        public async Task<ActionResult> Init(string id)
+        public async Task<ActionResult> Init(int id)
         {
             var stall = Models.Stall.FindById(id, _db);
             if (stall != null && string.IsNullOrEmpty(stall.PaymentTypeId) && string.IsNullOrEmpty(stall.DeliveryProductId))

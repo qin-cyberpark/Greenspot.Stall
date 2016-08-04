@@ -21,7 +21,7 @@
             </md-input-container>
             <md-input-container flex="50">
                 <label>手机</label>
-                <input name="mobile" required ng-model="ownerCtrl.OwnerInfo.Mobile" ng-pattern="/^02\d{6,8}$/">
+                <input name="mobile" required ng-model="ownerCtrl.OwnerInfo.Mobile" ng-pattern="/^02\d{6,9}$/">
                 <div ng-messages="formOwnerInfo.mobile.$error" role="alert">
                     <div ng-message-exp="['required', 'pattern']">
                         请检查手机号码

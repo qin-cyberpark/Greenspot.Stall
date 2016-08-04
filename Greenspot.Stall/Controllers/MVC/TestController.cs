@@ -9,7 +9,7 @@ namespace Greenspot.Stall.Controllers.MVC
     public class TestController : Controller
     {
         // GET: Test
-        public ActionResult Distance()
+        public ActionResult Index()
         {
             return View();
         }

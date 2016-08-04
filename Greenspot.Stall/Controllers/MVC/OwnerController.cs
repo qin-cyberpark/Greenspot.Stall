@@ -71,19 +71,10 @@ namespace Greenspot.Stall.Controllers.MVC
         [HttpPost]
         public ActionResult Register(OwnerRegisterViewModel ownerInfo)
         {
-            var user = Models.User.CurrentUser;
-            user.Email = ownerInfo.Email;
-            user.PhoneNumber = ownerInfo.Mobile;
-            user.FirstName = ownerInfo.FirstName;
-            user.LastName = ownerInfo.LastName;
             OperationResult<string> result = new OperationResult<string>(true);
-            if (!user.Save(_db))
+            try
             {
-                result.Message = "无法保存商户信息";
-                result.Succeeded = false;
-            }
-            else
-            {
+                var user = Models.User.CurrentUser;
                 //create stall
                 var opt = Models.Stall.CraeteStall(user.Id, ownerInfo.StallName, ownerInfo.VendPrefix, _db);
                 if (!opt.Succeeded)
@@ -93,9 +84,20 @@ namespace Greenspot.Stall.Controllers.MVC
                 }
                 else
                 {
+                    var stall = opt.Data;
+                    stall.ContactName = ownerInfo.ContactName;
+                    stall.Email = ownerInfo.Email;
+                    stall.Mobile = ownerInfo.Mobile;
+                    stall.Save();
                     result.Data = StallApplication.GetAuthorisationCodeUri(ownerInfo.VendPrefix, user.Id);
                 }
+            }catch (Exception ex)
+            {
+                result.Message = "注册店铺失败";
+                result.Exception = ex;
+                result.Succeeded = false;
             }
+
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -108,7 +110,6 @@ namespace Greenspot.Stall.Controllers.MVC
             var accessToken = await StallApplication.GetAccessTokenAsync(prefix, code);
             if (!string.IsNullOrEmpty(accessToken) && CurrentUser.Id.Equals(userId))
             {
-                //return RedirectToAction("InitStall", new { id = prefix });
                 return RedirectToAction("Index");
             }
             else
@@ -163,7 +164,7 @@ namespace Greenspot.Stall.Controllers.MVC
 
         #region Setting
         [Authorize]
-        public ActionResult Setting(string id)
+        public ActionResult Setting(int id)
         {
             var user = Models.User.CurrentUser;
             var stall = Models.Stall.FindById(id, _db);

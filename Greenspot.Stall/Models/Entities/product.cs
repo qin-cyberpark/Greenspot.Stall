@@ -20,8 +20,7 @@ namespace Greenspot.Stall.Models
         [StringLength(50)]
         public string Id { get; set; }
 
-        [StringLength(50)]
-        public string StallId { get; set; }
+        public int StallId { get; set; }
 
         [StringLength(100)]
         public string SourceId { get; set; }
