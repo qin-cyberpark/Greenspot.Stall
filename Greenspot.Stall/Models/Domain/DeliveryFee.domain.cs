@@ -51,6 +51,18 @@ namespace Greenspot.Stall.Models
                 return 0;
             }
 
+            //city suburb 
+            //google = Auckland
+            //NZ POST = Auckland Central
+            if(depSuburb.Equals("Auckland Central"))
+            {
+                depSuburb = "Auckland";
+            }
+            if (destSuburb.Equals("Auckland Central"))
+            {
+                destSuburb = "Auckland";
+            }
+
             return Utilities.DistanceMatrix.GetSuburbDistaince(depCountryCode, depCity, depSuburb, destCountryCode, destCity, destSuburb);
         }
 

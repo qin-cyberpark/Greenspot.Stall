@@ -378,7 +378,7 @@ namespace Greenspot.Stall.Models
                         _deliverySchedule = JsonConvert.DeserializeObject<DeliverySchedule>(DeliveryScheduleJsonString);
 
                     }
-                    catch
+                    catch(Exception ex)
                     {
                         return null;
                     }

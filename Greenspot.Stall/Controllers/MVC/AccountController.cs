@@ -73,14 +73,17 @@ namespace Greenspot.Stall.Controllers.MVC
         [AllowAnonymous]
         public ActionResult WeChatMpLogin(string returnUrl)
         {
-#if !DEBUG
-            // Request a redirect to the external login provider
+            //#if !DEBUG
+            //            // Request a redirect to the external login provider
+            //            return new ChallengeResult(WeChatAuthenticationTypes.MP, Url.Action("WeChatMpLoginCallback", "Account", new { ReturnUrl = returnUrl }));
+            //#else
+            //            //UserManager.AddPassword("f2c0021f-5165-439d-b5e4-72a61be7aed7", "testtest");
+            //            var stattus = SignInManager.PasswordSignIn("test", "testtest", false, false);
+            //            return RedirectToLocal(returnUrl);
+            //#endif
+            //ControllerContext.HttpContext.Session.RemoveAll();
+
             return new ChallengeResult(WeChatAuthenticationTypes.MP, Url.Action("WeChatMpLoginCallback", "Account", new { ReturnUrl = returnUrl }));
-#else
-            //UserManager.AddPassword("f2c0021f-5165-439d-b5e4-72a61be7aed7", "testtest");
-            var stattus = SignInManager.PasswordSignIn("test", "testtest", false, false);
-            return RedirectToLocal(returnUrl);
-#endif
         }
 
         [AllowAnonymous]
@@ -90,15 +93,17 @@ namespace Greenspot.Stall.Controllers.MVC
             if (loginInfo == null)
             {
                 StallApplication.BizErrorFormat("[MSG]failed to get login info");
-                return Redirect("~/ErrorPage");
+                return View("Error");
             }
 
             // Sign in the user with this external login provider if the user already has a login
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    StallApplication.SysInfoFormat(string.Format("[MSG]signIn succeed, redirec to {0}", returnUrl));
+                    return Redirect(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -114,9 +119,9 @@ namespace Greenspot.Stall.Controllers.MVC
                     if (rslt.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToLocal(returnUrl);
+                        return Redirect(returnUrl);
                     }
-                    return RedirectToLocal(returnUrl);
+                    return Redirect(returnUrl);
             }
         }
 
@@ -169,6 +174,7 @@ namespace Greenspot.Stall.Controllers.MVC
 
             public override void ExecuteResult(ControllerContext context)
             {
+                context.RequestContext.HttpContext.Response.SuppressFormsAuthenticationRedirect = true;
                 var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
                 if (UserId != null)
                 {

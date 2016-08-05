@@ -9,12 +9,12 @@
         <md-card ng-click="ownerCtrl.gotoUrl('@string.Format("/owner/setting/{0}", @s.Id)')">
             <md-card-title>
                 <md-card-title-text>
-                    <span class="md-headline">@s.Name</span>
+                    <span class="md-headline">@s.StallName</span>
                 </md-card-title-text>
             </md-card-title>
             <md-card-content>
                 <p>
-                    @string.Format("{0}, {1}, {2}", s.PhysicalAddress1, s.PhysicalSuburb, s.PhysicalCity)
+                    @string.Format("{0}, {1}, {2}", s.Address1, s.Suburb, s.City)
                 </p>
             </md-card-content>
         </md-card>

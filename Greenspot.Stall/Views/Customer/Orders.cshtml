@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="/static/img/favicon.png">
 
     <!-- 3rd party stylesheet -->
-    <link rel="stylesheet" href="/static/lib/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.css">
     <!-- platform stylesheet -->
 
     @if (HttpContext.Current.IsDebuggingEnabled)
@@ -51,7 +51,7 @@
                 <div layout="row">
                     <span flex>@o.Id</span>
                     <span flex>@string.Format("{0:HH:mm ddMMM}",o.PaidTime)</span>
-                    <span flex>@(o.Stall?.Name)</span>
+                    <span flex>@(o.Stall?.StallName)</span>
                     <span flex>@o.TotalCharge.ToString("$0.00")</span>
                 </div>
             }
@@ -59,14 +59,14 @@
     </md-content>
     
     <!-- 3rd party libraries -->
-    <script type="text/javascript" src="/Static/lib/jQuery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/angular/angular.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/angular-route/angular-route.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/angular-aria/angular-aria.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/angular-animate/angular-animate.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/angular-messages/angular-messages.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/angular-material/angular-material.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/js-cookie/src/js.cookie.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-aria.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-messages.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.2/js.cookie.min.js"></script>
 
     <!-- owner scripts -->
     @if (HttpContext.Current.IsDebuggingEnabled)

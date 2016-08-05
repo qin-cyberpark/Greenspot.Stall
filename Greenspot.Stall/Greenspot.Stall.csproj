@@ -251,9 +251,9 @@
     <Content Include="Content\middle-css\owner.css" />
     <Content Include="Content\middle-css\product.css" />
     <Content Include="Content\middle-css\_variables.css" />
-    <Content Include="Content\middle-js\addressAutoComplete.nzpost.js" />
+    <Content Include="Content\middle-js\plugin\addressAutoComplete.google.js" />
+    <Content Include="Content\middle-js\plugin\addressAutoComplete.nzpost.js" />
     <Content Include="Content\middle-js\app.js" />
-    <Content Include="Content\middle-js\addressAutoComplete.google.js" />
     <Content Include="Content\middle-js\controller\customer.controller.js" />
     <Content Include="Content\middle-js\controller\owner.controller.js" />
     <Content Include="Global.asax" />
@@ -261,6 +261,7 @@
     <Content Include="Static\css\stall.min.css" />
     <Content Include="Static\html\SelectArea.tmpl.html" />
     <Content Include="Static\img\background.jpg" />
+    <Content Include="Static\img\error.png" />
     <Content Include="Static\img\icon\core-icons.svg">
       <SubType>Designer</SubType>
     </Content>

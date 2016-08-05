@@ -56,13 +56,11 @@
 #checkout-content .delivery-info .address-mng-btn {
   color: #009688;
 }
-#checkout-content .delivery-info .address-option .address-radio {
-  display: inline-block;
-  vertical-align: top;
-}
-#checkout-content .delivery-info .address-option .address-text {
-  display: inline-block;
+#checkout-content .delivery-info .address-option {
   font-size: 11px;
+}
+#checkout-content .delivery-info .address-option .address-radio {
+  vertical-align: top;
 }
 #checkout-content .checkout-stall:nth-child(n+2) {
   margin-top: 5px;
@@ -144,4 +142,12 @@
 }
 #formNewAddress input {
   font-size: 11px;
+}
+.AddrAutoCompleteBox {
+  list-style: none outside;
+  border: 1px solid black;
+  margin: 0px;
+  padding: 0px;
+  background-color: #eee;
+  z-index: 999;
 }

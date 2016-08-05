@@ -15,7 +15,7 @@ namespace Greenspot.Stall.Controllers.API
         private static readonly log4net.ILog _bizLogger = log4net.LogManager.GetLogger("BizLogger");
 
         [HttpGet]
-        public OperationResult<DeliveryTimeViewModel[]> DeliverySchedule(int stallId, [FromUri]string country, [FromUri]string city, [FromUri]string area)
+        public OperationResult<DeliveryTimeViewModel[]> DeliverySchedule(int id, [FromUri]string country, [FromUri]string city, [FromUri]string area)
         {
             var result = new OperationResult<DeliveryTimeViewModel[]>(true);
 
@@ -23,11 +23,11 @@ namespace Greenspot.Stall.Controllers.API
             //get stall 
             using (var db = new StallEntities())
             {
-                stall = Models.Stall.FindById(stallId, db);
+                stall = Models.Stall.FindById(id, db);
                 if(stall == null)
                 {
                     result.Succeeded = false;
-                    result.Message = "Can not load delivery schedule for stall " + stallId;
+                    result.Message = "Can not load delivery schedule for stall " + id;
                     return result;
                 }
             }
@@ -52,7 +52,7 @@ namespace Greenspot.Stall.Controllers.API
         }
 
         [HttpGet]
-        public OperationResult<decimal> CalcDeliveryFee(int stallId, [FromUri]string country, [FromUri]string city, [FromUri]string suburb, [FromUri]decimal amount)
+        public OperationResult<decimal> CalcDeliveryFee(int id, [FromUri]string country, [FromUri]string city, [FromUri]string suburb, [FromUri]decimal amount)
         {
             var result = new OperationResult<decimal>(true);
 
@@ -60,11 +60,11 @@ namespace Greenspot.Stall.Controllers.API
             //get stall 
             using (var db = new StallEntities())
             {
-                stall = Models.Stall.FindById(stallId, db);
+                stall = Models.Stall.FindById(id, db);
                 if (stall == null)
                 {
                     result.Succeeded = false;
-                    result.Message = "Can not load delivery schedule for stall " + stallId;
+                    result.Message = "Can not load delivery schedule for stall " + id;
                     return result;
                 }
             }
@@ -74,7 +74,7 @@ namespace Greenspot.Stall.Controllers.API
             if (fee == null)
             {
                 result.Succeeded = false;
-                result.Message = "Can not get delivery fee for stall " + stallId;
+                result.Message = "Can not get delivery fee for stall " + id;
             }
             else
             {

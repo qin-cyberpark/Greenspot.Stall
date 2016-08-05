@@ -84,9 +84,11 @@ namespace Greenspot.Stall.Models
             if(result.Data == null)
             {
                 result.Message = "无法保存商铺信息";
+            }else
+            {
+                result.Succeeded = true;
             }
 
-            result.Succeeded = true;
             return result;
         }
     }

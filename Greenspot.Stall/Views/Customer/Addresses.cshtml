@@ -2,7 +2,7 @@
 }
 <!DOCTYPE html>
 
-<html lang="en" ng-app="greenspotStall" ng-cloak>
+<html lang="en" ng-app="greenspotStall" ng-cloak ng-strict-di>
 <head>
     <meta charset="utf-8">
     <meta name="description" content="Stall@Greenspot">
@@ -25,7 +25,6 @@
     {
         <link rel="stylesheet" href="/Static/css/stall.min.css">
     }
-
 </head>
 <body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init_address()">
     <form id="formEditAddress" name="formEditAddress" novalidate ng-submit="formEditAddress.$valid && custCtrl.addAddress($event)">
@@ -99,8 +98,8 @@
     {
         <script type="text/javascript" src="/Static/lib/less/dist/less.min.js"></script>
         <script type="text/javascript" src="/Content/middle-js/app.js"></script>
-        <script type="text/javascript" src="~/Content/middle-js/addressAutoComplete.nzpost.js"></script>
         <script type="text/javascript" src="/Content/middle-js/controller/customer.controller.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/plugin/addressAutoComplete.nzpost.js"></script>
     }
     else
     {

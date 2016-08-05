@@ -9,6 +9,7 @@ using System.Web;
 using System.Data.Entity;
 using System.Data;
 using System.Threading.Tasks;
+using Greenspot.Configuration;
 
 namespace Greenspot.Stall.Utilities
 {
@@ -44,7 +45,8 @@ namespace Greenspot.Stall.Utilities
             }
 
             //call google map api
-            var glResult = GetSuburbDistanceFromGoogleMapApi(depCountry, depCity, depSuburb, destCountry, destCity, destSuburb);
+            var glResult = GetSuburbDistanceFromGoogleMapApi(depCountry, depCity, depSuburb, destCountry, destCity, destSuburb, 
+                GreenspotConfiguration.AccessAccounts["google.map"].Secret);
             if (glResult == null)
             {
                 return null;

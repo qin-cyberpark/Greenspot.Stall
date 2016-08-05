@@ -14,10 +14,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/19/2016 14:06:15</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>05/18/2016 17:52:34</publishTime>
+      <publishTime>08/05/2016 16:00:29</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>05/18/2016 17:52:34</publishTime>
+      <publishTime>08/05/2016 16:00:29</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>05/17/2016 18:36:55</publishTime>
@@ -32,10 +32,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/26/2016 17:38:26</publishTime>
     </File>
     <File Include="bin/Greenspot.Identity.dll">
-      <publishTime>07/28/2016 23:08:31</publishTime>
+      <publishTime>08/05/2016 12:17:47</publishTime>
     </File>
     <File Include="bin/Greenspot.Identity.pdb">
-      <publishTime>07/28/2016 23:08:31</publishTime>
+      <publishTime>08/05/2016 12:17:47</publishTime>
     </File>
     <File Include="bin/Greenspot.Owin.Security.WeChat.dll">
       <publishTime>05/18/2016 09:22:05</publishTime>
@@ -50,10 +50,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/26/2016 17:38:26</publishTime>
     </File>
     <File Include="bin/Greenspot.Stall.dll">
-      <publishTime>07/28/2016 23:26:40</publishTime>
+      <publishTime>08/05/2016 16:00:18</publishTime>
     </File>
     <File Include="bin/Greenspot.Stall.pdb">
-      <publishTime>07/28/2016 23:26:40</publishTime>
+      <publishTime>08/05/2016 16:00:18</publishTime>
     </File>
     <File Include="bin/log4net.dll">
       <publishTime>05/17/2016 20:31:16</publishTime>
@@ -221,19 +221,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/17/2016 18:36:51</publishTime>
     </File>
     <File Include="bower.json">
-      <publishTime>06/17/2016 05:07:31</publishTime>
+      <publishTime>08/04/2016 23:23:31</publishTime>
     </File>
     <File Include="Content/delivery-fee-templte.json">
       <publishTime>07/28/2016 22:02:30</publishTime>
     </File>
     <File Include="Content/delivery-schedule-templte.json">
-      <publishTime>07/27/2016 00:46:19</publishTime>
+      <publishTime>08/05/2016 07:53:24</publishTime>
     </File>
     <File Include="Content/img/comming-soon.png">
       <publishTime>05/18/2016 08:53:51</publishTime>
     </File>
     <File Include="Content/less/customer.less">
-      <publishTime>07/27/2016 11:10:12</publishTime>
+      <publishTime>08/05/2016 13:20:55</publishTime>
     </File>
     <File Include="Content/less/global.less">
       <publishTime>07/27/2016 10:01:13</publishTime>
@@ -1058,31 +1058,37 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/17/2016 20:02:02</publishTime>
     </File>
     <File Include="Content/middle-css/customer.css">
-      <publishTime>07/27/2016 11:16:29</publishTime>
+      <publishTime>08/05/2016 13:27:53</publishTime>
     </File>
     <File Include="Content/middle-css/global.css">
-      <publishTime>07/27/2016 11:16:29</publishTime>
+      <publishTime>08/05/2016 13:27:53</publishTime>
     </File>
     <File Include="Content/middle-css/home.css">
-      <publishTime>07/27/2016 11:16:29</publishTime>
+      <publishTime>08/05/2016 13:27:53</publishTime>
     </File>
     <File Include="Content/middle-css/owner.css">
-      <publishTime>07/27/2016 11:16:29</publishTime>
+      <publishTime>08/05/2016 13:27:53</publishTime>
     </File>
     <File Include="Content/middle-css/product.css">
-      <publishTime>07/27/2016 11:16:29</publishTime>
+      <publishTime>08/05/2016 13:27:53</publishTime>
     </File>
     <File Include="Content/middle-css/_variables.css">
-      <publishTime>07/27/2016 11:16:29</publishTime>
+      <publishTime>08/05/2016 13:27:53</publishTime>
+    </File>
+    <File Include="Content/middle-js/addressAutoComplete.google.js">
+      <publishTime>07/26/2016 13:42:04</publishTime>
+    </File>
+    <File Include="Content/middle-js/addressAutoComplete.nzpost.js">
+      <publishTime>08/05/2016 07:04:40</publishTime>
     </File>
     <File Include="Content/middle-js/app.js">
-      <publishTime>07/14/2016 12:03:25</publishTime>
+      <publishTime>08/05/2016 04:44:51</publishTime>
     </File>
     <File Include="Content/middle-js/autoCompleteAddress.js">
       <publishTime>07/26/2016 13:42:04</publishTime>
     </File>
     <File Include="Content/middle-js/controller/customer.controller.js">
-      <publishTime>07/27/2016 15:54:34</publishTime>
+      <publishTime>08/05/2016 14:14:01</publishTime>
     </File>
     <File Include="Content/middle-js/controller/main.controller.js">
       <publishTime>06/17/2016 04:01:50</publishTime>
@@ -1091,22 +1097,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/23/2016 02:03:14</publishTime>
     </File>
     <File Include="Content/middle-js/controller/owner.controller.js">
-      <publishTime>07/05/2016 02:55:48</publishTime>
+      <publishTime>08/05/2016 14:01:33</publishTime>
+    </File>
+    <File Include="Content/middle-js/Plugin/addressAutoComplete.google.js">
+      <publishTime>07/26/2016 13:42:04</publishTime>
+    </File>
+    <File Include="Content/middle-js/Plugin/addressAutoComplete.nzpost.js">
+      <publishTime>08/05/2016 13:16:38</publishTime>
     </File>
     <File Include="Global.asax">
       <publishTime>05/17/2016 23:40:17</publishTime>
     </File>
     <File Include="gulpfile.js">
-      <publishTime>06/17/2016 04:31:38</publishTime>
+      <publishTime>08/05/2016 09:09:22</publishTime>
     </File>
     <File Include="package.json">
-      <publishTime>05/17/2016 19:58:10</publishTime>
+      <publishTime>08/04/2016 23:12:05</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>06/10/2016 00:56:56</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>05/18/2016 17:52:24</publishTime>
+      <publishTime>08/05/2016 16:00:21</publishTime>
     </File>
     <File Include="shop/Index.html">
       <publishTime>05/18/2016 10:07:35</publishTime>
@@ -1115,10 +1127,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/18/2016 17:49:43</publishTime>
     </File>
     <File Include="Static/css/stall.min.css">
-      <publishTime>07/27/2016 15:54:45</publishTime>
+      <publishTime>08/05/2016 14:19:50</publishTime>
+    </File>
+    <File Include="Static/html/SelectArea.tmpl.html">
+      <publishTime>08/05/2016 06:36:32</publishTime>
     </File>
     <File Include="Static/img/background.jpg">
       <publishTime>06/09/2016 22:22:46</publishTime>
+    </File>
+    <File Include="Static/img/error.png">
+      <publishTime>08/05/2016 14:34:25</publishTime>
     </File>
     <File Include="Static/img/favicon.png">
       <publishTime>06/16/2016 10:09:24</publishTime>
@@ -1133,7 +1151,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/09/2016 23:07:49</publishTime>
     </File>
     <File Include="Static/js/stall.min.js">
-      <publishTime>07/27/2016 15:54:45</publishTime>
+      <publishTime>08/05/2016 14:19:50</publishTime>
     </File>
     <File Include="Static/lib/angular-animate/.bower.json">
       <publishTime>06/09/2016 18:21:07</publishTime>
@@ -2852,838 +2870,838 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/09/2016 18:21:06</publishTime>
     </File>
     <File Include="Static/lib/jQuery/.babelrc">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/.bower.json">
-      <publishTime>06/14/2016 23:55:11</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/.editorconfig">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/.gitattributes">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/.github/ISSUE_TEMPLATE.md">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/.github/PULL_REQUEST_TEMPLATE.md">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/.gitignore">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/.jscsrc">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/.jshintignore">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/.jshintrc">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/.mailmap">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/.npmignore">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/.npmrc">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/.travis.yml">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/AUTHORS.txt">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/build/release.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/build/release/cdn.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/build/release/dist.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/build/release/ensure-sizzle.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/build/tasks/build.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/build/tasks/dist.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/build/tasks/lib/spawn_test.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/build/tasks/node_smoke_tests.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/build/tasks/promises_aplus_tests.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/build/tasks/sourcemap.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/build/tasks/testswarm.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/CONTRIBUTING.md">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/dist/jquery.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/dist/jquery.min.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/dist/jquery.min.map">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/dist/jquery.slim.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/dist/jquery.slim.min.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/dist/jquery.slim.min.map">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/external/npo/npo.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/external/qunit-assert-step/MIT-LICENSE.txt">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/external/qunit-assert-step/qunit-assert-step.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/external/qunit/LICENSE.txt">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/external/qunit/MIT-LICENSE.txt">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/external/qunit/qunit.css">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/external/qunit/qunit.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/external/requirejs/require.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/external/sinon/LICENSE.txt">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/external/sinon/sinon.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/external/sizzle/dist/sizzle.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/external/sizzle/dist/sizzle.min.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/external/sizzle/dist/sizzle.min.map">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/external/sizzle/LICENSE.txt">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/Gruntfile.js">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/LICENSE.txt">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/package.json">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/README.md">
-      <publishTime>06/14/2016 23:55:08</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/.jshintrc">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/ajax.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/ajax/jsonp.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/ajax/load.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/ajax/parseXML.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/ajax/script.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/ajax/var/location.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/ajax/var/nonce.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/ajax/var/rquery.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/ajax/xhr.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/attributes.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/attributes/attr.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/attributes/classes.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/attributes/prop.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/attributes/support.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/attributes/val.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/callbacks.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/core.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/core/access.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/core/DOMEval.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/core/init.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/core/parseHTML.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/core/ready-no-deferred.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/core/ready.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/core/support.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/core/var/rsingleTag.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/css.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/css/addGetHookIf.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/css/adjustCSS.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/css/curCSS.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/css/hiddenVisibleSelectors.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/css/showHide.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/css/support.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/css/var/cssExpand.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/css/var/getStyles.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/css/var/isHiddenWithinTree.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/css/var/rmargin.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/css/var/rnumnonpx.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/css/var/swap.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/data.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/data/Data.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/data/var/acceptData.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/data/var/dataPriv.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/data/var/dataUser.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/deferred.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/deferred/exceptionHook.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/deprecated.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/dimensions.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/effects.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/effects/animatedSelector.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/effects/Tween.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/event.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/event/ajax.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/event/alias.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/event/focusin.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/event/support.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/event/trigger.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/exports/amd.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/exports/global.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/jquery.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/manipulation.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/manipulation/buildFragment.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/manipulation/getAll.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/manipulation/setGlobalEval.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/manipulation/support.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/manipulation/var/rcheckableType.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/manipulation/var/rscriptType.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/manipulation/var/rtagName.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/manipulation/wrapMap.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/manipulation/_evalUrl.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/offset.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/queue.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/queue/delay.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/selector-native.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/selector-sizzle.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/selector.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/serialize.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/traversing.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/traversing/findFilter.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/traversing/var/dir.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/traversing/var/rneedsContext.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/traversing/var/siblings.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/var/arr.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/var/class2type.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/var/concat.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/var/document.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/var/documentElement.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/var/fnToString.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/var/getProto.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/var/hasOwn.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/var/indexOf.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/var/ObjectFunctionString.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/var/pnum.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/var/push.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/var/rcssNum.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/var/rnotwhite.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/var/slice.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/var/support.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/var/toString.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/wrap.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/src/wrapper.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/.jshintrc">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:39</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/1x1.jpg">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/ajax/content-type.php">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/ajax/evalScript.php">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/ajax/method.php">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/ajax/onunload.html">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/ajax/unreleasedXHR.html">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/atom+xml.php">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/badcall.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/badjson.js">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/cleanScript.html">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/core/aliased.html">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/core/cc_on.html">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/core/dont_return.php">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/core/dynamic_ready.html">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/core/onready.html">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/css/cssWidthBeforeDocReady.html">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/dashboard.xml">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/data/dataAttrs.html">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/dimensions/documentLarge.html">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/echoData.php">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/echoQuery.php">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/errorWithJSON.php">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/errorWithText.php">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/etag.php">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/event/focusElem.html">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/event/focusinCrossFrame.html">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/event/interactiveReady.html">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/event/onbeforeunload.html">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/event/promiseReady.html">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/event/syncReady.html">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/event/triggerunload.html">
-      <publishTime>06/14/2016 23:55:09</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/headers.php">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/iframe.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/iframeTest.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/if_modified_since.php">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/jquery-1.9.1.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/json.php">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/jsonp.php">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/json_obj.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/longLoadScript.php">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/manipulation/iframe-denied.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/manipulation/scripts-context.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/name.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/name.php">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/nocontent.php">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/offset/absolute.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/offset/body.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/offset/fixed.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/offset/relative.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/offset/scroll.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/offset/static.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/offset/table.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/params_html.php">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/readywaitasset.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/readywaitloader.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/script.php">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/selector/html5_selector.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/selector/sizzle_cache.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/statusText.php">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/support/bodyBackground.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/support/csp-clean.php">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/support/csp-log.php">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/support/csp.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/support/csp.log">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/support/csp.php">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/support/getComputedSupport.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/test.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/test.php">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/test2.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/test3.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/testbar.php">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/testinit.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/testrunner.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/testsuite.css">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/text.php">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/with_fries.xml">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/data/with_fries_over_jsonp.php">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/delegatetest.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/hovertest.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/index.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/integration/data/gh-1764-fullscreen-iframe.css">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/integration/data/gh-1764-fullscreen-iframe.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/integration/data/gh-1764-fullscreen.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/integration/gh-1764-fullscreen.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/integration/gh-2343-ie-radio-click.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/jquery.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/localfile.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/networkerror.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/node_smoke_tests/.jshintrc">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/node_smoke_tests/document_missing.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/node_smoke_tests/document_passed.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/node_smoke_tests/document_present_originally.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/node_smoke_tests/iterable_with_native_symbol.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/node_smoke_tests/iterable_with_symbol_polyfill.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/node_smoke_tests/lib/ensure_global_not_created.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/node_smoke_tests/lib/ensure_iterability_es6.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/node_smoke_tests/lib/ensure_jquery.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/promises_aplus_adapter_deferred.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/promises_aplus_adapter_when.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/readywait.html">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/ajax.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/animation.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/attributes.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/basic.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/callbacks.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/core.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/css.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/data.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/deferred.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/deprecated.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/dimensions.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/effects.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/event.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/exports.js">
-      <publishTime>06/14/2016 23:55:10</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/manipulation.js">
-      <publishTime>06/14/2016 23:55:11</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/offset.js">
-      <publishTime>06/14/2016 23:55:11</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/queue.js">
-      <publishTime>06/14/2016 23:55:11</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/ready.js">
-      <publishTime>06/14/2016 23:55:11</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/selector.js">
-      <publishTime>06/14/2016 23:55:11</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/serialize.js">
-      <publishTime>06/14/2016 23:55:11</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/support.js">
-      <publishTime>06/14/2016 23:55:11</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/traversing.js">
-      <publishTime>06/14/2016 23:55:11</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/tween.js">
-      <publishTime>06/14/2016 23:55:11</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/unit/wrap.js">
-      <publishTime>06/14/2016 23:55:11</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/jQuery/test/xhtml.php">
-      <publishTime>06/14/2016 23:55:11</publishTime>
+      <publishTime>08/04/2016 23:23:40</publishTime>
     </File>
     <File Include="Static/lib/js-cookie/.bower.json">
       <publishTime>06/09/2016 18:21:06</publishTime>
@@ -3734,19 +3752,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/18/2016 17:46:09</publishTime>
     </File>
     <File Include="Views/Customer/Addresses.cshtml">
-      <publishTime>07/26/2016 14:36:47</publishTime>
+      <publishTime>08/05/2016 14:23:24</publishTime>
     </File>
     <File Include="Views/Customer/Cart.cshtml">
-      <publishTime>07/26/2016 16:17:05</publishTime>
+      <publishTime>08/05/2016 08:47:48</publishTime>
     </File>
     <File Include="Views/Customer/Checkout.cshtml">
-      <publishTime>07/27/2016 16:04:10</publishTime>
+      <publishTime>08/05/2016 14:23:39</publishTime>
     </File>
     <File Include="Views/Customer/Index.cshtml">
       <publishTime>06/15/2016 11:10:25</publishTime>
     </File>
     <File Include="Views/Customer/Orders.cshtml">
-      <publishTime>07/26/2016 16:20:19</publishTime>
+      <publishTime>08/05/2016 08:48:03</publishTime>
     </File>
     <File Include="Views/Home/index.cshtml">
       <publishTime>07/28/2016 22:52:12</publishTime>
@@ -3755,28 +3773,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2016 02:47:45</publishTime>
     </File>
     <File Include="Views/Manage/Stall.cshtml">
-      <publishTime>07/26/2016 14:43:32</publishTime>
+      <publishTime>08/05/2016 07:36:06</publishTime>
     </File>
     <File Include="Views/Owner/Index.cshtml">
-      <publishTime>07/21/2016 16:45:07</publishTime>
+      <publishTime>08/05/2016 07:32:43</publishTime>
     </File>
     <File Include="Views/Owner/InitStall.cshtml">
       <publishTime>07/05/2016 02:37:15</publishTime>
     </File>
     <File Include="Views/Owner/Register.cshtml">
-      <publishTime>07/05/2016 02:48:14</publishTime>
+      <publishTime>08/04/2016 22:20:18</publishTime>
     </File>
     <File Include="Views/Owner/Setting.cshtml">
       <publishTime>07/05/2016 05:40:11</publishTime>
     </File>
     <File Include="Views/Product/detail.cshtml">
-      <publishTime>07/28/2016 10:43:19</publishTime>
+      <publishTime>08/05/2016 08:48:28</publishTime>
     </File>
     <File Include="Views/Shared/error.cshtml">
-      <publishTime>06/14/2016 21:46:28</publishTime>
+      <publishTime>08/05/2016 14:35:24</publishTime>
     </File>
     <File Include="Views/Shared/_CustomerLayout.cshtml">
-      <publishTime>07/05/2016 02:50:29</publishTime>
+      <publishTime>08/05/2016 08:48:35</publishTime>
     </File>
     <File Include="Views/Shared/_HomeLayout.cshtml">
       <publishTime>06/22/2016 22:11:24</publishTime>
@@ -3785,7 +3803,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/18/2016 17:35:42</publishTime>
     </File>
     <File Include="Views/Shared/_OwnerLayout.cshtml">
-      <publishTime>07/05/2016 03:04:30</publishTime>
+      <publishTime>08/05/2016 08:48:39</publishTime>
     </File>
     <File Include="Views/Stall/Detail.cshtml">
       <publishTime>06/17/2016 04:47:10</publishTime>
@@ -3796,6 +3814,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Test/Distance.cshtml">
       <publishTime>06/22/2016 19:54:04</publishTime>
     </File>
+    <File Include="Views/Test/Index.cshtml">
+      <publishTime>08/03/2016 15:18:19</publishTime>
+    </File>
     <File Include="Views/Web.config">
       <publishTime>05/18/2016 00:02:22</publishTime>
     </File>
@@ -3803,7 +3824,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/17/2016 18:36:43</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/28/2016 20:22:14</publishTime>
+      <publishTime>08/05/2016 10:56:04</publishTime>
     </File>
   </ItemGroup>
 </Project>

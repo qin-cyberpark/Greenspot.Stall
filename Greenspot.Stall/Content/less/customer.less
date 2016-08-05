@@ -9,10 +9,11 @@
         }
 
         & .stall-name {
-            width:100%;
-            & .selected{
-                color:white;
-                background-color:@color-primary;
+            width: 100%;
+
+            & .selected {
+                color: white;
+                background-color: @color-primary;
             }
         }
 
@@ -70,19 +71,16 @@
 #checkout-content {
     padding: 5px 15px 0px 15px;
 
-    & .delivery-info{
-        & .address-mng-btn{
-            color:@color-primary;
+    & .delivery-info {
+        & .address-mng-btn {
+            color: @color-primary;
         }
-        & .address-option{
-            & .address-radio{
-                display:inline-block;
-                vertical-align:top;
-            }
 
-            & .address-text{
-                display:inline-block;
-                font-size:11px;
+        & .address-option {
+            font-size: 11px;
+
+            & .address-radio {
+                vertical-align: top;
             }
         }
     }
@@ -138,7 +136,6 @@
                 float: right;
             }
         }
-
     }
 
 
@@ -154,15 +151,15 @@
         }
     }
 
-    & .checkout-note{
-        & textarea{
-            width:100%;
-            height:60px;
+    & .checkout-note {
+        & textarea {
+            width: 100%;
+            height: 60px;
         }
     }
 }
 
-#detail-content{
+#detail-content {
     position: fixed;
     width: 100%;
     max-width: @app-max-width;
@@ -190,8 +187,17 @@
     }
 }
 
-#formNewAddress{
-    & input{
-        font-size:11px;
+#formNewAddress {
+    & input {
+        font-size: 11px;
     }
+}
+
+.AddrAutoCompleteBox {
+    list-style: none outside;
+    border: 1px solid black;
+    margin: 0px;
+    padding: 0px;
+    background-color: #eee;
+    z-index:999;
 }
