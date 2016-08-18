@@ -1,6 +1,7 @@
 ﻿@using Newtonsoft.Json;
 @{
     var _orders = (IList<Greenspot.Stall.Models.Order>)ViewBag.Orders;
+    Page.Title = "我的订单";
 }
 <!DOCTYPE html>
 
@@ -29,35 +30,44 @@
     }
 
 </head>
-<body>
-    <md-toolbar id="stall-toolbar" class="md-primary" layout="row" layout-align="center center">
-        <div class="stall-text">
-            <div class="stall-text-line-1">
-                我的订单
-            </div>
-        </div>
-    </md-toolbar>
-    <md-content id="cart-content">
+<body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.removeStallCookie(@Request["remove_stallId"])">
+    <md-content id="order-content">
         @if (_orders == null || _orders.Count == 0)
         {
             <div>
-                <h3>没有订单</h3>
+                <h4>没有订单</h4>
             </div>
         }
         else
         {
-            foreach(var o in _orders)
-            {
-                <div layout="row">
-                    <span flex>@o.Id</span>
-                    <span flex>@string.Format("{0:HH:mm ddMMM}",o.PaidTime)</span>
-                    <span flex>@(o.Stall?.StallName)</span>
-                    <span flex>@o.TotalCharge.ToString("$0.00")</span>
-                </div>
-            }
+            <table class="order-list">
+                <thead>
+                    <tr>
+                        <td>订单号</td>
+                        <td>日期</td>
+                        <td>商铺</td>
+                        <td>金额</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var o in _orders)
+                    {
+                        <tr>
+                            <td>@o.Id</td>
+                            <td>@string.Format("{0:HH:mm ddMMM}", o.PaidTime)</td>
+                            <td>@(o.Stall?.StallName)</td>
+                            <td>@o.TotalCharge.ToString("$0.00")</td>
+                            <td><a href="/customer/order/@o.Id">查看</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         }
     </md-content>
-    
+    <center>
+        <a href="/">小铺首页</a>
+    </center>
     <!-- 3rd party libraries -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>

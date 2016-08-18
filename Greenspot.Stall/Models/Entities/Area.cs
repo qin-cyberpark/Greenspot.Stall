@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Greenspot.Stall.Models
 {
     [Table("areas")]
-    public class Area
+    public partial class Area
     {
         [StringLength(50)]
         public string ID { get; set; }

@@ -195,9 +195,13 @@
     <Compile Include="Models\Common\CustomDateTimeConverter .cs" />
     <Compile Include="Models\Common\Definitions.cs" />
     <Compile Include="Models\Domain\Accountant.cs" />
+    <Compile Include="Models\Domain\Area.domain.cs" />
     <Compile Include="Models\Domain\DeliveryAddress.domain.cs" />
-    <Compile Include="Models\Domain\DeliveryFee.domain.cs" />
-    <Compile Include="Models\Domain\DeliverySchedule.domain.cs" />
+    <Compile Include="Models\Domain\Delivery\ByRangeCalculator.domain.cs" />
+    <Compile Include="Models\Domain\Delivery\DeliveryOption.domain.cs" />
+    <Compile Include="Models\Domain\Delivery\DeliveryPlanItem.domain.cs" />
+    <Compile Include="Models\Domain\Delivery\DeliveryPlanPeriod.domain.cs" />
+    <Compile Include="Models\Domain\Delivery\FixedFeeCalculator.domain.cs" />
     <Compile Include="Models\Domain\Order.domain.cs" />
     <Compile Include="Models\Domain\OrderItem.domain.cs" />
     <Compile Include="Models\Domain\Product.domain.cs" />
@@ -205,9 +209,14 @@
     <Compile Include="Models\Domain\Suburb.domain.cs" />
     <Compile Include="Models\Entities\CreditCard.cs" />
     <Compile Include="Models\Entities\DeliveryAddress.cs" />
-    <Compile Include="Models\Entities\DeliveryFee.cs" />
-    <Compile Include="Models\Entities\DeliverySchedule.cs" />
     <Compile Include="Models\Entities\Area.cs" />
+    <Compile Include="Models\Entities\Delivery\FixedFeeCalculator.cs" />
+    <Compile Include="Models\Entities\Delivery\DateTimePair.cs" />
+    <Compile Include="Models\Entities\Delivery\DeliveryFeeCalculator.cs" />
+    <Compile Include="Models\Entities\Delivery\ByRangeCalculator.cs" />
+    <Compile Include="Models\Entities\Delivery\DeliveryPlan.cs" />
+    <Compile Include="Models\Entities\Delivery\DeliveryOption.cs" />
+    <Compile Include="Models\Entities\Delivery\DeliveryPlanItem.cs" />
     <Compile Include="Models\Entities\OrderItems.cs" />
     <Compile Include="Models\Entities\Suburb.cs" />
     <Compile Include="Models\Entities\Order.cs" />
@@ -230,7 +239,7 @@
     <Compile Include="Models\StallApplication.Log.cs" />
     <Compile Include="Models\StallApplication.Operating.cs" />
     <Compile Include="Models\StallApplication.VendToken.cs" />
-    <Compile Include="Models\ViewModels\DeliveryTimeViewModel.cs" />
+    <Compile Include="Models\ViewModels\DeliveryPlanModel.cs" />
     <Compile Include="Models\ViewModels\OrderViewModel.cs" />
     <Compile Include="Utilities\OwinLogger.cs" />
     <Compile Include="Utilities\PxPay.cs" />
@@ -258,6 +267,7 @@
     <Content Include="Content\middle-js\controller\owner.controller.js" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
+    <Compile Include="Models\Entities\Delivery\DeliveryPlanPeriod.cs" />
     <Content Include="Static\css\stall.min.css" />
     <Content Include="Static\html\SelectArea.tmpl.html" />
     <Content Include="Static\img\background.jpg" />
@@ -1059,10 +1069,10 @@
     <Content Include="Content\less\global.less" />
     <Content Include="Content\less\owner.less" />
     <Content Include="Content\less\customer.less" />
-    <Content Include="Content\delivery-fee-templte.json" />
-    <Content Include="Content\delivery-schedule-templte.json" />
+    <Content Include="Content\delivery-plan.json" />
     <None Include="Content\less\home.less" />
     <Content Include="Content\less\product.less" />
+    <Compile Include="Models\Domain\Delivery\DeliveryPlan.domain.cs" />
     <None Include="Properties\PublishProfiles\Pub.pubxml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Shared\_OwnerLayout.cshtml" />
@@ -1198,6 +1208,7 @@
     <Content Include="Views\Owner\Setting.cshtml" />
     <Content Include="Views\Customer\Addresses.cshtml" />
     <Content Include="Views\Manage\Stall.cshtml" />
+    <Content Include="Views\Customer\Order.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

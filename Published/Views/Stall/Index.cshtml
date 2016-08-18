@@ -1,6 +1,6 @@
 ﻿@{
     var _stall = (Greenspot.Stall.Models.Stall)ViewBag.Stall;
-    Page.Title = _stall?.Name ?? "商铺不存在";
+    Page.Title = (_stall == null ? "商铺不存在" : _stall.StallName);
 }
 <!DOCTYPE html>
 
@@ -35,7 +35,7 @@
         <md-toolbar id="stall-toolbar" class="md-primary" layout="row" layout-align="center center">
             <div class="stall-text">
                 <div class="stall-text-line-1">
-                    @_stall.Name
+                    @_stall.StallName
                 </div>
             </div>
         </md-toolbar>

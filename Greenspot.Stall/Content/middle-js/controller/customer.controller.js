@@ -17,6 +17,11 @@
                 vm.cart.loadFromCookie();
             }
 
+            vm.removeStallCookie = function (stallId) {
+                vm.cart.loadFromCookie();
+                vm.cart.removeStall(stallId);
+            }
+
             /*cart*/
             vm.cart = {
                 stls: [],
@@ -26,6 +31,18 @@
                     vm.order.stall = stall;
                     //this.currentStall = stall;
                     //this.writeToCookie();
+                },
+
+                //remove stall
+                removeStall: function (stallId) {
+                    for (var i = 0; i < this.stls.length; i++) {
+                        if (this.stls[i].i == stallId) {
+                            this.qty -= this.stls[i].qty;
+                            this.stls.splice(i, 1);
+                            break;
+                        }
+                    }
+                    this.writeToCookie();
                 },
 
                 add: function (nwItem) {
@@ -94,15 +111,6 @@
                     this.stls = [];
                     //this.currentStall = null;
 
-                    //current stall
-                    //if (c.currentStall != null) {
-                    //    var objStall = new StallCart(c.currentStall.i, c.currentStall.n);
-                    //    objStall.qty = c.currentStall.qty;
-                    //    objStall.amt = c.currentStall.amt;
-                    //    objStall.itms = c.currentStall.itms;
-                    //    this.currentStall = objStall;
-                    //}
-
                     //all stall
                     $.each(c.stls, function (idxStall, stall) {
                         var objStall = new StallCart(stall.i, stall.n);
@@ -129,6 +137,9 @@
                 }
             }
 
+            ///**********************************
+            //check out
+            //***********************************
             /* checkout */
             vm.checkOut = function () {
                 //load items
@@ -149,25 +160,27 @@
             /* checkout init */
             vm.init_checkout = function (orderJson) {
                 vm.order = orderJson;
-                vm.loadDeliveryAddress(vm.loadDeliverySchedule);
+                vm.loadDeliveryAddress(vm.loadDeliveryOptions);
+                vm.loadPickUpOptions();
             }
 
-            /* address management */
-            vm.init_address = function () {
-                vm.loadDeliveryAddress();
-            }
 
             /*order*/
             vm.order = {
             }
 
+            ///**********************************
+            //delivery options
+            //***********************************
             /* load address */
             vm.loadDeliveryAddress = function (callback) {
                 //load address
                 $http.get('/customer/DeliveryAddresses').success(function (result) {
                     if (result.Succeeded) {
                         vm.deliveryAddresses = result.Data;
-                        vm.order.deliveryAddress = vm.deliveryAddresses[0];
+                        if (vm.deliveryAddresses.length > 0) {
+                            vm.order.deliveryAddress = vm.deliveryAddresses[0];
+                        }
 
                         if (callback) {
                             callback();
@@ -181,18 +194,25 @@
                 });
             }
 
-            /* get delivery schedule*/
-            vm.loadDeliverySchedule = function () {
-                //load address
-                var url = '/api/stall/DeliverySchedule/' + vm.order.stall.i + "?country=" + vm.order.deliveryAddress.CountryId;
+            /* get delivery option*/
+            vm.loadDeliveryOptions = function () {
+                //refresh
+                vm.deliveryOptions = [];
+                vm.order.deliveryOption = null;
+
+                //delivery
+                var url = '/api/stall/GetDeliveryOptions/' + vm.order.stall.i + "?country=" + vm.order.deliveryAddress.CountryId;
                 url += "&city=" + vm.order.deliveryAddress.City;
+                url += "&suburb=" + vm.order.deliveryAddress.Suburb;
                 url += "&area=" + vm.order.deliveryAddress.Area;
 
                 $http.get(url).success(function (result) {
                     if (result.Succeeded) {
-                        vm.deliverySchedule = result.Data;
-                        vm.order.deliveryOption = vm.deliverySchedule[0];
-                        vm.SelectDeliveryOption();
+                        vm.deliveryOptionCollections = result.Data;
+                        if (vm.deliveryOptionCollections.length > 0) {
+                            vm.selectedDeliveryOptionCollection = vm.deliveryOptionCollections[0];
+                            vm.selectDeliveryDate();
+                        }
                     }
                     else {
                         $window.alert(result.Message);
@@ -203,48 +223,70 @@
                 });
             }
 
-            /* get delivery fee */
-            vm.getDeliveryFee = function () {
-                vm.order.deliveryFee = null;
+            /*get pickup option*/
+            vm.loadPickUpOptions = function () {
+                console.log(vm.order.deliveryAddress);
 
-                if (!vm.order.deliveryOption) {
-                    alert("无法获取配送信息");
-                    return;
-                }
+                //refresh
+                vm.pickUpOptions = [];
+                vm.order.deliveryOption = null;
 
-                if (!vm.order.deliveryOption.IsPickUp) {
-                    //get delivery fee
-                    var url = '/api/stall/CalcDeliveryFee/' + vm.order.stall.i + '?country=' + vm.order.deliveryAddress.CountryId;
-                    url += '&city=' + vm.order.deliveryAddress.City;
-                    url += '&suburb=' + vm.order.deliveryAddress.Suburb;
-                    url += '&amount=' + vm.order.stall.amt;
+                //delivery
+                var url = '/api/stall/GetPickUpOptions/' + vm.order.stall.i;
 
-                    $http.get(url).success(function (result) {
-                        if (result.Succeeded) {
-                            vm.order.deliveryFee = result.Data;
-                            vm.order.amount = vm.order.stall.amt + vm.order.deliveryFee
+                $http.get(url).success(function (result) {
+                    if (result.Succeeded) {
+                        vm.pickUpOptionCollections = result.Data;
+                        if (vm.deliveryOptionCollections && vm.deliveryOptionCollections.length > 0) {
+                            vm.selectedDeliveryOptionCollection = vm.pickUpOptionCollections[0];
+                            vm.selectDeliveryDate();
                         }
-                        else {
-                            $window.alert(result.Message);
-                            console.log(result.Message);
-                        }
-                    }).error(function (error) {
-                        console.log(error);
-                    });
+                    }
+                    else {
+                        $window.alert(result.Message);
+                        console.log(result.Message);
+                    }
+                }).error(function (error) {
+                    console.log(error);
+                });
+            }
+
+            //select delivery address
+            vm.selectDeliveryAddress = function () {
+                vm.order.deliveryOption = null;
+                if (vm.order.deliveryAddress != 'pickup') {
+                    vm.order.isPickUp = false;
+                    vm.loadDeliveryOptions();
                 } else {
-                    vm.order.deliveryFee = 0;
-                    vm.order.amount = vm.order.stall.amt + vm.order.deliveryFee
+                    vm.order.isPickUp = true;
+                    if (vm.pickUpOptionCollections && vm.pickUpOptionCollections.length > 0) {
+                        vm.selectedDeliveryOptionCollection = vm.pickUpOptionCollections[0];
+                        vm.selectDeliveryDate();
+                    }
                 }
             }
 
-            vm.SelectDeliveryAddress = function () {
-                vm.loadDeliverySchedule();
+            //select delivery date
+            vm.selectDeliveryDate = function () {
+                vm.order.deliveryOption = null;
+                if (vm.selectedDeliveryOptionCollection.ApplicableOpts || vm.selectedDeliveryOptionCollection.ApplicableOpts.length > 0) {
+                    vm.order.deliveryOption = vm.selectedDeliveryOptionCollection.ApplicableOpts[0];
+                    vm.selectDeliveryOption();
+                }
             }
 
-            vm.SelectDeliveryOption = function () {
-                vm.getDeliveryFee();
+            vm.selectDeliveryOption = function () {
+                console.log(vm.order.deliveryOption);
+                vm.order.amount = vm.order.stall.amt + vm.order.deliveryOption.Fee;
             }
 
+            ///**********************************
+            //address management
+            //***********************************
+            /* address management */
+            vm.init_address = function () {
+                vm.loadDeliveryAddress();
+            }
 
             /*new address*/
             vm.editAddress = {};
@@ -328,6 +370,9 @@
             vm.pay = function () {
                 //load items
                 console.log(vm.order);
+                if (vm.order.deliveryAddress == 'pickup') {
+                    vm.order.deliveryAddress = null;
+                }
                 $http.post('/customer/Pay', vm.order).success(function (result) {
                     if (result.Succeeded) {
                         //redirect to vent page

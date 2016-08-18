@@ -3,6 +3,7 @@ using Greenspot.Stall.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -15,48 +16,14 @@ namespace Greenspot.Stall.Controllers.API
         private static readonly log4net.ILog _bizLogger = log4net.LogManager.GetLogger("BizLogger");
 
         [HttpGet]
-        public OperationResult<DeliveryTimeViewModel[]> DeliverySchedule(int id, [FromUri]string country, [FromUri]string city, [FromUri]string area)
+        public OperationResult<IList<DeliveryOptionCollectionViewModel>> GetDeliveryOptions(int id,
+            [FromUri]string country, [FromUri]string city, [FromUri]string suburb, [FromUri]string area)
         {
-            var result = new OperationResult<DeliveryTimeViewModel[]>(true);
+            var areaStr = string.Format("{0}-{1}-{2}", country, city, area);
+            var result = new OperationResult<IList<DeliveryOptionCollectionViewModel>>(true);
 
             Models.Stall stall = null;
-            //get stall 
-            using (var db = new StallEntities())
-            {
-                stall = Models.Stall.FindById(id, db);
-                if(stall == null)
-                {
-                    result.Succeeded = false;
-                    result.Message = "Can not load delivery schedule for stall " + id;
-                    return result;
-                }
-            }
 
-            //get next 7 days delivery schedule
-            var scheduleItems = stall.GetSchedule(country, city, area, 3);
-            var deliveryOptions = new List<DeliveryTimeViewModel>();
-            foreach(var item in scheduleItems)
-            {
-                deliveryOptions.Add(new DeliveryTimeViewModel()
-                {
-                    From = item.From,
-                    To = item.To,
-                    IsPickUp = item.IsPickUp,
-                    Area = item.AreaString,
-                    PickUpAddress = item.PickUpAddress
-                });
-            }
-            result.Data = deliveryOptions.ToArray();
-
-            return result;
-        }
-
-        [HttpGet]
-        public OperationResult<decimal> CalcDeliveryFee(int id, [FromUri]string country, [FromUri]string city, [FromUri]string suburb, [FromUri]decimal amount)
-        {
-            var result = new OperationResult<decimal>(true);
-
-            Models.Stall stall = null;
             //get stall 
             using (var db = new StallEntities())
             {
@@ -69,19 +36,190 @@ namespace Greenspot.Stall.Controllers.API
                 }
             }
 
-            //get next 7 days delivery schedule
-            var fee = stall.GetDeliveryFee(country, city, suburb, amount);
-            if (fee == null)
+            //get distance
+            var distance = stall.GetDistance(country, city, suburb);
+
+            //
+            var collections = new SortedList<DateTime, DeliveryOptionCollectionViewModel>();
+
+            //get temporary delivery
+            var tempOpts = stall.DeliveryPlan.GetTemporaryDeliveryOptions(country, city, area,
+                distance, DateTime.Now).OrderBy(x => x.From).ToList();
+
+            #region temporary options
+            DeliveryOptionCollectionViewModel collection = null;
+            IList<DeliveryOption> destList = null;
+
+            foreach (var opt in tempOpts)
             {
-                result.Succeeded = false;
-                result.Message = "Can not get delivery fee for stall " + id;
+                //got collection by date
+                if (collections.ContainsKey(opt.From.Date))
+                {
+                    collection = collections[opt.From.Date];
+                }
+                else
+                {
+                    collection = new DeliveryOptionCollectionViewModel()
+                    {
+                        Date = opt.From.Date
+                    };
+                    collections[opt.From.Date] = collection;
+                }
+
+                if (opt.IsApplicableToArea(areaStr))
+                {
+                    //has suitable area = available
+                    destList = collection.ApplicableOptions;
+                }
+                else
+                {
+                    //other
+                    destList = collection.OtherOptions;
+                }
+
+                //add
+                if (!opt.IsTimeDivisible)
+                {
+                    destList.Add(opt);
+                }
+                else
+                {
+                    ((List<DeliveryOption>)destList).AddRange(opt.Divide());
+                }
             }
-            else
+            #endregion
+
+            #region default options
+            //get default delivery
+            var dftOpts = stall.DeliveryPlan.GetDefaultDeliveryOptions(country, city, area,
+                distance, DateTime.Now).OrderBy(x => x.From).ToList();
+
+            foreach (var opt in dftOpts)
             {
-                result.Data = fee.Value;
+                //got collection by date
+                if (collections.ContainsKey(opt.From.Date))
+                {
+                    collection = collections[opt.From.Date];
+                }
+                else
+                {
+                    collection = new DeliveryOptionCollectionViewModel()
+                    {
+                        Date = opt.From.Date
+                    };
+                    collections[opt.From.Date] = collection;
+                }
+
+                if (opt.IsApplicableToArea(areaStr))
+                {
+                    //has suitable area = available
+                    if (!opt.IsTimeDivisible)
+                    {
+                        collection.ApplicableOptions.Add(opt);
+                    }
+                    else
+                    {
+                        ((List<DeliveryOption>)collection.ApplicableOptions).AddRange(opt.Divide());
+                    }
+                }
+            }
+            #endregion
+
+            //resort result
+            result.Data = new List<DeliveryOptionCollectionViewModel>();
+            foreach (var dt in collections.Keys)
+            {
+                var c = collections[dt];
+                if (c.ApplicableOptions.Count == 0)
+                {
+                    continue;
+                }
+                var n = new DeliveryOptionCollectionViewModel()
+                {
+                    Date = dt,
+                    ApplicableOptions = c.ApplicableOptions.OrderBy(x => x.Fee).OrderBy(x => x.From).ToList(),
+                    OtherOptions = c.OtherOptions.OrderBy(x => x.From).OrderBy(x => x.Fee).ToList()
+                };
+                result.Data.Add(n);
             }
 
             return result;
+
+        }
+
+        [HttpGet]
+        public OperationResult<IList<DeliveryOptionCollectionViewModel>> GetPickUpOptions(int id)
+        {
+            var result = new OperationResult<IList<DeliveryOptionCollectionViewModel>>(true);
+
+            Models.Stall stall = null;
+
+            //get stall 
+            using (var db = new StallEntities())
+            {
+                stall = Models.Stall.FindById(id, db);
+                if (stall == null)
+                {
+                    result.Succeeded = false;
+                    result.Message = "Can not load delivery schedule for stall " + id;
+                    return result;
+                }
+            }
+
+            //
+            var collections = new SortedList<DateTime, DeliveryOptionCollectionViewModel>();
+
+            //get temporary delivery
+            var tempOpts = stall.DeliveryPlan.GetPickUpOptions(DateTime.Now).OrderBy(x => x.From).ToList();
+
+            DeliveryOptionCollectionViewModel collection = null;
+
+            foreach (var opt in tempOpts)
+            {
+                //got collection by date
+                if (collections.ContainsKey(opt.From.Date))
+                {
+                    collection = collections[opt.From.Date];
+                }
+                else
+                {
+                    collection = new DeliveryOptionCollectionViewModel()
+                    {
+                        Date = opt.From.Date
+                    };
+                    collections[opt.From.Date] = collection;
+                }
+
+                //add
+                if (!opt.IsTimeDivisible)
+                {
+                    collection.ApplicableOptions.Add(opt);
+                }
+                else
+                {
+                    ((List<DeliveryOption>)collection.ApplicableOptions).AddRange(opt.Divide());
+                }
+            }
+
+            //resort result
+            result.Data = new List<DeliveryOptionCollectionViewModel>();
+            foreach (var dt in collections.Keys)
+            {
+                var c = collections[dt];
+                if(c.ApplicableOptions.Count == 0)
+                {
+                    continue;
+                }
+                var n = new DeliveryOptionCollectionViewModel()
+                {
+                    Date = dt,
+                    ApplicableOptions = c.ApplicableOptions.OrderBy(x => x.From).OrderBy(x => x.Fee).ToList()
+                };
+                result.Data.Add(n);
+            }
+
+            return result;
+
         }
     }
 }

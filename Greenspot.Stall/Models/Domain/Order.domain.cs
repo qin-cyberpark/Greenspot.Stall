@@ -25,7 +25,7 @@ namespace Greenspot.Stall.Models
 
         public static Order FindById(int id, StallEntities db)
         {
-            return db.Orders.Include(x=>x.Items).FirstOrDefault(x => x.Id == id);
+            return db.Orders.Include(x => x.Stall).Include(x => x.Items).FirstOrDefault(x => x.Id == id);
         }
 
         public async Task<bool> Save(StallEntities db)
@@ -154,6 +154,22 @@ namespace Greenspot.Stall.Models
         public decimal CalcTotal()
         {
             return CalcTotalPriceExcludeTax() + CalcTotalTax();
+        }
+
+        public string Summary
+        {
+            get
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat("单号:{0}\r时间:{1:H:mm:ss dd/MM/yyyy}\r金额:{2}\r", Id, PaidTime, TotalCharge);
+                foreach (var item in Items)
+                {
+                    sb.AppendFormat("{0}@{1:0.00}x{2}\r", item.Name, item.Price, item.Quantity);
+                }
+                sb.AppendFormat(Note);
+
+                return sb.ToString();
+            }
         }
         #endregion
     }

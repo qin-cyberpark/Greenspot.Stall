@@ -98,10 +98,7 @@ namespace Greenspot.Stall.Models
         public decimal? Balance { get; set; }
 
         [Column(TypeName = "text")]
-        public string DeliveryFeeJsonString { get; set; }
-
-        [Column(TypeName = "text")]
-        public string DeliveryScheduleJsonString { get; set; }
+        public string DeliveryPlanJsonString { get; set; }
 
         [Column(TypeName = "bit")]
         public bool? Approved { get; set; }

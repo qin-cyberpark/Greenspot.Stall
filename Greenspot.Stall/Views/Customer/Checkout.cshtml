@@ -31,49 +31,65 @@
 </head>
 <body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init_checkout(@_orderJson)">
     <md-content id="checkout-content">
-        <div class="delivery-info">
-            送货地址
-            <a href="/customer/addresses" class="button address-mng-btn">添加</a>
-            <table>
-                <tr ng-repeat="addr in custCtrl.deliveryAddresses" class="address-option">
-                    <td class="address-radio">
-                        <input type="radio" ng-model="custCtrl.order.deliveryAddress" ng-value="addr"
-                               ng-change="custCtrl.SelectDeliveryAddress()" />
-                    </td>
-                    <td class="address-text">
-                        <div>{{addr.Name}}, {{addr.Mobile}}</div>
-                        <div>
-                            {{addr.FullAddress}}
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <div class="address-option" ng-if="custCtrl.deliveryAddresses.length==0">
-                请<a href="#" class="button address-mng-btn">添加</a>送货地址
-            </div>
-            配送时间
-            <div>
-                <div class="address-option" ng-repeat="opt in custCtrl.deliverySchedule">
-                    <div class="address-radio">
-                        <input type="radio" ng-model="custCtrl.order.deliveryOption" ng-value="opt"
-                               ng-change="custCtrl.SelectDeliveryOption()" />
-                    </div>
-                    <div class="address-text">
-                        <div><span ng-if="opt.IsPickUp">[自提]</span>{{opt.From|date:'EEE dMMM h:mma'}}-{{opt.To|date:'h:mma'}}</div>
-                        <div ng-if="opt.IsPickUp">{{opt.PickUpAddress}}</div>
-                    </div>
+        <div class="checkout-section">
+            <h5 class="caption">送货地址 <a href="/customer/addresses" md-colors="{color: 'accent'}">添加</a></h5>
+            <md-radio-group ng-model="custCtrl.order.deliveryAddress" ng-change="custCtrl.selectDeliveryAddress()">
+                <div ng-repeat='addr in custCtrl.deliveryAddresses' class="row">
+                    <md-radio-button flex ng-value="addr" class="md-primary delivery-address">
+                        <span class="delivery-address-name">{{addr.Name}}, {{addr.Mobile}}</span>
+                        {{addr.FullAddress}}
+                    </md-radio-button>
                 </div>
-            </div>
+                <div class="row" ng-if="custCtrl.pickUpOptionCollections.length>0">
+                    <md-radio-button flex value='pickup' class="md-primary delivery-address">
+                        <span class="delivery-address-name">自提</span>
+                    </md-radio-button>
+                </div>
+            </md-radio-group>
         </div>
+        <md-divider></md-divider>
+        <div class="checkout-section" ng-if="!custCtrl.order.isPickUp && custCtrl.deliveryOptionCollections.length==0">
+            <h5 class="caption">该地址最近没有配送计划</h5>
+        </div>
+        <div class="checkout-section" ng-if="custCtrl.order.isPickUp || custCtrl.deliveryOptionCollections.length>0">
+            <!--delivery-->
+            <h5 class="caption" ng-if="!custCtrl.order.isPickUp">
+                送货时间
+            </h5>
+            <select ng-options="(collection.Date|date:'EEE dMMM') for collection in custCtrl.deliveryOptionCollections"
+                    ng-model="custCtrl.selectedDeliveryOptionCollection" ng-if="!custCtrl.order.isPickUp" ng-change="custCtrl.selectDeliveryDate()"></select>
 
-        <div class="checkout-note">
-            留言|备注
+            <!--pick up-->
+            <h5 class="caption" ng-if="custCtrl.order.isPickUp">
+                自提时间
+            </h5>
+            <select ng-options="(collection.Date|date:'EEE dMMM') for collection in custCtrl.pickUpOptionCollections"
+                    ng-model="custCtrl.selectedDeliveryOptionCollection" ng-if="custCtrl.order.isPickUp" ng-change="custCtrl.selectDeliveryDate()"></select>
+
+            <!--time-->
+            <select ng-options="((opt.From|date:'H:mm')+'-'+(opt.To|date:'H:mm')+' '+(opt.Fee|currency:$)) for opt in custCtrl.selectedDeliveryOptionCollection.ApplicableOpts"
+                    ng-model="custCtrl.order.deliveryOption" ng-change="custCtrl.selectDeliveryOption()"></select>
+
+            <h5 class="caption" ng-if="custCtrl.order.isPickUp">
+                自提地址
+            </h5>
+            <span class="pickup-address">{{custCtrl.order.deliveryOption.PickUpAddress}}</span>
+
+        </div>
+        <md-divider></md-divider>
+        <div class="checkout-section checkout-note">
+            <h5 class="caption">
+                留言|备注
+            </h5>
             <div class="note-text">
                 <textarea ng-model="custCtrl.order.note"></textarea>
             </div>
         </div>
-        <div class="checkout-stall">
-            <div class="stall-name">{{custCtrl.order.stall.n}}</div>
+        <md-divider></md-divider>
+        <div class="checkout-section checkout-stall">
+            <h5 class="caption">
+                {{custCtrl.order.stall.n}}
+            </h5>
             <div class="checkout-item" ng-repeat="item in custCtrl.order.stall.itms track by item.i">
                 <div class="checkout-item-desc">
                     <div class="desc-name">{{item.n}}</div>
@@ -83,27 +99,31 @@
                 </div>
                 <div class="checkout-item-total-price">{{item.p*item.q|currency:$}}</div>
             </div>
-            <div class="checkout-item" ng-if="custCtrl.order.deliveryFee>0">
+            <div class="checkout-item" ng-if="custCtrl.order.deliveryOption">
                 <div class="checkout-item-desc">
                     <div class="desc-name">运费</div>
                 </div>
-                <div class="checkout-item-total-price">{{custCtrl.order.deliveryFee|currency:$}}</div>
+                <div class="checkout-item-total-price">{{custCtrl.order.deliveryOption.Fee|currency:$}}</div>
+            </div>
+            <div class="checkout-item">
+                <div class="checkout-item-desc">
+                    <div class="desc-name">总金额</div>
+                </div>
+                <div class="checkout-item-total-price">{{custCtrl.order.amount|currency:$}}</div>
             </div>
         </div>
+        <div class="checkout-operate" layout="row">
+            <md-button flex="100" ng-click="custCtrl.pay()" class="md-raised md-primary"
+                       ng-disabled="!custCtrl.order.deliveryAddress || !custCtrl.order.deliveryOption">
+                确认付款
+            </md-button>
+            @if (_isAdmin)
+            {
+                <a ng-click="custCtrl.fakePay()">Success</a>
+                    <a href="">Pay Fail</a>
+            }
+        </div>
     </md-content>
-    <div id="bottom-toolbar" ng-if="custCtrl.order.stall.qty>0" layout="row" layout-align="end center">
-        <span class="cart-amount" flex>总金额: {{custCtrl.order.amount|currency:$}}</span>
-        <!--a href="#" class="btn btn-danger" ng-click="storeCtrl.cart.empty()">Empty</a-->
-        <md-button ng-click="custCtrl.pay()" class="md-raised md-primary" flex
-                   ng-disabled="!custCtrl.order.deliveryAddress || !custCtrl.order.deliveryOption || custCtrl.order.deliveryFee==null">
-            确认付款
-        </md-button>
-        @if (_isAdmin)
-        {
-            <a ng-click="custCtrl.fakePay()">Success</a>
-            <a href="">Pay Fail</a>
-        }
-    </div>
 
     <!-- 3rd party libraries -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>

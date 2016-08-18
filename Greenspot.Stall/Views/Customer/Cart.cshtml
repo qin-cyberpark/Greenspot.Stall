@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     var _stockMsgs = (IList<string>)ViewBag.StockMsgs;
 }
 <!DOCTYPE html>
@@ -32,14 +32,14 @@
         <div ng-if="custCtrl.cart.qty<=0">
             <h3>空的购物车</h3>
         </div>
-        @if (_stockMsgs != null && _stockMsgs.Count >0)
+        @if (_stockMsgs != null && _stockMsgs.Count > 0)
         {
-        <div>
-            @foreach (var msg in _stockMsgs)
-            {
-                <p>@msg</p>
-            }
-        </div>
+            <div>
+                @foreach (var msg in _stockMsgs)
+                {
+                    <p>@msg</p>
+                }
+            </div>
         }
         <div class="cart-stall" ng-if="custCtrl.cart.qty>0">
             店铺：
@@ -71,7 +71,7 @@
         </div>
     </md-content>
     <div id="bottom-toolbar" ng-if="custCtrl.cart.qty>0" layout="row" layout-align="none center">
-        <span class="cart-amount" flex="40">{{custCtrl.order.stall.amt|currency:$}}</span>
+        <span class="amount" flex="40">总金额 {{custCtrl.order.stall.amt|currency:$}}</span>
         <md-button ng-click="custCtrl.cart.empty()" class="md-raised md-accent" flex="30">清空</md-button>
         <md-button ng-click="custCtrl.checkOut();" class="md-raised md-primary" flex="30">结账</md-button>
     </div>

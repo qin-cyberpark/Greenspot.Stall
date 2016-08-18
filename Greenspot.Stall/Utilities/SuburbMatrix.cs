@@ -45,7 +45,7 @@ namespace Greenspot.Stall.Utilities
             }
 
             //call google map api
-            var glResult = GetSuburbDistanceFromGoogleMapApi(depCountry, depCity, depSuburb, destCountry, destCity, destSuburb, 
+            var glResult = GetSuburbDistanceFromGoogleMapApi(depCountry, depCity, depSuburb, destCountry, destCity, destSuburb,
                 GreenspotConfiguration.AccessAccounts["google.map"].Secret);
             if (glResult == null)
             {
@@ -105,6 +105,16 @@ namespace Greenspot.Stall.Utilities
             destCity = destCity.ToLower();
             destSuburb = destSuburb.ToLower();
 
+            if ("auckland central".Equals(depSuburb))
+            {
+                depSuburb = "auckland";
+            }
+
+            if ("auckland central".Equals(destSuburb))
+            {
+                destSuburb = "auckland";
+            }
+
             string reqUrlPattern = "https://maps.googleapis.com/maps/api/directions/json?origin={0}&destination={1}&key={2}";
             var reqUrl = string.Format(reqUrlPattern, HttpUtility.UrlEncode(string.Format("{0},{1},{2}", depSuburb, depCity, depCountry)),
                 HttpUtility.UrlEncode(string.Format("{0},{1},{2}", destSuburb, destCity, destCountry)), key);
@@ -137,10 +147,8 @@ namespace Greenspot.Stall.Utilities
         }
 
         #region internal class
-
         private class GeocodedWaypoint
         {
-
             [JsonProperty("geocoder_status")]
             public string GeocoderStatus { get; set; }
 
@@ -153,7 +161,6 @@ namespace Greenspot.Stall.Utilities
 
         private class Bounds
         {
-
             [JsonProperty("northeast")]
             public Location Northeast { get; set; }
 
@@ -163,7 +170,6 @@ namespace Greenspot.Stall.Utilities
 
         private class Distance
         {
-
             [JsonProperty("text")]
             public string Text { get; set; }
 
@@ -173,7 +179,6 @@ namespace Greenspot.Stall.Utilities
 
         private class Duration
         {
-
             [JsonProperty("text")]
             public string Text { get; set; }
 
@@ -183,7 +188,6 @@ namespace Greenspot.Stall.Utilities
 
         private class Location
         {
-
             [JsonProperty("lat")]
             public double Lat { get; set; }
 
@@ -193,14 +197,12 @@ namespace Greenspot.Stall.Utilities
 
         private class Polyline
         {
-
             [JsonProperty("points")]
             public string Points { get; set; }
         }
 
         private class Step
         {
-
             [JsonProperty("distance")]
             public Distance Distance { get; set; }
 
@@ -228,7 +230,6 @@ namespace Greenspot.Stall.Utilities
 
         private class Leg
         {
-
             [JsonProperty("distance")]
             public Distance Distance { get; set; }
 
@@ -259,14 +260,12 @@ namespace Greenspot.Stall.Utilities
 
         private class OverviewPolyline
         {
-
             [JsonProperty("points")]
             public string Points { get; set; }
         }
 
         private class Route
         {
-
             [JsonProperty("bounds")]
             public Bounds Bounds { get; set; }
 

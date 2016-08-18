@@ -27,55 +27,55 @@
     }
 </head>
 <body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init_address()">
-    <form id="formEditAddress" name="formEditAddress" novalidate ng-submit="formEditAddress.$valid && custCtrl.addAddress($event)">
-        <div layout="row">
-            <md-input-container flex>
-                <label>姓名</label>
-                <input name="fullName" required ng-model="custCtrl.editAddress.FullName" ng-maxlength="50">
-                <div ng-messages="formEditAddress.fullName.$error">
-                    <div ng-message="required">请输入姓名</div>
-                </div>
-            </md-input-container>
-            <md-input-container flex="50">
-                <label>手机</label>
-                <input name="mobile" required ng-model="custCtrl.editAddress.Mobile" ng-pattern="/^02\d{6,9}$/">
-                <div ng-messages="formEditAddress.mobile.$error" role="alert">
-                    <div ng-message-exp="['required', 'pattern']">
-                        请检查手机号码
-                    </div>
-                </div>
-            </md-input-container>
-        </div>
-        <div layout="row">
-            <md-input-container flex>
-                <label>地址</label>
-                <input id="address1" name="address1" required ng-model="custCtrl.editAddress.Address" ng-maxlength="200" placeholder=""
-                       address-checker place-on-select="custCtrl.addressSelected()" address-object="custCtrl.editAddress.AddressObject">
-                <div ng-messages="formEditAddress.address.$error">
-                    <div ng-message="required">请输入地址</div>
-                </div>
-            </md-input-container>
-        </div>
-        <div layout="row">
-            <md-input-container flex="60">
-                <label>室号 / 楼层 / 公司名称 / 其他</label>
-                <input id="address2" name="address2" ng-model="custCtrl.editAddress.Address2" ng-maxlength="200">
-            </md-input-container>
-            <md-input-container flex="40" ng-if="custCtrl.editAddress.SelectedAreaName">
-                <label>区域</label>
-                <input ng-model="custCtrl.editAddress.SelectedAreaName" readonly ng-click="custCtrl.selectArea()">
-            </md-input-container>
-        </div>
-        <div layout="column" layout-align="center center">
-            <md-button type="submit" class="md-raised md-primary" ng-disabled="!formEditAddress.$valid">添加</md-button>
-        </div>
-    </form>
     <md-content id="checkout-content">
+        <form id="formEditAddress" name="formEditAddress" novalidate ng-submit="formEditAddress.$valid && custCtrl.addAddress($event)">
+            <div layout="row">
+                <md-input-container flex>
+                    <label>姓名</label>
+                    <input name="fullName" required ng-model="custCtrl.editAddress.FullName" ng-maxlength="50">
+                    <div ng-messages="formEditAddress.fullName.$error">
+                        <div ng-message="required">请输入姓名</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex="50">
+                    <label>手机</label>
+                    <input name="mobile" required ng-model="custCtrl.editAddress.Mobile" ng-pattern="/^02\d{6,9}$/">
+                    <div ng-messages="formEditAddress.mobile.$error" role="alert">
+                        <div ng-message-exp="['required', 'pattern']">
+                            请检查手机号码
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout="row">
+                <md-input-container flex>
+                    <label>地址</label>
+                    <input id="address1" name="address1" required ng-model="custCtrl.editAddress.Address" ng-maxlength="200" placeholder=""
+                           address-checker place-on-select="custCtrl.addressSelected()" address-object="custCtrl.editAddress.AddressObject">
+                    <div ng-messages="formEditAddress.address.$error">
+                        <div ng-message="required">请输入地址</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout="row">
+                <md-input-container flex="60">
+                    <label>室号 / 楼层 / 公司名称 / 其他</label>
+                    <input id="address2" name="address2" ng-model="custCtrl.editAddress.Address2" ng-maxlength="200">
+                </md-input-container>
+                <md-input-container flex="40" ng-if="custCtrl.editAddress.SelectedAreaName">
+                    <label>区域</label>
+                    <input ng-model="custCtrl.editAddress.SelectedAreaName" readonly ng-click="custCtrl.selectArea()">
+                </md-input-container>
+            </div>
+            <div layout="column" layout-align="center center">
+                <md-button type="submit" class="md-raised md-primary" ng-disabled="!formEditAddress.$valid">添加</md-button>
+            </div>
+        </form>
         <div class="delivery-info">
             <div class="address-option" ng-repeat="addr in custCtrl.deliveryAddresses">
-                <hr />
+                <md-divider></md-divider>
                 <div class="address-text">
-                    <div>{{addr.FirstName}} {{addr.LastName}} {{addr.Mobile}}</div>
+                    <div><b>{{addr.Name}}, {{addr.Mobile}}</b></div>
                     <div>{{addr.FullAddress}}</div>
                 </div>
             </div>

@@ -94,15 +94,46 @@ html, body {
 }
 
 #bottom-toolbar {
-    height: @bottom-toobar-height;
-    min-height: @bottom-toobar-height;
-    max-width: @app-max-width;
     position: fixed;
     bottom: 0px;
-    background-color: rgba(0,0,0,0.15);
-    width: 100%;
+    width:100%;
 
-    & md-button {
-        height: 45px;
+    & .amount {
+        margin-right:10px;
+        font-size: 16px;
+        text-align:right;
+        color: @color-primary;
     }
+
+    & .btn-cart {
+        margin: 0px;
+        padding: 0px;
+        width: 60px;
+        min-width: 60px;
+
+        & .cart-icon {
+            width: 30px;
+            height: 30px;
+        }
+
+        & .cart-amount {
+            position: absolute;
+            padding: 0px;
+            margin: 0px;
+            left: 30px;
+            top: 3px;
+            width: 18px;
+            height: 18px;
+            color: black;
+            background-color: @color-accent;
+            border-radius: 10px 10px;
+            line-height: 20px;
+            font-size: 11px;
+        }
+    }
+}
+
+md-divider {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

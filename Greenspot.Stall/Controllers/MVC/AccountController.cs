@@ -81,7 +81,7 @@ namespace Greenspot.Stall.Controllers.MVC
             //            var stattus = SignInManager.PasswordSignIn("test", "testtest", false, false);
             //            return RedirectToLocal(returnUrl);
             //#endif
-            //ControllerContext.HttpContext.Session.RemoveAll();
+            ControllerContext.HttpContext.Session.RemoveAll();
 
             return new ChallengeResult(WeChatAuthenticationTypes.MP, Url.Action("WeChatMpLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }

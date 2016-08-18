@@ -5,8 +5,9 @@
                function config($locationProvider, $mdThemingProvider, $mdIconProvider) {
                    //theme
                    $mdThemingProvider.theme('default')
-                       .primaryPalette('teal')
-                       .accentPalette('lime');
+                       .primaryPalette('cyan', { 'default': '700' })
+                       .accentPalette('orange', { 'default': 'A200' })
+                       .backgroundPalette('cyan', { 'default': '50' });
 
                    //
                    $mdIconProvider

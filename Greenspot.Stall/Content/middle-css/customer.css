@@ -9,7 +9,7 @@
 }
 #cart-content .cart-stall .stall-name .selected {
   color: white;
-  background-color: #009688;
+  background-color: #0097A7;
 }
 #cart-content .cart-stall .cart-item {
   padding: 3px 0px 3px 0px;
@@ -35,7 +35,7 @@
 #cart-content .cart-stall .cart-item .cart-item-desc .desc-unit-price {
   display: block;
   font-size: 11px;
-  color: #009688;
+  color: #0097A7;
 }
 #cart-content .cart-stall .cart-item .qty-lbl {
   font-size: 20px;
@@ -51,16 +51,27 @@
   height: 24px;
 }
 #checkout-content {
-  padding: 5px 15px 0px 15px;
+  padding: 0px 15px 0px 15px;
 }
-#checkout-content .delivery-info .address-mng-btn {
-  color: #009688;
+#checkout-content .checkout-section .caption {
+  margin-top: 5px;
+  margin-bottom: 3px;
 }
-#checkout-content .delivery-info .address-option {
-  font-size: 11px;
+#checkout-content .checkout-section select {
+  font-size: 12px;
 }
-#checkout-content .delivery-info .address-option .address-radio {
-  vertical-align: top;
+#checkout-content .pickup-address {
+  font-size: 12px;
+  line-height: 12px;
+}
+#checkout-content .delivery-address {
+  font-size: 12px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+#checkout-content .delivery-address .delivery-address-name {
+  display: block;
+  font-weight: bold;
 }
 #checkout-content .checkout-stall:nth-child(n+2) {
   margin-top: 5px;
@@ -82,7 +93,7 @@
   line-height: 12px;
 }
 #checkout-content .checkout-stall .checkout-item .checkout-item-desc.desc-name {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
 }
 #checkout-content .checkout-stall .checkout-item .checkout-item-desc .desc-option {
@@ -92,29 +103,29 @@
 }
 #checkout-content .checkout-stall .checkout-item .checkout-item-desc .desc-unit-price {
   font-size: 11px;
-  color: #009688;
+  color: #0097A7;
 }
 #checkout-content .checkout-stall .checkout-item .checkout-item-desc .desc-qty {
   font-size: 11px;
-  color: #009688;
+  color: #0097A7;
 }
 #checkout-content .checkout-stall .checkout-item .checkout-item-total-price {
   font-size: 14px;
   font-weight: bold;
   float: right;
 }
-#checkout-content .checkout-total {
-  font-size: 14px;
-  border-top: 2px solid #000;
-  font-weight: bold;
-}
-#checkout-content .checkout-total .total-price {
-  color: #009688;
-  float: right;
-}
 #checkout-content .checkout-note textarea {
   width: 100%;
   height: 60px;
+}
+#order-content {
+  font-size: 12px;
+}
+#order-content table {
+  width: 100%;
+}
+#order-content table thead {
+  font-weight: bold;
 }
 #detail-content {
   position: fixed;
@@ -124,21 +135,6 @@
   bottom: 50px;
   overflow-x: hidden;
   overflow-y: auto;
-}
-#bottom-toolbar {
-  padding: 5px;
-}
-#bottom-toolbar .btn-checkout {
-  margin: 0px;
-  padding: 0px;
-  width: 60px;
-  min-width: 60px;
-  color: #009688;
-}
-#bottom-toolbar .cart-amount {
-  font-size: 20px;
-  text-align: center;
-  color: #009688;
 }
 #formNewAddress input {
   font-size: 11px;

@@ -21,6 +21,7 @@ namespace Greenspot.Stall.Controllers.MVC
 {
     public class CustomerController : Controller
     {
+        private static object _locker = new object();
         private StallEntities _db = new StallEntities();
         private GreenspotUserManager _userManager;
         private GreenspotUser _currentUser;
@@ -54,7 +55,18 @@ namespace Greenspot.Stall.Controllers.MVC
         [Authorize]
         public ActionResult Orders()
         {
-            ViewBag.Orders = Order.FindByUserId(CurrentUser.Id, _db).Where(x => x.HasVendSaleCreated).ToList();
+            ViewBag.Orders = Models.Order.FindByUserId(CurrentUser.Id, _db).ToList();
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult Order(int id)
+        {
+            var order = Models.Order.FindById(id, _db);
+            if (order != null && CurrentUser.Id.Equals(order.UserId))
+            {
+                ViewBag.Order = order;
+            }
             return View();
         }
 
@@ -137,6 +149,10 @@ namespace Greenspot.Stall.Controllers.MVC
         public ActionResult Checkout()
         {
             var order = (OrderViewModel)Session["CURRENT_ORDER"];
+            if (order == null)
+            {
+                return View("Cart");
+            }
             var stockMsgs = new List<string>();
             //check stock
             foreach (var item in order.Stall.Items)
@@ -209,9 +225,14 @@ namespace Greenspot.Stall.Controllers.MVC
             var stall = Models.Stall.FindById(orderVM.Stall.Id, _db);
             var deliveryProduct = Product.FindById(stall.DeliveryProductId, _db);
 
-            var devAddr = DeliveryAddress.FindById(int.Parse(orderVM.DeliveryAddress.Id), _db);
-            deliveryProduct.LineNote = orderVM.DeliveryOption.ToString() + "\n" + devAddr.ToString();
-            deliveryProduct.Price = orderVM.DeliveryFee;
+            string addrStr = "";
+            if (!orderVM.DeliveryOption.IsPickUp)
+            {
+                var devAddr = DeliveryAddress.FindById(int.Parse(orderVM.DeliveryAddress.Id), _db);
+                addrStr = devAddr.ToString();
+            }
+            deliveryProduct.LineNote = orderVM.DeliveryOption.ToString() + "\n" + addrStr;
+            deliveryProduct.Price = orderVM.DeliveryOption.Fee;
 
             order.Items.Add(new OrderItem(deliveryProduct)
             {
@@ -308,7 +329,7 @@ namespace Greenspot.Stall.Controllers.MVC
             if (paidFlag == null)
             {
                 StallApplication.SysError("[MSG]pxpay callback without paid parameter");
-                return Redirect("~/ErrorPage");
+                return View("Error");
             }
 
             StallApplication.SysInfoFormat("[MSG]PxPay call back [{0}]:{1}", paidFlag, Request.Url.ToString());
@@ -318,78 +339,82 @@ namespace Greenspot.Stall.Controllers.MVC
             if (string.IsNullOrEmpty(payResultId))
             {
                 StallApplication.SysError("[MSG]pxpay callback without result id");
-                return Redirect("~/ErrorPage");
+                return View("Error");
             }
 
             int paidOrderId = 0;
             if (!Accountant.VerifyPxPayPayment(payResultId, isSuccess, out paidOrderId))
             {
                 StallApplication.BizErrorFormat("[MSG]PxPay not verified, result id={0}", payResultId);
-                return Redirect("~/ErrorPage");
+                return View("Error");
             }
 
             if (paidOrderId != id)
             {
                 StallApplication.BizErrorFormat("[MSG]transaction not matched, px {0} <> url {1}", paidOrderId, id);
-                return Redirect("~/ErrorPage");
+                return View("Error");
             }
 
             if (isSuccess)
             {
-                if (StallApplication.IsOrderOperating(id))
-                {
-                    StallApplication.BizErrorFormat("[MSG]order {0} is operating", id);
-                    return Redirect("/customer/orders");
-                }
+                //if (StallApplication.IsOrderOperating(id))
+                //{
+                //    StallApplication.BizErrorFormat("[MSG]order {0} is operating", id);
+                //    return Redirect("/customer/orders");
+                //}
+
 
                 //save to vend
-                var order = Order.FindById(id, _db);
 
-                //
-                if (order.HasVendSaleCreated)
+                Models.Order order = null;
+
+                //save order
+                lock (_locker)
                 {
-                    StallApplication.BizErrorFormat("[MSG]vend sale for order {0} is exist", id);
-                    return Redirect("/customer/orders");
+                    order = Models.Order.FindById(id, _db);
+
+                    if (!string.IsNullOrEmpty(order.Status))
+                    {
+                        StallApplication.BizErrorFormat("[MSG]vend sale for order {0} is exist", id);
+                        return Redirect("/customer/orders");
+                    }
+
+                    order.Status = "OPERATED";
+                    _db.SaveChanges();
                 }
 
                 try
                 {
-                    //save order
-                    StallApplication.AddOperatingOrder(order.Id);
-                    await order.Save(_db);
-
                     //send message
                     var owner = UserManager.FindById(order.Stall.UserId);
                     var openId = owner?.SnsInfos[WeChatClaimTypes.OpenId].InfoValue;
                     if (!string.IsNullOrEmpty(openId))
                     {
-                        var msg = string.Format("店铺[{0}]有一个新订单 [{1}]", order.Stall.StallName, order.Id);
+                        var msg = string.Format("店铺[{0}]有一个新订单\r{1}", order.Stall.StallName, order.Summary);
                         WeChatHelper.SendMessage(openId, msg);
                     }
                 }
                 catch (Exception ex)
                 {
-                    StallApplication.SysError("[MSG]failed to save order", ex);
-                    return Redirect("~/ErrorPage");
+                    StallApplication.SysError("[MSG]failed to send message", ex);
                 }
-                finally
+
+                try
                 {
-                    StallApplication.RemoveOperatingOrder(order.Id);
+                    await order.Save(_db);
+                }
+                catch (Exception ex)
+                {
+                    StallApplication.SysError("[MSG]failed to save order", ex);
                 }
 
-                ////clear cookie
-                //if (Request.Cookies["cart"] != null)
-                //{
-                //    HttpCookie myCookie = new HttpCookie("cart");
-                //    myCookie.Expires = DateTime.Now.AddDays(-1d);
-                //    Response.Cookies.Add(myCookie);
-                //}
+                //StallApplication.RemoveOperatingOrder(order.Id);
 
-                return Redirect("/customer/orders");
+                return Redirect("/customer/orders?remove_stallId=" + order.StallId);
             }
             else
             {
-                return Redirect("~/ErrorPage");
+                return View("Error");
             }
         }
     }

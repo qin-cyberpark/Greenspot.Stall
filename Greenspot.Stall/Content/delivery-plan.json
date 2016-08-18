@@ -1,0 +1,93 @@
+﻿{
+  "DefaultFee": 20.00,
+  "FreeDeliveryOrderAmount": 9999,
+  "MaxAdvancedOrderDays": 3,
+  "OptionDivideMinutes": 120,
+  "DefaultPlans": [
+    {
+      "Periods": [
+        {
+          "DaysOfMonth": [ ],
+          "DaysOfWeek": [ ],
+          "Dates": [ ],
+          "Times": [ "10:30-22:30" ],
+          "IsTimeDivisible": true,
+          "OptionDivideMinutes": 30
+        }
+      ],
+      "FilterByArea": true,
+      "Areas": ["NZ-Auckland"],
+      "FeeCalculators": [
+        {
+          "$type": "Greenspot.Stall.Models.ByRangeCalculator, Greenspot.Stall",
+          "Ranges": [
+            {
+              "From": 0,
+              "To": 10,
+              "Fee": 5.00
+            },
+            {
+              "From": 10,
+              "To": 20,
+              "Fee": 8.00
+            },
+            {
+              "From": 20,
+              "To": 30,
+              "Fee": 12.00
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "TemporaryPlans": [
+    {
+      "Periods": [
+        {
+          "DaysOfMonth": [ ],
+          "DaysOfWeek": [ ],
+          "Dates": [ "18/8/2016-20/8/2016" ],
+          "Times": [ "12:30-13:30", "18:30-19:30" ],
+          "IsTimeDivisible": false
+        }
+      ],
+      "FilterByArea": false,
+      "Areas": [ "NZ-Auckland-Auckland City", "NZ-Auckland-Central Auckland" ],
+      "PickupAddress": "",
+      "IsExclusive": true,
+      "ExclusiveExtensionMinutes": {
+        "Before": 60,
+        "After": 60
+      },
+      "FeeCalculators": [
+        {
+          "$type": "Greenspot.Stall.Models.FixedFeeCalculator, Greenspot.Stall",
+          "Fee": 6.00
+        }
+      ]
+    },
+    {
+      "Periods": [
+        {
+          "DaysOfMonth": [ ],
+          "DaysOfWeek": [ ],
+          "Dates": [ "18/8/2016-20/8/2016" ],
+          "Times": [ "12:30-17:30" ],
+          "IsTimeDivisible": true,
+          "OptionDivideMinutes": 30
+        }
+      ],
+      "Areas": [ ],
+      "FilterByArea": false,
+      "PickupAddress": "Sky Tower",
+      "IsExclusive": false,
+      "FeeCalculators": [
+        {
+          "$type": "Greenspot.Stall.Models.FixedFeeCalculator, Greenspot.Stall",
+          "Fee": 0.00
+        }
+      ]
+    }
+  ]
+}

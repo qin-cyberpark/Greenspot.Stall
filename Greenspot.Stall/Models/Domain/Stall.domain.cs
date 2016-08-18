@@ -307,7 +307,7 @@ namespace Greenspot.Stall.Models
                     db.SaveChanges();
                     return true;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return false;
                 }
@@ -334,57 +334,33 @@ namespace Greenspot.Stall.Models
         }
 
         [NotMapped]
-        private DeliveryFee _deliveryFee = null;
-        public DeliveryFee DeliveryFee
+        private DeliveryPlan _deliveryPlan = null;
+        public DeliveryPlan DeliveryPlan
         {
             get
             {
-                if (_deliveryFee == null)
+                if (_deliveryPlan == null)
                 {
-                    if (string.IsNullOrEmpty(DeliveryFeeJsonString))
+                    if (string.IsNullOrEmpty(DeliveryPlanJsonString))
                     {
-                        return null;
-                    }
-                    try
-                    {
-                        _deliveryFee = JsonConvert.DeserializeObject<DeliveryFee>(DeliveryFeeJsonString);
-                    }
-                    catch
-                    {
-                        return null;
-                    }
-                }
-
-                return _deliveryFee;
-
-            }
-        }
-
-        [NotMapped]
-        private DeliverySchedule _deliverySchedule = null;
-        public DeliverySchedule DeliverySchedule
-        {
-            get
-            {
-                if (_deliverySchedule == null)
-                {
-                    if (string.IsNullOrEmpty(DeliveryScheduleJsonString))
-                    {
-                        return null;
+                        return new DeliveryPlan();
                     }
 
                     try
                     {
-                        _deliverySchedule = JsonConvert.DeserializeObject<DeliverySchedule>(DeliveryScheduleJsonString);
-
+                        _deliveryPlan = JsonConvert.DeserializeObject<DeliveryPlan>(DeliveryPlanJsonString,
+                            new JsonSerializerSettings
+                            {
+                                TypeNameHandling = TypeNameHandling.Auto
+                            });
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
-                        return null;
+                        return new DeliveryPlan();
                     }
                 }
 
-                return _deliverySchedule;
+                return _deliveryPlan;
             }
         }
         #endregion
@@ -400,16 +376,38 @@ namespace Greenspot.Stall.Models
             return Products.Where(condition);
         }
 
-        public IList<DeliverySchedule.DeliveryScheduleItem> GetSchedule(string countryId, string city, string area,
-                                                                         int nextDays = 7)
+        public int? GetDistance(string destCountryCode, string destCity, string destSuburb)
         {
-            return DeliverySchedule.GetSchedule(countryId, city, area, DefaultOrderAdvancedMinutes ?? 0, nextDays);
+            if (string.IsNullOrEmpty(destCountryCode) || string.IsNullOrEmpty(destCity)
+                || string.IsNullOrEmpty(destSuburb))
+            {
+                return null;
+            }
+
+            if (!CountryId.Equals(destCountryCode) || !City.Equals(destCity))
+            {
+                return null;
+            }
+
+            if (Suburb.Equals(destSuburb))
+            {
+                return 0;
+            }
+
+            return Utilities.DistanceMatrix.GetSuburbDistaince(CountryId, City, Suburb,
+                destCountryCode, destCity, destSuburb);
         }
 
-        public decimal? GetDeliveryFee(string destCountryId, string destCity, string destSuburb, decimal orderAmount = 0)
-        {
-            return DeliveryFee.Get(CountryId, City, Suburb, destCountryId, destCity, destSuburb, orderAmount);
-        }
+        //public IList<DeliverySchedule.DeliveryScheduleItem> GetSchedule(string countryId, string city, string area,
+        //                                                                 int nextDays = 7)
+        //{
+        //    return DeliverySchedule.GetSchedule(countryId, city, area, DefaultOrderAdvancedMinutes ?? 0, nextDays);
+        //}
+
+        //public decimal? GetDeliveryFee(string destCountryId, string destCity, string destSuburb, decimal orderAmount = 0)
+        //{
+        //    return DeliveryFee.Get(CountryId, City, Suburb, destCountryId, destCity, destSuburb, orderAmount);
+        //}
 
 
         #endregion

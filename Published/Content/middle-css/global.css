@@ -66,7 +66,7 @@ body {
   width: 18px;
   height: 18px;
   color: black;
-  background-color: #eeff41;
+  background-color: #FFAB40;
   border-radius: 10px 10px;
   line-height: 20px;
   font-size: 11px;
@@ -81,14 +81,41 @@ body {
   overflow-y: auto;
 }
 #bottom-toolbar {
-  height: 50px;
-  min-height: 50px;
-  max-width: 900px;
   position: fixed;
   bottom: 0px;
-  background-color: rgba(0, 0, 0, 0.15);
   width: 100%;
 }
-#bottom-toolbar md-button {
-  height: 45px;
+#bottom-toolbar .amount {
+  margin-right: 10px;
+  font-size: 16px;
+  text-align: right;
+  color: #0097A7;
+}
+#bottom-toolbar .btn-cart {
+  margin: 0px;
+  padding: 0px;
+  width: 60px;
+  min-width: 60px;
+}
+#bottom-toolbar .btn-cart .cart-icon {
+  width: 30px;
+  height: 30px;
+}
+#bottom-toolbar .btn-cart .cart-amount {
+  position: absolute;
+  padding: 0px;
+  margin: 0px;
+  left: 30px;
+  top: 3px;
+  width: 18px;
+  height: 18px;
+  color: black;
+  background-color: #FFAB40;
+  border-radius: 10px 10px;
+  line-height: 20px;
+  font-size: 11px;
+}
+md-divider {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }

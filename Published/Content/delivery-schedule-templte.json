@@ -1,25 +1,20 @@
 ﻿{
-  "Type": "Directly",
-  "Directly": [
+  "NormalSchedule": [
     {
-      "From": "06/08/2016 11:30:00",
-      "To": "06/08/2016 12:30:00",
-      "Areas": [ "NZ-Auckland-Central Auckland" ]
-    },
+      "DayOfMonth": [ ],
+      "DayOfWeek": [ ],
+      "Date": [ ],
+      "Time": [ "1030-2230" ],
+      "Areas": [ ]
+    }
+  ],
+  "TemporarySchedule": [
     {
-      "From": "06/08/2016 19:30:00",
-      "To": "06/08/2016 20:30:00",
-      "Areas": [ "NZ-Auckland-North Shore" ]
-    },
-    {
-      "From": "07/08/2016 11:30:00",
-      "To": "07/08/2016 12:30:00",
-      "Areas": [ "NZ-Auckland-Central Auckland" ]
-    },
-    {
-      "From": "07/08/2016 19:30:00",
-      "To": "07/08/2016 20:30:00",
-      "Areas": [ "NZ-Auckland-East Auckland" ]
+      "DayOfMonth": [ ],
+      "DayOfWeek": [ ],
+      "Date": [ "8/8/2016", "8/8/2016" ],
+      "Time": [ "1130-1230" ],
+      "Areas": [ "NZ-Auckland-Auckland City", "NZ-Auckland-Central Auckland"]
     }
   ]
 }
