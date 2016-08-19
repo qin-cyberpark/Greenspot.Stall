@@ -12,8 +12,12 @@ namespace Greenspot.Stall.Models
         [JsonProperty("FreeDeliveryOrderAmount")]
         public int? FreeDeliveryOrderAmount { get; set; }
 
+
         [JsonProperty("MaxAdvancedOrderDays")]
         public int MaxAdvancedOrderDays { get; set; } = 7;
+
+        [JsonProperty("MinOrderAdvancedMinutes")]
+        public int MinOrderAcvancedMinutes { get; set; } = 120;
 
         [JsonProperty("OptionDivideMinutes")]
         public int OptionDivideMinutes { get; set; } = 120;

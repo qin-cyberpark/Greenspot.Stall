@@ -21,7 +21,6 @@ namespace Greenspot.Stall.Controllers.API
         {
             var areaStr = string.Format("{0}-{1}-{2}", country, city, area);
             var result = new OperationResult<IList<DeliveryOptionCollectionViewModel>>(true);
-
             Models.Stall stall = null;
 
             //get stall 
@@ -35,6 +34,10 @@ namespace Greenspot.Stall.Controllers.API
                     return result;
                 }
             }
+
+            //
+            var earliestOrderTime = DateTime.Now.AddMinutes(stall.DefaultOrderAdvancedMinutes == null ? 180 : stall.DefaultOrderAdvancedMinutes.Value);
+
 
             //get distance
             var distance = stall.GetDistance(country, city, suburb);
@@ -137,8 +140,8 @@ namespace Greenspot.Stall.Controllers.API
                 var n = new DeliveryOptionCollectionViewModel()
                 {
                     Date = dt,
-                    ApplicableOptions = c.ApplicableOptions.OrderBy(x => x.Fee).OrderBy(x => x.From).ToList(),
-                    OtherOptions = c.OtherOptions.OrderBy(x => x.From).OrderBy(x => x.Fee).ToList()
+                    ApplicableOptions = c.ApplicableOptions.Where(x => x.To > earliestOrderTime).OrderBy(x => x.Fee).OrderBy(x => x.From).ToList(),
+                    OtherOptions = c.OtherOptions.Where(x => x.To > earliestOrderTime).OrderBy(x => x.From).OrderBy(x => x.Fee).ToList()
                 };
                 result.Data.Add(n);
             }
@@ -165,6 +168,8 @@ namespace Greenspot.Stall.Controllers.API
                     return result;
                 }
             }
+
+            var earliestOrderTime = DateTime.Now.AddMinutes(stall.DefaultOrderAdvancedMinutes == null ? 180 : stall.DefaultOrderAdvancedMinutes.Value);
 
             //
             var collections = new SortedList<DateTime, DeliveryOptionCollectionViewModel>();
@@ -206,14 +211,14 @@ namespace Greenspot.Stall.Controllers.API
             foreach (var dt in collections.Keys)
             {
                 var c = collections[dt];
-                if(c.ApplicableOptions.Count == 0)
+                if (c.ApplicableOptions.Count == 0)
                 {
                     continue;
                 }
                 var n = new DeliveryOptionCollectionViewModel()
                 {
                     Date = dt,
-                    ApplicableOptions = c.ApplicableOptions.OrderBy(x => x.From).OrderBy(x => x.Fee).ToList()
+                    ApplicableOptions = c.ApplicableOptions.Where(x => x.To > earliestOrderTime).OrderBy(x => x.From).OrderBy(x => x.Fee).ToList()
                 };
                 result.Data.Add(n);
             }

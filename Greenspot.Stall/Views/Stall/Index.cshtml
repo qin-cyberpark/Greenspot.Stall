@@ -15,17 +15,17 @@
     <link rel="shortcut icon" href="/static/img/favicon.png">
 
     <!-- 3rd party stylesheet -->
-    <link rel="stylesheet" href="/static/lib/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.css">
     <!-- platform stylesheet -->
 
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
-        <link rel="stylesheet/less" href="/Content/less/global.less">
-        <link rel="stylesheet/less" href="/Content/less/product.less">
+        <link rel="stylesheet/less" href="~/Content/less/global.less">
+        <link rel="stylesheet/less" href="~/Content/less/home.less">
     }
     else
     {
-        <link rel="stylesheet" href="/Static/css/stall.min.css">
+        <link rel="stylesheet" href="~/static/css/stall.min.css">
     }
 
 </head>
@@ -39,45 +39,49 @@
                 </div>
             </div>
         </md-toolbar>
-        <md-content>
-
-            <div class="RecommendProductList">
+        <md-content id="main-content">
+            <div class="ProductList">
                 <md-grid-list md-cols-xs="2" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="4"
                               md-row-height-gt-md="1:1" md-row-height="2:2"
                               md-gutter="5px">
 
                     @foreach (var p in _stall.BaseProducts)
                     {
-                        <md-grid-tile ng-click="custCtrl.gotoUrl('@string.Format("/product/detail/{0}", p.Id)')">
-                            <img src="@p.ImageLarge" style="width:100%;height:100%" />
-                            <md-grid-tile-footer>
+                        <md-grid-tile ng-click="custCtrl.gotoUrl('@string.Format("/product/detail/{0}",p.Id)')">
+                            <img src="@p.Image" style="width:100%;height:100%" />
+                            <md-grid-tile-header>
                                 @p.BaseName
+                            </md-grid-tile-header>
+                            <md-grid-tile-footer>
+                                @string.Format("{0:$0.00}", p.TotalPrice)
                             </md-grid-tile-footer>
                         </md-grid-tile>
                     }
                 </md-grid-list>
+            </div>
         </md-content>
     }
     <!-- 3rd party libraries -->
-    <script type="text/javascript" src="/Static/lib/jQuery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/angular/angular.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/angular-route/angular-route.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/angular-aria/angular-aria.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/angular-animate/angular-animate.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/angular-messages/angular-messages.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/angular-material/angular-material.min.js"></script>
-    <script type="text/javascript" src="/Static/lib/js-cookie/src/js.cookie.js"></script>
+    <!-- 3rd party libraries -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-aria.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-messages.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.2/js.cookie.min.js"></script>
 
     <!-- owner scripts -->
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
-        <script type="text/javascript" src="/Static/lib/less/dist/less.min.js"></script>
-        <script type="text/javascript" src="/Content/middle-js/app.js"></script>
-        <script type="text/javascript" src="/Content/middle-js/controller/customer.controller.js"></script>
+        <script type="text/javascript" src="~/static/lib/less/dist/less.min.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/app.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/controller/customer.controller.js"></script>
     }
     else
     {
-        <script type="text/javascript" src="/Static/js/stall.min.js"></script>
+        <script type="text/javascript" src="~/static/js/stall.min.js"></script>
     }
 </body>
 </html>

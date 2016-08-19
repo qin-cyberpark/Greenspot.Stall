@@ -54,6 +54,12 @@ namespace Greenspot.Stall.Models
             return db.Stalls.Include(x => x.Products).FirstOrDefault(x => x.RetailerId.Equals(id));
         }
 
+
+        public static IList<Stall> Search(string keyworkd, StallEntities db, int takeAmount = 50)
+        {
+            return db.Stalls.Where(x=>x.StallName.ToLower().Contains(keyworkd.ToLower())).OrderBy(x=>x.StallName).Take(takeAmount).ToList();
+        }
+
         public static OperationResult<Stall> CraeteStall(string userId, string name, string prefix, StallEntities db)
         {
             var result = new OperationResult<Stall>(false);

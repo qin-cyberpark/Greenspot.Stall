@@ -29,7 +29,7 @@
     <form action="home/search" method="get">
         <md-toolbar id="main-toolbar" class="md-primary" layout="row" layout-align="none center">
             <md-input-container md-no-float class="md-block search-text" flex="90">
-                <input type="text" name="keyword" placeholder="搜索">
+                <input type="text" name="keyword" placeholder="搜索" value="@Request["keyword"]">
             </md-input-container>
             <md-button type="submit" class="btn-search md-dark" flex="5" aria-label="Search">
                 <md-icon md-svg-icon="search"></md-icon>

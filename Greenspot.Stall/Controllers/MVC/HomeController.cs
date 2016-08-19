@@ -26,6 +26,7 @@ namespace Greenspot.Stall.Controllers
             }
 
             ViewBag.Products = Product.Search(keyword, _db);
+            ViewBag.Stalls = Models.Stall.Search(keyword, _db);
             return View();
         }
     }

@@ -225,7 +225,6 @@
 
             /*get pickup option*/
             vm.loadPickUpOptions = function () {
-                console.log(vm.order.deliveryAddress);
 
                 //refresh
                 vm.pickUpOptions = [];
@@ -276,7 +275,6 @@
             }
 
             vm.selectDeliveryOption = function () {
-                console.log(vm.order.deliveryOption);
                 vm.order.amount = vm.order.stall.amt + vm.order.deliveryOption.Fee;
             }
 
@@ -352,7 +350,6 @@
 
             //submit address
             vm.submitAddress = function () {
-                console.log(vm.editAddress);
                 $http.post('/customer/addAddress', vm.editAddress).success(function (result) {
                     if (result.Succeeded) {
                         vm.loadDeliveryAddress();
@@ -369,14 +366,12 @@
             /* pay */
             vm.pay = function () {
                 //load items
-                console.log(vm.order);
                 if (vm.order.deliveryAddress == 'pickup') {
                     vm.order.deliveryAddress = null;
                 }
                 $http.post('/customer/Pay', vm.order).success(function (result) {
                     if (result.Succeeded) {
                         //redirect to vent page
-                        console.log(result);
                         window.location.href = result.Data;
                     }
                     else {
@@ -389,11 +384,9 @@
 
             vm.fakePay = function () {
                 //load items
-                console.log(vm.order);
                 $http.post('/customer/fakePay', vm.order).success(function (result) {
                     if (result.Succeeded) {
                         //redirect to vent page
-                        console.log(result);
                         window.location.href = result.Data;
                     }
                     else {

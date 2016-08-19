@@ -75,16 +75,19 @@ namespace Greenspot.Stall.Models
                     continue;
                 }
 
+
                 foreach (var timePair in availTimes)
                 {
-                    result.Add(new DateTimePair()
+                    var newPair =  new DateTimePair()
                     {
                         //add date time
                         From = new DateTime(dtStart.Year, dtStart.Month, dtStart.Day, timePair[0].Hour, timePair[0].Minute, 0),
                         To = new DateTime(dtStart.Year, dtStart.Month, dtStart.Day, timePair[1].Hour, timePair[1].Minute, 0),
                         IsTimeDivisible = IsTimeDivisible,
                         OptionDivideMinutes = OptionDivideMinutes
-                    });
+                    };
+
+                    result.Add(newPair);
                 }
 
                 dtStart = dtStart.AddDays(1);
