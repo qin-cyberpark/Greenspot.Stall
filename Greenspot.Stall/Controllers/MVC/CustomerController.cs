@@ -84,10 +84,10 @@ namespace Greenspot.Stall.Controllers.MVC
             req.Seek(0, System.IO.SeekOrigin.Begin);
             string json = new StreamReader(req).ReadToEnd();
 
-            OrderViewModel order = null;
+            OrderCollectionViewModel orders = null;
             try
             {
-                order = JsonConvert.DeserializeObject<OrderViewModel>(json);
+                orders = JsonConvert.DeserializeObject<OrderCollectionViewModel>(json);
             }
 
             catch
@@ -96,7 +96,7 @@ namespace Greenspot.Stall.Controllers.MVC
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Session["CURRENT_ORDER"] = order;
+            Session["CURRENT_ORDERS"] = orders;
             OperationResult<string> result = new OperationResult<string>(true);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -148,19 +148,23 @@ namespace Greenspot.Stall.Controllers.MVC
         [HttpGet]
         public ActionResult Checkout()
         {
-            var order = (OrderViewModel)Session["CURRENT_ORDER"];
-            if (order == null)
+            var orderCollection = (OrderCollectionViewModel)Session["CURRENT_ORDERS"];
+            if (orderCollection == null)
             {
                 return View("Cart");
             }
             var stockMsgs = new List<string>();
+
             //check stock
-            foreach (var item in order.Stall.Items)
+            foreach (var order in orderCollection.Orders)
             {
-                var pdt = Product.FindById(item.Id, _db);
-                if (pdt.Stock < item.Quantity)
+                foreach (var item in order.Items)
                 {
-                    stockMsgs.Add(string.Format("{0}仅剩{1}件(份)", pdt.Name, pdt.Stock));
+                    var pdt = Product.FindById(item.Id, _db);
+                    if (pdt.Stock < item.Quantity)
+                    {
+                        stockMsgs.Add(string.Format("{0}仅剩{1}件(份)", pdt.Name, pdt.Stock));
+                    }
                 }
             }
             if (stockMsgs.Count > 0)
@@ -170,7 +174,7 @@ namespace Greenspot.Stall.Controllers.MVC
             }
             else
             {
-                ViewBag.Order = order;
+                ViewBag.Orders = orderCollection;
                 return View();
             }
         }
@@ -202,47 +206,48 @@ namespace Greenspot.Stall.Controllers.MVC
 
         private Order ConvertToOrder(string jsonString)
         {
-            var orderVM = JsonConvert.DeserializeObject<OrderViewModel>(jsonString);
-            var order = new Order();
-            order.StallId = orderVM.Stall.Id;
-            order.UserId = CurrentUser.Id;
+            //var orderVM = JsonConvert.DeserializeObject<OrderViewModel>(jsonString);
+            //var order = new Order();
+            //order.StallId = orderVM.Stall.Id;
+            //order.UserId = CurrentUser.Id;
 
-            //product
-            foreach (var i in orderVM.Stall.Items)
-            {
-                var product = Product.FindById(i.Id, _db);
-                if (product.Stock < i.Quantity)
-                {
-                    //check stock
-                }
-                order.Items.Add(new OrderItem(product)
-                {
-                    Quantity = i.Quantity
-                });
-            }
+            ////product
+            //foreach (var i in orderVM.Stall.Items)
+            //{
+            //    var product = Product.FindById(i.Id, _db);
+            //    if (product.Stock < i.Quantity)
+            //    {
+            //        //check stock
+            //    }
+            //    order.Items.Add(new OrderItem(product)
+            //    {
+            //        Quantity = i.Quantity
+            //    });
+            //}
 
-            //delivery
-            var stall = Models.Stall.FindById(orderVM.Stall.Id, _db);
-            var deliveryProduct = Product.FindById(stall.DeliveryProductId, _db);
+            ////delivery
+            //var stall = Models.Stall.FindById(orderVM.Stall.Id, _db);
+            //var deliveryProduct = Product.FindById(stall.DeliveryProductId, _db);
 
-            string addrStr = "";
-            if (!orderVM.DeliveryOption.IsPickUp)
-            {
-                var devAddr = DeliveryAddress.FindById(int.Parse(orderVM.DeliveryAddress.Id), _db);
-                addrStr = devAddr.ToString();
-            }
-            deliveryProduct.LineNote = orderVM.DeliveryOption.ToString() + "\n" + addrStr;
-            deliveryProduct.Price = orderVM.DeliveryOption.Fee;
+            //string addrStr = "";
+            //if (!orderVM.DeliveryOption.IsPickUp)
+            //{
+            //    var devAddr = DeliveryAddress.FindById(int.Parse(orderVM.DeliveryAddress.Id), _db);
+            //    addrStr = devAddr.ToString();
+            //}
+            //deliveryProduct.LineNote = orderVM.DeliveryOption.ToString() + "\n" + addrStr;
+            //deliveryProduct.Price = orderVM.DeliveryOption.Fee;
 
-            order.Items.Add(new OrderItem(deliveryProduct)
-            {
-                Quantity = 1
-            });
+            //order.Items.Add(new OrderItem(deliveryProduct)
+            //{
+            //    Quantity = 1
+            //});
 
-            order.Note = orderVM.Note + "\n" + deliveryProduct.LineNote;
+            //order.Note = orderVM.Note + "\n" + deliveryProduct.LineNote;
 
-            //discount
-            return order;
+            ////discount
+            //return order;
+            return null;
         }
 
         [Authorize]

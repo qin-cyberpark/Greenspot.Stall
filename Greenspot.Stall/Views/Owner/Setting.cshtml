@@ -5,36 +5,9 @@
 }
 <md-content layout-padding>
     <h4>运费</h4>
-    @if (_stall.DeliveryFee != null)
+    @if (_stall.DeliveryPlan != null)
     {
-        <div>满 @_stall.DeliveryFee.FreeDeliveryOrderAmount 免运费</div>
-        <div>默认运费 @_stall.DeliveryFee.Default.ToString("C")</div>
-        if (_stall.DeliveryFee.Type.Equals("ByRange"))
-        {
-            var ranges = _stall.DeliveryFee.Ranges.OrderBy(x => x.From).ToList();
-            foreach (var r in ranges)
-            {
-                <div>@string.Format("{0} - {1} KM: {2:C}",r.From,r.To,r.Fee)</div>
-            }
-        }
-    }
-    <h4>运送时间</h4>
-    @if (_stall.DeliverySchedule != null)
-    {
-        if (_stall.DeliverySchedule.Type.Equals("Flex"))
-        {
-            var flexItems = _stall.DeliverySchedule.FlexItems.OrderBy(x => x.From).ToList();
-            var currentDate = DateTime.MinValue.Date;
-            foreach (var fi in flexItems)
-            {
-                if (!fi.From.Date.Equals(currentDate))
-                {
-                    <b>@fi.From.ToShortDateString()</b>
-                    currentDate = fi.From.Date;
-                }
-                <div>@string.Format("{0} - {1}", fi.From.ToShortTimeString(), fi.To.ToShortTimeString())</div>
-                <div>@fi.AreaString</div>
-            }
-        }
+        <div>满 @_stall.DeliveryPlan.FreeDeliveryOrderAmount.Value.ToString("C") 免运费</div>
+        <div>默认运费 @_stall.DeliveryPlan.DefaultFee.Value.ToString("C")</div>
     }
 </md-content>

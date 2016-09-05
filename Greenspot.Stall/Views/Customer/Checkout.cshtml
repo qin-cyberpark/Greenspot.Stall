@@ -1,6 +1,6 @@
 ﻿@{
-    var _order = (Greenspot.Stall.Models.ViewModels.OrderViewModel)ViewBag.Order;
-    var _orderJson = Newtonsoft.Json.JsonConvert.SerializeObject(_order);
+    var _orders = (Greenspot.Stall.Models.ViewModels.OrderCollectionViewModel)ViewBag.Orders;
+    var _orderJson = Newtonsoft.Json.JsonConvert.SerializeObject(_orders);
     var _isAdmin = User.IsInRole("Admin");
 }
 <!DOCTYPE html>
@@ -33,7 +33,7 @@
     <md-content id="checkout-content">
         <div class="checkout-section">
             <h5 class="caption">送货地址 <a href="/customer/addresses" md-colors="{color: 'accent'}">添加</a></h5>
-            <md-radio-group ng-model="custCtrl.order.deliveryAddress" ng-change="custCtrl.selectDeliveryAddress()">
+            <md-radio-group ng-model="custCtrl.deliveryAddress" ng-change="custCtrl.selectDeliveryAddress()">
                 <div ng-repeat='addr in custCtrl.deliveryAddresses' class="row">
                     <md-radio-button flex ng-value="addr" class="md-primary delivery-address">
                         <span class="delivery-address-name">{{addr.Name}}, {{addr.Mobile}}</span>
@@ -48,49 +48,40 @@
             </md-radio-group>
         </div>
         <md-divider></md-divider>
-        <div class="checkout-section" ng-if="!custCtrl.order.isPickUp && custCtrl.deliveryOptionCollections.length==0">
-            <h5 class="caption">该地址最近没有配送计划</h5>
-        </div>
-        <div class="checkout-section" ng-if="custCtrl.order.isPickUp || custCtrl.deliveryOptionCollections.length>0">
-            <!--delivery-->
-            <h5 class="caption" ng-if="!custCtrl.order.isPickUp">
-                送货时间
-            </h5>
-            <select ng-options="(collection.Date|date:'EEE dMMM') for collection in custCtrl.deliveryOptionCollections"
-                    ng-model="custCtrl.selectedDeliveryOptionCollection" ng-if="!custCtrl.order.isPickUp" ng-change="custCtrl.selectDeliveryDate()"></select>
-
-            <!--pick up-->
-            <h5 class="caption" ng-if="custCtrl.order.isPickUp">
-                自提时间
-            </h5>
-            <select ng-options="(collection.Date|date:'EEE dMMM') for collection in custCtrl.pickUpOptionCollections"
-                    ng-model="custCtrl.selectedDeliveryOptionCollection" ng-if="custCtrl.order.isPickUp" ng-change="custCtrl.selectDeliveryDate()"></select>
-
-            <!--time-->
-            <select ng-options="((opt.From|date:'H:mm')+'-'+(opt.To|date:'H:mm')+' '+(opt.Fee|currency:$)) for opt in custCtrl.selectedDeliveryOptionCollection.ApplicableOpts"
-                    ng-model="custCtrl.order.deliveryOption" ng-change="custCtrl.selectDeliveryOption()"></select>
-
-            <h5 class="caption" ng-if="custCtrl.order.isPickUp">
-                自提地址
-            </h5>
-            <span class="pickup-address">{{custCtrl.order.deliveryOption.PickUpAddress}}</span>
-
-        </div>
-        <md-divider></md-divider>
-        <div class="checkout-section checkout-note">
+        <div class="checkout-section checkout-stall" ng-repeat="order in custCtrl.orders">
+            <!-- name -->
             <h5 class="caption">
-                留言|备注
+                {{order.n}}
             </h5>
-            <div class="note-text">
-                <textarea ng-model="custCtrl.order.note"></textarea>
+
+            <!-- delivery -->
+            <div ng-if="!order.isPickUp">
+                <span>送货时间</span>
+                <!--date-->
+                <select ng-options="(collection.Date|date:'EEE dMMM') for collection in order.deliveryOptionCollections"
+                        ng-model="order.selectedDeliveryOptionCollection" ng-if="!order.isPickUp" ng-change="custCtrl.selectDeliveryDate(order)"></select>
+                <!--time-->
+                <select ng-options="((opt.From|date:'H:mm')+'-'+(opt.To|date:'H:mm')+' '+(opt.Fee|currency:$)) for opt in order.selectedDeliveryOptionCollection.ApplicableOpts"
+                        ng-model="order.deliveryOption" ng-change="custCtrl.selectDeliveryOption(order)"></select>
             </div>
-        </div>
-        <md-divider></md-divider>
-        <div class="checkout-section checkout-stall">
-            <h5 class="caption">
-                {{custCtrl.order.stall.n}}
-            </h5>
-            <div class="checkout-item" ng-repeat="item in custCtrl.order.stall.itms track by item.i">
+
+            <div class="checkout-section" ng-if="!order.isPickUp && order.deliveryOptionCollections.length==0">
+                <h5 class="caption">该地址最近没有配送计划</h5>
+            </div>
+            <div class="checkout-section" ng-if="order.isPickUp || order.deliveryOptionCollections.length>0">
+
+                <!--pick up-->
+                <h5 class="caption" ng-if="order.isPickUp">
+                    自提时间
+                </h5>
+                <select ng-options="(collection.Date|date:'EEE dMMM') for collection in order.pickUpOptionCollections"
+                        ng-model="order.selectedDeliveryOptionCollection" ng-if="order.isPickUp" ng-change="custCtrl.selectDeliveryDate(order)"></select>
+                <h5 class="caption" ng-if="order.isPickUp">
+                    自提地址
+                </h5>
+                <span class="pickup-address">{{order.deliveryOption.PickUpAddress}}</span>
+            </div>
+            <div class="checkout-item" ng-repeat="item in order.itms track by item.i">
                 <div class="checkout-item-desc">
                     <div class="desc-name">{{item.n}}</div>
                     <span class="desc-option">{{item.v}}</span>
@@ -99,11 +90,16 @@
                 </div>
                 <div class="checkout-item-total-price">{{item.p*item.q|currency:$}}</div>
             </div>
-            <div class="checkout-item" ng-if="custCtrl.order.deliveryOption">
+            <div class="checkout-item" ng-if="order.deliveryOption">
                 <div class="checkout-item-desc">
                     <div class="desc-name">运费</div>
                 </div>
-                <div class="checkout-item-total-price">{{custCtrl.order.deliveryOption.Fee|currency:$}}</div>
+                <div class="checkout-item-total-price">{{order.deliveryOption.Fee|currency:$}}</div>
+            </div>
+            <!-- note -->
+            <div class="checkout-section checkout-note">
+                <span>留言</span>
+                <input type="text" ng-model="custCtrl.order.note" />
             </div>
             <div class="checkout-item">
                 <div class="checkout-item-desc">
@@ -120,7 +116,7 @@
             @if (_isAdmin)
             {
                 <a ng-click="custCtrl.fakePay()">Success</a>
-                    <a href="">Pay Fail</a>
+                <a href="">Pay Fail</a>
             }
         </div>
     </md-content>
@@ -140,6 +136,7 @@
     {
         <script type="text/javascript" src="/Static/lib/less/dist/less.min.js"></script>
         <script type="text/javascript" src="/Content/middle-js/app.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/cart.js"></script>
         <script type="text/javascript" src="/Content/middle-js/controller/customer.controller.js"></script>
     }
     else

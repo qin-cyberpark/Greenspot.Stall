@@ -3,7 +3,7 @@
     Page.Title = "小铺";
     var _products = (IList<Greenspot.Stall.Models.Product>)ViewBag.Products;
 }
-<div class="RecommendProductList">
+<div class="ProductList">
     <md-grid-list md-cols-xs="2" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="4"
                   md-row-height-gt-md="1:1" md-row-height="2:2"
                   md-gutter="5px">
@@ -12,8 +12,11 @@
         {
             <md-grid-tile ng-click="custCtrl.gotoUrl('@string.Format("/product/detail/{0}",p.Id)')">
                 <img src="@p.Image" style="width:100%;height:100%" />
+                <md-grid-tile-header>
+                    @p.BaseName
+                </md-grid-tile-header>
                 <md-grid-tile-footer>
-                    <div style="font-size:14px;white-space:nowrap;overflow:hidden;">@p.BaseName</div>
+                    @string.Format("{0:$0.00}", p.TotalPrice)
                 </md-grid-tile-footer>
             </md-grid-tile>
         }

@@ -1,0 +1,44 @@
+{
+  "button": [
+   {
+      "name": "久等了Local",
+      "sub_button": [
+        {
+          "type": "view",
+          "name": "逛一逛",
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f0f03f3f09da028&redirect_uri=http://shanghu.kiwinetcom.com/auth/KD83/&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+        },
+        {
+          "type": "view",
+          "name": "我的订单",
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f0f03f3f09da028&redirect_uri=http://shanghu.kiwinetcom.com/auth/KD83/customer/orders&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+        },
+        {
+          "type": "view",
+          "name": "我的小铺",
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f0f03f3f09da028&redirect_uri=http://shanghu.kiwinetcom.com/auth/KD83/owner&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+        }
+      ]
+    },
+    {
+      "name": "久等了Demo",
+      "sub_button": [
+        {
+          "type": "view",
+          "name": "逛一逛",
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f0f03f3f09da028&redirect_uri=http://shanghu.kiwinetcom.com/auth/WD38/&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+        },
+        {
+          "type": "view",
+          "name": "我的订单",
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f0f03f3f09da028&redirect_uri=http://shanghu.kiwinetcom.com/auth/WD38/customer/orders&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+        },
+        {
+          "type": "view",
+          "name": "我的小铺",
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f0f03f3f09da028&redirect_uri=http://shanghu.kiwinetcom.com/auth/WD38/owner&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+        }
+      ]
+    }
+  ]
+}

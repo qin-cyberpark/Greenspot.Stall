@@ -6,8 +6,8 @@
                    //theme
                    $mdThemingProvider.theme('default')
                        .primaryPalette('cyan', { 'default': '700' })
-                       .accentPalette('orange', { 'default': 'A200' })
-                       .backgroundPalette('cyan', { 'default': '50' });
+                       .accentPalette('orange')
+                       .backgroundPalette('grey', { 'default': '100' });
 
                    //
                    $mdIconProvider

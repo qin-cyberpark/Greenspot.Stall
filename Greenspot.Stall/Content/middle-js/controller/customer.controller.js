@@ -23,119 +23,7 @@
             }
 
             /*cart*/
-            vm.cart = {
-                stls: [],
-                qty: 0,
-                //currentStall: null,
-                selectStall: function (stall) {
-                    vm.order.stall = stall;
-                    //this.currentStall = stall;
-                    //this.writeToCookie();
-                },
-
-                //remove stall
-                removeStall: function (stallId) {
-                    for (var i = 0; i < this.stls.length; i++) {
-                        if (this.stls[i].i == stallId) {
-                            this.qty -= this.stls[i].qty;
-                            this.stls.splice(i, 1);
-                            break;
-                        }
-                    }
-                    this.writeToCookie();
-                },
-
-                add: function (nwItem) {
-                    this.qty++;
-
-                    var isExist = false;
-                    $.each(this.stls, function (idxStall, stall) {
-                        if (stall.i == nwItem.stallId) {
-                            //existing stl
-                            isExist = true;
-                            stall.add(nwItem);
-                            return false;
-                        }
-                    });
-
-                    if (!isExist) {
-                        var stall = new StallCart(nwItem.stallId, nwItem.stallName);
-                        stall.add(nwItem);
-                        this.stls.push(stall);
-                    }
-
-                    //new item
-                    this.writeToCookie();
-                },
-
-                empty: function () {
-                    this.stls = [];
-                    this.qty = 0;
-                    Cookies.remove("cart");
-                },
-
-                remove: function (stall, itemId) {
-                    this.qty -= stall.remove(itemId);
-                    //remove empty stall
-                    if (stall.itms.length == 0) {
-                        var delIdx = this.stls.indexOf(stall);
-                        if (delIdx > -1) {
-                            this.stls.splice(delIdx, 1);
-                        }
-                    }
-
-                    this.writeToCookie();
-                },
-
-                plusOne: function (stall, itemId) {
-                    stall.plusOne(itemId);
-                    this.qty++;
-
-                    this.writeToCookie();
-                },
-
-                minusOne: function (stall, itemId) {
-                    stall.minusOne(itemId);
-                    this.qty--;
-
-                    this.writeToCookie();
-                },
-
-                loadFromCookie: function () {
-                    var str = Cookies.get('cart');
-
-                    if (!str) {
-                        return;
-                    }
-                    var c = $.parseJSON(str);
-                    this.stls = [];
-                    //this.currentStall = null;
-
-                    //all stall
-                    $.each(c.stls, function (idxStall, stall) {
-                        var objStall = new StallCart(stall.i, stall.n);
-                        objStall.qty = stall.qty;
-                        objStall.amt = stall.amt;
-                        objStall.itms = stall.itms;
-                        vm.cart.stls.push(objStall);
-                    });
-
-
-
-                    this.qty = c.qty;
-
-                    //select first
-                    //if (this.currentStall == null && this.stls.length > 0) {
-                    //    this.currentStall = this.stls[0];
-                    //}
-                    vm.order.stall = vm.cart.stls[0];
-
-                },
-
-                writeToCookie: function () {
-                    Cookies.set("cart", this, { expires: 14 });
-                }
-            }
+            vm.cart = new Greenspot.Cart();
 
             ///**********************************
             //check out
@@ -143,7 +31,7 @@
             /* checkout */
             vm.checkOut = function () {
                 //load items
-                $http.post('/customer/CheckStock', vm.order).success(function (result) {
+                $http.post('/customer/CheckStock', vm.cart.getOrders()).success(function (result) {
                     if (result.Succeeded) {
                         //redirect to vent page
                         window.location.href = "/customer/Checkout";
@@ -159,31 +47,23 @@
 
             /* checkout init */
             vm.init_checkout = function (orderJson) {
-                vm.order = orderJson;
-                vm.loadDeliveryAddress(vm.loadDeliveryOptions);
-                vm.loadPickUpOptions();
-            }
-
-
-            /*order*/
-            vm.order = {
+                vm.orders = orderJson.orders;
+                vm.loadDeliveryAddress();
+                //vm.loadPickUpOptions();
             }
 
             ///**********************************
             //delivery options
             //***********************************
             /* load address */
-            vm.loadDeliveryAddress = function (callback) {
+            vm.loadDeliveryAddress = function () {
                 //load address
                 $http.get('/customer/DeliveryAddresses').success(function (result) {
                     if (result.Succeeded) {
                         vm.deliveryAddresses = result.Data;
                         if (vm.deliveryAddresses.length > 0) {
-                            vm.order.deliveryAddress = vm.deliveryAddresses[0];
-                        }
-
-                        if (callback) {
-                            callback();
+                            vm.deliveryAddress = vm.deliveryAddresses[0];
+                            vm.selectDeliveryAddress();
                         }
                     }
                     else {
@@ -195,22 +75,22 @@
             }
 
             /* get delivery option*/
-            vm.loadDeliveryOptions = function () {
+            vm.loadDeliveryOptions = function (order) {
                 //refresh
-                vm.deliveryOptions = [];
-                vm.order.deliveryOption = null;
+                order.deliveryOptions = [];
+                order.deliveryOption = null;
 
                 //delivery
-                var url = '/api/stall/GetDeliveryOptions/' + vm.order.stall.i + "?country=" + vm.order.deliveryAddress.CountryId;
-                url += "&city=" + vm.order.deliveryAddress.City;
-                url += "&suburb=" + vm.order.deliveryAddress.Suburb;
-                url += "&area=" + vm.order.deliveryAddress.Area;
+                var url = '/api/stall/GetDeliveryOptions/' + order.i + "?country=" + order.deliveryAddress.CountryId;
+                url += "&city=" + order.deliveryAddress.City;
+                url += "&suburb=" + order.deliveryAddress.Suburb;
+                url += "&area=" + order.deliveryAddress.Area;
 
                 $http.get(url).success(function (result) {
                     if (result.Succeeded) {
-                        vm.deliveryOptionCollections = result.Data;
-                        if (vm.deliveryOptionCollections.length > 0) {
-                            vm.selectedDeliveryOptionCollection = vm.deliveryOptionCollections[0];
+                        order.deliveryOptionCollections = result.Data;
+                        if (order.deliveryOptionCollections.length > 0) {
+                            order.selectedDeliveryOptionCollection = order.deliveryOptionCollections[0];
                             vm.selectDeliveryDate();
                         }
                     }
@@ -252,17 +132,20 @@
 
             //select delivery address
             vm.selectDeliveryAddress = function () {
-                vm.order.deliveryOption = null;
-                if (vm.order.deliveryAddress != 'pickup') {
-                    vm.order.isPickUp = false;
-                    vm.loadDeliveryOptions();
-                } else {
-                    vm.order.isPickUp = true;
-                    if (vm.pickUpOptionCollections && vm.pickUpOptionCollections.length > 0) {
-                        vm.selectedDeliveryOptionCollection = vm.pickUpOptionCollections[0];
-                        vm.selectDeliveryDate();
+                $.each(vm.orders, function (orderIdx, order) {
+                    order.deliveryOption = null;
+                    order.deliveryAddress = vm.deliveryAddress;
+                    if (vm.orders.deliveryAddress != 'pickup') {
+                        order.isPickUp = false;
+                        vm.loadDeliveryOptions(order);
+                    } else {
+                        order.isPickUp = true;
+                        if (vm.pickUpOptionCollections && vm.pickUpOptionCollections.length > 0) {
+                            vm.selectedDeliveryOptionCollection = vm.pickUpOptionCollections[0];
+                            //vm.selectDeliveryDate();
+                        }
                     }
-                }
+                })
             }
 
             //select delivery date
@@ -410,73 +293,4 @@
              };
          }
     ]);
-
-
-    function StallCart(stallId, stallName) {
-        var self = this;
-
-        self.i = stallId;
-        self.n = stallName;
-        self.qty = 0;
-        self.amt = 0;
-        self.itms = [];
-
-        self.add = function (nwItem) {
-            self.qty++;
-            self.amt += nwItem.price;
-
-            var itemAdded = false;
-            $.each(self.itms, function (idxItem, item) {
-                //existing item
-                if (item.i == nwItem.id) {
-                    item.q++;
-                    itemAdded = true;
-                    return false;
-                }
-            });
-
-            if (!itemAdded) {
-                //new item
-                self.itms.push({ i: nwItem.id, n: nwItem.name, v: nwItem.variant, q: 1, p: nwItem.price });
-            }
-        };
-
-        self.remove = function (itemId) {
-            var removedQty = 0;
-            $.each(self.itms, function (idxItem, item) {
-                if (item.i == itemId) {
-                    var delIdx = self.itms.indexOf(item);
-                    if (delIdx > -1) {
-                        self.itms.splice(delIdx, 1);
-                    }
-                    removedQty = item.q;
-                    self.qty -= item.q;
-                    self.amt -= item.p * item.q;
-
-                    return false;
-                }
-            })
-            return removedQty;
-        }
-
-        self.plusOne = function (itemId) {
-            $.each(self.itms, function (idxItem, item) {
-                if (item.i == itemId && item.q < 99) {
-                    item.q++;
-                    self.qty++;
-                    self.amt += item.p;
-                }
-            })
-        }
-
-        self.minusOne = function (itemId) {
-            $.each(self.itms, function (idxItem, item) {
-                if (item.i == itemId && item.q > 0) {
-                    item.q--;
-                    self.qty--;
-                    self.amt -= item.p;
-                }
-            })
-        }
-    }
 })();

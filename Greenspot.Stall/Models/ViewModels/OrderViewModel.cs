@@ -6,10 +6,28 @@ using System.Web;
 
 namespace Greenspot.Stall.Models.ViewModels
 {
+    public class OrderCollectionViewModel
+    {
+        [JsonProperty(PropertyName = "orders")]
+        public IList<OrderViewModel> Orders { get; set; }
+    }
+
     public class OrderViewModel
     {
-        [JsonProperty(PropertyName = "stall")]
-        public OrderStallViewModel Stall { get; set; }
+        [JsonProperty(PropertyName = "i")]
+        public int Id { get; set; }
+
+        [JsonProperty(PropertyName = "n")]
+        public string Name { get; set; }
+
+        [JsonProperty(PropertyName = "qty")]
+        public int Quantity { get; set; }
+
+        [JsonProperty(PropertyName = "amt")]
+        public decimal Amount { get; set; }
+
+        [JsonProperty(PropertyName = "itms")]
+        public IList<OrdeItemViewModel> Items { get; set; }
 
         [JsonProperty(PropertyName = "deliveryOption")]
         public DeliveryOptionViewModel DeliveryOption { get; set; }
@@ -19,25 +37,6 @@ namespace Greenspot.Stall.Models.ViewModels
 
         [JsonProperty(PropertyName = "note")]
         public string Note { get; set; }
-
-        public class OrderStallViewModel
-        {
-            [JsonProperty(PropertyName = "i")]
-            public int Id { get; set; }
-
-            [JsonProperty(PropertyName = "n")]
-            public string Name { get; set; }
-
-            [JsonProperty(PropertyName = "qty")]
-            public int Quantity { get; set; }
-
-            [JsonProperty(PropertyName = "amt")]
-            public decimal Amount { get; set; }
-
-            [JsonProperty(PropertyName = "itms")]
-            public IList<OrdeItemViewModel> Items { get; set; }
-
-        }
 
         public class OrdeItemViewModel
         {

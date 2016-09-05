@@ -28,13 +28,13 @@ namespace Greenspot.Stall.Tests
             Assert.IsNotNull(plan.DefaultFee);
             Assert.IsNotNull(plan.DefaultPlans);
 
-            var tmpOptsCity = plan.GetTemporaryDeliveryOptions("NZ","Auckland","Auckland City",10, new DateTime(2016, 8, 10));
+            var tmpOptsCity = plan.GetTemporaryDeliveryOptions("NZ","Auckland","Auckland City",10, new DateTime(2016, 8, 22));
             Assert.IsTrue(tmpOptsCity.Count == 6);
 
-            var tmpOptsNorth = plan.GetTemporaryDeliveryOptions("NZ", "Auckland", "North Shore", 10, new DateTime(2016, 8, 10));
+            var tmpOptsNorth = plan.GetTemporaryDeliveryOptions("NZ", "Auckland", "North Shore", 10, new DateTime(2016, 8, 22));
             Assert.IsTrue(tmpOptsNorth.Count == 0);
 
-            var AvailOptsNorth = plan.GetDefaultDeliveryOptions("NZ", "Auckland", "North Shore", 10, new DateTime(2016, 8, 10));
+            var AvailOptsNorth = plan.GetDefaultDeliveryOptions("NZ", "Auckland", "North Shore", 10, new DateTime(2016, 8, 23));
             Assert.IsTrue(AvailOptsNorth.Count == 4);
         }
 

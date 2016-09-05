@@ -54,7 +54,7 @@ namespace Greenspot.Stall
 
             // Uncomment the following lines to enable logging in with third party login providers
             app.UseWeChatAuthentication(new WeChatAuthenticationOptions(GreenspotConfiguration.AccessAccounts["wechat"].Id,
-                GreenspotConfiguration.AccessAccounts["wechat"].Secret, ApplicationTypes.MP, ScopeTypes.Base, false, false)
+                GreenspotConfiguration.AccessAccounts["wechat"].Secret, ApplicationTypes.MP, ScopeTypes.Base, true, false)
             {
                 UnionCallbackPath = GreenspotConfiguration.AppSettings["wechatAuthUrl"].Value
             });

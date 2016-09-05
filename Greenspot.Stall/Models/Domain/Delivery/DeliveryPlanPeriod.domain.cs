@@ -78,7 +78,7 @@ namespace Greenspot.Stall.Models
 
                 foreach (var timePair in availTimes)
                 {
-                    var newPair =  new DateTimePair()
+                    var newPair = new DateTimePair()
                     {
                         //add date time
                         From = new DateTime(dtStart.Year, dtStart.Month, dtStart.Day, timePair[0].Hour, timePair[0].Minute, 0),
@@ -86,6 +86,10 @@ namespace Greenspot.Stall.Models
                         IsTimeDivisible = IsTimeDivisible,
                         OptionDivideMinutes = OptionDivideMinutes
                     };
+                    if (newPair.To < newPair.From)
+                    {
+                        newPair.To = newPair.To.AddDays(1);
+                    }
 
                     result.Add(newPair);
                 }
