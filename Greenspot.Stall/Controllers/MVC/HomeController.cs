@@ -17,9 +17,21 @@ namespace Greenspot.Stall.Controllers
             return View();
         }
 
+        public ActionResult Takeway()
+        {
+            return View();
+        }
+
+        public ActionResult Preorder()
+        {
+            return View();
+        }
+
         public ActionResult Search()
         {
             var keyword = Request["keyword"];
+            var category = Request["category"];
+            var area = Request["area"];
             if (string.IsNullOrEmpty(keyword))
             {
                 return RedirectToAction("Index");

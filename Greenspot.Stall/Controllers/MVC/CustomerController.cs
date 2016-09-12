@@ -204,50 +204,58 @@ namespace Greenspot.Stall.Controllers.MVC
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        private Order ConvertToOrder(string jsonString)
+        private IList<Order> ConvertToOrders(string jsonString)
         {
-            //var orderVM = JsonConvert.DeserializeObject<OrderViewModel>(jsonString);
-            //var order = new Order();
-            //order.StallId = orderVM.Stall.Id;
-            //order.UserId = CurrentUser.Id;
+            var orders = new List<Order>();
+            var orderVMs = JsonConvert.DeserializeObject<IList<OrderViewModel>>(jsonString);
+            foreach (var orderVM in orderVMs)
+            {
+                var order = new Order();
+                order.StallId = orderVM.StallId;
+                order.UserId = CurrentUser.Id;
 
-            ////product
-            //foreach (var i in orderVM.Stall.Items)
-            //{
-            //    var product = Product.FindById(i.Id, _db);
-            //    if (product.Stock < i.Quantity)
-            //    {
-            //        //check stock
-            //    }
-            //    order.Items.Add(new OrderItem(product)
-            //    {
-            //        Quantity = i.Quantity
-            //    });
-            //}
+                //product
+                foreach (var i in orderVM.Items)
+                {
+                    var product = Product.FindById(i.Id, _db);
+                    if (product.Stock < i.Quantity)
+                    {
+                        //check stock
+                    }
+                    order.Items.Add(new OrderItem(product)
+                    {
+                        Quantity = i.Quantity
+                    });
+                }
 
-            ////delivery
-            //var stall = Models.Stall.FindById(orderVM.Stall.Id, _db);
-            //var deliveryProduct = Product.FindById(stall.DeliveryProductId, _db);
+                //delivery
+                var stall = Models.Stall.FindById(orderVM.StallId, _db);
+                var deliveryProduct = Product.FindById(stall.DeliveryProductId, _db);
 
-            //string addrStr = "";
-            //if (!orderVM.DeliveryOption.IsPickUp)
-            //{
-            //    var devAddr = DeliveryAddress.FindById(int.Parse(orderVM.DeliveryAddress.Id), _db);
-            //    addrStr = devAddr.ToString();
-            //}
-            //deliveryProduct.LineNote = orderVM.DeliveryOption.ToString() + "\n" + addrStr;
-            //deliveryProduct.Price = orderVM.DeliveryOption.Fee;
+                string addrStr = "";
+                if (!orderVM.DeliveryOption.IsPickUp)
+                {
+                    var devAddr = DeliveryAddress.FindById(int.Parse(orderVM.DeliveryAddress.Id), _db);
+                    addrStr = devAddr.ToString();
+                }
+                deliveryProduct.LineNote = orderVM.DeliveryOption.ToString() + "\n" + addrStr;
+                deliveryProduct.Price = orderVM.DeliveryOption.Fee;
 
-            //order.Items.Add(new OrderItem(deliveryProduct)
-            //{
-            //    Quantity = 1
-            //});
+                order.Items.Add(new OrderItem(deliveryProduct)
+                {
+                    Quantity = 1
+                });
 
-            //order.Note = orderVM.Note + "\n" + deliveryProduct.LineNote;
+                order.Note = orderVM.Note + "\n" + deliveryProduct.LineNote;
 
-            ////discount
-            //return order;
-            return null;
+
+                //discount
+
+                orders.Add(order);
+            }
+
+
+            return orders;
         }
 
         [Authorize]
@@ -262,23 +270,30 @@ namespace Greenspot.Stall.Controllers.MVC
 
             try
             {
-                var order = ConvertToOrder(json);
+                var orders = ConvertToOrders(json);
+
+                //generate payment ID
+                var paymentId = Guid.NewGuid().ToString();
 
                 //create order
-                if (!order.Create(_db))
+                foreach (var order in orders)
                 {
-                    result.Succeeded = false;
-                    result.Message = "fail to create order";
+                    order.PaymentId = paymentId;
+                    if (!order.Create(_db))
+                    {
+                        result.Succeeded = false;
+                        result.Message = "fail to create order";
+                    }
                 }
 
                 //return payment url
                 string payUrl = null;
-                string urlSuccess = string.Format("{0}/Customer/PxPay/{1}?paid=SUCCESS", GreenspotConfiguration.RootUrl, order.Id);
-                string urlFail = string.Format("{0}/Customer/PxPay/{1}?paid=FAIL", GreenspotConfiguration.RootUrl, order.Id);
+                string urlSuccess = string.Format("{0}/Customer/PxPay/{1}?paid=SUCCESS", GreenspotConfiguration.RootUrl, paymentId);
+                string urlFail = string.Format("{0}/Customer/PxPay/{1}?paid=FAIL", GreenspotConfiguration.RootUrl, paymentId);
 
                 try
                 {
-                    payUrl = Accountant.GeneratePayURL(order, urlFail, urlSuccess);
+                    //payUrl = Accountant.GeneratePayURL(order, urlFail, urlSuccess);
                     StallApplication.BizInfoFormat("[PAY]go to payment url:{0}", payUrl);
                     result.Data = payUrl;
                 }
@@ -312,14 +327,14 @@ namespace Greenspot.Stall.Controllers.MVC
 
             try
             {
-                //save to vend
-                var order = ConvertToOrder(json);
+                ////save to vend
+                //var order = ConvertToOrders(json);
 
-                //create order
-                if (order.Create(_db))
-                {
-                    await order.Save(_db);
-                }
+                ////create order
+                //if (order.Create(_db))
+                //{
+                //    await order.Save(_db);
+                //}
             }
             catch (Exception ex)
             {

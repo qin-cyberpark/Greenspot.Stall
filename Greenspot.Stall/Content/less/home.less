@@ -1,5 +1,90 @@
 ﻿@import "_variables.less";
 
+#home-content {
+}
+
+#takeway-content {
+    padding: 5px;
+
+    & .takeway-bar {
+        & .area-selector {
+            margin-top: 9px;
+            //padding: 0px;
+            width: 60px;
+            min-width: 60px;
+        }
+
+        & .search-text {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        & .btn-search {
+            margin: 0px;
+            padding: 0px;
+            width: 40px;
+            min-width: 40px;
+        }
+
+        & .btn-cart {
+            margin: 0px;
+            padding: 0px;
+            width: 40px;
+            min-width: 40px;
+
+            & .cart-amount {
+                position: absolute;
+                padding: 0px;
+                margin: 0px;
+                left: 20px;
+                top: 3px;
+                width: 18px;
+                height: 18px;
+                color: black;
+                background-color: @color-accent;
+                border-radius: 10px 10px;
+                line-height: 20px;
+                font-size: 11px;
+            }
+        }
+    }
+}
+
+.banner {
+    color: @color-grey-300;
+    background: @color-primary;
+    padding-top: 30px;
+    height: 60px;
+    text-align: center;
+
+    & .title {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    & .sub-title {
+        font-size: 9px;
+    }
+}
+
+.card-category {
+    height: 220px;
+
+    &.alt-item {
+        background-color: @color-grey-300;
+    }
+
+    & .category-image {
+        height: 150px;
+    }
+
+    & .category-name {
+        color: @color-accent;
+        font-size: 32px;
+        font-weight: bold;
+    }
+}
+
 .ProductList {
     padding: 5px;
 
@@ -10,7 +95,7 @@
         & md-grid-tile-header {
             height: 20px;
             font-size: 14px;
-            font-weight:bold;
+            font-weight: bold;
             white-space: nowrap;
             overflow: hidden;
         }
@@ -18,7 +103,7 @@
         & md-grid-tile-footer {
             height: 20px;
             font-size: 14px;
-            font-weight:bold;
+            font-weight: bold;
             white-space: nowrap;
             overflow: hidden;
         }

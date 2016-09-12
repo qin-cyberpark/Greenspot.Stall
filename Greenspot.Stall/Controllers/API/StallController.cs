@@ -55,39 +55,38 @@ namespace Greenspot.Stall.Controllers.API
 
             foreach (var opt in tempOpts)
             {
-                //got collection by date
-                if (collections.ContainsKey(opt.From.Date))
+                var optObjs = opt.Divide();
+
+                foreach (var optObj in optObjs)
                 {
-                    collection = collections[opt.From.Date];
-                }
-                else
-                {
-                    collection = new DeliveryOptionCollectionViewModel()
+                    //got collection by date
+                    if (collections.ContainsKey(optObj.From.Date))
                     {
-                        Date = opt.From.Date
-                    };
-                    collections[opt.From.Date] = collection;
-                }
+                        collection = collections[optObj.From.Date];
+                    }
+                    else
+                    {
+                        collection = new DeliveryOptionCollectionViewModel()
+                        {
+                            Date = optObj.From.Date
+                        };
+                        collections[optObj.From.Date] = collection;
+                    }
 
-                if (opt.IsApplicableToArea(areaStr))
-                {
-                    //has suitable area = available
-                    destList = collection.ApplicableOptions;
-                }
-                else
-                {
-                    //other
-                    destList = collection.OtherOptions;
-                }
+                    //destination list
+                    if (optObj.IsApplicableToArea(areaStr))
+                    {
+                        //has suitable area = available
+                        destList = collection.ApplicableOptions;
+                    }
+                    else
+                    {
+                        //other
+                        destList = collection.OtherOptions;
+                    }
 
-                //add
-                if (!opt.IsTimeDivisible)
-                {
-                    destList.Add(opt);
-                }
-                else
-                {
-                    ((List<DeliveryOption>)destList).AddRange(opt.Divide());
+                    //add
+                    destList.Add(optObj);
                 }
             }
             #endregion
@@ -141,9 +140,13 @@ namespace Greenspot.Stall.Controllers.API
                 {
                     Date = dt,
                     ApplicableOptions = c.ApplicableOptions.Where(x => x.To > earliestOrderTime).OrderBy(x => x.Fee).OrderBy(x => x.From).ToList(),
-                    OtherOptions = c.OtherOptions.Where(x => x.To > earliestOrderTime).OrderBy(x => x.From).OrderBy(x => x.Fee).ToList()
+                    OtherOptions = c.OtherOptions.Where(x => x.To > earliestOrderTime).OrderBy(x => x.Fee).OrderBy(x => x.From).ToList()
                 };
-                result.Data.Add(n);
+
+                if (n.ApplicableOptions.Count > 0)
+                {
+                    result.Data.Add(n);
+                }
             }
 
             return result;
@@ -215,12 +218,17 @@ namespace Greenspot.Stall.Controllers.API
                 {
                     continue;
                 }
+
                 var n = new DeliveryOptionCollectionViewModel()
                 {
                     Date = dt,
                     ApplicableOptions = c.ApplicableOptions.Where(x => x.To > earliestOrderTime).OrderBy(x => x.From).OrderBy(x => x.Fee).ToList()
                 };
-                result.Data.Add(n);
+
+                if (n.ApplicableOptions.Count > 0)
+                {
+                    result.Data.Add(n);
+                }
             }
 
             return result;

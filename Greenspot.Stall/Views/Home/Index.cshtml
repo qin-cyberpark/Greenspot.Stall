@@ -1,24 +1,66 @@
-﻿@{
-    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
-    Page.Title = "小铺";
-    var _products = (IList<Greenspot.Stall.Models.Product>)ViewBag.Products;
-}
-<div class="ProductList">
-    <md-grid-list md-cols-xs="2" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="4"
-                  md-row-height-gt-md="1:1" md-row-height="2:2"
-                  md-gutter="5px">
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="greenspotStall" ng-cloak>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Stall@Greenspot">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <base href="/">
+    <title>久等了</title>
+    <link rel="shortcut icon" href="~/static/img/favicon.png">
+    <!-- 3rd party stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.css">
+    <!-- platform stylesheet -->
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <link rel="stylesheet/less" href="~/Content/less/global.less">
+        <link rel="stylesheet/less" href="~/Content/less/home.less">
+    }
+    else
+    {
+        <link rel="stylesheet" href="~/static/css/stall.min.css">
+    }
+</head>
+<body>
+    <md-content id="home-content" ng-controller="CustomerController as ctrl">
+        <div class="banner">
+            <div class="title">久等了</div>
+            <div class="sub-title">COMING SOON</div>
+        </div>
+        <md-card class="card-category" ng-click="ctrl.gotoUrl('home/takeway')">
+            <md-card-content layout="row" layout-align="space-between center">
 
-        @foreach (var p in _products)
-        {
-            <md-grid-tile ng-click="custCtrl.gotoUrl('@string.Format("/product/detail/{0}",p.Id)')">
-                <img src="@p.Image" style="width:100%;height:100%" />
-                <md-grid-tile-header>
-                    @p.BaseName
-                </md-grid-tile-header>
-                <md-grid-tile-footer>
-                    @string.Format("{0:$0.00}", p.TotalPrice)
-                </md-grid-tile-footer>
-            </md-grid-tile>
-        }
-    </md-grid-list>
-</div>
+                <img src="~/Static/img/takeway.jpg" class="category-image">
+                <div class="category-name">外卖</div>
+
+            </md-card-content>
+        </md-card>
+        <md-card class="card-category alt-item"  ng-click="ctrl.gotoUrl('home/preorder')">
+            <md-card-content layout="row" layout-align="space-between center">
+                <div class="category-name">预售</div>
+                <img src="~/Static/img/order.jpg" class="category-image">
+            </md-card-content>
+        </md-card>
+    </md-content>
+    <!-- 3rd party libraries -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-aria.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-messages.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.2/js.cookie.min.js"></script>
+    <!-- owner scripts -->
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <script type="text/javascript" src="~/static/lib/less/dist/less.min.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/app.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/cart.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/controller/customer.controller.js"></script>
+    }
+    else
+    {
+        <script type="text/javascript" src="~/static/js/stall.min.js"></script>
+    }
+</body>
+</html>

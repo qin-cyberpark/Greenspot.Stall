@@ -261,6 +261,8 @@
     <Content Include="Content\middle-css\product.css" />
     <Content Include="Content\middle-css\_variables.css" />
     <Content Include="Content\middle-js\cart.js" />
+    <Content Include="Content\middle-js\controller\customer-address.controller.js" />
+    <Content Include="Content\middle-js\order.js" />
     <Content Include="Content\middle-js\plugin\addressAutoComplete.google.js" />
     <Content Include="Content\middle-js\plugin\addressAutoComplete.nzpost.js" />
     <Content Include="Content\middle-js\app.js" />
@@ -1210,6 +1212,7 @@
     <Content Include="Views\Customer\Addresses.cshtml" />
     <Content Include="Views\Manage\Stall.cshtml" />
     <Content Include="Views\Customer\Order.cshtml" />
+    <Content Include="Views\Home\Takeway.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

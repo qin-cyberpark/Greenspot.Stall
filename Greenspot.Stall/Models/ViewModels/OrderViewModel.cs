@@ -15,10 +15,10 @@ namespace Greenspot.Stall.Models.ViewModels
     public class OrderViewModel
     {
         [JsonProperty(PropertyName = "i")]
-        public int Id { get; set; }
+        public int StallId { get; set; }
 
         [JsonProperty(PropertyName = "n")]
-        public string Name { get; set; }
+        public string StallName { get; set; }
 
         [JsonProperty(PropertyName = "qty")]
         public int Quantity { get; set; }
@@ -29,7 +29,7 @@ namespace Greenspot.Stall.Models.ViewModels
         [JsonProperty(PropertyName = "itms")]
         public IList<OrdeItemViewModel> Items { get; set; }
 
-        [JsonProperty(PropertyName = "deliveryOption")]
+        [JsonProperty(PropertyName = "selectedOption")]
         public DeliveryOptionViewModel DeliveryOption { get; set; }
 
         [JsonProperty(PropertyName = "deliveryAddress")]

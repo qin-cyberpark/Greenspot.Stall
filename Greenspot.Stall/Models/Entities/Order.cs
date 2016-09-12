@@ -62,6 +62,8 @@ namespace Greenspot.Stall.Models
         //[JsonIgnore]
         //public string JsonString { get; set; }
 
+        public string PaymentId { get; set; }
+
         [JsonIgnore]
         public string VendResponse { get; set; }
 

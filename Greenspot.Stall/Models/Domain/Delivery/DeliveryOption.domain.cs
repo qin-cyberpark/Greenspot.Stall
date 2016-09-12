@@ -46,9 +46,14 @@ namespace Greenspot.Stall.Models
             var t = f.AddMinutes(OptionDivideMinutes);
             t = t < To ? t : To;
 
+            if (!IsTimeDivisible)
+            {
+                return DivideOverNight(this);
+            }
+
             while (t < To)
             {
-                result.Add(new DeliveryOption()
+                result.AddRange(DivideOverNight(new DeliveryOption()
                 {
                     From = f,
                     To = t,
@@ -57,14 +62,14 @@ namespace Greenspot.Stall.Models
                     IsPickUp = IsPickUp,
                     PickUpAddress = PickUpAddress,
                     Fee = Fee
-                });
+                }));
 
                 f = t;
                 t = t.AddMinutes(OptionDivideMinutes);
                 t = t < To ? t : To;
             }
 
-            result.Add(new DeliveryOption()
+            result.AddRange(DivideOverNight(new DeliveryOption()
             {
                 From = f,
                 To = t,
@@ -73,8 +78,38 @@ namespace Greenspot.Stall.Models
                 IsPickUp = IsPickUp,
                 PickUpAddress = PickUpAddress,
                 Fee = Fee
-            });
+            }));
 
+            return result;
+        }
+
+        private IList<DeliveryOption> DivideOverNight(DeliveryOption option)
+        {
+            var result = new List<DeliveryOption>();
+
+            //overnight
+            while (option.From.Date < option.To.Date)
+            {
+                var newTo = new DateTime(option.From.Year, option.From.Month, option.From.Day, 0, 0, 0).AddDays(1);
+                var newOpt = new DeliveryOption()
+                {
+                    From = option.From,
+                    To = newTo,
+                    IsTimeDivisible = option.IsTimeDivisible,
+                    Areas = option.Areas,
+                    IsPickUp = option.IsPickUp,
+                    PickUpAddress = option.PickUpAddress,
+                    Fee = option.Fee
+                };
+
+                result.Add(newOpt);
+                option.From = newTo;
+            };
+
+            if (option.From != option.To)
+            {
+                result.Add(option);
+            }
             return result;
         }
     }
