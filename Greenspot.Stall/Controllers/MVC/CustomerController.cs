@@ -260,7 +260,7 @@ namespace Greenspot.Stall.Controllers.MVC
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> Pay()
+        public ActionResult Pay()
         {
             OperationResult<string> result = new OperationResult<string>(true);
 
@@ -317,7 +317,7 @@ namespace Greenspot.Stall.Controllers.MVC
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<ActionResult> FakePay()
+        public ActionResult FakePay()
         {
             OperationResult<string> result = new OperationResult<string>(true);
 

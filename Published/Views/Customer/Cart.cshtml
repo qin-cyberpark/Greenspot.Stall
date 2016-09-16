@@ -42,38 +42,36 @@
             </div>
         }
         <div class="cart-stall" ng-if="custCtrl.cart.qty>0">
-            店铺：
-            <div class="stall-name" flex ng-repeat="stall in custCtrl.cart.stls" ng-click="custCtrl.cart.selectStall(stall)">
-                <div ng-class="{'selected':stall.i == custCtrl.order.stall.i}">
+            <div ng-repeat="stall in custCtrl.cart.stls">
+                <md-checkbox class="stall-name md-primary" ng-click="stall.toggleAll()" ng-checked="stall.isChecked()" md-indeterminate="stall.isIndeterminate()">
                     {{stall.n}}
-                </div>
-            </div>
-            货物：
-            <div class="cart-item" ng-repeat="item in custCtrl.order.stall.itms track by item.i" layout="row" layout-align="none center">
-                <div class="cart-item-desc" flex>
-                    <span class="desc-name">{{item.n}}</span>
-                    <span class="desc-variant">{{item.v}}</span>
-                    <span class="desc-unit-price">{{item.p|currency:$}}</span>
-                </div>
-                <div layout="row" layout-align="end center" flex>
-                    <md-button ng-click="custCtrl.cart.minusOne(custCtrl.order.stall, item.i)" ng-disabled="item.q<=1" aria-label="minus">
+                </md-checkbox>
+                <div class="cart-item" ng-repeat="item in stall.itms track by item.i" layout="row" layout-align="space-between center">
+                    <md-checkbox class="item-name md-primary" flex ng-click="stall.toggle(item)" ng-checked="item.slctd">
+                        {{item.n}}
+                    </md-checkbox>
+                    <span class="item-price">{{item.p|currency:$}}</span>
+                    <md-button ng-click="custCtrl.cart.minusOne(stall, item.i)" ng-disabled="item.q<=1" aria-label="minus">
                         <md-icon md-svg-icon="arrow-left"></md-icon>
                     </md-button>
                     <span class="qty-lbl">{{item.q}}</span>
-                    <md-button ng-click="custCtrl.cart.plusOne(custCtrl.order.stall, item.i)" aria-label="plus">
+                    <md-button ng-click="custCtrl.cart.plusOne(stall, item.i)" aria-label="plus">
                         <md-icon md-svg-icon="arrow-right"></md-icon>
                     </md-button>
-                    <md-button ng-click="custCtrl.cart.remove(custCtrl.order.stall, item.i)" aria-label="删除">
+                    <md-button ng-click="custCtrl.cart.remove(stall, item.i)" aria-label="删除">
                         <md-icon md-svg-icon="delete"></md-icon>
                     </md-button>
                 </div>
+                <md-divider></md-divider>
             </div>
         </div>
     </md-content>
-    <div id="bottom-toolbar" ng-if="custCtrl.cart.qty>0" layout="row" layout-align="none center">
-        <span class="amount" flex="40">总金额 {{custCtrl.order.stall.amt|currency:$}}</span>
-        <md-button ng-click="custCtrl.cart.empty()" class="md-raised md-accent" flex="30">清空</md-button>
-        <md-button ng-click="custCtrl.checkOut();" class="md-raised md-primary" flex="30">结账</md-button>
+    <div id="bottom-toolbar" ng-if="custCtrl.cart.qty>0" layout="row" layout-align="space-between center">
+        <md-checkbox class="selectAll md-primary" flex="30" ng-click="custCtrl.cart.toggleAll()" ng-checked="custCtrl.cart.isChecked()">
+            全选
+        </md-checkbox>
+        <div flex="40" style="text-align:right">合计: <span class="total-amount align-right">{{custCtrl.cart.totalAmount()|currency:$}}</span></div>
+        <button ng-click="custCtrl.checkOut();" class="btn btn-primary" flex="30" ng-disabled="custCtrl.cart.totalAmount()<=0">结账</button>
     </div>
     <!-- 3rd party libraries -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -91,6 +89,7 @@
     {
         <script type="text/javascript" src="~/static/lib/less/dist/less.min.js"></script>
         <script type="text/javascript" src="~/Content/middle-js/app.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/cart.js"></script>
         <script type="text/javascript" src="~/Content/middle-js/controller/customer.controller.js"></script>
     }
     else

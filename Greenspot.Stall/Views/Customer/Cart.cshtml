@@ -70,8 +70,8 @@
         <md-checkbox class="selectAll md-primary" flex="30" ng-click="custCtrl.cart.toggleAll()" ng-checked="custCtrl.cart.isChecked()">
             全选
         </md-checkbox>
-        <div flex="40" style="text-align:right">合计: <span class="amount md-primary">{{custCtrl.cart.totalAmount()|currency:$}}</span></div>
-        <button ng-click="custCtrl.checkOut();" class="btn-checkout" flex="30" ng-disabled="custCtrl.cart.totalAmount()<=0">结算</button>
+        <div flex="40" style="text-align:right">合计: <span class="total-amount align-right">{{custCtrl.cart.totalAmount()|currency:$}}</span></div>
+        <button ng-click="custCtrl.checkOut();" class="btn btn-primary" flex="30" ng-disabled="custCtrl.cart.totalAmount()<=0">结账</button>
     </div>
     <!-- 3rd party libraries -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>

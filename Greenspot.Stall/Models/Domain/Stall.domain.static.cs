@@ -40,8 +40,8 @@ namespace Greenspot.Stall.Models
 
         public static Stall FindById(int id, StallEntities db)
         {
-         
-            return db.Stalls.Include(x=>x.Products).FirstOrDefault(x => x.Id == id);
+
+            return db.Stalls.Include(x => x.Products).FirstOrDefault(x => x.Id == id);
         }
 
         public static Stall FindByRetailerId(string id, StallEntities db)
@@ -54,10 +54,13 @@ namespace Greenspot.Stall.Models
             return db.Stalls.Include(x => x.Products).FirstOrDefault(x => x.RetailerId.Equals(id));
         }
 
-
-        public static IList<Stall> Search(string keyworkd, StallEntities db, int takeAmount = 50)
+        public static IList<Stall> Search(string category, string area, string keyword, StallEntities db, int takeAmount = 50)
         {
-            return db.Stalls.Where(x=>x.StallName.ToLower().Contains(keyworkd.ToLower())).OrderBy(x=>x.StallName).Take(takeAmount).ToList();
+            return db.Stalls.Include(x => x.Products)
+                .Where(x => (string.IsNullOrEmpty(area) || x.Area.StartsWith(area))
+                    && (string.IsNullOrEmpty(keyword) || x.StallName.ToLower().Contains(keyword.ToLower()))
+                    && (string.IsNullOrEmpty(category) || x.StallType.Equals(category)))
+                .OrderBy(x => x.StallName).Take(takeAmount).ToList();
         }
 
         public static OperationResult<Stall> CraeteStall(string userId, string name, string prefix, StallEntities db)
@@ -74,23 +77,27 @@ namespace Greenspot.Stall.Models
             else if (string.IsNullOrEmpty(prefix))
             {
                 result.Message = string.Format("Vend前缀不能为空", prefix);
-            }else if (Stall.FindByName(name, db) != null)
+            }
+            else if (Stall.FindByName(name, db) != null)
             {
                 result.Message = string.Format("铺名 {0} 已占用", name);
-            }else if (Stall.FindByVendPrefix(prefix, db) != null)
+            }
+            else if (Stall.FindByVendPrefix(prefix, db) != null)
             {
                 result.Message = string.Format("{0}.vendhq.com 已注册", prefix);
-            }else
+            }
+            else
             {
                 var stall = new Stall() { UserId = userId, StallName = name, Prefix = prefix };
                 result.Data = db.Stalls.Add(stall);
                 db.SaveChanges();
             }
 
-            if(result.Data == null)
+            if (result.Data == null)
             {
                 result.Message = "无法保存商铺信息";
-            }else
+            }
+            else
             {
                 result.Succeeded = true;
             }

@@ -1,24 +1,130 @@
+#home-content {
+  padding: 5px;
+  height: 100%;
+}
+#home-content .search-bar {
+  font-size: 13px;
+}
+#home-content .search-bar .search-text {
+  margin-left: 5px;
+}
+#home-content .search-bar .btn-search {
+  margin: 0px;
+  padding: 0px;
+  width: 40px;
+  min-width: 40px;
+}
+#home-content .section-caption {
+  color: #0097A7;
+  text-align: center;
+}
+.banner {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100px;
+  color: #E0E0E0;
+  background: #0097A7;
+  padding-top: 5px;
+  text-align: center;
+}
+.banner IMG.logo {
+  height: 96px;
+}
+.category-list {
+  position: absolute;
+  top: 100px;
+  left: 0px;
+  right: 0px;
+  bottom: 40px;
+}
+.category-list .category:nth-child(2n+2) {
+  background-color: #E0E0E0;
+}
+.category-list .category:nth-child(2n+2) .category-image {
+  float: right;
+}
+.category-list .category:nth-child(2n+2) .category-name {
+  float: left;
+  margin-left: 15px;
+  margin-right: 0px;
+  text-align: left;
+}
+.category-list .category .category-image {
+  margin: 15px;
+  height: 120px;
+}
+.category-list .category .category-name {
+  color: #0097A7;
+  font-size: 40px;
+  font-weight: bold;
+  width: 100px;
+  float: right;
+  margin-right: 15px;
+  text-align: right;
+}
+#bottom-toolbar.footer-banner {
+  font-size: 16px;
+  color: #F5F5F5;
+  background-color: #0097A7;
+}
+#search-result {
+  height: 100%;
+}
 .ProductList {
+  height: 100%;
+}
+.ProductList .item {
+  height: 100px;
   padding: 5px;
 }
-.ProductList md-grid-tile {
-  height: 80px;
+.ProductList .item .left {
+  display: inline-block;
+  width: 50%;
+  height: 100%;
+  text-align: center;
+}
+.ProductList .item .left > img {
+  height: 100%;
+}
+.ProductList .item .right {
+  float: right;
+  width: 50%;
+  height: 100%;
+  text-align: center;
+}
+.ProductList .item .right .product-name {
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
+}
+.ProductList .item .right .stall-name {
+  color: #9E9E9E;
+  font-size: 12px;
+}
+.ProductList .item .right .price {
+  color: #0097A7;
+  font-size: 14px;
   margin-top: 5px;
 }
-.ProductList md-grid-tile md-grid-tile-header {
-  height: 20px;
-  font-size: 14px;
-  font-weight: bold;
-  white-space: nowrap;
-  overflow: hidden;
+.ProductList .item .right .operation > input {
+  padding: 0px;
+  margin: 0px;
+  font-size: 12px;
 }
-.ProductList md-grid-tile md-grid-tile-footer {
-  height: 20px;
-  font-size: 14px;
-  font-weight: bold;
-  white-space: nowrap;
-  overflow: hidden;
+.ProductList .item .right .operation > button {
+  padding: 0px;
+  margin-top: 5px;
+  border: none;
+  color: #EF6C00;
+  background-color: #F5F5F5;
+  font-size: 12px;
 }
-.ProductList IMG {
-  width: 80px;
+.coming-soon {
+  width: 100%;
+  height: 100px;
+  vertical-align: middle;
+  text-align: center;
+  color: #0097A7;
 }

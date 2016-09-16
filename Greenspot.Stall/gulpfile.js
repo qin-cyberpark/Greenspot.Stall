@@ -44,7 +44,7 @@ gulp.task("min:js", function () {
     for (var i = 0; i < jsGroups.length; i++) {
         gulp.src([contentPath + jsGroups[i].src, "!" + contentPath + jsGroups[i].exclude])
                 .pipe(concat(staticPath + jsGroups[i].dest))
-                .pipe(uglify())
+                //.pipe(uglify())
                 .pipe(gulp.dest("."));
     }
 });

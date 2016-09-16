@@ -57,17 +57,17 @@
         </md-content>
 
         <div id="bottom-toolbar" layout="row">
-            <md-button class="btn-cart" flex="10" aria-label="Cart" ng-click="custCtrl.gotoUrl('/customer/cart')">
+            <md-button class="btn-cart" flex="10" aria-label="Cart" ng-click="gotoUrl('/customer/cart')">
                 <span class="cart-amount" ng-if="custCtrl.cart.qty>0">{{custCtrl.cart.qty}}</span>
                 <md-icon class="cart-icon" md-svg-icon="cart"></md-icon>
             </md-button>
-            <md-button flex="60" class="md-raised md-primary"
+            <button flex="60" class="btn btn-accent"
                        ng-click="custCtrl.cart.add({stallId:'@_product.StallId', stallName:'@_product.Stall.StallName',
                        id:'@_product.Id',price:@_product.TotalPrice,
                        name:'@_product.BaseName',variant:'@_product.VariantDescription'})">
                 加入购物车
-            </md-button>
-            <md-button flex="60" class="md-raised md-primary" ng-click="custCtrl.gotoUrl('@string.Format("/stall/index/{0}", _product.StallId)')">商铺</md-button>
+            </button>
+            <button flex="60" class="btn btn-primary" ng-click="gotoUrl('/customer/cart')">结账</button>
         </div>
     }
     <!-- 3rd party libraries -->
@@ -85,6 +85,7 @@
     {
         <script type="text/javascript" src="/Static/lib/less/dist/less.min.js"></script>
         <script type="text/javascript" src="/Content/middle-js/app.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/cart.js"></script>
         <script type="text/javascript" src="/Content/middle-js/controller/customer.controller.js"></script>
     }
     else

@@ -185,6 +185,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\API\AddressController.cs" />
+    <Compile Include="Controllers\API\HomeController.cs" />
     <Compile Include="Controllers\API\StallController.cs" />
     <Compile Include="Controllers\API\WebhookController.cs" />
     <Compile Include="Controllers\MVC\HomeController.cs" />
@@ -240,6 +241,7 @@
     <Compile Include="Models\StallApplication.Operating.cs" />
     <Compile Include="Models\StallApplication.VendToken.cs" />
     <Compile Include="Models\ViewModels\DeliveryPlanModel.cs" />
+    <Compile Include="Models\ViewModels\HomeViewModel.cs" />
     <Compile Include="Models\ViewModels\OrderViewModel.cs" />
     <Compile Include="Utilities\OwinLogger.cs" />
     <Compile Include="Utilities\PxPay.cs" />
@@ -262,6 +264,8 @@
     <Content Include="Content\middle-css\_variables.css" />
     <Content Include="Content\middle-js\cart.js" />
     <Content Include="Content\middle-js\controller\customer-address.controller.js" />
+    <Content Include="Content\middle-js\controller\dialog.controller.js" />
+    <Content Include="Content\middle-js\controller\home.controller.js" />
     <Content Include="Content\middle-js\order.js" />
     <Content Include="Content\middle-js\plugin\addressAutoComplete.google.js" />
     <Content Include="Content\middle-js\plugin\addressAutoComplete.nzpost.js" />
@@ -275,13 +279,21 @@
     <Content Include="Static\html\SelectArea.tmpl.html" />
     <Content Include="Static\img\background.jpg" />
     <Content Include="Static\img\error.png" />
+    <Content Include="Static\img\homemade.jpg" />
     <Content Include="Static\img\icon\core-icons.svg">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Static\img\loading.gif" />
     <Content Include="Static\img\favicon.png" />
+    <Content Include="Static\img\logo.png" />
+    <Content Include="Static\img\logo_grey.png" />
+    <Content Include="Static\img\logo_grey_96.png" />
+    <Content Include="Static\img\logo_white.png" />
     <Content Include="Static\img\stall-logo.png" />
-    <Content Include="Static\js\stall.min.js" />
+    <Content Include="Static\img\takeaway.jpg" />
+    <Content Include="Static\js\stall.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Static\lib\angular-animate\angular-animate.js" />
     <Content Include="Static\lib\angular-animate\angular-animate.min.js" />
     <Content Include="Static\lib\angular-animate\index.js" />
@@ -1036,6 +1048,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Static\font\" />
+    <Folder Include="Static\img\stall\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1212,7 +1225,7 @@
     <Content Include="Views\Customer\Addresses.cshtml" />
     <Content Include="Views\Manage\Stall.cshtml" />
     <Content Include="Views\Customer\Order.cshtml" />
-    <Content Include="Views\Home\Takeway.cshtml" />
+    <Content Include="Views\Home\Takeaway.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

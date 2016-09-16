@@ -1,0 +1,111 @@
+﻿using Greenspot.Stall.Models;
+using Greenspot.Stall.Models.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+
+namespace Greenspot.Stall.Controllers.API
+{
+
+
+    public class HomeController : ApiController
+    {
+        private StallEntities _db = new StallEntities();
+
+        // GET api/<controller>
+        [HttpGet]
+        public OperationResult<IList<StallViewModel>> RecommendTakeaway([FromUri]string area)
+        {
+            var result = new OperationResult<IList<StallViewModel>>(true);
+            var oriStalls = Models.Stall.Search("TAKEAWAY", area, "", _db, 5);
+            IList<StallViewModel> stalls = new List<StallViewModel>();
+            foreach (var s in oriStalls)
+            {
+                var stallVm = new StallViewModel
+                {
+                    Id = s.Id,
+                    Name = s.StallName,
+                    Products = new List<StallProductViewModel>()
+                };
+
+                var products = s.Products.Where(x => x.Active == true && x.Stock > 0).Take(3);
+                foreach (var p in products)
+                {
+                    stallVm.Products.Add(new StallProductViewModel()
+                    {
+                        Id = p.Id,
+                        Name = p.Name
+                    });
+                }
+                stalls.Add(stallVm);
+            }
+
+            result.Data = stalls;
+
+            return result;
+        }
+
+        // GET api/<controller>
+        [HttpGet]
+        public OperationResult<IList<StallViewModel>> SearchTakeawayStall([FromUri]string area, [FromUri]string keyword)
+        {
+            var result = new OperationResult<IList<StallViewModel>>(true);
+            var oriStalls = Models.Stall.Search("TAKEAWAY", area, keyword, _db);
+            IList<StallViewModel> stalls = new List<StallViewModel>();
+            foreach (var s in oriStalls)
+            {
+                var stallVm = new StallViewModel
+                {
+                    Id = s.Id,
+                    Name = s.StallName,
+                    Products = new List<StallProductViewModel>()
+                };
+
+                var products = s.Products.Where(x => x.Active == true && x.Stock > 0).Take(3);
+                foreach (var p in products)
+                {
+                    stallVm.Products.Add(new StallProductViewModel()
+                    {
+                        Id = p.Id,
+                        Name = p.Name
+                    });
+                }
+                stalls.Add(stallVm);
+            }
+
+            result.Data = stalls;
+
+            return result;
+        }
+
+        // GET api/<controller>
+        [HttpGet]
+        public OperationResult<IList<StallProductViewModel>> SearchTakeawayProduct([FromUri]string area, [FromUri]string keyword)
+        {
+            var result = new OperationResult<IList<StallProductViewModel>>(true);
+            var oriProducts = Models.Product.Search("TAKEAWAY", area, keyword, _db).Where(x => x.Active == true);
+            IList<StallProductViewModel> products = new List<StallProductViewModel>();
+            foreach (var p in oriProducts)
+            {
+                if (p.Price != null)
+                {
+                    products.Add(new StallProductViewModel()
+                    {
+                        Id = p.Id,
+                        Name = p.BaseName,
+                        Image = p.Image,
+                        Price = p.Price.Value,
+                        StallId = p.StallId,
+                        StallName = p.Stall.StallName
+                    });
+                }
+            }
+
+            result.Data = products;
+            return result;
+        }
+    }
+}

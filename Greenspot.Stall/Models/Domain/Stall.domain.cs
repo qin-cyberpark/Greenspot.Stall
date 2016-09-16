@@ -307,7 +307,7 @@ namespace Greenspot.Stall.Models
                     db.SaveChanges();
                     return true;
                 }
-                catch (Exception ex)
+                catch
                 {
                     return false;
                 }
@@ -354,7 +354,7 @@ namespace Greenspot.Stall.Models
                                 TypeNameHandling = TypeNameHandling.Auto
                             });
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         return new DeliveryPlan();
                     }

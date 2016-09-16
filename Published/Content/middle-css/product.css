@@ -15,7 +15,7 @@
   height: 20px;
   line-height: 20px;
   font-size: 18px;
-  color: #0097A7;
+  color: black;
 }
 #detail-content .text-info .text-price:before {
   content: "$";

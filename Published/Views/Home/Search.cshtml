@@ -1,12 +1,10 @@
 ﻿@{
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
-    Page.Title = "小铺";
+    Page.Title = "久等了";
     var _products = (IList<Greenspot.Stall.Models.Product>)ViewBag.Products;
     var _stalls = (IList<Greenspot.Stall.Models.Stall>)ViewBag.Stalls;
 }
-
-
-
+ 
 <md-tabs md-border-bottom md-stretch-tabs="always">
     <md-tab label="商品">
         @if (_products != null && _products.Count > 0)

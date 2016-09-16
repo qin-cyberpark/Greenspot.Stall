@@ -21,26 +21,31 @@
     }
 </head>
 <body>
-    <md-content id="home-content" ng-controller="CustomerController as ctrl">
-        <div class="banner">
-            <div class="title">久等了</div>
-            <div class="sub-title">COMING SOON</div>
+    <div class="banner">
+        <img class="logo" src="~/Static/img/logo_grey_96.png" />
+    </div>
+    <div class="category-list" layout="column">
+        <div class="category" flex layout="row" layout-align="center center">
+            <a href="/home/takeaway">
+                <img src="~/Static/img/takeaway.jpg" class="category-image">
+            </a>
+            <a href="/home/takeaway">
+                <div class="category-name">餐厅外卖</div>
+            </a>
         </div>
-        <md-card class="card-category" ng-click="ctrl.gotoUrl('home/takeway')">
-            <md-card-content layout="row" layout-align="space-between center">
+        <div class="category alt-item" flex layout="row" layout-align="center center">
+            <a href="/home/homemade">
+                <div class="category-name">私房自助</div>
+            </a>
+            <a href="/home/homemade">
+                <img src="~/Static/img/homemade.jpg" class="category-image">
+            </a>
+        </div>
+    </div>
+    <div id="bottom-toolbar" class="footer-banner" layout="row" layout-align="center center">
+        久等了点餐，让您久等了
+    </div>
 
-                <img src="~/Static/img/takeway.jpg" class="category-image">
-                <div class="category-name">外卖</div>
-
-            </md-card-content>
-        </md-card>
-        <md-card class="card-category alt-item"  ng-click="ctrl.gotoUrl('home/preorder')">
-            <md-card-content layout="row" layout-align="space-between center">
-                <div class="category-name">预售</div>
-                <img src="~/Static/img/order.jpg" class="category-image">
-            </md-card-content>
-        </md-card>
-    </md-content>
     <!-- 3rd party libraries -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>

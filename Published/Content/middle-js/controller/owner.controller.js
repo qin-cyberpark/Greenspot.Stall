@@ -7,11 +7,6 @@
         function ($http, $location) {
             var vm = this;
 
-            /* redirect */
-            vm.gotoUrl = function (url) {
-                window.location.href = url;
-            }
-
             //step 1 - Register
             vm.Register = function () {
                 //load items

@@ -22,6 +22,9 @@ namespace Greenspot.Stall.Models
         [StringLength(100)]
         public string StallName { get; set; }
 
+        [StringLength(10)]
+        public string StallType { get; set; }
+
         [Required]
         [StringLength(50)]
         public string UserId { get; set; }
@@ -67,6 +70,9 @@ namespace Greenspot.Stall.Models
 
         [StringLength(50)]
         public string Suburb { get; set; }
+
+        [StringLength(100)]
+        public string Area { get; set; }
 
         [StringLength(50)]
         public string RegisterName { get; set; }

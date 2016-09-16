@@ -138,7 +138,7 @@ namespace Greenspot.Stall.Models
                         }
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     return null;
                 }
@@ -188,7 +188,7 @@ namespace Greenspot.Stall.Models
                         }
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     return null;
                 }
@@ -221,7 +221,7 @@ namespace Greenspot.Stall.Models
                         times.Add(new DateTime[] { start, to });
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     return null;
                 }

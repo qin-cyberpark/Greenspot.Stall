@@ -17,28 +17,13 @@ namespace Greenspot.Stall.Controllers
             return View();
         }
 
-        public ActionResult Takeway()
+        public ActionResult Takeaway()
         {
             return View();
         }
 
-        public ActionResult Preorder()
+        public ActionResult Homemade()
         {
-            return View();
-        }
-
-        public ActionResult Search()
-        {
-            var keyword = Request["keyword"];
-            var category = Request["category"];
-            var area = Request["area"];
-            if (string.IsNullOrEmpty(keyword))
-            {
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.Products = Product.Search(keyword, _db);
-            ViewBag.Stalls = Models.Stall.Search(keyword, _db);
             return View();
         }
     }
