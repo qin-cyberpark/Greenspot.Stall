@@ -10,7 +10,7 @@
     <meta name="description" content="Stall@Greenspot">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <base href="/">
-    <title>@Page.Title</title>
+    <title>久等了</title>
 
     <link rel="shortcut icon" href="/static/img/favicon.png">
 
@@ -21,7 +21,7 @@
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
         <link rel="stylesheet/less" href="~/Content/less/global.less">
-        <link rel="stylesheet/less" href="~/Content/less/home.less">
+        <link rel="stylesheet/less" href="~/Content/less/customer.less">
     }
     else
     {
@@ -29,37 +29,61 @@
     }
 
 </head>
-<body ng-controller="CustomerController as custCtrl">
+
+<body>
     @if (_stall != null)
     {
-        <md-toolbar id="stall-toolbar" class="md-primary" layout="row" layout-align="center center">
-            <div class="stall-text">
-                <div class="stall-text-line-1">
-                    @_stall.StallName
+        <div ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init_stallHome(@_stall.Id)">
+            <md-content>
+                <div class="stall-header">
+                    <img src="@string.Format("/Static/img/stall/{0}.jpg",_stall.Id)" />
+                    <div class="info">
+                        <div>@_stall.StallName</div>
+                        <button>运费 | 营业时间 | 其他信息</button>
+                    </div>
                 </div>
+                <div class="ProductList">
+                    <div class="item" ng-repeat="product in custCtrl.currentStall.Products ">
+                        <div class="left">
+                            <img src="{{product.Image}}" ng-click="gotoUrl('/product/detail/' + product.Id)" />
+                        </div>
+                        <div class="right">
+                            <div class="product-name" ng-click="gotoUrl('/product/detail/' + product.Id)">{{product.Name}}</div>
+                            <div class="price">{{product.Price|currency:$}}</div>
+                            <div class="operation">
+                                <select ng-model="product.Quantity">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                                <button ng-click="custCtrl.cart.add({stallId:product.StallId, stallName:product.StallName,
+                                                id:product.Id, name:product.Name,price:product.Price, variant:''}, product.Quantity)">
+                                    加入购物车
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </md-content>
+            <!--bottom tool bar-->
+            <div id="bottom-toolbar-step"></div>
+            <div id="bottom-toolbar" layout="row" layout-align="space-between center">
+                <md-button class="btn-cart" aria-label="Cart" ng-click="gotoUrl('/customer/cart')" flex="60">
+                    <span class="cart-amount" ng-if="custCtrl.cart.qty>0">{{custCtrl.cart.qty}}</span>
+                    <md-icon md-svg-icon="cart"></md-icon>
+                    <span class="total-amount">合计: {{custCtrl.cart.totalAmount()|currency:$}}</span>
+                </md-button>
+                <button ng-click="gotoUrl('/customer/cart')" class="btn btn-primary" ng-class="{'invalid':custCtrl.cart.qty<=0}" flex="40"
+                        ng-disabled="custCtrl.cart.qty<=0">
+                    结账
+                </button>
             </div>
-        </md-toolbar>
-        <md-content id="main-content">
-            <div class="ProductList">
-                <md-grid-list md-cols-xs="2" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="4"
-                              md-row-height-gt-md="1:1" md-row-height="2:2"
-                              md-gutter="5px">
-
-                    @foreach (var p in _stall.BaseProducts)
-                    {
-                        <md-grid-tile ng-click="custCtrl.gotoUrl('@string.Format("/product/detail/{0}",p.Id)')">
-                            <img src="@p.Image" style="width:100%;height:100%" />
-                            <md-grid-tile-header>
-                                @p.BaseName
-                            </md-grid-tile-header>
-                            <md-grid-tile-footer>
-                                @string.Format("{0:$0.00}", p.TotalPrice)
-                            </md-grid-tile-footer>
-                        </md-grid-tile>
-                    }
-                </md-grid-list>
+            <div class="loading-circle big screen-center" ng-if="loadingCircle">
+                <img src="~/Static/img/loading.gif" />
             </div>
-        </md-content>
+        </div>
     }
     <!-- 3rd party libraries -->
     <!-- 3rd party libraries -->
@@ -77,6 +101,8 @@
     {
         <script type="text/javascript" src="~/static/lib/less/dist/less.min.js"></script>
         <script type="text/javascript" src="~/Content/middle-js/app.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/cart.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/order.js"></script>
         <script type="text/javascript" src="~/Content/middle-js/controller/customer.controller.js"></script>
     }
     else

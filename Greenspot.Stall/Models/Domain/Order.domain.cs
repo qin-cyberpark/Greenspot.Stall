@@ -28,16 +28,23 @@ namespace Greenspot.Stall.Models
             return db.Orders.Include(x => x.Stall).Include(x => x.Items).FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task<bool> Save(StallEntities db)
+        public static IList<Order> FindByPaymentId(int paymentId, StallEntities db)
         {
-            if (await SaveToVend(db))
-            {
-                return SaveToDB(db);
-            }
-            return false;
+            return db.Orders.Include(x => x.Stall).Include(x => x.Items).Where(x => x.PaymentId == paymentId).ToList();
         }
 
-        private async Task<bool> SaveToVend(StallEntities db)
+        public bool Save(StallEntities db)
+        {
+            db.Orders.AddOrUpdate(this);
+            return db.SaveChanges() > 0;
+        }
+
+        /// <summary>
+        /// Send Order To Vend
+        /// </summary>
+        /// <param name="db"></param>
+        /// <returns></returns>
+        private async Task<bool> SendToVend(StallEntities db)
         {
             try
             {
@@ -79,8 +86,8 @@ namespace Greenspot.Stall.Models
                 vendSale.RegisterSalePayments.Add(new VendRegisterSaleRequest.RegisterSalePayment()
                 {
                     RetailerPaymentTypeId = Stall.PaymentTypeId,
-                    PaymentDate = string.Format("{0:yyyy-MM-dd HH:mm:ss}", PaidTime),
-                    Amount = (double)TotalCharge
+                    PaymentDate = string.Format("{0:yyyy-MM-dd HH:mm:ss}", Payment.ResponseTime),
+                    Amount = (double)Amount
                 });
 
                 //do reqeust
@@ -96,29 +103,6 @@ namespace Greenspot.Stall.Models
                 StallApplication.SysError("[MSG]fail to save to vend", ex);
                 return false;
             }
-        }
-
-        public bool Create(StallEntities db)
-        {
-            //set total price
-            if (GreenspotConfiguration.Payment.IsFullCharge)
-            {
-                TotalCharge = CalcTotal();
-            }
-            else
-            {
-                TotalCharge = 0.01M;
-            }
-
-            db.Set<Order>().AddOrUpdate(this);
-            return db.SaveChanges() > 0;
-        }
-
-        private bool SaveToDB(StallEntities db)
-        {
-            db.Orders.Attach(this);
-            db.Entry(this).State = EntityState.Modified;
-            return db.SaveChanges() > 0;
         }
 
         #region properties
@@ -155,13 +139,17 @@ namespace Greenspot.Stall.Models
         {
             return CalcTotalPriceExcludeTax() + CalcTotalTax();
         }
+        public decimal CalcTotalCharge()
+        {
+            return CalcTotal() - StallDiscount - PlatformDiscount;
+        }
 
         public string Summary
         {
             get
             {
                 StringBuilder sb = new StringBuilder();
-                sb.AppendFormat("单号:{0}\r时间:{1:H:mm:ss dd/MM/yyyy}\r金额:{2}\r", Id, PaidTime, TotalCharge);
+                sb.AppendFormat("单号:{0}\r时间:{1:H:mm:ss dd/MM/yyyy}\r金额:{2}\r", Id, CreateTime, ChargeAmount);
                 foreach (var item in Items)
                 {
                     sb.AppendFormat("{0}@{1:0.00}x{2}\r", item.Name, item.Price, item.Quantity);

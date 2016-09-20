@@ -234,5 +234,51 @@ namespace Greenspot.Stall.Controllers.API
             return result;
 
         }
+
+        [HttpGet]
+        public OperationResult<StallViewModel> GetStallProducts(int id)
+        {
+            var result = new OperationResult<StallViewModel>(true);
+
+            //get stall 
+            StallViewModel stallVM = null;
+            Models.Stall stall = null;
+            using (var db = new StallEntities())
+            {
+                stall = Models.Stall.FindById(id, db);
+                if (stall == null)
+                {
+                    result.Succeeded = false;
+                    result.Message = "Can not load products for stall " + id;
+                    return result;
+                }
+
+                stallVM = new StallViewModel()
+                {
+                    Id = stall.Id,
+                    Name = stall.StallName,
+                    Products = new List<StallProductViewModel>()
+                };
+            }
+
+            foreach (var p in stall.Products)
+            {
+                if (p.Active == true && p.Stock > 0 && p.Price != null)
+                {
+                    stallVM.Products.Add(new StallProductViewModel()
+                    {
+                        Id = p.Id,
+                        Name = p.BaseName,
+                        Image = p.Image,
+                        Price = p.Price.Value,
+                        StallId = p.StallId,
+                        StallName = p.Stall.StallName
+                    });
+                }
+            }
+
+            result.Data = stallVM;
+            return result;
+        }
     }
 }

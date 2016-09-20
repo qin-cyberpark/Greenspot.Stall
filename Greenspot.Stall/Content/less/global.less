@@ -98,6 +98,10 @@ html, body {
     overflow-y: auto;
 }
 
+#bottom-toolbar-step {
+    height: @bottom-toobar-height;
+}
+
 #bottom-toolbar {
     position: fixed;
     left: 0px;
@@ -146,15 +150,16 @@ html, body {
     & .btn {
         border: 0px;
         height: 100%;
-        
         color: white;
 
-        &.btn-primary{
+        &.btn-primary {
             background-color: @color-primary;
         }
-        &.btn-accent{
+
+        &.btn-accent {
             background-color: @color-accent;
         }
+
         &.invalid {
             background-color: @color-grey-500;
         }
@@ -197,6 +202,67 @@ md-divider {
     &.big {
         & > img {
             width: 100px;
+        }
+    }
+}
+
+.ProductList {
+    height: 100%;
+
+    & .item {
+        height: 100px;
+        padding: 5px;
+
+        & .left {
+            display: inline-block;
+            width: 50%;
+            height: 100%;
+            text-align: center;
+
+            & > img {
+                height: 100%;
+            }
+        }
+
+        & .right {
+            float: right;
+            width: 50%;
+            height: 100%;
+            text-align: center;
+
+            & .product-name {
+                color: black;
+                font-weight: bold;
+                font-size: 16px;
+            }
+
+            & .stall-name {
+                color: @color-grey-500;
+                font-size: 12px;
+            }
+
+            & .price {
+                color: @color-primary;
+                font-size: 14px;
+                margin-top: 5px;
+            }
+
+            & .operation {
+                & > input {
+                    padding: 0px;
+                    margin: 0px;
+                    font-size: 12px;
+                }
+
+                & > button {
+                    padding: 0px;
+                    margin-top: 5px;
+                    border: none;
+                    color: @color-accent;
+                    background-color: @color-grey-100;
+                    font-size: 12px;
+                }
+            }
         }
     }
 }

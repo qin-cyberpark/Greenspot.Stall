@@ -152,3 +152,33 @@
     background-color: #eee;
     z-index: 999;
 }
+
+
+.stall-header {
+    padding: 10px;
+    background-color: @color-primary;
+
+    & > img {
+        display: inline-block;
+        width: 40%;
+    }
+
+    & .info {
+        float: right;
+        width: 60%;
+        text-align: center;
+
+        & > div {
+            color: @color-grey-100;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        & > button {
+            border: none;
+            color: @color-grey-300;
+            background-color: @color-primary;
+            font-size: 11px;
+        }
+    }
+}

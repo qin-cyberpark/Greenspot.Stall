@@ -7,21 +7,21 @@ namespace Greenspot.Stall
 {
     public partial class StallApplication
     {
-        private HashSet<int> _operatingOrders = new HashSet<int>();
+        private HashSet<int> _operatingPayments = new HashSet<int>();
 
-        public static bool IsOrderOperating(int orderId)
+        public static bool IsPaymentOperating(int paymentId)
         {
-            return _instance._operatingOrders.Contains(orderId);
+            return _instance._operatingPayments.Contains(paymentId);
         }
 
-        public static void AddOperatingOrder(int orderId)
+        public static void AddOperatingPayment(int paymentId)
         {
-            _instance._operatingOrders.Add(orderId);
+            _instance._operatingPayments.Add(paymentId);
         }
 
-        public static void RemoveOperatingOrder(int orderId)
+        public static void RemoveOperatingPayment(int paymentId)
         {
-            _instance._operatingOrders.Remove(orderId);
+            _instance._operatingPayments.Remove(paymentId);
         }
     }
 }

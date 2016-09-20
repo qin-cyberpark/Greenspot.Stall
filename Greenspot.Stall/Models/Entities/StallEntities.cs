@@ -24,6 +24,7 @@ namespace Greenspot.Stall.Models
         public virtual DbSet<Suburb> Suburbs { get; set; }
         public virtual DbSet<SuburbDistance> SuburbDistances { get; set; }
         public virtual DbSet<DeliveryAddress> DeliveryAddresses { get; set; }
+        public virtual DbSet<Payment> Payments { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

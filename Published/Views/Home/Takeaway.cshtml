@@ -41,17 +41,17 @@
         <!-- recommend stall -->
         <div ng-if="homeCtrl.firstPage && homeCtrl.recommendTakeaway.length">
             <div class="section-caption">最新 | 推荐</div>
-            <md-card ng-repeat="stall in homeCtrl.recommendTakeaway">
+            <md-card ng-repeat="stall in homeCtrl.recommendTakeaway" ng-click="gotoUrl('/stall/index/' + stall.Id)">
                 <md-card-title>
                     <md-card-title-text layout-align="space-between center">
-                        <span class="md-headline" ng-click="gotoUrl('/stall/index/' + stall.Id)">{{stall.Name}}</span>
-                        <span class="md-subhead" ng-repeat="product in stall.Products" ng-click="gotoUrl('/product/detail/'+ product.Id)">
+                        <span class="md-headline">{{stall.Name}}</span>
+                        <span class="md-subhead" ng-repeat="product in stall.Products">
                             {{product.Name}}
                         </span>
                     </md-card-title-text>
                     <md-card-title-media>
                         <div class="md-media-md card-media">
-                            <img src="~/Static/img/stall/{{stall.Id}}.jpg"/>
+                            <img src="~/Static/img/stall/{{stall.Id}}.jpg" />
                         </div>
                     </md-card-title-media>
                 </md-card-title>
@@ -115,14 +115,15 @@
     </md-content>
 
     <!--bottom tool bar-->
+    <div id="bottom-toolbar-step"></div>
     <div id="bottom-toolbar" layout="row" layout-align="space-between center">
         <md-button class="btn-cart" aria-label="Cart" ng-click="gotoUrl('/customer/cart')" flex="60">
             <span class="cart-amount" ng-if="homeCtrl.cart.qty>0">{{homeCtrl.cart.qty}}</span>
             <md-icon md-svg-icon="cart"></md-icon>
             <span class="total-amount">合计: {{homeCtrl.cart.totalAmount()|currency:$}}</span>
         </md-button>
-        <button ng-click="gotoUrl('/customer/cart')" class="btn btn-primary" ng-class="{'invalid':homeCtrl.cart.totalAmount()<=0}" flex="40"
-                ng-disabled="homeCtrl.cart.totalAmount()<=0">
+        <button ng-click="gotoUrl('/customer/cart')" class="btn btn-primary" ng-class="{'invalid':homeCtrl.cart.qty<=0}" flex="40"
+                ng-disabled="homeCtrl.cart.qty<=0">
             结账
         </button>
     </div>

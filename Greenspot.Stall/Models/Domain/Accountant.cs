@@ -59,12 +59,12 @@ namespace Greenspot.Stall.Models
         }
 
         #endregion
-        public static string GeneratePayURL(Order order, string urlFail, string urlSuccess)
+        public static string GeneratePayURL(Payment Payment, string urlFail, string urlSuccess)
         {
             string payUrl = null;
-            string refStr = string.Format("GS STALL {0}", order.Id);
-            string tranIdStr = string.Format("{0}-{1:HHmmssfff}", order.Id, DateTime.Now);
-            payUrl = GeneratePxPayRequestURL(order.TotalCharge, refStr, tranIdStr, urlFail, urlSuccess);
+            string refStr = string.Format("GSPAY {0}", Payment.Id);
+            string tranIdStr = string.Format("{0}-{1:HHmmssfff}", Payment.Id, DateTime.Now);
+            payUrl = GeneratePxPayRequestURL(Payment.Amount, refStr, tranIdStr, urlFail, urlSuccess);
             return payUrl;
         }
 
@@ -76,9 +76,9 @@ namespace Greenspot.Stall.Models
         /// <param name="resultId"></param>
         /// <param name="isSuccess"></param>
         /// <returns></returns>
-        public static bool VerifyPxPayPayment(string resultId, bool isSuccess, out int outOrderId)
+        public static bool VerifyPxPayPayment(string resultId, bool isSuccess, out int outPaymentId)
         {
-            outOrderId = 0;
+            outPaymentId = 0;
             try
             {
                 //check response
@@ -96,41 +96,42 @@ namespace Greenspot.Stall.Models
                     return false;
                 }
 
-                //set order
-                int orderId = int.Parse(output.TxnId.Split('-')[0]);
+                //set payment
+                int paymentId = int.Parse(output.TxnId.Split('-')[0]);
                 decimal amount = decimal.Parse(output.AmountSettlement);
                 using (StallEntities db = new StallEntities())
                 {
-                    Order order = db.Orders.FirstOrDefault(o => o.Id == orderId);
-                    if (order == null)
+                    Payment payment = db.Payments.FirstOrDefault(o => o.Id == paymentId);
+                    if (payment == null)
                     {
-                        StallApplication.BizErrorFormat("[ACCOUNTANT-PXPAY]payment {0} can not mactch order {1}", resultId, outOrderId);
+                        StallApplication.BizErrorFormat("[ACCOUNTANT-PXPAY]payment {0} can not mactch payment {1}", resultId, outPaymentId);
                         StallApplication.BizErrorFormat("[ACCOUNTANT-PXPAY]{0}", output);
                         return false;
                     }
 
-                    outOrderId = orderId;
+                    payment.ResponseTime = DateTime.Now;
+                    outPaymentId = paymentId;
                     bool result = true;
                     if (!isSuccess)
                     {
                         //pay fail
-                        StallApplication.BizErrorFormat("[ACCOUNT-PAPAY]pay failed order id={0}", order.Id);
+                        StallApplication.BizErrorFormat("[ACCOUNT-PAPAY]pay failed payment id={0}", payment.Id);
                     }
                     else
                     {
                         //pay success
-                        if (order.TotalCharge != amount)
+                        if (payment.Amount != amount)
                         {
-                            StallApplication.BizErrorFormat("[ACCOUNT-PAPAY]pxpay amount {0} <> transaction amount {1}", amount, order.TotalCharge);
+                            StallApplication.BizErrorFormat("[ACCOUNT-PAPAY]pxpay amount {0} <> transaction amount {1}", amount, payment.Amount);
                             result = false;
                         }
                         else
                         {
-                            order.PaidTime = DateTime.Now;
+                            payment.HasPaid = true;
                         }
 
                     }
-                    order.PxPayResponse = output.ToString();
+                    payment.PxPayResponse = output.ToString();
                     db.SaveChanges();
                     return result;
                 }

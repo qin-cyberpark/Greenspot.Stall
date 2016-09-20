@@ -55,7 +55,7 @@ namespace Greenspot.Stall.Controllers.MVC
         [Authorize]
         public ActionResult Orders()
         {
-            ViewBag.Orders = Models.Order.FindByUserId(CurrentUser.Id, _db).ToList();
+            ViewBag.Orders = Models.Order.FindByUserId(CurrentUser.Id, _db).Where(x=>x.HasPaid).ToList();
             return View();
         }
 
@@ -249,7 +249,16 @@ namespace Greenspot.Stall.Controllers.MVC
                 order.Note = orderVM.Note + "\n" + deliveryProduct.LineNote;
 
 
+                //amount
+                order.Amount = order.CalcTotal();
+
                 //discount
+                order.StallDiscount = 0;
+                order.PlatformDiscount = 0;
+
+                //amount
+                order.ChargeAmount = order.CalcTotalCharge();
+
 
                 orders.Add(order);
             }
@@ -268,32 +277,72 @@ namespace Greenspot.Stall.Controllers.MVC
             req.Seek(0, System.IO.SeekOrigin.Begin);
             string json = new StreamReader(req).ReadToEnd();
 
+            Payment payment = null;
+
             try
             {
                 var orders = ConvertToOrders(json);
 
-                //generate payment ID
-                var paymentId = Guid.NewGuid().ToString();
-
-                //create order
-                foreach (var order in orders)
+                using (var tran = _db.Database.BeginTransaction())
                 {
-                    order.PaymentId = paymentId;
-                    if (!order.Create(_db))
+                    //calc total amnount, orderIds
+                    decimal amount = 0.0M;
+                    foreach (var order in orders)
                     {
-                        result.Succeeded = false;
-                        result.Message = "fail to create order";
+                        amount += order.ChargeAmount;
                     }
+
+                    //create payment
+                    payment = Payment.CreatePayment(_db, amount);
+                    if (payment == null)
+                    {
+                        tran.Rollback();
+                        result.Succeeded = false;
+                        result.Message = "fail to create payment";
+                        return Json(result, JsonRequestBehavior.AllowGet);
+
+                    }
+
+                    //create order
+                    string orderIds = null;
+                    foreach (var order in orders)
+                    {
+                        order.PaymentId = payment.Id;
+                        if (!order.Save(_db))
+                        {
+                            tran.Rollback();
+                            result.Succeeded = false;
+                            result.Message = "fail to create order";
+                            return Json(result, JsonRequestBehavior.AllowGet);
+                        }
+
+                        //get order id
+                        if (string.IsNullOrEmpty(orderIds))
+                        {
+                            orderIds = order.Id.ToString();
+                        }
+                        else
+                        {
+                            orderIds += "," + order.Id.ToString();
+                        }
+                    }
+
+                    //update payment
+                    payment.OrderIds = orderIds;
+                    payment.Save(_db);
+
+                    //save
+                    tran.Commit();
                 }
 
                 //return payment url
                 string payUrl = null;
-                string urlSuccess = string.Format("{0}/Customer/PxPay/{1}?paid=SUCCESS", GreenspotConfiguration.RootUrl, paymentId);
-                string urlFail = string.Format("{0}/Customer/PxPay/{1}?paid=FAIL", GreenspotConfiguration.RootUrl, paymentId);
+                string urlSuccess = string.Format("{0}/Customer/PxPay/{1}?paid=SUCCESS", GreenspotConfiguration.RootUrl, payment.Id);
+                string urlFail = string.Format("{0}/Customer/PxPay/{1}?paid=FAIL", GreenspotConfiguration.RootUrl, payment.Id);
 
                 try
                 {
-                    //payUrl = Accountant.GeneratePayURL(order, urlFail, urlSuccess);
+                    payUrl = Accountant.GeneratePayURL(payment, urlFail, urlSuccess);
                     StallApplication.BizInfoFormat("[PAY]go to payment url:{0}", payUrl);
                     result.Data = payUrl;
                 }
@@ -362,75 +411,94 @@ namespace Greenspot.Stall.Controllers.MVC
                 return View("Error");
             }
 
-            int paidOrderId = 0;
-            if (!Accountant.VerifyPxPayPayment(payResultId, isSuccess, out paidOrderId))
+            int paymentId = 0;
+            if (!Accountant.VerifyPxPayPayment(payResultId, isSuccess, out paymentId))
             {
                 StallApplication.BizErrorFormat("[MSG]PxPay not verified, result id={0}", payResultId);
                 return View("Error");
             }
 
-            if (paidOrderId != id)
+            if (paymentId != id)
             {
-                StallApplication.BizErrorFormat("[MSG]transaction not matched, px {0} <> url {1}", paidOrderId, id);
+                StallApplication.BizErrorFormat("[MSG]transaction not matched, px {0} <> url {1}", paymentId, id);
                 return View("Error");
             }
 
             if (isSuccess)
             {
-                //if (StallApplication.IsOrderOperating(id))
+
+
+                ////save to vend
+
+                //Models.Order order = null;
+
+                ////save order
+                //lock (_locker)
                 //{
-                //    StallApplication.BizErrorFormat("[MSG]order {0} is operating", id);
-                //    return Redirect("/customer/orders");
+                //    order = Models.Order.FindById(id, _db);
+
+                //    if (!string.IsNullOrEmpty(order.Status))
+                //    {
+                //        StallApplication.BizErrorFormat("[MSG]vend sale for order {0} is exist", id);
+                //        return Redirect("/customer/orders");
+                //    }
+
+                //    order.Status = "OPERATED";
+                //    _db.SaveChanges();
                 //}
 
+                //try
+                //{
+                //    //send message
+                //    var owner = UserManager.FindById(order.Stall.UserId);
+                //    var openId = owner?.SnsInfos[WeChatClaimTypes.OpenId].InfoValue;
+                //    if (!string.IsNullOrEmpty(openId))
+                //    {
+                //        var msg = string.Format("店铺[{0}]有一个新订单\r{1}", order.Stall.StallName, order.Summary);
+                //        WeChatHelper.SendMessage(openId, msg);
+                //    }
+                //}
+                //catch (Exception ex)
+                //{
+                //    StallApplication.SysError("[MSG]failed to send message", ex);
+                //}
 
-                //save to vend
-
-                Models.Order order = null;
-
-                //save order
-                lock (_locker)
-                {
-                    order = Models.Order.FindById(id, _db);
-
-                    if (!string.IsNullOrEmpty(order.Status))
-                    {
-                        StallApplication.BizErrorFormat("[MSG]vend sale for order {0} is exist", id);
-                        return Redirect("/customer/orders");
-                    }
-
-                    order.Status = "OPERATED";
-                    _db.SaveChanges();
-                }
-
-                try
-                {
-                    //send message
-                    var owner = UserManager.FindById(order.Stall.UserId);
-                    var openId = owner?.SnsInfos[WeChatClaimTypes.OpenId].InfoValue;
-                    if (!string.IsNullOrEmpty(openId))
-                    {
-                        var msg = string.Format("店铺[{0}]有一个新订单\r{1}", order.Stall.StallName, order.Summary);
-                        WeChatHelper.SendMessage(openId, msg);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    StallApplication.SysError("[MSG]failed to send message", ex);
-                }
-
-                try
-                {
-                    await order.Save(_db);
-                }
-                catch (Exception ex)
-                {
-                    StallApplication.SysError("[MSG]failed to save order", ex);
-                }
+                //try
+                //{
+                //    if(order.Save(_db)) {
+                //        |;
+                //}
+                //catch (Exception ex)
+                //{
+                //    StallApplication.SysError("[MSG]failed to save order", ex);
+                //}
 
                 //StallApplication.RemoveOperatingOrder(order.Id);
 
-                return Redirect("/customer/orders?remove_stallId=" + order.StallId);
+                //return Redirect("/customer/orders?remove_stallId=" + order.StallId);
+
+                if (StallApplication.IsPaymentOperating(paymentId))
+                {
+                    StallApplication.BizErrorFormat("[MSG]payment {0} is operating", paymentId);
+                    return Redirect("/customer/orders");
+                }
+
+                //set order as paid
+                var orders = Models.Order.FindByPaymentId(paymentId, _db);
+                foreach (var order in orders)
+                {
+                    order.HasPaid = true;
+                }
+                try
+                {
+                    _db.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    StallApplication.SysError("[MSG]failed to save orders", ex);
+                }
+                StallApplication.RemoveOperatingPayment(paymentId);
+                return Redirect("/customer/orders?paid=true");
             }
             else
             {

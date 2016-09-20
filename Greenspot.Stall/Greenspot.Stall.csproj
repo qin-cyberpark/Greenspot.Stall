@@ -46,6 +46,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -65,6 +73,10 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Quartz, Version=2.4.1.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.2.4.1\lib\net40\Quartz.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Senparc.Weixin, Version=4.5.20.25374, Culture=neutral, processorArchitecture=MSIL">
@@ -193,6 +205,7 @@
     <Compile Include="Controllers\MVC\ProductController.cs" />
     <Compile Include="Controllers\MVC\StallController.cs" />
     <Compile Include="Controllers\MVC\TestController.cs" />
+    <Compile Include="Jobs\OrderNotifier.cs" />
     <Compile Include="Models\Common\CustomDateTimeConverter .cs" />
     <Compile Include="Models\Common\Definitions.cs" />
     <Compile Include="Models\Domain\Accountant.cs" />
@@ -205,6 +218,8 @@
     <Compile Include="Models\Domain\Delivery\FixedFeeCalculator.domain.cs" />
     <Compile Include="Models\Domain\Order.domain.cs" />
     <Compile Include="Models\Domain\OrderItem.domain.cs" />
+    <Compile Include="Models\Domain\Payment.domain.cs" />
+    <Compile Include="Models\Domain\Payment.domain.static.cs" />
     <Compile Include="Models\Domain\Product.domain.cs" />
     <Compile Include="Models\Domain\Stall.domain.cs" />
     <Compile Include="Models\Domain\Suburb.domain.cs" />
@@ -219,6 +234,7 @@
     <Compile Include="Models\Entities\Delivery\DeliveryOption.cs" />
     <Compile Include="Models\Entities\Delivery\DeliveryPlanItem.cs" />
     <Compile Include="Models\Entities\OrderItems.cs" />
+    <Compile Include="Models\Entities\Payment.cs" />
     <Compile Include="Models\Entities\Suburb.cs" />
     <Compile Include="Models\Entities\Order.cs" />
     <Compile Include="Models\Common\OperationResult.cs" />
@@ -241,7 +257,7 @@
     <Compile Include="Models\StallApplication.Operating.cs" />
     <Compile Include="Models\StallApplication.VendToken.cs" />
     <Compile Include="Models\ViewModels\DeliveryPlanModel.cs" />
-    <Compile Include="Models\ViewModels\HomeViewModel.cs" />
+    <Compile Include="Models\ViewModels\StallViewModel.cs" />
     <Compile Include="Models\ViewModels\OrderViewModel.cs" />
     <Compile Include="Utilities\OwinLogger.cs" />
     <Compile Include="Utilities\PxPay.cs" />
@@ -1089,6 +1105,9 @@
     <None Include="Content\less\home.less" />
     <Content Include="Content\less\product.less" />
     <Compile Include="Models\Domain\Delivery\DeliveryPlan.domain.cs" />
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\Pub.pubxml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Shared\_OwnerLayout.cshtml" />

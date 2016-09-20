@@ -110,3 +110,27 @@
   background-color: #eee;
   z-index: 999;
 }
+.stall-header {
+  padding: 10px;
+  background-color: #0097A7;
+}
+.stall-header > img {
+  display: inline-block;
+  width: 40%;
+}
+.stall-header .info {
+  float: right;
+  width: 60%;
+  text-align: center;
+}
+.stall-header .info > div {
+  color: #F5F5F5;
+  font-size: 24px;
+  font-weight: bold;
+}
+.stall-header .info > button {
+  border: none;
+  color: #E0E0E0;
+  background-color: #0097A7;
+  font-size: 11px;
+}

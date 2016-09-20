@@ -45,10 +45,12 @@ namespace Greenspot.Stall.Models
         [StringLength(50)]
         public string UserId { get; set; }
 
-        public decimal TotalCharge { get; set; }
+        public decimal Amount { get; set; }
+        public decimal StallDiscount { get; set; }
+        public decimal PlatformDiscount { get; set; }
+        public decimal ChargeAmount { get; set; }
 
         public DateTime CreateTime { get; set; } = DateTime.Now;
-        public DateTime? PaidTime { get; set; }
 
         [StringLength(50)]
         public string Status { get; set; }
@@ -59,20 +61,21 @@ namespace Greenspot.Stall.Models
 
         public string Note { get; set; }
 
-        //[JsonIgnore]
-        //public string JsonString { get; set; }
-
-        public string PaymentId { get; set; }
+        public bool HasPaid { get; set; }
+        public int? PaymentId { get; set; }
+        public bool HasSavedToVend { get; set; }
+        public bool HasNotified { get; set; }
 
         [JsonIgnore]
         public string VendResponse { get; set; }
 
-        [JsonIgnore]
-        public string PxPayResponse { get; set; }
-
         [ForeignKey("StallId")]
         [JsonIgnore]
         public virtual Stall Stall { get; set; }
+
+        [ForeignKey("PaymentId")]
+        [JsonIgnore]
+        public virtual Payment Payment { get; set; }
 
         public virtual ICollection<OrderItem> Items { get; set; }
     }

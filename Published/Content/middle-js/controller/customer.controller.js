@@ -18,6 +18,32 @@
             vm.cart.removeStall(stallId);
         }
 
+        ///**********************************
+        //stall home page
+        //***********************************
+        /*stall home page */
+        vm.init_stallHome = function (stallId) {
+            vm.init();
+            vm.loadStallProducts(stallId);
+        }
+
+        /* load address */
+        vm.loadStallProducts = function (stallId) {
+            commSrv.showLoading();
+            //load address
+            $http.get('/api/stall/GetStallProducts/' + stallId).success(function (result) {
+                if (result.Succeeded) {
+                    vm.currentStall = result.Data;
+                }
+                else {
+                    console.log(result.Message);
+                }
+            }).error(function (error) {
+                console.log(error);
+            }).finally(function () {
+                commSrv.hideLoading();
+            });
+        }
 
         ///**********************************
         //check out
@@ -101,21 +127,6 @@
 
             //load items
             $http.post('/customer/Pay', vm.orders).success(function (result) {
-                if (result.Succeeded) {
-                    //redirect to vent page
-                    window.location.href = result.Data;
-                }
-                else {
-                    console.log(result.Message);
-                }
-            }).error(function (error) {
-                console.log(error);
-            });
-        }
-
-        vm.fakePay = function () {
-            //load items
-            $http.post('/customer/fakePay', vm.orders).success(function (result) {
                 if (result.Succeeded) {
                     //redirect to vent page
                     window.location.href = result.Data;

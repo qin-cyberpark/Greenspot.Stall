@@ -72,55 +72,6 @@
 #search-result {
   height: 100%;
 }
-.ProductList {
-  height: 100%;
-}
-.ProductList .item {
-  height: 100px;
-  padding: 5px;
-}
-.ProductList .item .left {
-  display: inline-block;
-  width: 50%;
-  height: 100%;
-  text-align: center;
-}
-.ProductList .item .left > img {
-  height: 100%;
-}
-.ProductList .item .right {
-  float: right;
-  width: 50%;
-  height: 100%;
-  text-align: center;
-}
-.ProductList .item .right .product-name {
-  color: black;
-  font-weight: bold;
-  font-size: 16px;
-}
-.ProductList .item .right .stall-name {
-  color: #9E9E9E;
-  font-size: 12px;
-}
-.ProductList .item .right .price {
-  color: #0097A7;
-  font-size: 14px;
-  margin-top: 5px;
-}
-.ProductList .item .right .operation > input {
-  padding: 0px;
-  margin: 0px;
-  font-size: 12px;
-}
-.ProductList .item .right .operation > button {
-  padding: 0px;
-  margin-top: 5px;
-  border: none;
-  color: #EF6C00;
-  background-color: #F5F5F5;
-  font-size: 12px;
-}
 .coming-soon {
   width: 100%;
   height: 100px;
