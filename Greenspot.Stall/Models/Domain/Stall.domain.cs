@@ -339,26 +339,26 @@ namespace Greenspot.Stall.Models
         {
             get
             {
-                if (_deliveryPlan == null)
-                {
-                    if (string.IsNullOrEmpty(DeliveryPlanJsonString))
-                    {
-                        return new DeliveryPlan();
-                    }
+                //if (_deliveryPlan == null)
+                //{
+                //    if (string.IsNullOrEmpty(""))
+                //    {
+                //        return new DeliveryPlan();
+                //    }
 
-                    try
-                    {
-                        _deliveryPlan = JsonConvert.DeserializeObject<DeliveryPlan>(DeliveryPlanJsonString,
-                            new JsonSerializerSettings
-                            {
-                                TypeNameHandling = TypeNameHandling.Auto
-                            });
-                    }
-                    catch
-                    {
-                        return new DeliveryPlan();
-                    }
-                }
+                //    try
+                //    {
+                //        _deliveryPlan = JsonConvert.DeserializeObject<DeliveryPlan>(
+                //            new JsonSerializerSettings
+                //            {
+                //                TypeNameHandling = TypeNameHandling.Auto
+                //            });
+                //    }
+                //    catch
+                //    {
+                //        return new DeliveryPlan();
+                //    }
+                //}
 
                 return _deliveryPlan;
             }

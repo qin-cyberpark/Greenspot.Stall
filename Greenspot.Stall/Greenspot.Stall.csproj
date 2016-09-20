@@ -221,6 +221,7 @@
     <Compile Include="Models\Domain\Payment.domain.cs" />
     <Compile Include="Models\Domain\Payment.domain.static.cs" />
     <Compile Include="Models\Domain\Product.domain.cs" />
+    <Compile Include="Models\Domain\Receipt.cs" />
     <Compile Include="Models\Domain\Stall.domain.cs" />
     <Compile Include="Models\Domain\Suburb.domain.cs" />
     <Compile Include="Models\Entities\CreditCard.cs" />
@@ -260,6 +261,7 @@
     <Compile Include="Models\ViewModels\StallViewModel.cs" />
     <Compile Include="Models\ViewModels\OrderViewModel.cs" />
     <Compile Include="Utilities\OwinLogger.cs" />
+    <Compile Include="Utilities\PrintHelper.cs" />
     <Compile Include="Utilities\PxPay.cs" />
     <Compile Include="Utilities\SuburbMatrix.cs" />
     <Compile Include="Utilities\WeChatHelper.cs" />
@@ -1078,6 +1080,10 @@
       <Project>{4322d1cd-fbf3-42f0-94d8-c86b1c321828}</Project>
       <Name>Greenspot.Identity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Greenspot.Common\Greenspot.SDK.MemoBird\Greenspot.SDK.MemoBird.csproj">
+      <Project>{fe8b36cf-b787-410b-b7a8-0ce44856e7e2}</Project>
+      <Name>Greenspot.SDK.MemoBird</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Greenspot.Vend\Greenspot.SDK.Vend.csproj">
       <Project>{25f56ab3-9e97-4746-aa25-6bf78810a26a}</Project>
       <Name>Greenspot.SDK.Vend</Name>
@@ -1102,6 +1108,10 @@
     <Content Include="Content\less\owner.less" />
     <Content Include="Content\less\customer.less" />
     <Content Include="Content\delivery-plan.json" />
+    <Content Include="Config\103_delivery_plan.json" />
+    <Content Include="Config\104_delivery_plan.json" />
+    <Content Include="Config\platform_delivery_plan.json" />
+    <Content Include="Config\103_open_time.json" />
     <None Include="Content\less\home.less" />
     <Content Include="Content\less\product.less" />
     <Compile Include="Models\Domain\Delivery\DeliveryPlan.domain.cs" />

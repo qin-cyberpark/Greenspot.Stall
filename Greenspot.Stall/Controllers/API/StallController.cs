@@ -36,7 +36,7 @@ namespace Greenspot.Stall.Controllers.API
             }
 
             //
-            var earliestOrderTime = DateTime.Now.AddMinutes(stall.DefaultOrderAdvancedMinutes == null ? 180 : stall.DefaultOrderAdvancedMinutes.Value);
+            var earliestOrderTime = DateTime.Now.AddMinutes(stall.DeliveryPlan.MinOrderAcvancedMinutes);
 
 
             //get distance
@@ -172,7 +172,7 @@ namespace Greenspot.Stall.Controllers.API
                 }
             }
 
-            var earliestOrderTime = DateTime.Now.AddMinutes(stall.DefaultOrderAdvancedMinutes == null ? 180 : stall.DefaultOrderAdvancedMinutes.Value);
+            var earliestOrderTime = DateTime.Now.AddMinutes(stall.DeliveryPlan.MinOrderAcvancedMinutes);
 
             //
             var collections = new SortedList<DateTime, DeliveryOptionCollectionViewModel>();

@@ -45,9 +45,10 @@ namespace Greenspot.Stall.Models
         [StringLength(50)]
         public string UserId { get; set; }
 
-        public decimal Amount { get; set; }
+        public decimal StallAmount { get; set; }
         public decimal StallDiscount { get; set; }
         public decimal PlatformDiscount { get; set; }
+        public decimal PlatformDelivery { get; set; }
         public decimal ChargeAmount { get; set; }
 
         public DateTime CreateTime { get; set; } = DateTime.Now;
@@ -63,8 +64,14 @@ namespace Greenspot.Stall.Models
 
         public bool HasPaid { get; set; }
         public int? PaymentId { get; set; }
-        public bool HasSavedToVend { get; set; }
-        public bool HasNotified { get; set; }
+        public bool HasSendToVend { get; set; }
+        public bool HasSendToWechat { get; set; }
+        public bool HasSendToPrinter { get; set; }
+
+        public DateTime? DeliveryTimeStart { get; set; }
+        public DateTime? DeliveryTimeEnd { get; set; }
+        public string Receiver { get; set; }
+        public string DeliveryAddress { get; set; }
 
         [JsonIgnore]
         public string VendResponse { get; set; }

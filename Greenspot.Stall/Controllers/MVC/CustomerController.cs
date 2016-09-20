@@ -250,7 +250,7 @@ namespace Greenspot.Stall.Controllers.MVC
 
 
                 //amount
-                order.Amount = order.CalcTotal();
+                order.StallAmount = order.CalcTotal();
 
                 //discount
                 order.StallDiscount = 0;

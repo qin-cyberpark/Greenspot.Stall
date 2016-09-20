@@ -31,7 +31,7 @@ namespace Greenspot.Stall.Models
 
         [StringLength(50)]
         public string Prefix { get; set; }
-        
+
         [StringLength(50)]
         public string RetailerId { get; set; }
 
@@ -93,21 +93,17 @@ namespace Greenspot.Stall.Models
         [StringLength(250)]
         public string QrCodeImage { get; set; }
 
-        public decimal? MinOrderAmount { get; set; }
-
-        public int? DefaultOrderAdvancedMinutes { get; set; }
-
-
         [StringLength(50)]
         public string BankAccount { get; set; }
 
-        public decimal? Balance { get; set; }
+        public decimal Balance { get; set; }
 
-        [Column(TypeName = "text")]
-        public string DeliveryPlanJsonString { get; set; }
+        public bool IsPrintOrder { get; set; }
+        public string PrinterAddress { get; set; }
+        public bool HasDelivery { get; set; }
 
         [Column(TypeName = "bit")]
-        public bool? Approved { get; set; }
+        public bool Approved { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
 

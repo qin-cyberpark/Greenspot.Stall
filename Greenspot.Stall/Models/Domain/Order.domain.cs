@@ -44,7 +44,7 @@ namespace Greenspot.Stall.Models
         /// </summary>
         /// <param name="db"></param>
         /// <returns></returns>
-        private async Task<bool> SendToVend(StallEntities db)
+        public async Task<bool> SendToVend(StallEntities db)
         {
             try
             {
@@ -87,7 +87,7 @@ namespace Greenspot.Stall.Models
                 {
                     RetailerPaymentTypeId = Stall.PaymentTypeId,
                     PaymentDate = string.Format("{0:yyyy-MM-dd HH:mm:ss}", Payment.ResponseTime),
-                    Amount = (double)Amount
+                    Amount = (double)StallAmount
                 });
 
                 //do reqeust
@@ -104,6 +104,8 @@ namespace Greenspot.Stall.Models
                 return false;
             }
         }
+
+
 
         #region properties
         public bool HasVendSaleCreated
