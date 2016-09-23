@@ -3,22 +3,115 @@
 
 html, body {
     margin: 0px auto;
-    max-width: @app-max-width;
     padding: 0px;
     height: 100%;
+    max-width: @app-max-width;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    font-family: Helvetica,Arial,'Microsoft YaHei';
+    font-size: 13px;
+    -webkit-font-smoothing: antialiased;
 }
 
 
 & input, select {
     border: none;
-    border-bottom: 1px solid @color-grey-500;
+    -webkit-appearance: none;
+    border-radius: 0;
+    border-bottom: 1px solid @color-grey-300;
     background-color: @color-grey-100;
 }
+
+.content-with-bottom-bar {
+    padding-bottom: @bottom-toobar-height;
+}
+
+#bottom-toolbar {
+    position: fixed;
+    bottom: 0px;
+    height: @bottom-toobar-height;
+    width: 100%;
+    max-width: @app-max-width;
+    color: @color-primary;
+    background-color: @color-grey-300;
+    font-size: 1.2rem;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row;
+    flex-flow: row;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+    & .selectAll {
+        margin: 0px 0px 0px 10px;
+        padding: 0px;
+    }
+
+    & .btn-cart {
+        margin: 0px;
+        padding-left: 10px;
+        width: 60px;
+        min-width: 60px;
+        text-align: left;
+
+        & .cart-icon {
+            width: 30px;
+            height: 30px;
+        }
+
+        & .cart-amount {
+            position: absolute;
+            padding: 0px;
+            margin: 0px;
+            left: 25px;
+            top: 3px;
+            width: 18px;
+            height: 18px;
+            color: white;
+            background-color: @color-primary;
+            border-radius: 10px 10px;
+            line-height: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+
+    & .btn {
+        margin: 0px;
+        border: 0px;
+        height: 100%;
+        color: white;
+
+        &.btn-primary {
+            background-color: @color-primary;
+        }
+
+        &.btn-accent {
+            background-color: @color-accent;
+        }
+
+        &.invalid {
+            background-color: @color-grey-500;
+        }
+    }
+
+    & .total-amount {
+        margin-left: 10px;
+        font-size: 16px;
+
+        &.align-right {
+            margin-left: 0px;
+            margin-right: 10px;
+        }
+    }
+}
+
 
 #main-toolbar {
     position: fixed;
@@ -96,86 +189,6 @@ html, body {
     bottom: 0px;
     overflow-x: hidden;
     overflow-y: auto;
-}
-
-#bottom-toolbar-step {
-    height: @bottom-toobar-height;
-}
-
-#bottom-toolbar {
-    position: fixed;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    height: @bottom-toobar-height;
-    color: @color-primary;
-    background-color: @color-grey-300;
-    //background-color:rebeccapurple;
-    font-size: 16px;
-
-    & .selectAll {
-        margin: 0px 0px 0px 10px;
-        padding: 0px;
-    }
-
-    & .btn-cart {
-        margin: 0px;
-        padding-left: 10px;
-        width: 60px;
-        min-width: 60px;
-        text-align: left;
-
-        & .cart-icon {
-            width: 30px;
-            height: 30px;
-        }
-
-        & .cart-amount {
-            position: absolute;
-            padding: 0px;
-            margin: 0px;
-            left: 25px;
-            top: 3px;
-            width: 18px;
-            height: 18px;
-            color: white;
-            background-color: @color-primary;
-            border-radius: 10px 10px;
-            line-height: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            text-align: center;
-        }
-    }
-
-    & .btn {
-        margin:0px;
-        border: 0px;
-        height: 100%;
-        color: white;
-
-        &.btn-primary {
-            background-color: @color-primary;
-        }
-
-        &.btn-accent {
-            background-color: @color-accent;
-        }
-
-        &.invalid {
-            background-color: @color-grey-500;
-        }
-    }
-
-    & .total-amount {
-        margin-left: 10px;
-        font-size: 16px;
-
-        &.align-right {
-            margin-left: 0px;
-            margin-right: 10px;
-        }
-    }
 }
 
 md-divider {

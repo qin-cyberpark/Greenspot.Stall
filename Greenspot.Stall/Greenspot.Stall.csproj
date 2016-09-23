@@ -71,20 +71,20 @@
       <HintPath>..\packages\MySql.Data.Entity.6.9.8\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Quartz, Version=2.4.1.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
       <HintPath>..\packages\Quartz.2.4.1\lib\net40\Quartz.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Senparc.Weixin, Version=4.5.20.25374, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Senparc.Weixin.4.5.20\lib\net45\Senparc.Weixin.dll</HintPath>
+    <Reference Include="Senparc.Weixin, Version=4.7.7.42111, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.Weixin.4.7.7\lib\net45\Senparc.Weixin.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Senparc.Weixin.MP, Version=13.8.4.26917, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Senparc.Weixin.MP.13.8.4\lib\net45\Senparc.Weixin.MP.dll</HintPath>
+    <Reference Include="Senparc.Weixin.MP, Version=14.3.4.28700, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.Weixin.MP.14.3.5\lib\net45\Senparc.Weixin.MP.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -204,7 +204,6 @@
     <Compile Include="Controllers\MVC\ManageController.cs" />
     <Compile Include="Controllers\MVC\ProductController.cs" />
     <Compile Include="Controllers\MVC\StallController.cs" />
-    <Compile Include="Controllers\MVC\TestController.cs" />
     <Compile Include="Jobs\OrderNotifier.cs" />
     <Compile Include="Models\Common\CustomDateTimeConverter .cs" />
     <Compile Include="Models\Common\Definitions.cs" />
@@ -281,6 +280,7 @@
     <Content Include="Content\middle-css\product.css" />
     <Content Include="Content\middle-css\_variables.css" />
     <Content Include="Content\middle-js\cart.js" />
+    <Content Include="Content\middle-js\utility.js" />
     <Content Include="Content\middle-js\controller\customer-address.controller.js" />
     <Content Include="Content\middle-js\controller\dialog.controller.js" />
     <Content Include="Content\middle-js\controller\home.controller.js" />
@@ -294,8 +294,9 @@
     <Content Include="gulpfile.js" />
     <Compile Include="Models\Entities\Delivery\DeliveryPlanPeriod.cs" />
     <Content Include="Static\css\stall.min.css" />
+    <Content Include="Static\html\homemade\index.html" />
     <Content Include="Static\html\SelectArea.tmpl.html" />
-    <Content Include="Static\img\background.jpg" />
+    <Content Include="Static\html\takeaway\index.html" />
     <Content Include="Static\img\error.png" />
     <Content Include="Static\img\homemade.jpg" />
     <Content Include="Static\img\icon\core-icons.svg">
@@ -303,12 +304,11 @@
     </Content>
     <Content Include="Static\img\loading.gif" />
     <Content Include="Static\img\favicon.png" />
-    <Content Include="Static\img\logo.png" />
     <Content Include="Static\img\logo_grey.png" />
     <Content Include="Static\img\logo_grey_96.png" />
     <Content Include="Static\img\logo_white.png" />
-    <Content Include="Static\img\stall-logo.png" />
     <Content Include="Static\img\takeaway.jpg" />
+    <Content Include="Static\html\Index.html" />
     <Content Include="Static\js\stall.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1108,10 +1108,6 @@
     <Content Include="Content\less\owner.less" />
     <Content Include="Content\less\customer.less" />
     <Content Include="Content\delivery-plan.json" />
-    <Content Include="Config\103_delivery_plan.json" />
-    <Content Include="Config\104_delivery_plan.json" />
-    <Content Include="Config\platform_delivery_plan.json" />
-    <Content Include="Config\103_open_time.json" />
     <None Include="Content\less\home.less" />
     <Content Include="Content\less\product.less" />
     <Compile Include="Models\Domain\Delivery\DeliveryPlan.domain.cs" />

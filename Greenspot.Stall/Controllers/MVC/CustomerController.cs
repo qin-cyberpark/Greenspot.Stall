@@ -16,6 +16,7 @@ using Greenspot.Stall.Utilities;
 using System.IO;
 using System.Net;
 using Greenspot.Configuration;
+using System.Web.Hosting;
 
 namespace Greenspot.Stall.Controllers.MVC
 {
@@ -55,7 +56,7 @@ namespace Greenspot.Stall.Controllers.MVC
         [Authorize]
         public ActionResult Orders()
         {
-            ViewBag.Orders = Models.Order.FindByUserId(CurrentUser.Id, _db).Where(x=>x.HasPaid).ToList();
+            ViewBag.Orders = Models.Order.FindByUserId(CurrentUser.Id, _db).Where(x => x.HasPaid).ToList();
             return View();
         }
 
@@ -212,6 +213,7 @@ namespace Greenspot.Stall.Controllers.MVC
             {
                 var order = new Order();
                 order.StallId = orderVM.StallId;
+                order.Stall = Models.Stall.FindById(orderVM.StallId, _db);
                 order.UserId = CurrentUser.Id;
 
                 //product
@@ -229,25 +231,39 @@ namespace Greenspot.Stall.Controllers.MVC
                 }
 
                 //delivery
-                var stall = Models.Stall.FindById(orderVM.StallId, _db);
-                var deliveryProduct = Product.FindById(stall.DeliveryProductId, _db);
-
-                string addrStr = "";
                 if (!orderVM.DeliveryOption.IsPickUp)
                 {
                     var devAddr = DeliveryAddress.FindById(int.Parse(orderVM.DeliveryAddress.Id), _db);
-                    addrStr = devAddr.ToString();
+                    order.Receiver = string.Format("{0} {1}", devAddr.Name, devAddr.Mobile);
+                    order.DeliveryAddress = devAddr.FullAddress;
                 }
-                deliveryProduct.LineNote = orderVM.DeliveryOption.ToString() + "\n" + addrStr;
-                deliveryProduct.Price = orderVM.DeliveryOption.Fee;
-
-                order.Items.Add(new OrderItem(deliveryProduct)
+                else
                 {
-                    Quantity = 1
-                });
+                    order.Receiver = "PICK-UP";
+                    order.DeliveryAddress = order.Stall.Address1 + " " + order.Stall.Address2;
+                }
 
-                order.Note = orderVM.Note + "\n" + deliveryProduct.LineNote;
+                if (order.Stall.HasDelivery)
+                {
+                    //owner delivery
+                    var deliveryProduct = Product.FindById(order.Stall.DeliveryProductId, _db);
 
+                    deliveryProduct.LineNote = orderVM.DeliveryOption.ToString() + "\n" + order.Receiver + "\n" + order.DeliveryAddress;
+                    deliveryProduct.Price = orderVM.DeliveryOption.Fee;
+
+                    order.Items.Add(new OrderItem(deliveryProduct)
+                    {
+                        Quantity = 1
+                    });
+                }
+                else
+                {
+                    //platform delivery
+                    order.PlatformDelivery = orderVM.DeliveryOption.Fee;
+                }
+
+                //note
+                order.Note = orderVM.Note;
 
                 //amount
                 order.StallAmount = order.CalcTotal();
@@ -256,9 +272,8 @@ namespace Greenspot.Stall.Controllers.MVC
                 order.StallDiscount = 0;
                 order.PlatformDiscount = 0;
 
-                //amount
+                //charge amount
                 order.ChargeAmount = order.CalcTotalCharge();
-
 
                 orders.Add(order);
             }
@@ -308,6 +323,7 @@ namespace Greenspot.Stall.Controllers.MVC
                     foreach (var order in orders)
                     {
                         order.PaymentId = payment.Id;
+                        order.IsPrintOrder = order.Stall.IsPrintOrder;
                         if (!order.Save(_db))
                         {
                             tran.Rollback();
@@ -364,35 +380,7 @@ namespace Greenspot.Stall.Controllers.MVC
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public ActionResult FakePay()
-        {
-            OperationResult<string> result = new OperationResult<string>(true);
-
-            Stream req = Request.InputStream;
-            req.Seek(0, System.IO.SeekOrigin.Begin);
-            string json = new StreamReader(req).ReadToEnd();
-
-            try
-            {
-                ////save to vend
-                //var order = ConvertToOrders(json);
-
-                ////create order
-                //if (order.Create(_db))
-                //{
-                //    await order.Save(_db);
-                //}
-            }
-            catch (Exception ex)
-            {
-                StallApplication.SysError("[MSG]fake pay failed", ex);
-            }
-
-            return Redirect("/customer/orders");
-        }
-        public async Task<ActionResult> PxPay(int id)
+        public ActionResult PxPay(int id)
         {
             string paidFlag = Request["paid"];
             if (paidFlag == null)
@@ -426,57 +414,6 @@ namespace Greenspot.Stall.Controllers.MVC
 
             if (isSuccess)
             {
-
-
-                ////save to vend
-
-                //Models.Order order = null;
-
-                ////save order
-                //lock (_locker)
-                //{
-                //    order = Models.Order.FindById(id, _db);
-
-                //    if (!string.IsNullOrEmpty(order.Status))
-                //    {
-                //        StallApplication.BizErrorFormat("[MSG]vend sale for order {0} is exist", id);
-                //        return Redirect("/customer/orders");
-                //    }
-
-                //    order.Status = "OPERATED";
-                //    _db.SaveChanges();
-                //}
-
-                //try
-                //{
-                //    //send message
-                //    var owner = UserManager.FindById(order.Stall.UserId);
-                //    var openId = owner?.SnsInfos[WeChatClaimTypes.OpenId].InfoValue;
-                //    if (!string.IsNullOrEmpty(openId))
-                //    {
-                //        var msg = string.Format("店铺[{0}]有一个新订单\r{1}", order.Stall.StallName, order.Summary);
-                //        WeChatHelper.SendMessage(openId, msg);
-                //    }
-                //}
-                //catch (Exception ex)
-                //{
-                //    StallApplication.SysError("[MSG]failed to send message", ex);
-                //}
-
-                //try
-                //{
-                //    if(order.Save(_db)) {
-                //        |;
-                //}
-                //catch (Exception ex)
-                //{
-                //    StallApplication.SysError("[MSG]failed to save order", ex);
-                //}
-
-                //StallApplication.RemoveOperatingOrder(order.Id);
-
-                //return Redirect("/customer/orders?remove_stallId=" + order.StallId);
-
                 if (StallApplication.IsPaymentOperating(paymentId))
                 {
                     StallApplication.BizErrorFormat("[MSG]payment {0} is operating", paymentId);
@@ -487,18 +424,28 @@ namespace Greenspot.Stall.Controllers.MVC
                 var orders = Models.Order.FindByPaymentId(paymentId, _db);
                 foreach (var order in orders)
                 {
-                    order.HasPaid = true;
+                    if (!order.HasPaid)
+                    {
+                        try
+                        {
+                            order.HasPaid = true;
+                            _db.SaveChanges();
+
+                            //notify
+                            var owner = UserManager.FindById(order.Stall.UserId);
+                            var openId = owner?.SnsInfos[WeChatClaimTypes.OpenId].InfoValue;
+                            //await order.Notify(_db, openId);
+                            HostingEnvironment.QueueBackgroundWorkItem(x => order.Notify(_db, openId));
+                        }
+                        catch (Exception ex)
+                        {
+                            StallApplication.SysError("[MSG]failed to save orders", ex);
+                        }
+                    }
                 }
-                try
-                {
-                    _db.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    StallApplication.SysError("[MSG]failed to save orders", ex);
-                }
+
                 StallApplication.RemoveOperatingPayment(paymentId);
-                return Redirect("/customer/orders?paid=true");
+                return Redirect("/customer/orders");
             }
             else
             {

@@ -102,8 +102,14 @@ namespace Greenspot.Stall.Models
         public string PrinterAddress { get; set; }
         public bool HasDelivery { get; set; }
 
-        [Column(TypeName = "bit")]
-        public bool Approved { get; set; }
+        public int RecommendIndex { get; set; }
+        public string Status { get; set; }
+
+        [Column(TypeName = "text")]
+        public string DeliveryPlanJsonString { get; set; }
+
+        [Column(TypeName = "text")]
+        public string OpenTimeJsonString { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
 

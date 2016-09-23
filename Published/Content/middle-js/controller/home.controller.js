@@ -50,7 +50,7 @@
                 === search ===
                 */
                 vm.searchCondition = {
-                    area: "NZ-Auckland-Auckland City",
+                    area: "NZ-Auckland",
                     category: "TAKEAWAY",
                     keyword: ""
                 }

@@ -1,63 +1,137 @@
-﻿@{
-    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
-    Page.Title = "久等了";
-    var _products = (IList<Greenspot.Stall.Models.Product>)ViewBag.Products;
-    var _stalls = (IList<Greenspot.Stall.Models.Stall>)ViewBag.Stalls;
+﻿@using Greenspot.Stall.Models;
+@{
+
+    string _category = Request["c"];
+    string _keyword = Request["k"];
+    string _area = Request["a"];
+    bool _isTakeaway = "T".Equals(_category);
+
+    var _stalls = (IList<Stall>)ViewBag.MatchedStalls;
+    var _products = (IList<Product>)ViewBag.MatchedProducts;
 }
- 
-<md-tabs md-border-bottom md-stretch-tabs="always">
-    <md-tab label="商品">
-        @if (_products != null && _products.Count > 0)
-        {
-            <div class="ProductList">
-                <md-grid-list md-cols-xs="2" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="4"
-                              md-row-height-gt-md="1:1" md-row-height="2:2"
-                              md-gutter="5px">
+<!DOCTYPE html>
+<html lang="en" ng-app="greenspotStall" ng-cloak>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="外卖 Takeaway Homemade">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <base href="/">
+    <title>@(_isTakeaway ? "餐厅外卖" : "私房自助") | 久等了</title>
+    <link rel="shortcut icon" href="/static/img/favicon.png">
+    <!-- 3rd party stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.css">
+    <!-- platform stylesheet -->
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <link rel="stylesheet/less" href="~/Content/less/global.less">
+        <link rel="stylesheet/less" href="~/Content/less/home.less">
+    }
+    else
+    {
+        <link rel="stylesheet" href="~/static/css/stall.min.css">
+    }
+</head>
+<body ng-controller="HomeController as homeCtrl" ng-init="homeCtrl.init_cart()">
+    <div id="search-bar">
+        <form method="get" action="/home/search">
+            <select name="a">
+                <option value="NZ-Auckland" @(_area.Equals("NZ-Auckland") ? "selected" : "")>全奥克兰</option>
+                <option value="NZ-Auckland-Auckland City" @(_area.Equals("NZ-Auckland-Auckland City") ? "selected" : "")>奥克兰City</option>
+                <option value="NZ-Auckland-Central Auckland" @(_area.Equals("NZ-Auckland-Central Auckland") ? "selected" : "")>奥克兰中区</option>
+                <option value="NZ-Auckland-North Shore" @(_area.Equals("NZ-Auckland-North Shore") ? "selected" : "")>奥克兰北岸</option>
+                <option value="NZ-Auckland-East Auckland" @(_area.Equals("NZ-Auckland-East Auckland") ? "selected" : "")>奥克兰东区</option>
+                <option value="NZ-Auckland-West Auckland" @(_area.Equals("NZ-Auckland-West Auckland") ? "selected" : "")>奥克兰西区</option>
+                <option value="NZ-Auckland-South Auckland" @(_area.Equals("NZ-Auckland-South Auckland") ? "selected" : "")>奥克兰南区</option>
+            </select>
+            <input type="hidden" name="c" value="@_category" />
+            <input class="search-text" type="text" placeholder="搜索" name="k" value="@_keyword">
+            <md-button type="submit " class="btn-search" aria-label="Search">
+                <md-icon md-svg-icon="search"></md-icon>
+            </md-button>
+        </form>
+    </div>
 
-                    @foreach (var p in _products)
-                    {
-                        <md-grid-tile ng-click="custCtrl.gotoUrl('@string.Format("/product/detail/{0}",p.Id)')">
-                            <img src="@p.Image" style="width:100%;height:100%" />
-                            <md-grid-tile-header>
-                                @p.BaseName
-                            </md-grid-tile-header>
-                            <md-grid-tile-footer>
-                                @string.Format("{0:$0.00}", p.TotalPrice)
-                            </md-grid-tile-footer>
-                        </md-grid-tile>
+    <!-- search -->
+    <md-tabs id="search-result" md-border-bottom md-stretch-tabs="always">
+        <!-- product search result -->
+
+        <md-tab label="商品">
+            @if (_products != null && _products.Count > 0)
+            {
+                <div class="ProductList">
+                    @{
+                        var idx = 0;
                     }
-                </md-grid-list>
-            </div>
-        }
-        else
-        {
-            <CENTER>
-                <h4>换个关键字试试？</h4>
-            </CENTER>
-        }
-    </md-tab>
-    <md-tab label="商铺">
-        @if (_stalls != null && _stalls.Count > 0)
-        {
-            <md-list flex>
-                @foreach (var s in _stalls)
-                {
-                    <md-list-item class="md-2-line" ng-click="custCtrl.gotoUrl('@string.Format("/stall/index/{0}",@s.Id)')">
-                        <img ng-src="@string.Format("/static/img/stall-logo.png", @s.Id)" class="md-avatar" alt="@s.StallName" />
-                        <div class="md-list-item-text">
-                            <h3>@s.StallName</h3>
-                            <p>@s.StallName</p>
-                        </div>
-                    </md-list-item>
-                }
-            </md-list>
-        }
-        else
-        {
+                    @foreach (var product in _products)
+                    {
 
-            <CENTER>
-                <h4>换个关键字试试？</h4>
-            </CENTER>
-        }
-    </md-tab>
-</md-tabs>
+                        <div class="item">
+                            <div class="left">
+                                <img src="@product.Image" ng-click="@string.Format("gotoUrl('/product/detail/{0}')", product.Id)" />
+                            </div>
+                            <div class="right">
+                                <div class="product-name" ng-click="@string.Format("gotoUrl('/product/detail/{0}')", product.Id)">@product.BaseName</div>
+                                <div class="stall-name">@product.Stall.StallName</div>
+                                <div class="price">@product.PriceIncTax.ToString("$0.00")</div>
+                                <div class="operation">
+                                    <select ng-model="qty+@" ng-init="productVM='1'">
+                                        <option value="1" selected>1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                    <button ng-click="@string.Format("homeCtrl.cart.add({{stallId:{0},stallName:'{1}',id:'{2}',name:'{3}',price:{4}, variant:''}},productVM)",
+                                                product.StallId, product.Stall.StallName, product.Id, product.BaseName, product.PriceIncTax)">
+                                        加入购物车
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                        }
+                        else
+                        {
+                            <div class="section-caption" ng-if="!homeCtrl.matchedProducts.length">
+                                换个关键字试试？
+                            </div>
+                        }
+        </md-tab>
+
+    </md-tabs>
+
+    <!--bottom tool bar-->
+    <div id="bottom-toolbar">
+        <md-button class="btn-cart" aria-label="Cart" ng-click="gotoUrl('/customer/cart')" flex="60">
+            <span class="cart-amount" ng-if="homeCtrl.cart.qty>0">{{homeCtrl.cart.qty}}</span>
+            <md-icon md-svg-icon="cart"></md-icon>
+            <span class="total-amount">合计: {{homeCtrl.cart.totalAmount()|currency:$}}</span>
+        </md-button>
+        <button ng-click="gotoUrl('/customer/cart')" class="btn btn-primary" ng-class="{'invalid':homeCtrl.cart.qty<=0}" flex
+                ng-disabled="homeCtrl.cart.qty<=0">
+            结账
+        </button>
+    </div>
+
+    <!-- 3rd party libraries -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-aria.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-messages.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.2/js.cookie.min.js"></script>
+
+    <!-- owner scripts -->
+    <script type="text/javascript" src="/static/lib/less/dist/less.min.js"></script>
+    <script type="text/javascript" src="/Content/middle-js/app.js"></script>
+    <script type="text/javascript" src="/Content/middle-js/cart.js"></script>
+    <script type="text/javascript" src="/Content/middle-js/order.js"></script>
+    <script type="text/javascript" src="/Content/middle-js/controller/home.controller.js"></script>
+
+    <!-- End Browser Link -->
+
+</body>
+</html>

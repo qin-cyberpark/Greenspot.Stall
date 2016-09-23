@@ -14,8 +14,7 @@ namespace Greenspot.Stall.Models
     public partial class Product
     {
         #region properties
-        [NotMapped]
-        public decimal TotalPrice
+        public decimal PriceIncTax
         {
             get
             {
@@ -68,29 +67,20 @@ namespace Greenspot.Stall.Models
         }
 
         #region Static
-        public static IList<Product> GetHomepageProducts(StallEntities db)
-        {
-            Func<Product, bool> condition = delegate (Product p) { return string.IsNullOrEmpty(p.VariantParentId) && p.Active == true; };
-            return GetProducts(condition, db).Take(50).ToList();
-        }
-
-        //public static IList<Product> Search(string keyworkd, StallEntities db, int takeAmount = 50)
+        //public static IList<Product> GetHomepageProducts(StallEntities db)
         //{
-        //    Func<Product, bool> condition = delegate (Product p)
-        //    {
-        //        return string.IsNullOrEmpty(p.VariantParentId) && p.BaseName.ToLower().Contains(keyworkd.ToLower());
-        //    };
-        //    return GetProducts(condition, db).Take(takeAmount).ToList();
+        //    Func<Product, bool> condition = delegate (Product p) { return string.IsNullOrEmpty(p.VariantParentId) && p.Active == true; };
+        //    return GetProducts(condition, db).Take(50).ToList();
         //}
 
         public static IList<Product> Search(string category, string area, string keyworkd, StallEntities db, int takeAmount = 50)
         {
             Func<Product, bool> condition = delegate (Product p)
             {
-                return (string.IsNullOrEmpty(p.VariantParentId)
-                        && string.IsNullOrEmpty(category) || p.Stall.StallType.Equals(category))
-                        && (string.IsNullOrEmpty(area) || p.Stall.Area.StartsWith(area))
-                        && (string.IsNullOrEmpty(keyworkd) || p.BaseName.ToLower().Contains(keyworkd.ToLower()));
+                return (p.Active == true && string.IsNullOrEmpty(p.VariantParentId)
+                            && (string.IsNullOrEmpty(category) || p.Stall.StallType.Equals(category))
+                            && (string.IsNullOrEmpty(area) || p.Stall.Area.StartsWith(area))
+                            && (string.IsNullOrEmpty(keyworkd) || p.BaseName.ToLower().Contains(keyworkd.ToLower())));
             };
             return GetProducts(condition, db).Take(takeAmount).ToList();
         }
@@ -118,7 +108,7 @@ namespace Greenspot.Stall.Models
 
         private static IEnumerable<Product> GetProducts(Func<Product, bool> condition, StallEntities db)
         {
-            return db.Products.Include(x => x.Stall).Where(x => x.Stall.Approved == true).Where(condition);
+            return db.Products.Include(x => x.Stall).Where(x => Stall.StallStatus.Online.Equals(x.Stall.Status)).Where(condition);
         }
 
         public static Product ConvertFrom(VendProduct p, int stallId)

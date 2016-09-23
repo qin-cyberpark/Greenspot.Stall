@@ -270,7 +270,7 @@ namespace Greenspot.Stall.Controllers.API
                         Id = p.Id,
                         Name = p.BaseName,
                         Image = p.Image,
-                        Price = p.Price.Value,
+                        Price = p.PriceIncTax,
                         StallId = p.StallId,
                         StallName = p.Stall.StallName
                     });

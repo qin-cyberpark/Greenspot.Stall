@@ -57,7 +57,7 @@
                             <td>@o.Id</td>
                             <td>@string.Format("{0:HH:mm ddMMM}", o.CreateTime)</td>
                             <td>@(o.Stall?.StallName)</td>
-                            <td>@o.Amount.ToString("$0.00")</td>
+                            <td>@o.ChargeAmount.ToString("$0.00")</td>
                             <td><a href="/customer/order/@o.Id">查看</a></td>
                         </tr>
                     }

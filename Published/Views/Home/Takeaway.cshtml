@@ -122,7 +122,7 @@
             <md-icon md-svg-icon="cart"></md-icon>
             <span class="total-amount">合计: {{homeCtrl.cart.totalAmount()|currency:$}}</span>
         </md-button>
-        <button ng-click="gotoUrl('/customer/cart')" class="btn btn-primary" ng-class="{'invalid':homeCtrl.cart.qty<=0}" flex="40"
+        <button ng-click="gotoUrl('/customer/cart')" class="btn btn-primary" ng-class="{'invalid':homeCtrl.cart.qty<=0}" flex
                 ng-disabled="homeCtrl.cart.qty<=0">
             结账
         </button>

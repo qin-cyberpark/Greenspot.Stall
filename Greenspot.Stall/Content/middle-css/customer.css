@@ -93,7 +93,7 @@
 #detail-content {
   position: fixed;
   width: 100%;
-  max-width: 900px;
+  max-width: 720px;
   top: 0px;
   bottom: 40px;
   overflow-x: hidden;

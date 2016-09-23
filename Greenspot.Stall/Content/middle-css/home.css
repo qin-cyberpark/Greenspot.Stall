@@ -1,3 +1,61 @@
+#banner {
+  width: 100%;
+  height: 100px;
+  color: #E0E0E0;
+  padding: 0px;
+  background: #0097A7;
+  text-align: center;
+}
+#banner IMG.logo {
+  margin-top: 3px;
+  height: 96px;
+}
+#bottom-toolbar {
+  color: #F5F5F5;
+  background-color: #0097A7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#category-list {
+  position: absolute;
+  top: 100px;
+  bottom: 40px;
+  width: 100%;
+  max-width: 720px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: column;
+  flex-flow: column;
+}
+#category-list .category {
+  height: 50%;
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  padding: 2%;
+}
+#category-list .category .category-image {
+  width: 60%;
+  max-height: 98%;
+}
+#category-list .category .category-name {
+  color: #0097A7;
+  font-size: 2.5rem;
+  font-weight: bold;
+  width: 40%;
+  float: right;
+  text-align: center;
+}
+#category-list .category:nth-child(2n+2) {
+  background-color: #E0E0E0;
+}
+#category-list .category:nth-child(2n+2) .category-image {
+  float: right;
+}
+#category-list .category:nth-child(2n+2) .category-name {
+  float: left;
+}
 #home-content {
   padding: 5px;
   height: 100%;
@@ -17,57 +75,6 @@
 #home-content .section-caption {
   color: #0097A7;
   text-align: center;
-}
-.banner {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100px;
-  color: #E0E0E0;
-  background: #0097A7;
-  padding-top: 5px;
-  text-align: center;
-}
-.banner IMG.logo {
-  height: 96px;
-}
-.category-list {
-  position: absolute;
-  top: 100px;
-  left: 0px;
-  right: 0px;
-  bottom: 40px;
-}
-.category-list .category:nth-child(2n+2) {
-  background-color: #E0E0E0;
-}
-.category-list .category:nth-child(2n+2) .category-image {
-  float: right;
-}
-.category-list .category:nth-child(2n+2) .category-name {
-  float: left;
-  margin-left: 15px;
-  margin-right: 0px;
-  text-align: left;
-}
-.category-list .category .category-image {
-  margin: 15px;
-  height: 120px;
-}
-.category-list .category .category-name {
-  color: #0097A7;
-  font-size: 40px;
-  font-weight: bold;
-  width: 100px;
-  float: right;
-  margin-right: 15px;
-  text-align: right;
-}
-#bottom-toolbar.footer-banner {
-  font-size: 16px;
-  color: #F5F5F5;
-  background-color: #0097A7;
 }
 #search-result {
   height: 100%;

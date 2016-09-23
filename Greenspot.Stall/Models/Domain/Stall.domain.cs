@@ -14,6 +14,11 @@ namespace Greenspot.Stall.Models
 {
     public partial class Stall
     {
+        public class StallStatus
+        {
+            public const string Offline = "OFFLINE";
+            public const string Online = "ONLINE";
+        }
         public async Task<OperationResult<bool>> Init()
         {
             var result = new OperationResult(false);
@@ -30,10 +35,6 @@ namespace Greenspot.Stall.Models
             {
                 return productResult;
             }
-
-            //now manually create delivery product
-
-            //now manually create payment
 
 
             //create webhook
@@ -317,18 +318,18 @@ namespace Greenspot.Stall.Models
 
         #region extend properties
         [NotMapped]
-        public IList<Product> BaseProducts
+        public IList<Product> SellingProducts
         {
             get
             {
                 if (Products == null)
                 {
-                    return null;
+                    return new List<Product>();
                 }
 
                 return GetProducts(delegate (Product x)
                 {
-                    return string.IsNullOrEmpty(x.VariantParentId) && x.Active == true;
+                    return string.IsNullOrEmpty(x.VariantParentId) && x.Active == true && x.Stock > 0;
                 }).ToList();
             }
         }
@@ -339,26 +340,26 @@ namespace Greenspot.Stall.Models
         {
             get
             {
-                //if (_deliveryPlan == null)
-                //{
-                //    if (string.IsNullOrEmpty(""))
-                //    {
-                //        return new DeliveryPlan();
-                //    }
+                if (_deliveryPlan == null)
+                {
+                    if (string.IsNullOrEmpty(DeliveryPlanJsonString))
+                    {
+                        return new DeliveryPlan();
+                    }
 
-                //    try
-                //    {
-                //        _deliveryPlan = JsonConvert.DeserializeObject<DeliveryPlan>(
-                //            new JsonSerializerSettings
-                //            {
-                //                TypeNameHandling = TypeNameHandling.Auto
-                //            });
-                //    }
-                //    catch
-                //    {
-                //        return new DeliveryPlan();
-                //    }
-                //}
+                    try
+                    {
+                        _deliveryPlan = JsonConvert.DeserializeObject<DeliveryPlan>(DeliveryPlanJsonString,
+                            new JsonSerializerSettings
+                            {
+                                TypeNameHandling = TypeNameHandling.Auto
+                            });
+                    }
+                    catch (Exception ex)
+                    {
+                        return new DeliveryPlan();
+                    }
+                }
 
                 return _deliveryPlan;
             }
@@ -366,7 +367,6 @@ namespace Greenspot.Stall.Models
         #endregion
 
         #region operation
-
         private IEnumerable<Product> GetProducts(Func<Product, bool> condition)
         {
             if (Products == null)

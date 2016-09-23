@@ -15,7 +15,7 @@
                       .defaultIconSet('/static/img/icon/core-icons.svg', 24);
 
                    //location
-                   //$locationProvider.html5Mode(true);
+                   $locationProvider.html5Mode(true);
                }]);
 
     angular.module('greenspotStall')
@@ -26,7 +26,7 @@
             }
 
 
-            $rootScope.loadingCircle = true;
+            $rootScope.loadingCircle = false;
             this.showLoading = function () {
                 $rootScope.loadingCircle = true;
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,6 +47,14 @@ namespace Greenspot.Stall.Models
             TaxName = product.TaxName;
             DisplayRetailPriceTaxInclusive = product.DisplayRetailPriceTaxInclusive;
             LineNote = product.LineNote;
+        }
+
+        public decimal PriceIncTax
+        {
+            get
+            {
+                return (Price ?? 0.0M) + (Tax ?? 0.0M);
+            }
         }
     }
 }

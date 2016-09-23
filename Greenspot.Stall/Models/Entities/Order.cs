@@ -67,6 +67,7 @@ namespace Greenspot.Stall.Models
         public bool HasSendToVend { get; set; }
         public bool HasSendToWechat { get; set; }
         public bool HasSendToPrinter { get; set; }
+        public bool IsPrintOrder { get; set; }
 
         public DateTime? DeliveryTimeStart { get; set; }
         public DateTime? DeliveryTimeEnd { get; set; }

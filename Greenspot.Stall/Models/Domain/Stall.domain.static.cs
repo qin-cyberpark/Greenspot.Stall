@@ -54,6 +54,15 @@ namespace Greenspot.Stall.Models
             return db.Stalls.Include(x => x.Products).FirstOrDefault(x => x.RetailerId.Equals(id));
         }
 
+        /// <summary>
+        /// search stall
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="area"></param>
+        /// <param name="keyword"></param>
+        /// <param name="db"></param>
+        /// <param name="takeAmount"></param>
+        /// <returns></returns>
         public static IList<Stall> Search(string category, string area, string keyword, StallEntities db, int takeAmount = 50)
         {
             return db.Stalls.Include(x => x.Products)
@@ -61,6 +70,23 @@ namespace Greenspot.Stall.Models
                     && (string.IsNullOrEmpty(keyword) || x.StallName.ToLower().Contains(keyword.ToLower()))
                     && (string.IsNullOrEmpty(category) || x.StallType.Equals(category)))
                 .OrderBy(x => x.StallName).Take(takeAmount).ToList();
+        }
+
+        /// <summary>
+        /// get recommend stall
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="area"></param>
+        /// <param name="db"></param>
+        /// <param name="takeAmount"></param>
+        /// <returns></returns>
+        public static IList<Stall> GetRecommend(string category, string area, StallEntities db, int takeAmount = 50)
+        {
+            return db.Stalls.Include(x => x.Products)
+                .Where(x => (StallStatus.Online.Equals(x.Status)
+                    && string.IsNullOrEmpty(area) || x.Area.StartsWith(area))
+                    && (string.IsNullOrEmpty(category) || x.StallType.Equals(category)))
+                .OrderBy(x => x.RecommendIndex).Take(takeAmount).ToList();
         }
 
         public static OperationResult<Stall> CraeteStall(string userId, string name, string prefix, StallEntities db)
@@ -76,7 +102,7 @@ namespace Greenspot.Stall.Models
             }
             else if (string.IsNullOrEmpty(prefix))
             {
-                result.Message = string.Format("Vend前缀不能为空", prefix);
+                result.Message = "Vend前缀不能为空";
             }
             else if (Stall.FindByName(name, db) != null)
             {
@@ -90,14 +116,17 @@ namespace Greenspot.Stall.Models
             {
                 var stall = new Stall() { UserId = userId, StallName = name, Prefix = prefix };
                 result.Data = db.Stalls.Add(stall);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    result.Message = string.Format("无法保存店铺 {0}", name);
+                }
             }
 
-            if (result.Data == null)
-            {
-                result.Message = "无法保存商铺信息";
-            }
-            else
+            if (result.Data != null)
             {
                 result.Succeeded = true;
             }

@@ -2,7 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Greenspot.Stall.Models;
 using Greenspot.Stall.Utilities;
-
+using Senparc.Weixin.MP.Containers;
+using Greenspot.Configuration;
 namespace Greenspot.Stall.Storefont.Tests
 {
     [TestClass]
@@ -14,18 +15,28 @@ namespace Greenspot.Stall.Storefont.Tests
         public void InitTest()
         {
             _db = new StallEntities();
+            AccessTokenContainer.Register(GreenspotConfiguration.AccessAccounts["wechat"].Id, GreenspotConfiguration.AccessAccounts["wechat"].Secret);
         }
 
         [TestMethod]
-        public void PrintOrder()
+        public void OrderNotifier()
+        {
+            //load order
+            var order = Order.FindById(8, _db);
+            order.Notify(_db, "opDxls3kxQNdVPqkKW4c8DAfDGX8").Wait();
+        }
+
+
+        [TestMethod]
+        public async void PrintOrder()
         {
             //load order
             var order = Order.FindById(7, _db);
-            var result = PrintHelper.PrintOrder(order);
+            var result = await PrintHelper.PrintOrderAsync(order);
         }
 
         [TestMethod]
-        public void PrintSampleOrder()
+        public async void PrintSampleOrder()
         {
             var order = new Order()
             {
@@ -55,7 +66,7 @@ namespace Greenspot.Stall.Storefont.Tests
             order.Items.Add(new OrderItem() { Name = "一A二B", Price = 20.01M, Quantity = 10 });
             order.Items.Add(new OrderItem() { Name = "一A二B三C四D五E一A二B三C四D五E一A二B三C四D五EA二B三C四D五E", Price = 101.01M, Quantity = 9 });
 
-            var result = PrintHelper.PrintOrder(order);
+            var result = await PrintHelper.PrintOrderAsync(order);
         }
     }
 }

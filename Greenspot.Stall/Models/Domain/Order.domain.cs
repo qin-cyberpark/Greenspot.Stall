@@ -8,6 +8,8 @@ using System.Data.Entity;
 using Newtonsoft.Json;
 using Greenspot.Configuration;
 using System.Data.Entity.Migrations;
+using Greenspot.Stall.Utilities;
+using Greenspot.Identity;
 
 namespace Greenspot.Stall.Models
 {
@@ -44,7 +46,7 @@ namespace Greenspot.Stall.Models
         /// </summary>
         /// <param name="db"></param>
         /// <returns></returns>
-        public async Task<bool> SendToVend(StallEntities db)
+        public async Task<bool> SendToVend()
         {
             try
             {
@@ -61,7 +63,7 @@ namespace Greenspot.Stall.Models
                 //vendSale.TaxName = Items[0].Product.TaxName;
                 vendSale.RegisterSaleProducts = new List<VendRegisterSaleRequest.RegisterSaleProduct>();
                 vendSale.RegisterSalePayments = new List<VendRegisterSaleRequest.RegisterSalePayment>();
-                vendSale.Note = Note;
+                vendSale.Note = string.Format("#{0}@{1}\n{2}\n{3}\n{4}", Id, PaymentId, Receiver, DeliveryAddress, Note);
                 foreach (var item in Items)
                 {
                     var salePdt = new VendRegisterSaleRequest.RegisterSaleProduct()
@@ -91,12 +93,19 @@ namespace Greenspot.Stall.Models
                 });
 
                 //do reqeust
-
                 var response = await VendRegisterSale.CreateVendRegisterSalesAsync(vendSale, Stall.Prefix, await StallApplication.GetAccessTokenAsync(Stall.Prefix));
-                VendResponse = JsonConvert.SerializeObject(response);
-                VendSaleId = response?.RegisterSale?.Id;
-
-                return !string.IsNullOrEmpty(response.RegisterSale.Id) && OrderStatus.CLOSED.Equals(response.RegisterSale.Status);
+                //update
+                if (!string.IsNullOrEmpty(response.RegisterSale.Id) && OrderStatus.CLOSED.Equals(response.RegisterSale.Status))
+                {
+                    VendResponse = JsonConvert.SerializeObject(response);
+                    VendSaleId = response?.RegisterSale?.Id;
+                    return true;
+                }
+                else
+                {
+                    StallApplication.SysError("[MSG]fail to save to vend");
+                    return false;
+                }
             }
             catch (Exception ex)
             {
@@ -105,6 +114,75 @@ namespace Greenspot.Stall.Models
             }
         }
 
+        public async Task<bool> SendToPrinter()
+        {
+            try
+            {
+                if (await PrintHelper.PrintOrderAsync(this))
+                {
+                    //update
+                    return true;
+                }
+                else
+                {
+                    StallApplication.SysError("[MSG]fail to print");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                StallApplication.SysError("[MSG]fail to print", ex);
+                return false;
+            }
+        }
+
+        public async Task<bool> SendToWechat(string openId)
+        {
+            try
+            {
+                //send message
+                if (!string.IsNullOrEmpty(openId))
+                {
+                    var msg = string.Format("店铺[{0}]有一个新订单\r{1}", Stall.StallName, Summary);
+                    return await WeChatHelper.SendMessageAsync(openId, msg);
+                }
+                else
+                {
+                    StallApplication.SysError("[MSG]failed to send message");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                StallApplication.SysError("[MSG]failed to send message", ex);
+                return false;
+            }
+        }
+
+
+        public async Task Notify(StallEntities db, string openId)
+        {
+            //vend
+            if (!HasSendToVend)
+            {
+                HasSendToVend = await SendToVend();
+            }
+
+            if (!HasSendToWechat)
+            {
+                //wechat
+                HasSendToWechat = await SendToWechat(openId);
+            }
+
+            if (IsPrintOrder && !HasSendToPrinter)
+            {
+                //print
+                HasSendToPrinter = await SendToPrinter();
+            }
+
+            //update
+            db.SaveChanges();
+        }
 
 
         #region properties
@@ -143,7 +221,7 @@ namespace Greenspot.Stall.Models
         }
         public decimal CalcTotalCharge()
         {
-            return CalcTotal() - StallDiscount - PlatformDiscount;
+            return CalcTotal() - StallDiscount - PlatformDiscount + PlatformDelivery;
         }
 
         public string Summary
@@ -151,12 +229,15 @@ namespace Greenspot.Stall.Models
             get
             {
                 StringBuilder sb = new StringBuilder();
-                sb.AppendFormat("单号:{0}\r时间:{1:H:mm:ss dd/MM/yyyy}\r金额:{2}\r", Id, CreateTime, ChargeAmount);
+                sb.AppendFormat("单号:{0}\r时间:{1:H:mm:ss dd/MM/yyyy}\r金额:{2}\r", Id, CreateTime, StallAmount);
                 foreach (var item in Items)
                 {
-                    sb.AppendFormat("{0}@{1:0.00}x{2}\r", item.Name, item.Price, item.Quantity);
+                    sb.AppendFormat("{0}@{1:0.00}x{2}\r", item.Name, item.PriceIncTax, item.Quantity);
                 }
-                sb.AppendFormat(Note);
+                if (string.IsNullOrEmpty(Note))
+                {
+                    sb.Append(Note);
+                }
 
                 return sb.ToString();
             }

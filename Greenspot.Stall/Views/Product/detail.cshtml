@@ -38,7 +38,7 @@
                     @_product.BaseName
                 </div>
                 <div class="text-price">
-                    @string.Format("{0:0.00}", _product.TotalPrice)
+                    @string.Format("{0:$0.00}", _product.PriceIncTax)
                 </div>
                 <div class="text-description">
                     <text>
@@ -62,7 +62,7 @@
                 <md-icon class="cart-icon" md-svg-icon="cart"></md-icon>
             </md-button>
             <button flex="60" class="btn btn-accent"
-                       ng-click="custCtrl.cart.add({stallId:'@_product.StallId', stallName:'@_product.Stall.StallName',
+                    ng-click="custCtrl.cart.add({stallId:'@_product.StallId', stallName:'@_product.Stall.StallName',
                        id:'@_product.Id',price:@_product.TotalPrice,
                        name:'@_product.BaseName',variant:'@_product.VariantDescription'})">
                 加入购物车

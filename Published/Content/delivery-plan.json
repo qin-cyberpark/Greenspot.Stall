@@ -1,8 +1,6 @@
 ﻿{
   "DefaultFee": 20.00,
-  "MinOrderAmount":0,
   "FreeDeliveryOrderAmount": 9999,
-  "MinOrderAdvancedMinutes":30,
   "MaxAdvancedOrderDays": 3,
   "OptionDivideMinutes": 120,
   "DefaultPlans": [
