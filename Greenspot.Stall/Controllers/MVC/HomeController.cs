@@ -26,17 +26,5 @@ namespace Greenspot.Stall.Controllers
         {
             return Redirect("/homemade/index.html");
         }
-
-        public ActionResult Search()
-        {
-            string category = Request["c"];
-            string area = Request["a"];
-            string keyword = Request["k"];
-
-            ViewBag.MatchedStalls = Models.Stall.Search(category, area, keyword, _db);
-            ViewBag.MatchedProducts = Product.Search(category, area, keyword, _db);
-
-            return View();
-        }
     }
 }

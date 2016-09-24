@@ -17,7 +17,7 @@ namespace Greenspot.Stall.Controllers.API
 
         // GET api/<controller>
         [HttpGet]
-        public OperationResult<IList<StallViewModel>> Recommend([FromUri(Name ="c")]string category, [FromUri(Name = "a")]string area)
+        public OperationResult<IList<StallViewModel>> Recommend([FromUri(Name = "c")]string category, [FromUri(Name = "a")]string area)
         {
             var result = new OperationResult<IList<StallViewModel>>(true);
             var oriStalls = Models.Stall.GetRecommend(category, area, _db, 5);
@@ -50,10 +50,11 @@ namespace Greenspot.Stall.Controllers.API
 
         // GET api/<controller>
         [HttpGet]
-        public OperationResult<IList<StallViewModel>> SearchStall([FromUri(Name = "c")]string category, [FromUri(Name = "a")]string area, [FromUri(Name = "k")]string keyword)
+        public OperationResult<IList<StallViewModel>> SearchStall([FromUri(Name = "c")]string category, [FromUri(Name = "a")]string area, [FromUri(Name = "k")]string keyword
+                                                                    , [FromUri(Name = "p")]int page = 0, [FromUri(Name = "ps")]int pageSize = 10)
         {
             var result = new OperationResult<IList<StallViewModel>>(true);
-            var oriStalls = Models.Stall.Search(category, area, keyword, _db);
+            var oriStalls = Models.Stall.Search(_db, category, area, keyword, page, pageSize);
             IList<StallViewModel> stalls = new List<StallViewModel>();
             foreach (var s in oriStalls)
             {
@@ -64,7 +65,7 @@ namespace Greenspot.Stall.Controllers.API
                     Products = new List<StallProductViewModel>()
                 };
 
-                var products = s.Products.Where(x => x.Active == true && x.Stock > 0).Take(3);
+                var products = s.SellingProducts.Take(3);
                 foreach (var p in products)
                 {
                     stallVm.Products.Add(new StallProductViewModel()
@@ -83,10 +84,11 @@ namespace Greenspot.Stall.Controllers.API
 
         // GET api/<controller>
         [HttpGet]
-        public OperationResult<IList<StallProductViewModel>> SearchProduct([FromUri(Name = "c")]string category, [FromUri(Name = "a")]string area, [FromUri(Name = "k")]string keyword)
+        public OperationResult<IList<StallProductViewModel>> SearchProduct([FromUri(Name = "c")]string category, [FromUri(Name = "a")]string area, [FromUri(Name = "k")]string keyword,
+                                                                            [FromUri(Name = "p")]int page = 0, [FromUri(Name = "ps")]int pageSize = 10)
         {
             var result = new OperationResult<IList<StallProductViewModel>>(true);
-            var oriProducts = Product.Search(category, area, keyword, _db).Where(x => x.Active == true);
+            var oriProducts = Product.Search(_db, category, area, keyword, page, pageSize);
             IList<StallProductViewModel> products = new List<StallProductViewModel>();
             foreach (var p in oriProducts)
             {

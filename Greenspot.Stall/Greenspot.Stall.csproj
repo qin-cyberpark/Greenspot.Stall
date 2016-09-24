@@ -280,7 +280,7 @@
     <Content Include="Content\middle-css\product.css" />
     <Content Include="Content\middle-css\_variables.css" />
     <Content Include="Content\middle-js\cart.js" />
-    <Content Include="Content\middle-js\utility.js" />
+    <Content Include="Content\middle-js\Utilities.js" />
     <Content Include="Content\middle-js\controller\customer-address.controller.js" />
     <Content Include="Content\middle-js\controller\dialog.controller.js" />
     <Content Include="Content\middle-js\controller\home.controller.js" />
@@ -1182,8 +1182,6 @@
     <Content Include="Static\lib\jQuery\test\node_smoke_tests\.jshintrc" />
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Shared\_CustomerLayout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Product\detail.cshtml" />
     <Content Include="Views\Stall\Index.cshtml" />
     <Content Include="Views\Customer\Cart.cshtml" />
@@ -1250,7 +1248,6 @@
     <Content Include="Views\Customer\Addresses.cshtml" />
     <Content Include="Views\Manage\Stall.cshtml" />
     <Content Include="Views\Customer\Order.cshtml" />
-    <Content Include="Views\Home\Takeaway.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

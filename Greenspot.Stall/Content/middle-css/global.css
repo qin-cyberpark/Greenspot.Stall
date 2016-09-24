@@ -16,7 +16,6 @@ body {
 }
 input,
 select {
-  border: none;
   border-bottom: 1px solid #9E9E9E;
   background-color: #F5F5F5;
 }

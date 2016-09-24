@@ -63,8 +63,8 @@
             </md-button>
             <button flex="60" class="btn btn-accent"
                     ng-click="custCtrl.cart.add({stallId:'@_product.StallId', stallName:'@_product.Stall.StallName',
-                       id:'@_product.Id',price:@_product.TotalPrice,
-                       name:'@_product.BaseName',variant:'@_product.VariantDescription'})">
+                       id:'@_product.Id',price:@_product.PriceIncTax,
+                       name:'@_product.BaseName',variant:'@_product.VariantDescription'},1)">
                 加入购物车
             </button>
             <button flex="60" class="btn btn-primary" ng-click="gotoUrl('/customer/cart')">结账</button>

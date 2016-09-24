@@ -55,21 +55,23 @@ namespace Greenspot.Stall.Models
         }
 
         /// <summary>
-        /// search stall
+        /// 
         /// </summary>
+        /// <param name="db"></param>
         /// <param name="category"></param>
         /// <param name="area"></param>
         /// <param name="keyword"></param>
-        /// <param name="db"></param>
-        /// <param name="takeAmount"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
         /// <returns></returns>
-        public static IList<Stall> Search(string category, string area, string keyword, StallEntities db, int takeAmount = 50)
+        public static IList<Stall> Search(StallEntities db, string category, string area, string keyword, int page = 0, int pageSize = 10)
         {
             return db.Stalls.Include(x => x.Products)
-                .Where(x => (string.IsNullOrEmpty(area) || x.Area.StartsWith(area))
+                .Where(x => StallStatus.Online.Equals(x.Status)
+                    && (string.IsNullOrEmpty(area) || x.Area.StartsWith(area))
                     && (string.IsNullOrEmpty(keyword) || x.StallName.ToLower().Contains(keyword.ToLower()))
                     && (string.IsNullOrEmpty(category) || x.StallType.Equals(category)))
-                .OrderBy(x => x.StallName).Take(takeAmount).ToList();
+                .OrderBy(x => x.StallName).Skip(pageSize * page).Take(pageSize).ToList();
         }
 
         /// <summary>

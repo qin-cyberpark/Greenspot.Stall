@@ -73,7 +73,7 @@ namespace Greenspot.Stall.Models
         //    return GetProducts(condition, db).Take(50).ToList();
         //}
 
-        public static IList<Product> Search(string category, string area, string keyworkd, StallEntities db, int takeAmount = 50)
+        public static IList<Product> Search(StallEntities db, string category, string area, string keyworkd, int page = 0, int pageSize = 10)
         {
             Func<Product, bool> condition = delegate (Product p)
             {
@@ -82,7 +82,7 @@ namespace Greenspot.Stall.Models
                             && (string.IsNullOrEmpty(area) || p.Stall.Area.StartsWith(area))
                             && (string.IsNullOrEmpty(keyworkd) || p.BaseName.ToLower().Contains(keyworkd.ToLower())));
             };
-            return GetProducts(condition, db).Take(takeAmount).ToList();
+            return GetProducts(condition, db).Skip(pageSize * page).Take(pageSize).ToList();
         }
 
         public static Product FindById(string id, StallEntities db)

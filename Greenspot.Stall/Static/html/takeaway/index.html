@@ -15,10 +15,10 @@
     <!--link rel="stylesheet" href="/static/css/stall.min.css"-->
 </head>
 <body ng-controller="HomeController as homeCtrl" ng-init="homeCtrl.init('T')">
-    <div id="search-bar">
+    <form id="search-bar" ng-submit="homeCtrl.search(10,10)">
         <select ng-model="homeCtrl.searchCondition.area" ng-change="homeCtrl.loadRecommendStalls()">
-            <option value="NZ-Auckland">奥克兰</option>
-            <option value="NZ-Auckland-Auckland City" selected>奥克兰City</option>
+            <option value="NZ-Auckland" selected>奥克兰</option>
+            <option value="NZ-Auckland-Auckland City">奥克兰City</option>
             <option value="NZ-Auckland-Central Auckland">奥克兰中区</option>
             <option value="NZ-Auckland-North Shore">奥克兰北岸</option>
             <option value="NZ-Auckland-East Auckland">奥克兰东区</option>
@@ -26,10 +26,10 @@
             <option value="NZ-Auckland-South Auckland">奥克兰南区</option>
         </select>
         <input class="search-text" type="text" placeholder="搜索" ng-model="homeCtrl.searchCondition.keyword">
-        <md-button class="btn-search" aria-label="Search" ng-click="homeCtrl.search()">
+        <md-button type="submit" class="btn-search" aria-label="Search">
             <md-icon md-svg-icon="search"></md-icon>
         </md-button>
-    </div>
+    </form>
 
     <!-- recommend stall -->
     <div class="content-with-bottom-bar" ng-if="homeCtrl.searchCondition.isRecommend && homeCtrl.recommendStalls.length">
@@ -59,24 +59,26 @@
     <!-- search -->
     <md-tabs id="search-result" md-border-bottom md-stretch-tabs="always" ng-if="homeCtrl.matchedStalls || homeCtrl.matchedProducts">
         <!-- product search result -->
-        <md-tab label="商品" ng-if="homeCtrl.matchedProducts">
+        <md-tab label="菜品" ng-if="homeCtrl.matchedProducts.items">
             <div class="ProductList">
-                <div class="item" ng-repeat="product in homeCtrl.matchedProducts">
+                <div class="item" ng-repeat="product in homeCtrl.matchedProducts.items track by product.Id">
                     <div class="left">
                         <img src="{{product.Image}}" ng-click="gotoUrl('/product/detail/' + product.Id)" />
                     </div>
                     <div class="right">
                         <div class="product-name" ng-click="gotoUrl('/product/detail/' + product.Id)">{{product.Name}}</div>
                         <div class="stall-name">{{product.StallName}}</div>
-                        <div class="price">{{product.Price|currency:$}}</div>
-                        <div class="operation">
+                        <div class="price-quantity">
+                            <span>{{product.Price|currency:$}}</span>
                             <select ng-model="product.Quantity">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
+                                <option value="1">×1</option>
+                                <option value="2">×2</option>
+                                <option value="3">×3</option>
+                                <option value="4">×4</option>
+                                <option value="5">×5</option>
                             </select>
+                        </div>
+                        <div class="operation">
                             <button ng-click="homeCtrl.cart.add({stallId:product.StallId, stallName:product.StallName,
                                                 id:product.Id, name:product.Name,price:product.Price, variant:''}, product.Quantity)">
                                 加入购物车
@@ -85,23 +87,30 @@
                     </div>
                 </div>
             </div>
-            <div class="section-caption" ng-if="!homeCtrl.matchedProducts.length">
-                换个关键字试试？
+            <div class="load-more-bar">
+                <button ng-click="homeCtrl.loadMoreProduct()" ng-if="homeCtrl.matchedProducts.hasMore">显示更多菜品</button>
+                <span ng-if="homeCtrl.matchedProducts.items.length && !homeCtrl.matchedProducts.hasMore">没有更多相关菜品了</span>
+            </div>
+            <div class="section-caption" ng-if="!homeCtrl.matchedProducts.items.length">
+                没有找到相关菜品，换个关键字试试？
             </div>
         </md-tab>
         <!-- product stall result -->
-        <md-tab label="商铺" ng-if="homeCtrl.matchedStalls">
-            <md-list flex ng-if="homeCtrl.matchedStalls.length">
-                <md-list-item class="md-2-line" ng-repeat="stall in homeCtrl.matchedStalls" ng-click="gotoUrl('/stall/index/' + stall.Id)">
+        <md-tab label="餐厅" ng-if="homeCtrl.matchedStalls.items">
+            <md-list flex ng-if="homeCtrl.matchedStalls.items.length">
+                <md-list-item class="md-2-line" ng-repeat="stall in homeCtrl.matchedStalls.items track by stall.Id" ng-click="gotoUrl('/stall/index/' + stall.Id)">
                     <img ng-src="/Static/img/stall/{{stall.Id}}.jpg" class="md-avatar" alt="{{stall.Name}}" />
                     <div class="md-list-item-text">
                         <h3>{{stall.Name}}</h3>
                     </div>
                 </md-list-item>
             </md-list>
-
-            <div class="section-caption" ng-if="!homeCtrl.matchedStalls.length">
-                换个关键字试试？
+            <div class="load-more-bar">
+                <button ng-click="homeCtrl.loadMoreStall()" ng-if="homeCtrl.matchedStalls.hasMore">显示更多餐厅</button>
+                <span ng-if="homeCtrl.matchedStalls.items.length && !homeCtrl.matchedStalls.hasMore">没有更多相关餐厅了</span>
+            </div>
+            <div class="section-caption" ng-if="!homeCtrl.matchedStalls.items.length">
+                没有找到相关餐厅，换个关键字试试？
             </div>
         </md-tab>
     </md-tabs>
@@ -137,6 +146,7 @@
     <script type="text/javascript" src="/Content/middle-js/app.js"></script>
     <script type="text/javascript" src="/Content/middle-js/cart.js"></script>
     <script type="text/javascript" src="/Content/middle-js/order.js"></script>
+    <script type="text/javascript" src="/Content/middle-js/Utilities.js"></script>
     <script type="text/javascript" src="/Content/middle-js/controller/home.controller.js"></script>
 
     <!-- End Browser Link -->

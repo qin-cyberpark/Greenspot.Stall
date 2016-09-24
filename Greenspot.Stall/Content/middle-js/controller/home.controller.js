@@ -80,54 +80,25 @@
             /*
             === search ===
             */
-            //vm.redirectSearchPage = function () {
-            //    //$location.url('/takeaway/index.html?' + vm.searchCondition.queryString);
-            //    $window.location = '/takeaway/index.html?' + vm.searchCondition.queryString;
-            //}
-
-            vm.search = function () {
-                comSrv.showLoading();
-                vm.searchCondition.isRecommend = false;
-                vm.recommendStalls = null;
-                vm.matchedStalls = null;
-                vm.matchedProducts = null;
-
-                //var condition = 'r=false&c=' + vm.searchCondition.category + '&a=' + vm.searchCondition.area + '&k=' + vm.searchCondition.keyword;
-
-                //store search condition
-                if ($window.localStorage) {
-                    $window.localStorage.setItem("pre_condition", JSON.stringify(vm.searchCondition));
+            //search product
+            vm.searchProduct = function (page, pageSize) {
+                page = page || 0;
+                pageSize = pageSize || 10;
+                if (page == 0) {
+                    vm.matchedProducts = new Greenspot.Utilities.SearchResult(page, pageSize);
+                } else {
+                    vm.matchedProducts.page = page;
+                    vm.matchedProducts.pageSize = pageSize;
                 }
 
-                $location.url('/takeaway/index.html' + vm.searchCondition.queryString());
 
-                //search stall
-                $http.get('/api/home/SearchStall' + vm.searchCondition.queryString()).success(function (result) {
+                $http.get('/api/home/SearchProduct' + vm.searchCondition.queryString() + '&p=' + page + '&ps=' + pageSize).success(function (result) {
                     if (result.Succeeded) {
-                        vm.matchedStalls = result.Data;
+                        vm.matchedProducts.append(result.Data);
 
                         //store result
-                        if (vm.matchedStalls.length && $window.localStorage) {
-                            $window.localStorage.setItem("matched_stalls", JSON.stringify(vm.matchedStalls))
-                        }
-                    }
-                    else {
-                        console.log(result.Message);
-                    }
-                }).error(function (error) {
-                    console.log(error)
-                }).finally(function () {
-                    comSrv.hideLoading();
-                });
-
-                //search product
-                $http.get('/api/home/SearchProduct' + vm.searchCondition.queryString()).success(function (result) {
-                    if (result.Succeeded) {
-                        vm.matchedProducts = result.Data;
-
-                        //store result
-                        if (vm.matchedProducts.length && $window.localStorage) {
-                            $window.localStorage.setItem("matched_products", JSON.stringify(vm.matchedProducts))
+                        if ($window.localStorage && vm.matchedProducts) {
+                            $window.localStorage.setItem("matched_products", JSON.stringify(vm.matchedProducts));
                         }
                     }
                     else {
@@ -140,9 +111,72 @@
                 });
             }
 
-            //
-            vm.restoreSearchResult = function () {
+            //load more product
+            vm.loadMoreProduct = function () {
+                comSrv.showLoading();
+                vm.searchProduct(vm.matchedProducts.page + 1, vm.matchedProducts.pageSize);
+            }
+
+            //search stall
+            vm.searchStall = function (page, pageSize) {
+                page = page || 0;
+                pageSize = pageSize || 10;
+
+                if (page == 0) {
+                    vm.matchedStalls = new Greenspot.Utilities.SearchResult(page, pageSize);
+                } else {
+                    vm.matchedStalls.page = page;
+                    vm.matchedStalls.pageSize = pageSize;
+                }
+
+                //search stall
+                $http.get('/api/home/SearchStall' + vm.searchCondition.queryString() + '&p=' + page + '&ps=' + pageSize).success(function (result) {
+                    if (result.Succeeded) {
+
+                        vm.matchedStalls.append(result.Data);
+                        //store result
+                        if ($window.localStorage && vm.matchedStalls) {
+                            $window.localStorage.setItem("matched_stalls", JSON.stringify(vm.matchedStalls));
+                        }
+                    }
+                    else {
+                        console.log(result.Message);
+                    }
+                }).error(function (error) {
+                    console.log(error)
+                }).finally(function () {
+                    comSrv.hideLoading();
+                });
+            }
+
+            //load more stall
+            vm.loadMoreStall = function () {
+                comSrv.showLoading();
+                vm.searchStall(vm.matchedStalls.page + 1, vm.matchedStalls.pageSize);
+            }
+
+            //search all
+            vm.search = function (stallPageSize, productPageSize) {
+                comSrv.showLoading();
+                vm.searchCondition.isRecommend = false;
+                vm.recommendStalls = null;
+
+                //store search condition
                 if ($window.localStorage) {
+                    $window.localStorage.setItem("pre_condition", JSON.stringify(vm.searchCondition));
+                }
+
+                //
+                vm.searchProduct(0, productPageSize);
+                vm.searchStall(0, stallPageSize);
+
+                $location.url('/takeaway/index.html' + vm.searchCondition.queryString());
+
+            }
+
+            //restore result
+            vm.restoreSearchResult = function () {
+                if ($window.localStorage && $window.localStorage["pre_condition"]) {
                     var storedCondition = JSON.parse($window.localStorage["pre_condition"]);
                     if (storedCondition.category != vm.searchCondition.category
                         || storedCondition.area != vm.searchCondition.area
@@ -150,8 +184,14 @@
                         //condition not match
                         return false;
                     }
-                    vm.matchedStalls = JSON.parse($window.localStorage["matched_stalls"]);
-                    vm.matchedProducts = JSON.parse($window.localStorage["matched_products"]);
+
+                    if ($window.localStorage["matched_stalls"]) {
+                        vm.matchedStalls = Greenspot.Utilities.SearchResult.Parse($window.localStorage["matched_stalls"]);
+                    }
+
+                    if ($window.localStorage["matched_products"]) {
+                        vm.matchedProducts = Greenspot.Utilities.SearchResult.Parse($window.localStorage["matched_products"]);
+                    }
                 }
 
                 return (vm.matchedStalls || false && vm.matchedStalls.length) || (vm.matchedProducts || false && vm.matchedProducts.length);
