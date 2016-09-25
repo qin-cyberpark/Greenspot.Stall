@@ -1,5 +1,91 @@
 ﻿@import "_variables.less";
 
+/* Stall Home Page */
+#stall-header {
+    padding: 10px;
+    background-color: @color-primary;
+
+    & > img {
+        display: inline-block;
+        width: 40%;
+    }
+
+    & .info {
+        float: right;
+        width: 60%;
+        text-align: center;
+
+        & > div {
+            color: @color-grey-100;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        & > button {
+            border: none;
+            color: @color-grey-300;
+            background-color: @color-primary;
+            font-size: 11px;
+        }
+    }
+}
+
+/* Product Page*/
+#product-content {
+    padding-bottom: 20px;
+
+    & > img {
+        width: 100%;
+    }
+
+    & .line {
+        padding: 5px 5px 10px 10px;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row;
+        flex-flow: row;
+        align-items: center;
+        //justify-content: center;
+        & .sel-quantity {
+            font-size: 1.5rem;
+        }
+
+        & .text-name {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        & .text-price {
+            font-size: 2rem;
+            color: @color-primary;
+        }
+
+        & .align-left {
+            text-align: left;
+        }
+
+        & .align-right {
+            text-align: right;
+            flex: auto;
+        }
+
+        & .btn-2line {
+            display: inline-block;
+            text-align: center;
+            width: 30px;
+
+            & > md-icon {
+            }
+
+            & .caption {
+                line-height: 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+    }
+}
+
+/* Cart Page */
 #cart-content {
     padding: 5px;
 
@@ -9,7 +95,6 @@
     }
 
     & .cart-stall {
-        font-size: 12px;
 
         & .stall-name {
         }
@@ -27,7 +112,6 @@
             }
 
             & .qty-lbl {
-                font-size: 16px;
                 padding: 0px;
             }
 
@@ -128,16 +212,6 @@
     }
 }
 
-#detail-content {
-    position: fixed;
-    width: 100%;
-    max-width: @app-max-width;
-    top: 0px;
-    bottom: @bottom-toobar-height;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
 #formNewAddress {
     & input {
         font-size: 11px;
@@ -151,34 +225,4 @@
     padding: 0px;
     background-color: #eee;
     z-index: 999;
-}
-
-
-.stall-header {
-    padding: 10px;
-    background-color: @color-primary;
-
-    & > img {
-        display: inline-block;
-        width: 40%;
-    }
-
-    & .info {
-        float: right;
-        width: 60%;
-        text-align: center;
-
-        & > div {
-            color: @color-grey-100;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        & > button {
-            border: none;
-            color: @color-grey-300;
-            background-color: @color-primary;
-            font-size: 11px;
-        }
-    }
 }

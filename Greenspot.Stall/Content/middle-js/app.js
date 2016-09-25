@@ -35,4 +35,11 @@
                 $rootScope.loadingCircle = false;
             }
         });
+
+    angular.module('greenspotStall')
+        .filter("trust", ['$sce', function ($sce) {
+        return function (htmlCode) {
+            return $sce.trustAsHtml(htmlCode);
+        }
+    }]);
 })();

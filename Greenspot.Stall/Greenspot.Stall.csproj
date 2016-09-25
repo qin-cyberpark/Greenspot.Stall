@@ -198,6 +198,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\API\AddressController.cs" />
     <Compile Include="Controllers\API\HomeController.cs" />
+    <Compile Include="Controllers\API\ProductController.cs" />
     <Compile Include="Controllers\API\StallController.cs" />
     <Compile Include="Controllers\API\WebhookController.cs" />
     <Compile Include="Controllers\MVC\HomeController.cs" />
@@ -304,9 +305,8 @@
     </Content>
     <Content Include="Static\img\loading.gif" />
     <Content Include="Static\img\favicon.png" />
-    <Content Include="Static\img\logo_grey.png" />
+    <Content Include="Static\img\logo_darkgrey_96.png" />
     <Content Include="Static\img\logo_grey_96.png" />
-    <Content Include="Static\img\logo_white.png" />
     <Content Include="Static\img\takeaway.jpg" />
     <Content Include="Static\html\Index.html" />
     <Content Include="Static\js\stall.min.js">
@@ -1182,7 +1182,7 @@
     <Content Include="Static\lib\jQuery\test\node_smoke_tests\.jshintrc" />
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Shared\_CustomerLayout.cshtml" />
-    <Content Include="Views\Product\detail.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Stall\Index.cshtml" />
     <Content Include="Views\Customer\Cart.cshtml" />
     <Content Include="Views\Customer\Checkout.cshtml" />

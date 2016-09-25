@@ -46,7 +46,7 @@ namespace Greenspot.SDK.Vend
         public string OutletName { get; set; }
 
         [JsonProperty("count")]
-        public float Count { get; set; }
+        public int Count { get; set; }
 
         [JsonProperty("reorder_point")]
         public string ReorderPoint { get; set; }
@@ -257,7 +257,7 @@ namespace Greenspot.SDK.Vend
         public DateTime? DeletedAt { get; set; }
     }
 
-    public class VendProductApiResult 
+    public class VendProductApiResult
     {
         [JsonProperty("products")]
         public IList<VendProduct> Products { get; set; }

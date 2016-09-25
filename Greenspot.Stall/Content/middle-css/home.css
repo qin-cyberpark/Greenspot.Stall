@@ -1,3 +1,6 @@
+/*
+    Platform Home Page
+*/
 #banner {
   width: 100%;
   height: 100px;
@@ -10,12 +13,9 @@
   margin-top: 3px;
   height: 96px;
 }
-#bottom-toolbar {
+#bottom-toolbar.slogan {
   color: #F5F5F5;
   background-color: #0097A7;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 #category-list {
   position: absolute;
@@ -56,33 +56,40 @@
 #category-list .category:nth-child(2n+2) .category-name {
   float: left;
 }
-#home-content {
-  padding: 5px;
-  height: 100%;
+#search-bar {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row;
+  flex-flow: row;
 }
-#home-content .search-bar {
-  font-size: 13px;
+#search-bar .search-text {
+  margin-left: 3px;
+  flex: auto;
 }
-#home-content .search-bar .search-text {
-  margin-left: 5px;
-}
-#home-content .search-bar .btn-search {
+#search-bar .btn-search {
   margin: 0px;
   padding: 0px;
   width: 40px;
   min-width: 40px;
 }
-#home-content .section-caption {
+.section-caption {
   color: #0097A7;
+  font-size: 1.25rem;
   text-align: center;
+  margin-top: 10px;
 }
 #search-result {
   height: 100%;
 }
-.coming-soon {
-  width: 100%;
-  height: 100px;
-  vertical-align: middle;
+.load-more-bar {
+  padding: 20px;
   text-align: center;
+}
+.load-more-bar > button {
+  border: none;
   color: #0097A7;
+  background-color: transparent;
+}
+.load-more-bar > span {
+  color: #9E9E9E;
 }

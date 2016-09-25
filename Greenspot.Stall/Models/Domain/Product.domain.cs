@@ -90,7 +90,7 @@ namespace Greenspot.Stall.Models
             return db.Products.FirstOrDefault(x => x.Id.Equals(id));
         }
 
-        public static bool SetInventoryById(string id, float count, StallEntities db)
+        public static bool SetInventoryById(string id, int count, StallEntities db)
         {
             var p = FindById(id, db);
             if (p == null) { return false; }

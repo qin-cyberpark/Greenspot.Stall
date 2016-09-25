@@ -20,6 +20,9 @@
                 },
                 queryString: function () {
                     return '?r=' + this.isRecommend + '&c=' + this.category + '&a=' + this.area + '&k=' + this.keyword;
+                },
+                queryObject: function () {
+                    return { 'r': this.isRecommend, 'c': this.category, 'a': this.area, 'k': this.keyword };
                 }
             }
 
@@ -170,7 +173,7 @@
                 vm.searchProduct(0, productPageSize);
                 vm.searchStall(0, stallPageSize);
 
-                $location.url('/takeaway/index.html' + vm.searchCondition.queryString());
+                $location.search(vm.searchCondition.queryObject());
 
             }
 

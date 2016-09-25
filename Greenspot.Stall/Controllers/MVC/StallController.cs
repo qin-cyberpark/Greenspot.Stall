@@ -14,7 +14,7 @@ namespace Greenspot.Stall.Controllers.MVC
         // GET: Stall
         public ActionResult Index(int id)
         {
-            ViewBag.Stall = Models.Stall.FindById(id, _db);
+            ViewBag.StallId = id;
             return View();
         }
     }

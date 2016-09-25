@@ -34,7 +34,7 @@
     <!-- recommend stall -->
     <div class="content-with-bottom-bar" ng-if="homeCtrl.searchCondition.isRecommend && homeCtrl.recommendStalls.length">
         <div class="section-caption">最新 | 推荐</div>
-        <md-card ng-repeat="stall in homeCtrl.recommendStalls" ng-click="gotoUrl('/stall/index/' + stall.Id)">
+        <md-card ng-repeat="stall in homeCtrl.recommendStalls" ng-click="gotoUrl('/stall/' + stall.Id)">
             <md-card-title>
                 <md-card-title-text layout-align="space-between center">
                     <span class="md-headline">{{stall.Name}}</span>
@@ -63,10 +63,10 @@
             <div class="ProductList">
                 <div class="item" ng-repeat="product in homeCtrl.matchedProducts.items track by product.Id">
                     <div class="left">
-                        <img src="{{product.Image}}" ng-click="gotoUrl('/product/detail/' + product.Id)" />
+                        <img src="{{product.Image}}" ng-click="gotoUrl('/product/' + product.Id)" />
                     </div>
                     <div class="right">
-                        <div class="product-name" ng-click="gotoUrl('/product/detail/' + product.Id)">{{product.Name}}</div>
+                        <div class="product-name" ng-click="gotoUrl('/product/' + product.Id)">{{product.Name}}</div>
                         <div class="stall-name">{{product.StallName}}</div>
                         <div class="price-quantity">
                             <span>{{product.Price|currency:$}}</span>
@@ -98,7 +98,7 @@
         <!-- product stall result -->
         <md-tab label="餐厅" ng-if="homeCtrl.matchedStalls.items">
             <md-list flex ng-if="homeCtrl.matchedStalls.items.length">
-                <md-list-item class="md-2-line" ng-repeat="stall in homeCtrl.matchedStalls.items track by stall.Id" ng-click="gotoUrl('/stall/index/' + stall.Id)">
+                <md-list-item class="md-2-line" ng-repeat="stall in homeCtrl.matchedStalls.items track by stall.Id" ng-click="gotoUrl('/stall/' + stall.Id)">
                     <img ng-src="/Static/img/stall/{{stall.Id}}.jpg" class="md-avatar" alt="{{stall.Name}}" />
                     <div class="md-list-item-text">
                         <h3>{{stall.Name}}</h3>

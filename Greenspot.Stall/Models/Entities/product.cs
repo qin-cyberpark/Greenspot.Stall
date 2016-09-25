@@ -104,9 +104,9 @@ namespace Greenspot.Stall.Models
         public string AccountCodeSales { get; set; }
 
         [Column(TypeName = "bit")]
-        public bool? TrackInventory { get; set; }
+        public bool TrackInventory { get; set; }
 
-        public float? Stock { get; set; }
+        public int Stock { get; set; }
 
         public decimal? Price { get; set; }
 

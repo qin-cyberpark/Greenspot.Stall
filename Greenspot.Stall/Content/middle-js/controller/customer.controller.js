@@ -27,13 +27,43 @@
             vm.loadStallProducts(stallId);
         }
 
-        /* load address */
+        /* load stall products */
         vm.loadStallProducts = function (stallId) {
             commSrv.showLoading();
-            //load address
+            //load stall products
             $http.get('/api/stall/GetStallProducts/' + stallId).success(function (result) {
                 if (result.Succeeded) {
                     vm.currentStall = result.Data;
+                    document.title = vm.currentStall.Name;
+                }
+                else {
+                    console.log(result.Message);
+                }
+            }).error(function (error) {
+                console.log(error);
+            }).finally(function () {
+                commSrv.hideLoading();
+            });
+        }
+
+
+        ///**********************************
+        //product home page
+        //***********************************
+        /*product home page */
+        vm.init_productHome = function (productId) {
+            vm.init();
+            vm.loadProduct(productId);
+        }
+
+        /* load product */
+        vm.loadProduct = function (productId) {
+            commSrv.showLoading();
+            //load product
+            $http.get('/api/product/' + productId).success(function (result) {
+                if (result.Succeeded) {
+                    vm.currentProduct = result.Data;
+                    document.title = vm.currentProduct.Name;
                 }
                 else {
                     console.log(result.Message);

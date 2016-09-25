@@ -12,9 +12,9 @@ namespace Greenspot.Stall.Controllers.MVC
         private StallEntities _db = new StallEntities();
 
         // GET: Product
-        public ActionResult Detail(string id)
+        public ActionResult Index(string id)
         {
-            ViewBag.Product = Product.FindById(id, _db);
+            ViewBag.ProductId = id;
             return View();
         }
     }

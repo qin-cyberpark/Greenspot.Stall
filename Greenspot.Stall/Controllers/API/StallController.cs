@@ -261,7 +261,7 @@ namespace Greenspot.Stall.Controllers.API
                 };
             }
 
-            foreach (var p in stall.Products)
+            foreach (var p in stall.SellingProducts)
             {
                 if (p.Active == true && p.Stock > 0 && p.Price != null)
                 {

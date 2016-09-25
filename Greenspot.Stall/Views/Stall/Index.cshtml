@@ -1,113 +1,48 @@
 ﻿@{
-    var _stall = (Greenspot.Stall.Models.Stall)ViewBag.Stall;
-    Page.Title = (_stall == null ? "商铺不存在" : _stall.StallName);
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    var _stallId = (int)ViewBag.StallId;
+    Page.Title = "久等了";
 }
-<!DOCTYPE html>
 
-<html lang="en" ng-app="greenspotStall" ng-cloak>
-<head>
-    <meta charset="utf-8">
-    <meta name="description" content="Stall@Greenspot">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <base href="/">
-    <title>久等了</title>
-
-    <link rel="shortcut icon" href="/static/img/favicon.png">
-
-    <!-- 3rd party stylesheet -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.css">
-    <!-- platform stylesheet -->
-
-    @if (HttpContext.Current.IsDebuggingEnabled)
-    {
-        <link rel="stylesheet/less" href="~/Content/less/global.less">
-        <link rel="stylesheet/less" href="~/Content/less/customer.less">
-    }
-    else
-    {
-        <link rel="stylesheet" href="~/static/css/stall.min.css">
-    }
-
-</head>
-
-<body>
-    @if (_stall != null)
-    {
-        <div ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init_stallHome(@_stall.Id)">
-            <md-content>
-                <div class="stall-header">
-                    <img src="@string.Format("/Static/img/stall/{0}.jpg",_stall.Id)" />
-                    <div class="info">
-                        <div>@_stall.StallName</div>
-                        <button>运费 | 营业时间 | 其他信息</button>
-                    </div>
-                </div>
-                <div class="ProductList">
-                    <div class="item" ng-repeat="product in custCtrl.currentStall.Products ">
-                        <div class="left">
-                            <img src="{{product.Image}}" ng-click="gotoUrl('/product/detail/' + product.Id)" />
-                        </div>
-                        <div class="right">
-                            <div class="product-name" ng-click="gotoUrl('/product/detail/' + product.Id)">{{product.Name}}</div>
-                            <div class="price">{{product.Price|currency:$}}</div>
-                            <div class="operation">
-                                <select ng-model="product.Quantity">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                                <button ng-click="custCtrl.cart.add({stallId:product.StallId, stallName:product.StallName,
-                                                id:product.Id, name:product.Name,price:product.Price, variant:''}, product.Quantity)">
-                                    加入购物车
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </md-content>
-            <!--bottom tool bar-->
-            <div id="bottom-toolbar-step"></div>
-            <div id="bottom-toolbar" layout="row" layout-align="space-between center">
-                <md-button class="btn-cart" aria-label="Cart" ng-click="gotoUrl('/customer/cart')" flex="60">
-                    <span class="cart-amount" ng-if="custCtrl.cart.qty>0">{{custCtrl.cart.qty}}</span>
-                    <md-icon md-svg-icon="cart"></md-icon>
-                    <span class="total-amount">合计: {{custCtrl.cart.totalAmount()|currency:$}}</span>
-                </md-button>
-                <button ng-click="gotoUrl('/customer/cart')" class="btn btn-primary" ng-class="{'invalid':custCtrl.cart.qty<=0}" flex="40"
-                        ng-disabled="custCtrl.cart.qty<=0">
-                    结账
-                </button>
+<div ng-init="custCtrl.loadStallProducts(@_stallId)"></div>
+<div ng-if="custCtrl.currentStall">
+    <div id="stall-header">
+        <img ng-src="/Static/img/stall/{{custCtrl.currentStall.Id}}.jpg" />
+        <div class="info">
+            <div>{{custCtrl.currentStall.Name}}</div>
+            <button>运费 | 营业时间 | 其他信息</button>
+        </div>
+    </div>
+    <div class="ProductList">
+        <div class="item" ng-repeat="product in custCtrl.currentStall.Products track by product.Id">
+            <div class="left">
+                <img src="{{product.Image}}" ng-click="gotoUrl('/product/' + product.Id)" />
             </div>
-            <div class="loading-circle big screen-center" ng-if="loadingCircle">
-                <img src="~/Static/img/loading.gif" />
+            <div class="right">
+                <div class="product-name" ng-click="gotoUrl('/product/' + product.Id)">{{product.Name}}</div>
+                <div class="price-quantity">
+                    <span>{{product.Price|currency:$}}</span>
+                    <select ng-model="product.Quantity">
+                        <option value="1">×1</option>
+                        <option value="2">×2</option>
+                        <option value="3">×3</option>
+                        <option value="4">×4</option>
+                        <option value="5">×5</option>
+                    </select>
+                </div>
+                <div class="operation">
+                    <button ng-click="custCtrl.cart.add({stallId:product.StallId, stallName:product.StallName,
+                                                id:product.Id, name:product.Name,price:product.Price, variant:''}, product.Quantity)">
+                        加入购物车
+                    </button>
+                </div>
             </div>
         </div>
-    }
-    <!-- 3rd party libraries -->
-    <!-- 3rd party libraries -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-aria.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-messages.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.2/js.cookie.min.js"></script>
-
-    <!-- owner scripts -->
-    @if (HttpContext.Current.IsDebuggingEnabled)
-    {
-        <script type="text/javascript" src="~/static/lib/less/dist/less.min.js"></script>
-        <script type="text/javascript" src="~/Content/middle-js/app.js"></script>
-        <script type="text/javascript" src="~/Content/middle-js/cart.js"></script>
-        <script type="text/javascript" src="~/Content/middle-js/order.js"></script>
-        <script type="text/javascript" src="~/Content/middle-js/controller/customer.controller.js"></script>
-    }
-    else
-    {
-        <script type="text/javascript" src="~/static/js/stall.min.js"></script>
-    }
-</body>
-</html>
+    </div>
+    <div class="load-more-bar">
+        <span>没有更多商品了</span>
+    </div>
+</div>
+<div id="empty-content" ng-if="!custCtrl.currentStall">
+    店铺不存在
+</div>

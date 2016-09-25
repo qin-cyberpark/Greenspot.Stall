@@ -1,12 +1,45 @@
+/* Stall Home Page */
+#stall-header {
+  padding: 10px;
+  background-color: #0097A7;
+}
+#stall-header > img {
+  display: inline-block;
+  width: 40%;
+}
+#stall-header .info {
+  float: right;
+  width: 60%;
+  text-align: center;
+}
+#stall-header .info > div {
+  color: #F5F5F5;
+  font-size: 24px;
+  font-weight: bold;
+}
+#stall-header .info > button {
+  border: none;
+  color: #E0E0E0;
+  background-color: #0097A7;
+  font-size: 11px;
+}
+/* Product Page*/
+#product-content {
+  position: fixed;
+  width: 100%;
+  max-width: 720px;
+  top: 0px;
+  bottom: 40px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+/* Cart Page */
 #cart-content {
   padding: 5px;
 }
 #cart-content md-checkbox {
   padding: 0px;
   margin: 0px;
-}
-#cart-content .cart-stall {
-  font-size: 12px;
 }
 #cart-content .cart-stall .cart-item {
   vertical-align: middle;
@@ -17,7 +50,6 @@
   width: 40px;
 }
 #cart-content .cart-stall .cart-item .qty-lbl {
-  font-size: 16px;
   padding: 0px;
 }
 #cart-content .cart-stall .cart-item .md-button {
@@ -90,15 +122,6 @@
 #order-content table thead {
   font-weight: bold;
 }
-#detail-content {
-  position: fixed;
-  width: 100%;
-  max-width: 720px;
-  top: 0px;
-  bottom: 40px;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
 #formNewAddress input {
   font-size: 11px;
 }
@@ -109,28 +132,4 @@
   padding: 0px;
   background-color: #eee;
   z-index: 999;
-}
-.stall-header {
-  padding: 10px;
-  background-color: #0097A7;
-}
-.stall-header > img {
-  display: inline-block;
-  width: 40%;
-}
-.stall-header .info {
-  float: right;
-  width: 60%;
-  text-align: center;
-}
-.stall-header .info > div {
-  color: #F5F5F5;
-  font-size: 24px;
-  font-weight: bold;
-}
-.stall-header .info > button {
-  border: none;
-  color: #E0E0E0;
-  background-color: #0097A7;
-  font-size: 11px;
 }

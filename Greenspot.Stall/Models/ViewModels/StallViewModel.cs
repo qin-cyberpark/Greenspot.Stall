@@ -22,5 +22,15 @@ namespace Greenspot.Stall.Models.ViewModels
         public string Image { get; set; }
         public decimal Price { get; set; }
         public string Quantity { get; set; } = "1";
+        public string Description { get; set; }
+        public bool TrackInventory { get; set; }
+        public int Stock { get; set; }
+        public int[] QuantityOptions
+        {
+            get
+            {
+                return new int[(TrackInventory && Stock < 5) ? Stock : 5];
+            }
+        }
     }
 }

@@ -10,9 +10,7 @@
     <!-- 3rd party stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.css">
     <!-- platform stylesheet -->
-    <link rel="stylesheet/less" href="/Content/less/global.less">
-    <link rel="stylesheet/less" href="/Content/less/home.less">
-    <!--link rel="stylesheet" href="/static/css/stall.min.css"-->
+    <link rel="stylesheet" href="/static/css/stall.min.css">
 </head>
 <body ng-controller="HomeController as homeCtrl" ng-init="homeCtrl.init('H')">
     <form id="search-bar" ng-submit="homeCtrl.search(10,10)">
@@ -26,9 +24,9 @@
     </form>
 
     <!-- recommend stall -->
-    <div class="content-with-bottom-bar" ng-if="homeCtrl.searchCondition.isRecommend && homeCtrl.recommendStalls.length">
+    <div ng-if="homeCtrl.searchCondition.isRecommend && homeCtrl.recommendStalls.length">
         <div class="section-caption">最新 | 推荐</div>
-        <md-card ng-repeat="stall in homeCtrl.recommendStalls" ng-click="gotoUrl('/stall/index/' + stall.Id)">
+        <md-card ng-repeat="stall in homeCtrl.recommendStalls" ng-click="gotoUrl('/stall/' + stall.Id)">
             <md-card-title>
                 <md-card-title-text layout-align="space-between center">
                     <span class="md-headline">{{stall.Name}}</span>
@@ -57,10 +55,10 @@
             <div class="ProductList">
                 <div class="item" ng-repeat="product in homeCtrl.matchedProducts.items track by product.Id">
                     <div class="left">
-                        <img src="{{product.Image}}" ng-click="gotoUrl('/product/detail/' + product.Id)" />
+                        <img src="{{product.Image}}" ng-click="gotoUrl('/product/' + product.Id)" />
                     </div>
                     <div class="right">
-                        <div class="product-name" ng-click="gotoUrl('/product/detail/' + product.Id)">{{product.Name}}</div>
+                        <div class="product-name" ng-click="gotoUrl('/product/' + product.Id)">{{product.Name}}</div>
                         <div class="stall-name">{{product.StallName}}</div>
                         <div class="price-quantity">
                             <span>{{product.Price|currency:$}}</span>
@@ -90,9 +88,9 @@
             </div>
         </md-tab>
         <!-- product stall result -->
-        <md-tab label="餐厅" ng-if="homeCtrl.matchedStalls.items">
+        <md-tab label="店铺" ng-if="homeCtrl.matchedStalls.items">
             <md-list flex ng-if="homeCtrl.matchedStalls.items.length">
-                <md-list-item class="md-2-line" ng-repeat="stall in homeCtrl.matchedStalls.items track by stall.Id" ng-click="gotoUrl('/stall/index/' + stall.Id)">
+                <md-list-item class="md-2-line" ng-repeat="stall in homeCtrl.matchedStalls.items track by stall.Id" ng-click="gotoUrl('/stall/' + stall.Id)">
                     <img ng-src="/Static/img/stall/{{stall.Id}}.jpg" class="md-avatar" alt="{{stall.Name}}" />
                     <div class="md-list-item-text">
                         <h3>{{stall.Name}}</h3>
@@ -104,11 +102,12 @@
                 <span ng-if="homeCtrl.matchedStalls.items.length && !homeCtrl.matchedStalls.hasMore">没有更多相关商铺了</span>
             </div>
             <div class="section-caption" ng-if="!homeCtrl.matchedStalls.items.length">
-                没有找到相关商铺，换个关键字试试？
+                没有找到相关店铺，换个关键字试试？
             </div>
         </md-tab>
     </md-tabs>
 
+    <div id="bottom-step"></div>
     <!--bottom tool bar-->
     <div id="bottom-toolbar">
         <md-button class="btn-cart" aria-label="Cart" ng-click="gotoUrl('/customer/cart')" flex="60">
@@ -121,9 +120,8 @@
             结账
         </button>
     </div>
-    <div class="loading-circle big screen-center" ng-if="loadingCircle">
-        <img src="/Static/img/loading.gif" />
-    </div>
+
+    <div id="loading-circle" class="big screen-center" ng-if="loadingCircle"><img src="/Static/img/loading.gif" /></div>
 
     <!-- 3rd party libraries -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -136,14 +134,6 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.2/js.cookie.min.js"></script>
 
     <!-- owner scripts -->
-    <script type="text/javascript" src="/static/lib/less/dist/less.min.js"></script>
-    <script type="text/javascript" src="/Content/middle-js/app.js"></script>
-    <script type="text/javascript" src="/Content/middle-js/cart.js"></script>
-    <script type="text/javascript" src="/Content/middle-js/order.js"></script>
-    <script type="text/javascript" src="/Content/middle-js/Utilities.js"></script>
-    <script type="text/javascript" src="/Content/middle-js/controller/home.controller.js"></script>
-
-    <!-- End Browser Link -->
-
+    <script type="text/javascript" src="/Static/js/stall.min.js"></script>
 </body>
 </html>

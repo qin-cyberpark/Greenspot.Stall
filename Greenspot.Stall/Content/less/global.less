@@ -1,6 +1,7 @@
 ﻿/* global */
 @import "_variables.less";
 
+/* global elements*/
 html, body {
     margin: 0px auto;
     padding: 0px;
@@ -30,8 +31,25 @@ html, body {
     background-color: transparent;
 }
 
-.content-with-bottom-bar {
-    padding-bottom: @bottom-toobar-height;
+
+md-divider {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+/* global component */
+#main-content {
+    position: fixed;
+    width: 100%;
+    max-width: @app-max-width;
+    top: @bottom-toobar-height;
+    bottom: 0px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#bottom-step {
+    height: @bottom-toobar-height;
 }
 
 #bottom-toolbar {
@@ -117,92 +135,7 @@ html, body {
     }
 }
 
-
-#main-toolbar {
-    position: fixed;
-    height: @top-toolbar-height;
-    min-height: @top-toolbar-height;
-    max-width: @app-max-width;
-    top: 0px;
-
-    & md-button {
-        height: 32px;
-    }
-
-    & md-icon {
-        width: 24px;
-        height: 24px;
-    }
-
-    & .btn-back {
-        margin: 0px;
-        padding: 0px;
-        width: 40px;
-        min-width: 40px;
-    }
-
-    & .search-text {
-        height: @top-toolbar-height;
-
-        & input[type="text"] {
-            color: white;
-            font-size: 14px;
-            font-weight: normal;
-            height: 28px;
-        }
-    }
-
-    & .text-caption {
-        text-align: center;
-    }
-
-    & .btn-search {
-        margin: 0px;
-        padding: 0px;
-        width: 20px;
-        min-width: 20px;
-    }
-
-    & .btn-cart {
-        margin: 0px;
-        padding: 0px;
-        width: 40px;
-        min-width: 40px;
-
-        & .cart-amount {
-            position: absolute;
-            padding: 0px;
-            margin: 0px;
-            left: 20px;
-            top: 3px;
-            width: 18px;
-            height: 18px;
-            color: black;
-            background-color: @color-accent;
-            border-radius: 10px 10px;
-            line-height: 20px;
-            font-size: 11px;
-        }
-    }
-}
-
-#main-content {
-    position: fixed;
-    width: 100%;
-    max-width: @app-max-width;
-    top: @bottom-toobar-height;
-    bottom: 0px;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-md-divider {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-
-.loading-circle {
+#loading-circle {
     width: 100%;
     position: absolute;
     top: 0;
@@ -223,6 +156,19 @@ md-divider {
         & > img {
             width: 100px;
         }
+    }
+}
+
+#empty-content {
+    padding-top: 50px;
+    text-align: center;
+    font-size: 2rem;
+    color: @color-grey-500;
+
+    &:after {
+        content: url('/Static/img/logo_darkgrey_96.png');
+        margin: 10px;
+        display: block;
     }
 }
 
