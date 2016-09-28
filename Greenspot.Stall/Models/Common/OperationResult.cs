@@ -21,6 +21,7 @@ namespace Greenspot.Stall.Models
 
         public bool Succeeded { get; set; } = true;
         public T Data { get; set; }
+        public string ErrorType { get; set; }
         public string Message { get; set; }
         public Exception Exception { get; set; }
     }

@@ -32,19 +32,21 @@ md-divider {
 }
 /* global component */
 #main-content {
-  position: fixed;
+  position: absolute;
   width: 100%;
-  max-width: 720px;
-  top: 40px;
+  top: 0px;
   bottom: 0px;
   overflow-x: hidden;
   overflow-y: auto;
 }
-#bottom-step {
-  height: 40px;
+#main-content.with-bottom-bar {
+  bottom: 40px;
+}
+#main-content.with-topsearch-bar {
+  top: 35px;
 }
 #bottom-toolbar {
-  position: fixed;
+  position: absolute;
   bottom: 0px;
   height: 40px;
   width: 100%;
@@ -107,16 +109,17 @@ md-divider {
   margin-left: 0px;
   margin-right: 10px;
 }
-#loading-circle {
+#loading-circle.screen-center {
   width: 100%;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  text-align: center;
 }
-#loading-circle > img {
-  margin: 150px auto;
+#loading-circle.screen-center > img {
+  margin-top: 150px;
 }
 #loading-circle.big > img {
   width: 100px;
@@ -131,6 +134,19 @@ md-divider {
   content: url('/Static/img/logo_darkgrey_96.png');
   margin: 10px;
   display: block;
+}
+.load-more-bar {
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.load-more-bar > button {
+  border: none;
+  color: #0097A7;
+  background-color: transparent;
+}
+.load-more-bar > span {
+  color: #9E9E9E;
 }
 .ProductList {
   height: 100%;

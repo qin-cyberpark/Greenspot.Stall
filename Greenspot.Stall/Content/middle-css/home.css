@@ -91,15 +91,3 @@
   text-align: center;
   margin-top: 10px;
 }
-.load-more-bar {
-  padding: 20px;
-  text-align: center;
-}
-.load-more-bar > button {
-  border: none;
-  color: #0097A7;
-  background-color: transparent;
-}
-.load-more-bar > span {
-  color: #9E9E9E;
-}

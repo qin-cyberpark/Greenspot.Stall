@@ -170,30 +170,29 @@ namespace Greenspot.Stall.Models
             foreach (var item in order.Items)
             {
                 AddRow(item.Name, ReceiptFont.Font24);
-                AddRow(string.Format("x{0} @ {1:$0.00}", item.Quantity, item.Price * item.Quantity), ReceiptFont.Font24);
+                AddRow(string.Format("{1:$0.00}×{0}", item.Quantity, item.PriceIncTax * item.Quantity), ReceiptFont.Font20);
             }
 
             //separator
             AddRow("".PadRight(ReceiptFont.CharsInRow(ReceiptFont.Font24), '-'), ReceiptFont.Font24);
 
             //total
-            AddRow(string.Format("总计:{0:$0.0}", order.StallAmount), ReceiptFont.Font24);
+            AddRow(string.Format("总计:{0:$0.00}", order.StallAmount), ReceiptFont.Font24);
 
             //separator
             AddRow("".PadRight(ReceiptFont.CharsInRow(ReceiptFont.Font16), ' '), ReceiptFont.Font16);
 
             //note
-            AddRow("备注:" + order.Note, ReceiptFont.Font16);
+            if (!string.IsNullOrEmpty(order.Note))
+            {
+                AddRow("备注:" + order.Note, ReceiptFont.Font16);
+            }
 
             //separator
             AddRow("".PadRight(ReceiptFont.CharsInRow(ReceiptFont.Font16), ' '), ReceiptFont.Font16);
 
             //slogan
             AddRow("------久等了点餐 让您久等了------", ReceiptFont.Font16);
-
-            //gst
-            //AddRow("GST", string.Format("{0:$0.00}", order.GST), ReceiptFont.Font24);
-
         }
 
         public float Height

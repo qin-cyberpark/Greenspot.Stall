@@ -40,7 +40,7 @@
             vm.init_cart = function () {
                 //init cart
                 vm.cart = new Greenspot.Cart();
-                vm.cart.loadFromCookie();
+                vm.cart.load();
             }
 
             //T - takeaway, H - homemade
@@ -141,6 +141,7 @@
                     if (result.Succeeded) {
 
                         vm.matchedStalls.append(result.Data);
+
                         //store result
                         if ($window.localStorage && vm.matchedStalls) {
                             $window.localStorage.setItem("matched_stalls", JSON.stringify(vm.matchedStalls));

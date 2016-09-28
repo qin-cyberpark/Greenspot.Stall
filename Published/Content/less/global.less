@@ -39,23 +39,26 @@ md-divider {
 
 /* global component */
 #main-content {
-    position: fixed;
+    position: absolute;
     width: 100%;
-    max-width: @app-max-width;
-    top: @bottom-toobar-height;
+    top: 0px;
     bottom: 0px;
     overflow-x: hidden;
     overflow-y: auto;
-}
 
-#bottom-step {
-    height: @bottom-toobar-height;
+    &.with-bottom-bar {
+        bottom: @bottom-toolbar-height;
+    }
+
+    &.with-topsearch-bar {
+        top: @top-searchbar-height;
+    }
 }
 
 #bottom-toolbar {
-    position: fixed;
+    position: absolute;
     bottom: 0px;
-    height: @bottom-toobar-height;
+    height: @bottom-toolbar-height;
     width: 100%;
     max-width: @app-max-width;
     color: @color-primary;
@@ -128,15 +131,18 @@ md-divider {
 }
 
 #loading-circle {
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    &.screen-center {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        text-align: center;
 
-    & > img {
-        margin: 150px auto;
+        & > img {
+            margin-top: 150px;
+        }
     }
 
     &.big {
@@ -156,6 +162,22 @@ md-divider {
         content: url('/Static/img/logo_darkgrey_96.png');
         margin: 10px;
         display: block;
+    }
+}
+
+.load-more-bar {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    & > button {
+        border: none;
+        color: @color-primary;
+        background-color: transparent;
+    }
+
+    & > span {
+        color: @color-grey-500;
     }
 }
 

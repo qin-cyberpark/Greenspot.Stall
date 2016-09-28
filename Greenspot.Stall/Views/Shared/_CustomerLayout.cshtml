@@ -10,16 +10,15 @@
     <!-- 3rd party stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.css">
     <!-- platform stylesheet -->
-    <link rel="stylesheet" href="/static/css/stall.min.css">
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
         <link rel="stylesheet/less" href="/Content/less/global.less">
-        <link rel="stylesheet/less" href="~/Content/less/customer.less">
-        <link rel="stylesheet/less" href="~/Content/less/home.less">
+        <link rel="stylesheet/less" href="/Content/less/customer.less">
+        <link rel="stylesheet/less" href="/Content/less/home.less">
     }
     else
     {
-        <link rel="stylesheet" href="~/static/css/stall.min.css">
+        <link rel="stylesheet" href="/static/css/stall.min.css">
     }
 
 </head>
@@ -39,7 +38,7 @@
         </button>
     </div>
     <div id="loading-circle" class="big screen-center" ng-if="loadingCircle">
-        <img src="~/Static/img/loading.gif" />
+        <img src="/Static/img/loading.gif" />
     </div>
     <!-- 3rd party libraries -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -54,17 +53,17 @@
     <!-- owner scripts -->
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
-        <script type="text/javascript" src="~/static/lib/less/dist/less.min.js"></script>
-        <script type="text/javascript" src="~/Content/middle-js/app.js"></script>
-        <script type="text/javascript" src="~/Content/middle-js/cart.js"></script>
-        <script type="text/javascript" src="~/Content/middle-js/order.js"></script>
-        <script type="text/javascript" src="~/Content/middle-js/Utilities.js"></script>
-        <script type="text/javascript" src="~/Content/middle-js/controller/customer.controller.js"></script>
-        <script type="text/javascript" src="~/Content/middle-js/controller/home.controller.js"></script>
+        <script type="text/javascript" src="/static/lib/less/dist/less.min.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/app.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/cart.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/order.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/Utilities.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/controller/customer.controller.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/controller/home.controller.js"></script>
     }
     else
     {
-        <script type="text/javascript" src="~/static/js/stall.min.js"></script>
+        <script type="text/javascript" src="/static/js/stall.min.js"></script>
     }
 </body>
 </html>

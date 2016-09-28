@@ -20,19 +20,26 @@
 
     angular.module('greenspotStall')
         .service('CommonService', function ($rootScope) {
+            var self = this;
+
             /* redirect */
             $rootScope.gotoUrl = function (url) {
+                self.showLoading();
                 window.location.href = url;
             }
 
 
             $rootScope.loadingCircle = false;
-            this.showLoading = function () {
+            self.showLoading = function () {
                 $rootScope.loadingCircle = true;
             }
 
-            this.hideLoading = function () {
+            self.hideLoading = function () {
                 $rootScope.loadingCircle = false;
+            }
+
+            self.isLoading = function () {
+                return $rootScope.loadingCircle;
             }
         });
 

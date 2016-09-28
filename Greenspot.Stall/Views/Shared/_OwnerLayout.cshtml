@@ -11,25 +11,25 @@
     <base href="/">
     <title>@Page.Title</title>
 
-    <link rel="shortcut icon" href="~/static/img/favicon.png">
+    <link rel="shortcut icon" href="/static/img/favicon.png">
     <!-- 3rd party stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.css">
     <!-- owner stylesheet -->
 
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
-        <link rel="stylesheet/less" href="~/Content/less/global.less">
-        <link rel="stylesheet/less" href="~/Content/less/owner.less">
+        <link rel="stylesheet/less" href="/Content/less/global.less">
+        <link rel="stylesheet/less" href="/Content/less/owner.less">
     }
     else
     {
-        <link rel="stylesheet" href="~/static/css/stall.min.css">
+        <link rel="stylesheet" href="/static/css/stall.min.css">
     }
 </head>
 <body ng-controller="OwnerController as ownerCtrl">
     <md-toolbar id="stall-toolbar" class="md-primary" layout="row" layout-align="center center">
         <div class="stall-logo">
-            <img src="~/static/img/favicon.png" />
+            <img src="/static/img/favicon.png" />
         </div>
         <div class="stall-text">
             <div class="stall-text-line-1">
@@ -57,14 +57,14 @@
     <!-- owner scripts -->
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
-        <script type="text/javascript" src="~/static/lib/less/dist/less.min.js"></script>
-        <script type="text/javascript" src="~/Content/middle-js/app.js"></script>
-        <script type="text/javascript" src="~/Content/middle-js/cart.js"></script>
-        <script type="text/javascript" src="~/Content/middle-js/controller/owner.controller.js"></script>
+        <script type="text/javascript" src="/static/lib/less/dist/less.min.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/app.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/cart.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/controller/owner.controller.js"></script>
     }
     else
     {
-        <script type="text/javascript" src="~/static/js/stall.min.js"></script>
+        <script type="text/javascript" src="/static/js/stall.min.js"></script>
     }
 
     @RenderSection("ScriptSection", false)

@@ -110,7 +110,7 @@
                     break;
                 }
             }
-            self.writeToCookie();
+            self.save();
         };
 
         //add item
@@ -135,15 +135,7 @@
             }
 
             //new item
-            self.writeToCookie();
-        };
-
-
-        //clear
-        self.empty = function () {
-            self.stls = [];
-            self.qty = 0;
-            Cookies.remove("cart");
+            self.save();
         };
 
         //remove item
@@ -157,33 +149,47 @@
                 }
             }
 
-            self.writeToCookie();
+            self.save();
         };
 
-        //this
+        //clear
+        self.empty = function () {
+            self.stls = [];
+            self.qty = 0;
+            Cookies.remove("cart");
+        };
+
+        //item qty+1
         self.plusOne = function (stall, itemId) {
             stall.plusOne(itemId);
             self.qty++;
 
-            self.writeToCookie();
+            self.save();
         };
 
-        //
+        //item qty-1
         self.minusOne = function (stall, itemId) {
             stall.minusOne(itemId);
             self.qty--;
 
-            self.writeToCookie();
+            self.save();
         };
 
-
-        self.loadFromCookie = function () {
-            var str = Cookies.get('cart');
+        //load stored cart
+        self.load = function () {
+            //var str = Cookies.get('cart');
+            var str = window.localStorage["jdl_cart"];
 
             if (!str) {
                 return;
             }
+
             var c = $.parseJSON(str);
+            var timeSpan = Date.now() - c.savedTime;
+            if (timeSpan > 604800000) {
+                return;
+            }
+
             self.stls = [];
 
             //all stall
@@ -199,10 +205,14 @@
 
         };
 
-        self.writeToCookie = function () {
-            Cookies.set("cart", self, { expires: 14 });
-        };
+        //store cart
+        self.save = function () {
+            //Cookies.set("cart", self, { expires: 14 });
+            self.savedTime = Date.now();
+            window.localStorage.setItem("jdl_cart", JSON.stringify(self));
+        }
 
+        //is all items selected
         self.isChecked = function () {
             var hasChecked = false;
             var hasUnchecked = false;
@@ -211,8 +221,9 @@
                 hasUnchecked = hasUnchecked || !stall.isChecked();
             })
             return hasChecked && !hasUnchecked;
-        };
+        }
 
+        //select or unselect all items
         self.toggleAll = function () {
             var checked = !self.isChecked();
             $.each(self.stls, function (idxStall, stall) {
@@ -222,16 +233,27 @@
             });
         }
 
-        self.totalAmount = function () {
-            var orders = self.getOrders();
-            return orders.amt;
-        }
-
-        self.getOrders = function () {
-            var orders = new Greenspot.SimpleOrderCollection();
+        //get total selected items amount
+        self.totalAmount = function (selectedOnly) {
+            selectedOnly = selectedOnly || false;
+            var amount = 0;
             $.each(self.stls, function (idxStall, stall) {
                 //new order
-                var order = new Greenspot.SimpleOrder(stall.i, stall.n);
+                $.each(stall.itms, function (idxItem, item) {
+                    if (!selectedOnly || item.slctd) {
+                        amount += (item.p * item.q);
+                    }
+                })
+            });
+            return amount;
+        }
+
+        //convert selected items to order
+        self.getOrders = function () {
+            var orders = new Greenspot.CartOrderCollection();
+            $.each(self.stls, function (idxStall, stall) {
+                //new order
+                var order = new Greenspot.CartOrder(stall.i, stall.n);
 
                 $.each(stall.itms, function (idxItem, item) {
                     if (item.slctd) {
@@ -246,9 +268,28 @@
 
             return orders;
         }
+
+        //remove selected items
+        self.removeSelected = function () {
+            var orders = new Greenspot.CartOrderCollection();
+            $.each(self.stls, function (idxStall, stall) {
+
+                if (stall.isChecked()) {
+                    self.removeStall(stall.i);
+                } else {
+                    $.each(stall.itms, function (idxItem, item) {
+                        if (item && item.slctd) {
+                            self.remove(stall, item.i);
+                        }
+                    })
+                }
+            });
+
+            self.save();
+        }
     };
 
-    Greenspot.SimpleOrder = function (stallId, stallName) {
+    Greenspot.CartOrder = function (stallId, stallName) {
         var self = this;
         self.i = stallId;
         self.n = stallName;
@@ -263,11 +304,11 @@
         }
     }
 
-    Greenspot.SimpleOrderCollection = function () {
+    Greenspot.CartOrderCollection = function () {
         var self = this;
         self.orders = [];
         self.amt = 0;
-
+        self.qty = 0;
         self.AddOrder = function (order) {
             self.orders.push(order);
             self.qty += order.qty;

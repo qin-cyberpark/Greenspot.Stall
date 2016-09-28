@@ -17,6 +17,7 @@ using System.IO;
 using System.Net;
 using Greenspot.Configuration;
 using System.Web.Hosting;
+using System.Text;
 
 namespace Greenspot.Stall.Controllers.MVC
 {
@@ -148,35 +149,36 @@ namespace Greenspot.Stall.Controllers.MVC
         [HttpGet]
         public ActionResult Checkout()
         {
-            var orderCollection = (OrderCollectionViewModel)Session["CURRENT_ORDERS"];
-            if (orderCollection == null)
-            {
-                return View("Cart");
-            }
-            var stockMsgs = new List<string>();
+            //var orderCollection = (OrderCollectionViewModel)Session["CURRENT_ORDERS"];
+            //if (orderCollection == null)
+            //{
+            //    return View("Cart");
+            //}
+            //var stockMsgs = new List<string>();
 
-            //check stock
-            foreach (var order in orderCollection.Orders)
-            {
-                foreach (var item in order.Items)
-                {
-                    var pdt = Product.FindById(item.Id, _db);
-                    if (pdt.Stock < item.Quantity)
-                    {
-                        stockMsgs.Add(string.Format("{0}仅剩{1}件(份)", pdt.Name, pdt.Stock));
-                    }
-                }
-            }
-            if (stockMsgs.Count > 0)
-            {
-                ViewBag.StockMsgs = stockMsgs;
-                return View("Cart");
-            }
-            else
-            {
-                ViewBag.Orders = orderCollection;
-                return View();
-            }
+            ////check stock
+            //foreach (var order in orderCollection.Orders)
+            //{
+            //    foreach (var item in order.Items)
+            //    {
+            //        var pdt = Product.FindById(item.Id, _db);
+            //        if (pdt.Stock < item.Quantity)
+            //        {
+            //            stockMsgs.Add(string.Format("{0}仅剩{1}件(份)", pdt.Name, pdt.Stock));
+            //        }
+            //    }
+            //}
+            //if (stockMsgs.Count > 0)
+            //{
+            //    ViewBag.StockMsgs = stockMsgs;
+            //    return View("Cart");
+            //}
+            //else
+            //{
+            //    ViewBag.Orders = orderCollection;
+            //    return View();
+            //}
+            return View();
         }
 
         [Authorize]
@@ -204,9 +206,10 @@ namespace Greenspot.Stall.Controllers.MVC
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        private IList<Order> ConvertToOrders(string jsonString)
+        private IList<Order> ConvertToOrders(string jsonString, out IList<Product> outOtStocks)
         {
             var orders = new List<Order>();
+            outOtStocks = new List<Product>();
             var orderVMs = JsonConvert.DeserializeObject<IList<OrderViewModel>>(jsonString);
             foreach (var orderVM in orderVMs)
             {
@@ -222,6 +225,7 @@ namespace Greenspot.Stall.Controllers.MVC
                     if (product.Stock < i.Quantity)
                     {
                         //check stock
+                        outOtStocks.Add(product);
                     }
                     order.Items.Add(new OrderItem(product)
                     {
@@ -295,7 +299,24 @@ namespace Greenspot.Stall.Controllers.MVC
 
             try
             {
-                var orders = ConvertToOrders(json);
+                IList<Product> outOfStocks;
+                var orders = ConvertToOrders(json, out outOfStocks);
+                if (outOfStocks.Count > 0)
+                {
+                    result.Succeeded = false;
+                    result.Message = "Some Products are out of stock";
+                    var sb = new StringBuilder("[");
+                    var comma = "";
+                    foreach (var p in outOfStocks)
+                    {
+                        sb.Append(string.Format("{0}{{\"StallName\":\"{1}\",\"ProductName\":\"{2}\",\"Stock\":{3}}}", comma, p.Stall.StallName, p.BaseName, p.Stock));
+                        comma = ",";
+                    }
+                    sb.Append("]");
+                    result.ErrorType = "OutOfStock";
+                    result.Data = sb.ToString();
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
 
                 using (var tran = _db.Database.BeginTransaction())
                 {
@@ -314,7 +335,6 @@ namespace Greenspot.Stall.Controllers.MVC
                         result.Succeeded = false;
                         result.Message = "fail to create payment";
                         return Json(result, JsonRequestBehavior.AllowGet);
-
                     }
 
                     //create order
@@ -444,11 +464,11 @@ namespace Greenspot.Stall.Controllers.MVC
                 }
 
                 StallApplication.RemoveOperatingPayment(paymentId);
-                return Redirect("/customer/orders");
+                return Redirect("/customer/orders?act=paid");
             }
             else
             {
-                return View("Error");
+                return Redirect("/errorpage/payfailed");
             }
         }
     }

@@ -73,15 +73,16 @@ namespace Greenspot.Stall.Controllers.MVC
         [AllowAnonymous]
         public ActionResult WeChatMpLogin(string returnUrl)
         {
-            //#if !DEBUG
-            //            // Request a redirect to the external login provider
-            //            return new ChallengeResult(WeChatAuthenticationTypes.MP, Url.Action("WeChatMpLoginCallback", "Account", new { ReturnUrl = returnUrl }));
-            //#else
-            //            //UserManager.AddPassword("f2c0021f-5165-439d-b5e4-72a61be7aed7", "testtest");
-            //            var stattus = SignInManager.PasswordSignIn("test", "testtest", false, false);
-            //            return RedirectToLocal(returnUrl);
-            //#endif
             ControllerContext.HttpContext.Session.RemoveAll();
+#if !DEBUG
+                        // Request a redirect to the external login provider
+                        return new ChallengeResult(WeChatAuthenticationTypes.MP, Url.Action("WeChatMpLoginCallback", "Account", new { ReturnUrl = returnUrl }));
+#else
+            //UserManager.AddPassword("2d232ccd-3bf3-4057-b8ce-40a1a5c0ffdb", "testtest");
+            var stattus = SignInManager.PasswordSignIn("test", "testtest", false, false);
+            return RedirectToLocal(returnUrl);
+#endif
+
 
             return new ChallengeResult(WeChatAuthenticationTypes.MP, Url.Action("WeChatMpLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }

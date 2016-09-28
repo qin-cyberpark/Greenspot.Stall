@@ -1,7 +1,7 @@
 ﻿@{
-    var _orders = (Greenspot.Stall.Models.ViewModels.OrderCollectionViewModel)ViewBag.Orders;
-    var _orderJson = Newtonsoft.Json.JsonConvert.SerializeObject(_orders);
-    var _isAdmin = User.IsInRole("Admin");
+//var _orders = (Greenspot.Stall.Models.ViewModels.OrderCollectionViewModel)ViewBag.Orders;
+//var _orderJson = Newtonsoft.Json.JsonConvert.SerializeObject(_orders);
+//var _isAdmin = User.IsInRole("Admin");
 }
 <!DOCTYPE html>
 <html lang="en" ng-app="greenspotStall" ng-cloak>
@@ -25,7 +25,7 @@
         <link rel="stylesheet" href="/Static/css/stall.min.css">
     }
 </head>
-<body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init_checkout(@_orderJson)">
+<body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init_checkout()">
     <!-- address -->
     <md-content id="checkout-content">
         <div class="checkout-section">
@@ -54,7 +54,7 @@
             <div layout="row" layout-align="space-between center" ng-if="order.hasDeliveryOption() || order.hasPickUpOption()">
                 <div>
                     <span ng-if="order.hasDeliveryOption() && !order.hasPickUpOption()">配送</span>
-                    <span ng-if="!order.hasDeliveryOption() && order.hasPickUpOption()">自提</span>
+                    <span ng-if="order.hasPickUpOption() && !order.hasDeliveryOption()">自提</span>
                     <div class="switcher" ng-if="order.hasDeliveryOption() && order.hasPickUpOption()">
                         <div class="switcher-item" ng-class="{'switch-on': !order.isPickup}" ng-click="order.setIsPickup(false)">配送</div>
                         <div class="switcher-item" ng-class="{'switch-on': order.isPickup}" ng-click="order.setIsPickup(true)">自提</div>
@@ -102,21 +102,27 @@
             <!-- note -->
             <div class="checkout-item" layout="row" layout-align="space-between center">
                 <div class="item-name" flex="10">留言</div>
-                <input type="text" ng-model="order.note" flex/>
+                <input type="text" ng-model="order.note" flex />
             </div>
         </div>
 
+        <!-- message -->
+        <div ng-messages="custCtrl.error" role="alert">
+            <div ng-message="outOfStock" class="out-of-stock-error">
+                <div ng-repeat="p in custCtrl.error.outOfStockData">
+                    <span class="product-name">{{p.StallName}}-{{p.ProductName}}</span>库存不足，只余<span class="stock">{{p.Stock}}</span>份
+                </div>
+            </div>
+            <div ng-message="other">
+                {{custCtrl.error.message}}
+            </div>
+        </div>
         <!-- operation -->
         <div class="checkout-operate" layout="row">
             <md-button flex="100" ng-click="custCtrl.pay()" class="md-raised md-primary"
                        ng-disabled="!custCtrl.allDeliverySelected()">
                 确认付款
             </md-button>
-            @if (_isAdmin)
-            {
-                <a ng-click="custCtrl.fakePay()">Success</a>
-                    <a href="">Pay Fail</a>
-            }
         </div>
     </md-content>
     <!-- 3rd party libraries -->
@@ -132,10 +138,10 @@
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
         <script type="text/javascript" src="/Static/lib/less/dist/less.min.js"></script>
-            <script type="text/javascript" src="/Content/middle-js/app.js"></script>
-            <script type="text/javascript" src="~/Content/middle-js/cart.js"></script>
-            <script type="text/javascript" src="~/Content/middle-js/order.js"></script>
-            <script type="text/javascript" src="/Content/middle-js/controller/customer.controller.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/app.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/cart.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/order.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/controller/customer.controller.js"></script>
     }
     else
     {

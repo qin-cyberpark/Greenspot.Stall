@@ -135,6 +135,19 @@ md-divider {
   margin: 10px;
   display: block;
 }
+.load-more-bar {
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.load-more-bar > button {
+  border: none;
+  color: #0097A7;
+  background-color: transparent;
+}
+.load-more-bar > span {
+  color: #9E9E9E;
+}
 .ProductList {
   height: 100%;
 }

@@ -14,14 +14,14 @@
 }
 #stall-header .info > div {
   color: #F5F5F5;
-  font-size: 24px;
+  font-size: 2rem;
   font-weight: bold;
 }
 #stall-header .info > button {
   border: none;
   color: #E0E0E0;
   background-color: #0097A7;
-  font-size: 11px;
+  font-size: 1rem;
 }
 /* Product Page*/
 #product-content {
@@ -100,7 +100,7 @@
   padding: 0px 15px 0px 15px;
 }
 #checkout-content .checkout-section {
-  font-size: 12px;
+  font-size: 0.9rem;
   padding: 0px 0px 10px 0px;
   border-bottom: 1px dotted black;
 }
@@ -147,8 +147,18 @@
   color: white;
   background-color: #0097A7;
 }
+#checkout-content .out-of-stock-error {
+  width: 100%;
+  text-align: center;
+}
+#checkout-content .out-of-stock-error .product-name {
+  color: #EF6C00;
+}
+#checkout-content .out-of-stock-error .stock {
+  color: #EF6C00;
+}
 #order-content {
-  font-size: 12px;
+  font-size: 0.9rem;
 }
 #order-content table {
   width: 100%;

@@ -11,12 +11,15 @@
         self.items = [],
         //has more records
         self.hasMore = false;
+        //has record
+        self.hasRecord = false;
         //append
         self.append = function (data) {
             if (data && data.length) {
                 self.items = self.items.concat(data);
             }
             self.hasMore = data && data.length == self.pageSize;
+            self.hasRecord = self.items.length;
         }
     }
 
@@ -26,6 +29,7 @@
         var newResult = new Greenspot.Utilities.SearchResult(obj.page, obj.pageSize);
         newResult.items = obj.items;
         newResult.hasMore = obj.hasMore;
+        newResult.hasRecord = obj.hasRecord;
         return newResult;
     }
 })();

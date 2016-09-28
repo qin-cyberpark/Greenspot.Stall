@@ -19,7 +19,7 @@
                 self.items = self.items.concat(data);
             }
             self.hasMore = data && data.length == self.pageSize;
-            self.hasRecord = data && data.length;
+            self.hasRecord = self.items.length;
         }
     }
 
@@ -29,6 +29,7 @@
         var newResult = new Greenspot.Utilities.SearchResult(obj.page, obj.pageSize);
         newResult.items = obj.items;
         newResult.hasMore = obj.hasMore;
+        newResult.hasRecord = obj.hasRecord;
         return newResult;
     }
 })();

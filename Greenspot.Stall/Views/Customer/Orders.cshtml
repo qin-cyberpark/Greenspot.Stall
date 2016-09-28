@@ -1,6 +1,8 @@
 ﻿@using Newtonsoft.Json;
 @{
     var _orders = (IList<Greenspot.Stall.Models.Order>)ViewBag.Orders;
+
+    var _isPaid = "paid".Equals(Request["act"]);
     Page.Title = "我的订单";
 }
 <!DOCTYPE html>
@@ -30,7 +32,7 @@
     }
 
 </head>
-<body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.removeStallCookie(@Request["remove_stallId"])">
+<body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init_orders(@(_isPaid?"true":"false"))">
     <md-content id="order-content">
         @if (_orders == null || _orders.Count == 0)
         {
@@ -66,7 +68,7 @@
         }
     </md-content>
     <center>
-        <a href="/">小铺首页</a>
+        <a href="/">返回首页</a>
     </center>
     <!-- 3rd party libraries -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -83,6 +85,7 @@
     {
         <script type="text/javascript" src="/Static/lib/less/dist/less.min.js"></script>
         <script type="text/javascript" src="/Content/middle-js/app.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/cart.js"></script>
         <script type="text/javascript" src="/Content/middle-js/controller/customer.controller.js"></script>
     }
     else

@@ -15,6 +15,7 @@
     {
         <link rel="stylesheet/less" href="/Content/less/global.less">
         <link rel="stylesheet/less" href="~/Content/less/customer.less">
+        <link rel="stylesheet/less" href="~/Content/less/home.less">
     }
     else
     {
@@ -22,18 +23,18 @@
     }
 
 </head>
-<body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init()">
+<body ng-controller="@Page.Controller as ctrl" ng-init="ctrl.init()">
     @RenderBody()
     <div id="bottom-step"></div>
     <!--bottom tool bar-->
     <div id="bottom-toolbar" layout="row" layout-align="space-between center">
         <md-button class="btn-cart" aria-label="Cart" ng-click="gotoUrl('/customer/cart')" flex="60">
-            <span class="cart-amount" ng-if="custCtrl.cart.qty>0">{{custCtrl.cart.qty}}</span>
+            <span class="cart-amount" ng-if="ctrl.cart.qty>0">{{ctrl.cart.qty}}</span>
             <md-icon md-svg-icon="cart"></md-icon>
-            <span class="total-amount">合计: {{custCtrl.cart.totalAmount()|currency:$}}</span>
+            <span class="total-amount">合计: {{ctrl.cart.totalAmount()|currency:$}}</span>
         </md-button>
-        <button ng-click="gotoUrl('/customer/cart')" class="btn btn-primary" ng-class="{'invalid':custCtrl.cart.qty<=0}" flex="40"
-                ng-disabled="custCtrl.cart.qty<=0">
+        <button ng-click="gotoUrl('/customer/cart')" class="btn btn-primary" ng-class="{'invalid':ctrl.cart.qty<=0}" flex="40"
+                ng-disabled="ctrl.cart.qty<=0">
             结账
         </button>
     </div>
@@ -56,7 +57,10 @@
         <script type="text/javascript" src="~/static/lib/less/dist/less.min.js"></script>
         <script type="text/javascript" src="~/Content/middle-js/app.js"></script>
         <script type="text/javascript" src="~/Content/middle-js/cart.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/order.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/Utilities.js"></script>
         <script type="text/javascript" src="~/Content/middle-js/controller/customer.controller.js"></script>
+        <script type="text/javascript" src="~/Content/middle-js/controller/home.controller.js"></script>
     }
     else
     {

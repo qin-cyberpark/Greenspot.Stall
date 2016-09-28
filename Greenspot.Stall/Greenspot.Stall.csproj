@@ -200,6 +200,7 @@
     <Compile Include="Controllers\API\ProductController.cs" />
     <Compile Include="Controllers\API\StallController.cs" />
     <Compile Include="Controllers\API\WebhookController.cs" />
+    <Compile Include="Controllers\MVC\ErrorPageController.cs" />
     <Compile Include="Controllers\MVC\HomeController.cs" />
     <Compile Include="Controllers\MVC\ManageController.cs" />
     <Compile Include="Controllers\MVC\ProductController.cs" />
@@ -297,7 +298,9 @@
     <Content Include="gulpfile.js" />
     <Compile Include="Models\Entities\Delivery\DeliveryPlanPeriod.cs" />
     <Content Include="Static\css\stall.min.css" />
+    <Content Include="Static\html\PayFaild.html" />
     <Content Include="Static\html\SelectArea.tmpl.html" />
+    <Content Include="Static\img\404.png" />
     <Content Include="Static\img\error.png" />
     <Content Include="Static\img\homemade.jpg" />
     <Content Include="Static\img\icon\core-icons.svg">
@@ -307,6 +310,7 @@
     <Content Include="Static\img\favicon.png" />
     <Content Include="Static\img\logo_darkgrey_96.png" />
     <Content Include="Static\img\logo_grey_96.png" />
+    <Content Include="Static\img\logo_prodcut_img.png" />
     <Content Include="Static\img\logo_receipt.png" />
     <Content Include="Static\img\takeaway.jpg" />
     <Content Include="Static\html\Index.html" />
@@ -1066,6 +1070,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ErrorPage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1155,7 +1160,7 @@
     <Content Include="Static\lib\angular-route\package.json" />
     <Content Include="Static\lib\angular-route\README.md" />
     <Content Include="Views\Owner\InitStall.cshtml" />
-    <Content Include="Views\Shared\error.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Static\lib\jQuery\.babelrc" />
     <Content Include="Static\lib\jQuery\.bower.json" />
     <Content Include="Static\lib\jQuery\.editorconfig" />

@@ -7,7 +7,7 @@ namespace Greenspot.Stall.Models.ViewModels
 {
     public class ErrorViewModel
     {
-        public enum ErrorType { Customer, General, FileNotFound, UnauthorizedAccess, OutOfStock }
+        public enum ErrorType { Customer, General, FileNotFound, UnauthorizedAccess, PayFailed }
         public ErrorType Type { get; set; }
         public string ImageFile { get; set; }
         public string BackUrl { get; set; }

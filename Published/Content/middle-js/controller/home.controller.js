@@ -5,21 +5,29 @@
         function ($window, $location, $http, comSrv) {
             var vm = this;
 
+            //loading
+            vm.isLoading = function () {
+                return comSrv.isLoading();
+            }
+
             //search condition
             vm.searchCondition = {
                 isRecommend: true,
                 category: "T",
                 area: "NZ-Auckland",
                 keyword: "",
-                init: function (category) {
-                    this.category = category;
+                init: function () {
                     var params = $location.search();
+                    this.category = 'T';
+                    if (params.c === 'H') {
+                        this.category = 'H';
+                    }
                     this.isRecommend = params.r != 'false';
                     this.area = params.a || this.area;
                     this.keyword = params.k || this.keyword;
                 },
                 queryString: function () {
-                    return '?r=' + this.isRecommend + '&c=' + this.category + '&a=' + this.area + '&k=' + this.keyword;
+                    return '?c=' + this.category + '&r=' + this.isRecommend + '&a=' + this.area + '&k=' + this.keyword;
                 },
                 queryObject: function () {
                     return { 'r': this.isRecommend, 'c': this.category, 'a': this.area, 'k': this.keyword };
@@ -36,9 +44,9 @@
             }
 
             //T - takeaway, H - homemade
-            vm.init = function (category) {
+            vm.init = function () {
                 //init condition
-                vm.searchCondition.init(category);
+                vm.searchCondition.init();
                 if (vm.searchCondition.isRecommend) {
                     //load recommend
                     vm.loadRecommendStalls();
@@ -57,7 +65,7 @@
             //load recommend
             vm.loadRecommendStalls = function () {
                 comSrv.showLoading();
-                vm.recommendStalls = null;
+                vm.recommendStalls = new Greenspot.Utilities.SearchResult(0, 20);
 
                 //require url
                 var url = '/api/stall/recommend?c=' + vm.searchCondition.category + '&a=' + vm.searchCondition.area;
@@ -65,7 +73,7 @@
                 //load
                 $http.get(url).success(function (result) {
                     if (result.Succeeded) {
-                        vm.recommendStalls = result.Data;
+                        vm.recommendStalls.append(result.Data);
                     }
                     else {
                         console.log(result.Message);
@@ -73,7 +81,6 @@
                 }).error(function (error) {
                     console.log(error)
                 }).finally(function () {
-                    vm.noRecommend = !vm.recommendStalls || !vm.recommendStalls.length;
                     comSrv.hideLoading();
                 });
             }
@@ -108,7 +115,6 @@
                     console.log(error)
                 }).finally(function () {
                     comSrv.hideLoading();
-                    vm.noMatchedProducts = !vm.matchedProducts || !vm.matchedProducts.items.length;
                 });
             }
 
@@ -147,7 +153,6 @@
                     console.log(error)
                 }).finally(function () {
                     comSrv.hideLoading();
-                    vm.noMatchedStalls = !vm.matchedStalls || !vm.matchedStalls.items.length;
                 });
             }
 

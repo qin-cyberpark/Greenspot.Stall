@@ -82,24 +82,12 @@
   width: 40px;
   min-width: 40px;
 }
+#search-result {
+  height: 100%;
+}
 .section-caption {
   color: #0097A7;
   font-size: 1.25rem;
   text-align: center;
   margin-top: 10px;
-}
-#search-result {
-  height: 100%;
-}
-.load-more-bar {
-  padding: 20px;
-  text-align: center;
-}
-.load-more-bar > button {
-  border: none;
-  color: #0097A7;
-  background-color: transparent;
-}
-.load-more-bar > span {
-  color: #9E9E9E;
 }

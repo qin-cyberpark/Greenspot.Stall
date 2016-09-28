@@ -18,7 +18,7 @@ namespace Greenspot.Stall.Models
 
         public static DeliveryAddress FindByCode(string userId, string code, StallEntities db)
         {
-            return db.DeliveryAddresses.FirstOrDefault(x => x.User.Equals(userId) && x.Code.Equals(code));
+            return db.DeliveryAddresses.FirstOrDefault(x => x.UserId.Equals(userId) && x.Code.Equals(code));
         }
 
         public bool Save(StallEntities db)

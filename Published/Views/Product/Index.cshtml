@@ -1,44 +1,46 @@
 ﻿@{
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
     var _productId = (string)ViewBag.ProductId;
+    Page.Controller = "CustomerController";
     Page.Title = "久等了";
 }
-<div ng-init="custCtrl.init_productHome('@_productId')"></div>
-<div id="product-content" ng-if="custCtrl.currentProduct">
-    <img ng-src="{{custCtrl.currentProduct.Image}}">
-    <div class="line">
-        <span class="text-name">{{custCtrl.currentProduct.Name}}</span>
-        <div class="align-right">
-            <div class="btn-2line" ng-click="gotoUrl('/stall/' + custCtrl.currentProduct.StallId)">
-                <md-icon md-svg-icon="stall"></md-icon>
-                <div class="caption">店铺</div>
+<div id="main-content" class="with-bottom-bar" ng-init="ctrl.init_productHome('@_productId')">
+    <div id="product-content" ng-if="ctrl.currentProduct">
+        <img src="/Static/img/logo_prodcut_img.png" ng-src="{{ctrl.currentProduct.Image}}">
+        <div class="line">
+            <span class="text-name">{{ctrl.currentProduct.Name}}</span>
+            <div class="align-right">
+                <div class="btn-2line" ng-click="gotoUrl('/stall/' + ctrl.currentProduct.StallId)">
+                    <md-icon md-svg-icon="stall"></md-icon>
+                    <div class="caption">店铺</div>
+                </div>
+                <!-- div class="btn-2line">
+                    <md-icon md-svg-icon="share"></md-icon>
+                    <div class="caption">分享</div>
+                </div -->
             </div>
-            <!-- div class="btn-2line">
-                <md-icon md-svg-icon="share"></md-icon>
-                <div class="caption">分享</div>
-            </div -->
+        </div>
+        <div class="line" ng-if="!ctrl.currentProduct.TrackInventory || ctrl.currentProduct.Stock>0">
+            <div class="align-left text-price">
+                {{ctrl.currentProduct.Price|currency:$}}
+                <select class="sel-quantity" ng-model="ctrl.currentProduct.Quantity">
+                    <option ng-repeat="n in ctrl.currentProduct.QuantityOptions track by $index" value="{{$index+1}}">
+                        ×{{$index+1}}
+                    </option>
+                </select>
+            </div>
+            <div class="align-right">
+                <md-button class="md-raised md-accent" ng-click="ctrl.cart.add({stallId:ctrl.currentProduct.StallId, stallName:ctrl.currentProduct.StallName,
+                                                id:ctrl.currentProduct.Id, name:ctrl.currentProduct.Name,price:ctrl.currentProduct.Price, variant:''},
+                                                ctrl.currentProduct.Quantity)">
+                    加入购物车
+                </md-button>
+            </div>
+        </div>
+        <div class="line" ng-bind-html="ctrl.currentProduct.Description | trust">
         </div>
     </div>
-    <div class="line" ng-if="!custCtrl.currentProduct.TrackInventory || custCtrl.currentProduct.Stock>0">
-        <div class="align-left text-price">
-            {{custCtrl.currentProduct.Price|currency:$}}
-            <select class="sel-quantity" ng-model="custCtrl.currentProduct.Quantity">
-                <option ng-repeat="n in custCtrl.currentProduct.QuantityOptions track by $index" value="{{$index+1}}">
-                    ×{{$index+1}}
-                </option>
-            </select>
-        </div>
-        <div class="align-right">
-            <md-button class="md-raised md-accent" ng-click="custCtrl.cart.add({stallId:custCtrl.currentProduct.StallId, stallName:custCtrl.currentProduct.StallName,
-                                                id:custCtrl.currentProduct.Id, name:custCtrl.currentProduct.Name,price:custCtrl.currentProduct.Price, variant:''},
-                                                custCtrl.currentProduct.Quantity)">
-                加入购物车
-            </md-button>
-        </div>
+    <div id="empty-content" ng-if="ctrl.currentProduct===null">
+        商品不存在
     </div>
-    <div class="line" ng-bind-html="custCtrl.currentProduct.Description | trust">
-    </div>
-</div>
-<div id="empty-content" ng-if="custCtrl.currentProduct===null">
-    商品不存在
 </div>

@@ -1,11 +1,12 @@
 ﻿@using Greenspot.Stall.Models.ViewModels;
 @{
-    string backUrl = Url.Content("~");
+    string backUrl = Url.Content("/");
     string imgFile = "error.png";
     string message = "Sorry! Something went wrong";
 
     ErrorViewModel m = (ErrorViewModel)Model;
-    if (m != null) {
+    if (m != null)
+    {
         switch (m.Type)
         {
             case ErrorViewModel.ErrorType.FileNotFound:
@@ -15,9 +16,9 @@
             case ErrorViewModel.ErrorType.UnauthorizedAccess:
                 message = "Sorry! Access denied :(";
                 break;
-            case ErrorViewModel.ErrorType.OutOfStock:
-                imgFile = "soldout.png";
-                message = "Sorry! Temporarily out of stock.";
+            case ErrorViewModel.ErrorType.PayFailed:
+                message = "支付失败";
+                backUrl = "/customer/orders";
                 break;
             case ErrorViewModel.ErrorType.Customer:
                 backUrl = string.IsNullOrEmpty(m.BackUrl) ? backUrl : m.BackUrl;
@@ -29,10 +30,33 @@
 
 
 }
-<div class="container">
-    <div class="jumbotron" style="text-align:center">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="外卖 Takeaway Homemade">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <base href="/">
+    <title>@Page.Title</title>
+    <link rel="shortcut icon" href="/static/img/favicon.png">
+    <!-- platform stylesheet -->
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <link rel="stylesheet/less" href="/Content/less/global.less">
+        <link rel="stylesheet/less" href="~/Content/less/customer.less">
+        <link rel="stylesheet/less" href="~/Content/less/home.less">
+    }
+    else
+    {
+        <link rel="stylesheet" href="~/static/css/stall.min.css">
+    }
+
+</head>
+<body>
+    <div style="width:100%;text-align:center">
         <img src="~/static/img/@imgFile" style="width:200px" />
         <h4 style="margin-bottom:30px">@message</h4>
-        <a href="@backUrl"><button type="button" class="btn">Back</button></a>
+        <a href="@backUrl">返回</a>
     </div>
-</div>
+</body>
+</html>
