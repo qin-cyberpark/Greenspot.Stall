@@ -13,13 +13,12 @@ namespace Greenspot.Stall.Controllers
         private StallEntities _db = new StallEntities();
         public ActionResult Index()
         {
-            //ViewBag.Products = Product.GetHomepageProducts(_db);
             return Redirect("/index.html");
         }
 
-        public ActionResult Takeaway()
+        public ActionResult Search()
         {
-            return Redirect("/takeaway/index.html");
+            return View();
         }
 
         public ActionResult Homemade()

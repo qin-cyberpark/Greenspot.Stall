@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_OwnerLayout.cshtml";
-    Page.Title = "我的小铺";
+    Page.Title = "我的商铺";
     var _stalls = (IList<Greenspot.Stall.Models.Stall>)ViewBag.Stalls;
 }
 <md-content layout-padding>
@@ -14,7 +14,7 @@
             </md-card-title>
             <md-card-content>
                 <p>
-                    @string.Format("{0}, {1}, {2}", s.Address1, s.Suburb, s.City)
+                    @s.Status
                 </p>
             </md-card-content>
         </md-card>

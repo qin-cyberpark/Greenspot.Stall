@@ -1,0 +1,52 @@
+﻿@{
+    Layout = "~/Views/Shared/_OwnerLayout.cshtml";
+    Page.Title = "申请开店";
+}
+<md-content layout-padding>
+    <form name="formOwnerInfo" novalidate ng-submit="formOwnerInfo.$valid && ownerCtrl.Apply()">
+        <div layout="row">
+            <md-input-container flex>
+                <label>姓</label>
+                <input name="lastName" required ng-model="ownerCtrl.OwnerInfo.LastName" ng-maxlength="50">
+                <div ng-messages="formOwnerInfo.lastName.$error">
+                    <div ng-message="required">请输入姓</div>
+                </div>
+            </md-input-container>
+            <md-input-container flex>
+                <label>名</label>
+                <input name="firstName" required ng-model="ownerCtrl.OwnerInfo.FirstName" ng-maxlength="50">
+                <div ng-messages="formOwnerInfo.firstName.$error">
+                    <div ng-message="required">请输入名</div>
+                </div>
+            </md-input-container>
+            <md-input-container flex="50">
+                <label>手机</label>
+                <input name="mobile" required ng-model="ownerCtrl.OwnerInfo.Mobile" ng-pattern="/^02\d{6,9}$/">
+                <div ng-messages="formOwnerInfo.mobile.$error" role="alert">
+                    <div ng-message-exp="['required', 'pattern']">
+                        请检查手机号码
+                    </div>
+                </div>
+            </md-input-container>
+        </div>
+        <md-input-container class="md-block">
+            <label>邮箱</label>
+            <input type="email" name="email" required="" ng-model="ownerCtrl.OwnerInfo.Email" ng-pattern="@Html.Display(@"/^.+@.+\..+$/")">
+            <div ng-messages="formOwnerInfo.email.$error" role="alert">
+                <div ng-message-exp="['required', 'pattern']">
+                    请检查邮箱地址
+                </div>
+            </div>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>铺名</label>
+            <input name="stallName" required ng-model="ownerCtrl.OwnerInfo.StallName">
+            <div ng-messages="formOwnerInfo.StallName.$error">
+                <div ng-message="required">请输入铺名</div>
+            </div>
+        </md-input-container>
+        <div layout="column" layout-align="center center">
+            <md-button type="submit" class="md-raised md-primary" ng-disabled="!formOwnerInfo.$valid">申请</md-button>
+        </div>
+    </form>
+</md-content>

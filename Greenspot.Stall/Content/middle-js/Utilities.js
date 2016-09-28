@@ -10,13 +10,16 @@
         //items
         self.items = [],
         //has more records
-        self.hasMore = true;
+        self.hasMore = false;
+        //has record
+        self.hasRecord = false;
         //append
         self.append = function (data) {
             if (data && data.length) {
                 self.items = self.items.concat(data);
             }
             self.hasMore = data && data.length == self.pageSize;
+            self.hasRecord = data && data.length;
         }
     }
 

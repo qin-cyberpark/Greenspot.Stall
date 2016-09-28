@@ -30,6 +30,7 @@
         /* load stall products */
         vm.loadStallProducts = function (stallId) {
             commSrv.showLoading();
+
             //load stall products
             $http.get('/api/stall/GetStallProducts/' + stallId).success(function (result) {
                 if (result.Succeeded) {
@@ -43,6 +44,9 @@
                 console.log(error);
             }).finally(function () {
                 commSrv.hideLoading();
+                if (!vm.currentStall) {
+                    vm.currentStall = null;
+                };
             });
         }
 
@@ -59,6 +63,7 @@
         /* load product */
         vm.loadProduct = function (productId) {
             commSrv.showLoading();
+
             //load product
             $http.get('/api/product/' + productId).success(function (result) {
                 if (result.Succeeded) {
@@ -72,6 +77,9 @@
                 console.log(error);
             }).finally(function () {
                 commSrv.hideLoading();
+                if (!vm.currentProduct) {
+                    vm.currentProduct = null;
+                };
             });
         }
 

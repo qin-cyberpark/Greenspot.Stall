@@ -39,36 +39,31 @@ md-divider {
 
 /* global component */
 #main-content {
-    position: fixed;
+    position: absolute;
     width: 100%;
-    max-width: @app-max-width;
-    top: @bottom-toobar-height;
+    top: 0px;
     bottom: 0px;
     overflow-x: hidden;
     overflow-y: auto;
-}
 
-#bottom-step {
-    height: @bottom-toobar-height;
+    &.with-bottom-bar {
+        bottom: @bottom-toolbar-height;
+    }
+
+    &.with-topsearch-bar {
+        top: @top-searchbar-height;
+    }
 }
 
 #bottom-toolbar {
-    position: fixed;
+    position: absolute;
     bottom: 0px;
-    height: @bottom-toobar-height;
+    height: @bottom-toolbar-height;
     width: 100%;
     max-width: @app-max-width;
     color: @color-primary;
     background-color: @color-grey-300;
     font-size: 1.2rem;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-flow: row;
-    flex-flow: row;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
 
     & .selectAll {
         margin: 0px 0px 0px 10px;
@@ -136,20 +131,18 @@ md-divider {
 }
 
 #loading-circle {
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    & > img {
+    &.screen-center {
+        width: 100%;
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        margin: auto;
+        text-align: center;
+
+        & > img {
+            margin-top: 150px;
+        }
     }
 
     &.big {
@@ -185,6 +178,7 @@ md-divider {
 
         & .left {
             flex: 1;
+            -webkit-flex: 1;
             height: 100%;
             text-align: center;
 
@@ -195,6 +189,7 @@ md-divider {
 
         & .right {
             flex: 1;
+            -webkit-flex: 1;
             height: 100%;
             display: -webkit-flex;
             display: flex;

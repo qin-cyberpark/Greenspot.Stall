@@ -34,12 +34,16 @@
             this.hideLoading = function () {
                 $rootScope.loadingCircle = false;
             }
+
+            this.isLoading = function () {
+                return $rootScope.loadingCircle;
+            }
         });
 
     angular.module('greenspotStall')
         .filter("trust", ['$sce', function ($sce) {
-        return function (htmlCode) {
-            return $sce.trustAsHtml(htmlCode);
-        }
-    }]);
+            return function (htmlCode) {
+                return $sce.trustAsHtml(htmlCode);
+            }
+        }]);
 })();

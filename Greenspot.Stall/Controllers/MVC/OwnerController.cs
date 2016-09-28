@@ -53,7 +53,7 @@ namespace Greenspot.Stall.Controllers.MVC
             if (stalls.Count == 0)
             {
                 //have not registered
-                return Redirect("~/owner/register");
+                return View("Apply");
             }
 
             ViewBag.Stalls = stalls;
@@ -62,14 +62,14 @@ namespace Greenspot.Stall.Controllers.MVC
         }
         #region Register
         //Step 1
-        public ActionResult Register()
+        public ActionResult Apply()
         {
             return View();
         }
 
         [Authorize]
         [HttpPost]
-        public ActionResult Register(OwnerRegisterViewModel ownerInfo)
+        public ActionResult Apply(OwnerRegisterViewModel ownerInfo)
         {
             OperationResult<string> result = new OperationResult<string>(true);
             try
@@ -88,12 +88,14 @@ namespace Greenspot.Stall.Controllers.MVC
                     stall.ContactName = ownerInfo.ContactName;
                     stall.Email = ownerInfo.Email;
                     stall.Mobile = ownerInfo.Mobile;
+                    stall.Status = Models.Stall.StallStatus.Applied;
                     stall.Save();
-                    result.Data = StallApplication.GetAuthorisationCodeUri(ownerInfo.VendPrefix, user.Id);
+                    //result.Data = StallApplication.GetAuthorisationCodeUri(ownerInfo.VendPrefix, user.Id);
                 }
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                result.Message = "注册店铺失败";
+                result.Message = "申请店铺失败";
                 result.Exception = ex;
                 result.Succeeded = false;
             }
@@ -108,9 +110,9 @@ namespace Greenspot.Stall.Controllers.MVC
             var prefix = Request["domain_prefix"];
             var userId = Request["state"];
             var accessToken = await StallApplication.GetAccessTokenAsync(prefix, code);
-            if (!string.IsNullOrEmpty(accessToken) && CurrentUser.Id.Equals(userId))
+            if (!string.IsNullOrEmpty(accessToken))
             {
-                return RedirectToAction("Index");
+                return Content(string.Format("Vend {0} binding succeed", prefix));
             }
             else
             {

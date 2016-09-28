@@ -1,23 +1,20 @@
 ﻿<!DOCTYPE html>
-
 <html lang="en" ng-app="greenspotStall" ng-cloak>
 <head>
     <meta charset="utf-8">
-    <meta name="description" content="Stall@Greenspot">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="description" content="外卖 Takeaway Homemade">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <base href="/">
     <title>@Page.Title</title>
-
-    <link rel="shortcut icon" href="~/static/img/favicon.png">
-
+    <link rel="shortcut icon" href="/static/img/favicon.png">
     <!-- 3rd party stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.css">
     <!-- platform stylesheet -->
-
+    <link rel="stylesheet" href="/static/css/stall.min.css">
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
-        <link rel="stylesheet/less" href="~/Content/less/global.less">
-        <link rel="stylesheet/less" href="~/Content/less/home.less">
+        <link rel="stylesheet/less" href="/Content/less/global.less">
+        <link rel="stylesheet/less" href="~/Content/less/customer.less">
     }
     else
     {
@@ -26,24 +23,23 @@
 
 </head>
 <body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init()">
-    <form action="home/search" method="get">
-        <md-toolbar id="main-toolbar" class="md-primary" layout="row" layout-align="none center">
-            <md-input-container md-no-float class="md-block search-text" flex="90">
-                <input type="text" name="keyword" placeholder="搜索" value="@Request["keyword"]">
-            </md-input-container>
-            <md-button type="submit" class="btn-search md-dark" flex="5" aria-label="Search">
-                <md-icon md-svg-icon="search"></md-icon>
-            </md-button>
-            <md-button class="btn-cart" flex="5" aria-label="Cart" ng-click="custCtrl.gotoUrl('/customer/cart')">
-                <span class="cart-amount" ng-if="custCtrl.cart.qty>0">{{custCtrl.cart.qty}}</span>
-                <md-icon md-svg-icon="cart"></md-icon>
-            </md-button>
-        </md-toolbar>
-    </form>
-    <md-content id="main-content">
-        @RenderBody()
-    </md-content>
-
+    @RenderBody()
+    <div id="bottom-step"></div>
+    <!--bottom tool bar-->
+    <div id="bottom-toolbar" layout="row" layout-align="space-between center">
+        <md-button class="btn-cart" aria-label="Cart" ng-click="gotoUrl('/customer/cart')" flex="60">
+            <span class="cart-amount" ng-if="custCtrl.cart.qty>0">{{custCtrl.cart.qty}}</span>
+            <md-icon md-svg-icon="cart"></md-icon>
+            <span class="total-amount">合计: {{custCtrl.cart.totalAmount()|currency:$}}</span>
+        </md-button>
+        <button ng-click="gotoUrl('/customer/cart')" class="btn btn-primary" ng-class="{'invalid':custCtrl.cart.qty<=0}" flex="40"
+                ng-disabled="custCtrl.cart.qty<=0">
+            结账
+        </button>
+    </div>
+    <div id="loading-circle" class="big screen-center" ng-if="loadingCircle">
+        <img src="~/Static/img/loading.gif" />
+    </div>
     <!-- 3rd party libraries -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>

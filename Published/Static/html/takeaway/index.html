@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="greenspotStall" ng-cloak>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="外卖 Takeaway Homemade">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <base href="/">
+    <title>餐厅外卖 | 久等了</title>
+    <link rel="shortcut icon" href="/static/img/favicon.png">
+    <!-- 3rd party stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.css">
+
+    <!-- platform stylesheet -->
+    <link rel="stylesheet" href="/static/css/stall.min.css">
+    <!--
+
+         <link rel="stylesheet/less" href="/Content/less/global.less">
+    <link rel="stylesheet/less" href="/Content/less/home.less">
+    -->
+
+</head>
+<body ng-controller="HomeController as homeCtrl" ng-init="homeCtrl.init('T')">
+    <form id="search-bar" ng-submit="homeCtrl.search(10,10)">
+        <select ng-model="homeCtrl.searchCondition.area" ng-change="homeCtrl.loadRecommendStalls()">
+            <option value="NZ-Auckland" selected>奥克兰</option>
+            <option value="NZ-Auckland-Auckland City">奥克兰City</option>
+            <option value="NZ-Auckland-Central Auckland">奥克兰中区</option>
+            <option value="NZ-Auckland-North Shore">奥克兰北岸</option>
+            <option value="NZ-Auckland-East Auckland">奥克兰东区</option>
+            <option value="NZ-Auckland-West Auckland">奥克兰西区</option>
+            <option value="NZ-Auckland-South Auckland">奥克兰南区</option>
+        </select>
+        <input class="search-text" type="text" placeholder="搜索" ng-model="homeCtrl.searchCondition.keyword">
+        <md-button type="submit" class="btn-search" aria-label="Search">
+            <md-icon md-svg-icon="search"></md-icon>
+        </md-button>
+    </form>
+
+    <!-- recommend stall -->
+    <div ng-if="homeCtrl.searchCondition.isRecommend && !homeCtrl.noRecommend">
+        <div class="section-caption">最新 | 推荐</div>
+        <md-card ng-repeat="stall in homeCtrl.recommendStalls" ng-click="gotoUrl('/stall/' + stall.Id)">
+            <md-card-title>
+                <md-card-title-text layout-align="space-between center">
+                    <span class="md-headline">{{stall.Name}}</span>
+                    <span class="md-subhead" ng-repeat="product in stall.Products">
+                        {{product.Name}}
+                    </span>
+                </md-card-title-text>
+                <md-card-title-media>
+                    <div class="md-media-md card-media">
+                        <img ng-src="/stalls/{{stall.Id}}/avatar.png" />
+                    </div>
+                </md-card-title-media>
+            </md-card-title>
+        </md-card>
+    </div>
+
+    <!-- no recommend stall -->
+    <div id="empty-content" ng-if="homeCtrl.searchCondition.isRecommend && homeCtrl.noRecommend">
+        暂时没有餐厅
+    </div>
+
+    <!-- search -->
+    <md-tabs id="search-result" md-border-bottom md-stretch-tabs="always" ng-if="homeCtrl.matchedStalls || homeCtrl.matchedProducts">
+        <!-- product search result -->
+        <md-tab label="菜品" ng-if="homeCtrl.matchedProducts.items">
+            <div class="ProductList">
+                <div class="item" ng-repeat="product in homeCtrl.matchedProducts.items track by product.Id">
+                    <div class="left">
+                        <img ng-src="{{product.Image}}" ng-click="gotoUrl('/product/' + product.Id)" />
+                    </div>
+                    <div class="right">
+                        <div class="product-name" ng-click="gotoUrl('/product/' + product.Id)">{{product.Name}}</div>
+                        <div class="stall-name">{{product.StallName}}</div>
+                        <div class="price-quantity">
+                            <span>{{product.Price|currency:$}}</span>
+                            <select ng-model="product.Quantity">
+                                <option ng-repeat="n in product.QuantityOptions track by $index" value="{{$index+1}}">
+                                    ×{{$index+1}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="operation">
+                            <button ng-click="homeCtrl.cart.add({stallId:product.StallId, stallName:product.StallName,
+                                                id:product.Id, name:product.Name,price:product.Price, variant:''}, product.Quantity)">
+                                加入购物车
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="load-more-bar">
+                <button ng-click="homeCtrl.loadMoreProduct()" ng-if="homeCtrl.matchedProducts.hasMore">显示更多菜品</button>
+                <span ng-if="homeCtrl.matchedProducts.hasMore">没有更多相关菜品了</span>
+            </div>
+            <div class="section-caption" ng-if="homeCtrl.noMatchedProducts">
+                没有找到相关菜品，换个关键字试试？
+            </div>
+        </md-tab>
+        <!-- product stall result -->
+        <md-tab label="餐厅" ng-if="homeCtrl.matchedStalls.items">
+            <md-list flex ng-if="homeCtrl.matchedStalls.items.length">
+                <md-list-item class="md-2-line" ng-repeat="stall in homeCtrl.matchedStalls.items track by stall.Id" ng-click="gotoUrl('/stall/' + stall.Id)">
+                    <img ng-src="/stalls/{{stall.Id}}/avatar.png" class="md-avatar" alt="{{stall.Name}}" />
+                    <div class="md-list-item-text">
+                        <h3>{{stall.Name}}</h3>
+                    </div>
+                </md-list-item>
+            </md-list>
+            <div class="load-more-bar">
+                <button ng-click="homeCtrl.loadMoreStall()" ng-if="homeCtrl.matchedStalls.hasMore">显示更多餐厅</button>
+                <span ng-if="!homeCtrl.matchedStalls.hasMore">没有更多相关餐厅了</span>
+            </div>
+            <div class="section-caption" ng-if="homeCtrl.noMatchedStalls">
+                没有找到相关餐厅，换个关键字试试？
+            </div>
+        </md-tab>
+    </md-tabs>
+
+    <!--bottom tool bar-->
+    <div id="bottom-toolbar" layout="row" layout-align="space-between center">
+        <md-button class="btn-cart" aria-label="Cart" ng-click="gotoUrl('/customer/cart')" flex="60">
+            <span class="cart-amount" ng-if="homeCtrl.cart.qty>0">{{homeCtrl.cart.qty}}</span>
+            <md-icon md-svg-icon="cart"></md-icon>
+            <span class="total-amount">合计: {{homeCtrl.cart.totalAmount()|currency:$}}</span>
+        </md-button>
+        <button ng-click="gotoUrl('/customer/cart')" class="btn btn-primary" ng-class="{'invalid':homeCtrl.cart.qty<=0}" flex="40"
+                ng-disabled="homeCtrl.cart.qty<=0">
+            结账
+        </button>
+    </div>
+    <div id="loading-circle" class="big screen-center" ng-if="loadingCircle">
+        <img src="/Static/img/loading.gif" />
+    </div>
+
+    <!-- 3rd party libraries -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-aria.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-messages.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.2/js.cookie.min.js"></script>
+
+    <!-- owner scripts -->
+    <!--
+        <script type="text/javascript" src="/static/lib/less/dist/less.min.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/app.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/cart.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/order.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/Utilities.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/controller/home.controller.js"></script>
+    -->
+    <script type="text/javascript" src="/Static/js/stall.min.js"></script>
+</body>
+</html>

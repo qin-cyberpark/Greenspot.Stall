@@ -1,93 +1,43 @@
 ﻿/* global */
 @import "_variables.less";
 
+/* global elements*/
 html, body {
     margin: 0px auto;
-    max-width: @app-max-width;
     padding: 0px;
     height: 100%;
+    max-width: @app-max-width;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    font-family: Helvetica,Arial,'Microsoft YaHei';
+    font-size: 13px;
+    -webkit-font-smoothing: antialiased;
 }
 
 
-& input, select {
+& input {
     border: none;
-    border-bottom: 1px solid @color-grey-500;
+    border-bottom: 1px solid @color-grey-300;
     background-color: @color-grey-100;
 }
 
-#main-toolbar {
-    position: fixed;
-    height: @top-toolbar-height;
-    min-height: @top-toolbar-height;
-    max-width: @app-max-width;
-    top: 0px;
-
-    & md-button {
-        height: 32px;
-    }
-
-    & md-icon {
-        width: 24px;
-        height: 24px;
-    }
-
-    & .btn-back {
-        margin: 0px;
-        padding: 0px;
-        width: 40px;
-        min-width: 40px;
-    }
-
-    & .search-text {
-        height: @top-toolbar-height;
-
-        & input[type="text"] {
-            color: white;
-            font-size: 14px;
-            font-weight: normal;
-            height: 28px;
-        }
-    }
-
-    & .text-caption {
-        text-align: center;
-    }
-
-    & .btn-search {
-        margin: 0px;
-        padding: 0px;
-        width: 20px;
-        min-width: 20px;
-    }
-
-    & .btn-cart {
-        margin: 0px;
-        padding: 0px;
-        width: 40px;
-        min-width: 40px;
-
-        & .cart-amount {
-            position: absolute;
-            padding: 0px;
-            margin: 0px;
-            left: 20px;
-            top: 3px;
-            width: 18px;
-            height: 18px;
-            color: black;
-            background-color: @color-accent;
-            border-radius: 10px 10px;
-            line-height: 20px;
-            font-size: 11px;
-        }
-    }
+& select {
+    border: none;
+    border-radius: 0px;
+    border-bottom: 1px solid @color-grey-300;
+    background-color: transparent;
 }
 
+
+md-divider {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+/* global component */
 #main-content {
     position: fixed;
     width: 100%;
@@ -98,20 +48,19 @@ html, body {
     overflow-y: auto;
 }
 
-#bottom-toolbar-step {
+#bottom-step {
     height: @bottom-toobar-height;
 }
 
 #bottom-toolbar {
     position: fixed;
-    left: 0px;
-    right: 0px;
     bottom: 0px;
     height: @bottom-toobar-height;
+    width: 100%;
+    max-width: @app-max-width;
     color: @color-primary;
     background-color: @color-grey-300;
-    //background-color:rebeccapurple;
-    font-size: 16px;
+    font-size: 1.2rem;
 
     & .selectAll {
         margin: 0px 0px 0px 10px;
@@ -149,7 +98,7 @@ html, body {
     }
 
     & .btn {
-        margin:0px;
+        margin: 0px;
         border: 0px;
         height: 100%;
         color: white;
@@ -178,13 +127,7 @@ html, body {
     }
 }
 
-md-divider {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-
-.loading-circle {
+#loading-circle {
     width: 100%;
     position: absolute;
     top: 0;
@@ -193,12 +136,7 @@ md-divider {
     bottom: 0;
 
     & > img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        margin: auto;
+        margin: 150px auto;
     }
 
     &.big {
@@ -208,16 +146,33 @@ md-divider {
     }
 }
 
+#empty-content {
+    padding-top: 50px;
+    text-align: center;
+    font-size: 2rem;
+    color: @color-grey-500;
+
+    &:after {
+        content: url('/Static/img/logo_darkgrey_96.png');
+        margin: 10px;
+        display: block;
+    }
+}
+
 .ProductList {
     height: 100%;
 
     & .item {
         height: 100px;
         padding: 5px;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row;
+        flex-flow: row;
 
         & .left {
-            display: inline-block;
-            width: 50%;
+            flex: 1;
+            -webkit-flex: 1;
             height: 100%;
             text-align: center;
 
@@ -227,42 +182,48 @@ md-divider {
         }
 
         & .right {
-            float: right;
-            width: 50%;
+            flex: 1;
+            -webkit-flex: 1;
             height: 100%;
-            text-align: center;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-flow: column;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
 
             & .product-name {
                 color: black;
                 font-weight: bold;
-                font-size: 16px;
+                font-size: 1.25rem;
             }
 
             & .stall-name {
                 color: @color-grey-500;
-                font-size: 12px;
             }
 
-            & .price {
-                color: @color-primary;
-                font-size: 14px;
-                margin-top: 5px;
-            }
+            & .price-quantity {
+                font-size: 1.25rem;
+                margin-top: 2px;
 
-            & .operation {
+                & > span {
+                    color: @color-primary;
+                }
+
                 & > input {
                     padding: 0px;
                     margin: 0px;
-                    font-size: 12px;
                 }
+            }
+
+            & .operation {
+                margin-top: 3px;
 
                 & > button {
                     padding: 0px;
-                    margin-top: 5px;
                     border: none;
                     color: @color-accent;
-                    background-color: @color-grey-100;
-                    font-size: 12px;
+                    background-color: transparent;
                 }
             }
         }

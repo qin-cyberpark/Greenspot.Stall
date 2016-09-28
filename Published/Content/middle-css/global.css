@@ -1,101 +1,57 @@
 /* global */
+/* global elements*/
 html,
 body {
   margin: 0px auto;
-  max-width: 900px;
   padding: 0px;
   height: 100%;
+  max-width: 720px;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  font-family: Helvetica, Arial, 'Microsoft YaHei';
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
 }
-input,
-select {
+input {
   border: none;
-  border-bottom: 1px solid #9E9E9E;
+  border-bottom: 1px solid #E0E0E0;
   background-color: #F5F5F5;
 }
-#main-toolbar {
-  position: fixed;
-  height: 35px;
-  min-height: 35px;
-  max-width: 900px;
-  top: 0px;
+select {
+  border: none;
+  border-radius: 0px;
+  border-bottom: 1px solid #E0E0E0;
+  background-color: transparent;
 }
-#main-toolbar md-button {
-  height: 32px;
+md-divider {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
-#main-toolbar md-icon {
-  width: 24px;
-  height: 24px;
-}
-#main-toolbar .btn-back {
-  margin: 0px;
-  padding: 0px;
-  width: 40px;
-  min-width: 40px;
-}
-#main-toolbar .search-text {
-  height: 35px;
-}
-#main-toolbar .search-text input[type="text"] {
-  color: white;
-  font-size: 14px;
-  font-weight: normal;
-  height: 28px;
-}
-#main-toolbar .text-caption {
-  text-align: center;
-}
-#main-toolbar .btn-search {
-  margin: 0px;
-  padding: 0px;
-  width: 20px;
-  min-width: 20px;
-}
-#main-toolbar .btn-cart {
-  margin: 0px;
-  padding: 0px;
-  width: 40px;
-  min-width: 40px;
-}
-#main-toolbar .btn-cart .cart-amount {
-  position: absolute;
-  padding: 0px;
-  margin: 0px;
-  left: 20px;
-  top: 3px;
-  width: 18px;
-  height: 18px;
-  color: black;
-  background-color: #EF6C00;
-  border-radius: 10px 10px;
-  line-height: 20px;
-  font-size: 11px;
-}
+/* global component */
 #main-content {
   position: fixed;
   width: 100%;
-  max-width: 900px;
+  max-width: 720px;
   top: 40px;
   bottom: 0px;
   overflow-x: hidden;
   overflow-y: auto;
 }
-#bottom-toolbar-step {
+#bottom-step {
   height: 40px;
 }
 #bottom-toolbar {
   position: fixed;
-  left: 0px;
-  right: 0px;
   bottom: 0px;
   height: 40px;
+  width: 100%;
+  max-width: 720px;
   color: #0097A7;
   background-color: #E0E0E0;
-  font-size: 16px;
+  font-size: 1.2rem;
 }
 #bottom-toolbar .selectAll {
   margin: 0px 0px 0px 10px;
@@ -151,11 +107,7 @@ select {
   margin-left: 0px;
   margin-right: 10px;
 }
-md-divider {
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-.loading-circle {
+#loading-circle {
   width: 100%;
   position: absolute;
   top: 0;
@@ -163,16 +115,22 @@ md-divider {
   right: 0;
   bottom: 0;
 }
-.loading-circle > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
+#loading-circle > img {
+  margin: 150px auto;
 }
-.loading-circle.big > img {
+#loading-circle.big > img {
   width: 100px;
+}
+#empty-content {
+  padding-top: 50px;
+  text-align: center;
+  font-size: 2rem;
+  color: #9E9E9E;
+}
+#empty-content:after {
+  content: url('/Static/img/logo_darkgrey_96.png');
+  margin: 10px;
+  display: block;
 }
 .ProductList {
   height: 100%;
@@ -180,10 +138,14 @@ md-divider {
 .ProductList .item {
   height: 100px;
   padding: 5px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row;
+  flex-flow: row;
 }
 .ProductList .item .left {
-  display: inline-block;
-  width: 50%;
+  flex: 1;
+  -webkit-flex: 1;
   height: 100%;
   text-align: center;
 }
@@ -191,35 +153,41 @@ md-divider {
   height: 100%;
 }
 .ProductList .item .right {
-  float: right;
-  width: 50%;
+  flex: 1;
+  -webkit-flex: 1;
   height: 100%;
-  text-align: center;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: column;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
 }
 .ProductList .item .right .product-name {
   color: black;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 1.25rem;
 }
 .ProductList .item .right .stall-name {
   color: #9E9E9E;
-  font-size: 12px;
 }
-.ProductList .item .right .price {
+.ProductList .item .right .price-quantity {
+  font-size: 1.25rem;
+  margin-top: 2px;
+}
+.ProductList .item .right .price-quantity > span {
   color: #0097A7;
-  font-size: 14px;
-  margin-top: 5px;
 }
-.ProductList .item .right .operation > input {
+.ProductList .item .right .price-quantity > input {
   padding: 0px;
   margin: 0px;
-  font-size: 12px;
+}
+.ProductList .item .right .operation {
+  margin-top: 3px;
 }
 .ProductList .item .right .operation > button {
   padding: 0px;
-  margin-top: 5px;
   border: none;
   color: #EF6C00;
-  background-color: #F5F5F5;
-  font-size: 12px;
+  background-color: transparent;
 }

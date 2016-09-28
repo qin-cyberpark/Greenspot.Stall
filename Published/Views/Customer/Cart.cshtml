@@ -29,8 +29,8 @@
 </head>
 <body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init()">
     <md-content id="cart-content">
-        <div ng-if="custCtrl.cart.qty<=0">
-            <h3>空的购物车</h3>
+        <div id="empty-content" ng-if="custCtrl.cart.qty<=0">
+            空的购物车
         </div>
         @if (_stockMsgs != null && _stockMsgs.Count > 0)
         {
@@ -66,6 +66,7 @@
             </div>
         </div>
     </md-content>
+
     <div id="bottom-toolbar" ng-if="custCtrl.cart.qty>0" layout="row" layout-align="space-between center">
         <md-checkbox class="selectAll md-primary" flex="30" ng-click="custCtrl.cart.toggleAll()" ng-checked="custCtrl.cart.isChecked()">
             全选

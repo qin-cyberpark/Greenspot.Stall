@@ -16,6 +16,14 @@
 #bottom-toolbar.slogan {
   color: #F5F5F5;
   background-color: #0097A7;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: column;
+  flex-flow: column;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
 }
 #category-list {
   position: absolute;
@@ -33,6 +41,7 @@
   display: flex;
   text-decoration: none;
   align-items: center;
+  -webkit-align-items: center;
   padding: 2%;
 }
 #category-list .category .category-image {
@@ -65,6 +74,7 @@
 #search-bar .search-text {
   margin-left: 3px;
   flex: auto;
+  -webkit-flex: auto;
 }
 #search-bar .btn-search {
   margin: 0px;
@@ -72,14 +82,14 @@
   width: 40px;
   min-width: 40px;
 }
+#search-result {
+  height: 100%;
+}
 .section-caption {
   color: #0097A7;
   font-size: 1.25rem;
   text-align: center;
   margin-top: 10px;
-}
-#search-result {
-  height: 100%;
 }
 .load-more-bar {
   padding: 20px;

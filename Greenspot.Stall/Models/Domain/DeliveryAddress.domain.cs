@@ -16,9 +16,9 @@ namespace Greenspot.Stall.Models
             return db.DeliveryAddresses.Where(x => x.UserId.Equals(id)).ToList();
         }
 
-        public static DeliveryAddress FindById(int id, StallEntities db)
+        public static DeliveryAddress FindByCode(string userId, string code, StallEntities db)
         {
-            return db.DeliveryAddresses.FirstOrDefault(x => x.Id == id);
+            return db.DeliveryAddresses.FirstOrDefault(x => x.User.Equals(userId) && x.Code.Equals(code));
         }
 
         public bool Save(StallEntities db)
@@ -29,7 +29,16 @@ namespace Greenspot.Stall.Models
 
         public override string ToString()
         {
-            return string.Format("{0} {1}\n{2}", Name, Mobile, FullAddress);
+            return string.Format("{0}, {1}, {2}", Name, Mobile, FullAddress);
+        }
+
+        public string FullAddress
+        {
+            get
+            {
+                return (string.IsNullOrEmpty(Address2) ? "" : Address2 + ", ") +
+                    string.Format("{0}, {1}, {2} {3}", Address1, Suburb, City, Postcode);
+            }
         }
     }
 }

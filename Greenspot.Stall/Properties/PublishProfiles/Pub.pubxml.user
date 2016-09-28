@@ -14,10 +14,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2016 13:58:10</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>09/22/2016 16:33:39</publishTime>
+      <publishTime>09/27/2016 18:00:44</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>09/22/2016 16:33:39</publishTime>
+      <publishTime>09/27/2016 18:00:44</publishTime>
     </File>
     <File Include="bin/Common.Logging.Core.dll">
       <publishTime>11/14/2015 13:35:30</publishTime>
@@ -32,10 +32,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/14/2015 13:35:30</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
-      <publishTime>03/02/2015 09:32:26</publishTime>
+      <publishTime>02/03/2015 09:32:26</publishTime>
     </File>
     <File Include="bin/EntityFramework.SqlServer.dll">
-      <publishTime>03/02/2015 09:32:26</publishTime>
+      <publishTime>02/03/2015 09:32:26</publishTime>
     </File>
     <File Include="bin/Greenspot.Common.dll">
       <publishTime>09/16/2016 16:35:01</publishTime>
@@ -56,34 +56,34 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/18/2016 09:22:05</publishTime>
     </File>
     <File Include="bin/Greenspot.SDK.MemoBird.dll">
-      <publishTime>09/22/2016 11:57:52</publishTime>
+      <publishTime>09/26/2016 11:27:57</publishTime>
     </File>
     <File Include="bin/Greenspot.SDK.MemoBird.pdb">
-      <publishTime>09/22/2016 11:57:52</publishTime>
+      <publishTime>09/26/2016 11:27:57</publishTime>
     </File>
     <File Include="bin/Greenspot.SDK.Vend.dll">
-      <publishTime>09/16/2016 16:35:01</publishTime>
+      <publishTime>09/25/2016 18:15:03</publishTime>
     </File>
     <File Include="bin/Greenspot.SDK.Vend.pdb">
-      <publishTime>09/16/2016 16:35:01</publishTime>
+      <publishTime>09/25/2016 18:15:03</publishTime>
     </File>
     <File Include="bin/Greenspot.Stall.dll">
-      <publishTime>09/22/2016 13:56:55</publishTime>
+      <publishTime>09/27/2016 17:59:27</publishTime>
     </File>
     <File Include="bin/Greenspot.Stall.pdb">
-      <publishTime>09/22/2016 13:56:55</publishTime>
+      <publishTime>09/27/2016 17:59:27</publishTime>
     </File>
     <File Include="bin/log4net.dll">
-      <publishTime>12/10/2015 16:55:06</publishTime>
+      <publishTime>10/12/2015 16:55:06</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
-      <publishTime>04/03/2015 17:07:22</publishTime>
+      <publishTime>03/04/2015 17:07:22</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.EntityFramework.dll">
-      <publishTime>04/03/2015 17:07:22</publishTime>
+      <publishTime>03/04/2015 17:07:22</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Owin.dll">
-      <publishTime>04/03/2015 17:07:22</publishTime>
+      <publishTime>03/04/2015 17:07:22</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>08/20/2015 08:08:40</publishTime>
@@ -107,10 +107,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/25/2012 11:48:56</publishTime>
     </File>
     <File Include="bin/MySql.Data.dll">
-      <publishTime>10/02/2015 17:38:40</publishTime>
+      <publishTime>02/10/2015 17:38:40</publishTime>
     </File>
     <File Include="bin/MySql.Data.Entity.EF6.dll">
-      <publishTime>10/02/2015 17:38:42</publishTime>
+      <publishTime>02/10/2015 17:38:42</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>06/13/2016 23:06:14</publishTime>
@@ -212,7 +212,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/16/2016 19:20:07</publishTime>
     </File>
     <File Include="bin/Static/js/stall.min.js">
-      <publishTime>09/22/2016 16:33:19</publishTime>
+      <publishTime>09/27/2016 18:00:30</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>01/28/2015 04:02:42</publishTime>
@@ -230,7 +230,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/28/2015 04:02:18</publishTime>
     </File>
     <File Include="bin/System.Web.Optimization.dll">
-      <publishTime>02/11/2014 15:26:04</publishTime>
+      <publishTime>11/02/2014 15:26:04</publishTime>
     </File>
     <File Include="bin/System.Web.Razor.dll">
       <publishTime>01/28/2015 04:02:32</publishTime>
@@ -275,10 +275,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/18/2016 08:53:51</publishTime>
     </File>
     <File Include="Content/less/customer.less">
-      <publishTime>09/20/2016 12:41:54</publishTime>
+      <publishTime>09/26/2016 09:38:05</publishTime>
     </File>
     <File Include="Content/less/global.less">
-      <publishTime>09/20/2016 21:40:28</publishTime>
+      <publishTime>09/26/2016 17:56:37</publishTime>
     </File>
     <File Include="Content/less/owner.less">
       <publishTime>09/13/2016 13:58:10</publishTime>
@@ -287,7 +287,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2016 13:58:10</publishTime>
     </File>
     <File Include="Content/less/_variables.less">
-      <publishTime>09/14/2016 11:11:43</publishTime>
+      <publishTime>09/23/2016 13:22:58</publishTime>
     </File>
     <File Include="Content/lib/angular/.bower.json">
       <publishTime>05/17/2016 20:02:02</publishTime>
@@ -1100,22 +1100,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/17/2016 20:02:02</publishTime>
     </File>
     <File Include="Content/middle-css/customer.css">
-      <publishTime>09/22/2016 16:33:14</publishTime>
+      <publishTime>09/27/2016 18:00:28</publishTime>
     </File>
     <File Include="Content/middle-css/global.css">
-      <publishTime>09/22/2016 16:33:14</publishTime>
+      <publishTime>09/27/2016 18:00:28</publishTime>
     </File>
     <File Include="Content/middle-css/home.css">
-      <publishTime>09/22/2016 16:33:14</publishTime>
+      <publishTime>09/27/2016 18:00:28</publishTime>
     </File>
     <File Include="Content/middle-css/owner.css">
-      <publishTime>09/22/2016 16:33:14</publishTime>
+      <publishTime>09/27/2016 18:00:28</publishTime>
     </File>
     <File Include="Content/middle-css/product.css">
-      <publishTime>09/22/2016 16:33:14</publishTime>
+      <publishTime>09/27/2016 18:00:28</publishTime>
     </File>
     <File Include="Content/middle-css/_variables.css">
-      <publishTime>09/22/2016 16:33:14</publishTime>
+      <publishTime>09/27/2016 18:00:28</publishTime>
     </File>
     <File Include="Content/middle-js/addressAutoComplete.google.js">
       <publishTime>07/26/2016 13:42:04</publishTime>
@@ -1124,7 +1124,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/05/2016 07:04:40</publishTime>
     </File>
     <File Include="Content/middle-js/app.js">
-      <publishTime>09/16/2016 11:57:32</publishTime>
+      <publishTime>09/26/2016 16:22:20</publishTime>
     </File>
     <File Include="Content/middle-js/autoCompleteAddress.js">
       <publishTime>07/26/2016 13:42:04</publishTime>
@@ -1136,13 +1136,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2016 13:58:10</publishTime>
     </File>
     <File Include="Content/middle-js/controller/customer.controller.js">
-      <publishTime>09/20/2016 12:58:19</publishTime>
+      <publishTime>09/26/2016 17:45:11</publishTime>
     </File>
     <File Include="Content/middle-js/controller/dialog.controller.js">
       <publishTime>09/16/2016 17:59:59</publishTime>
     </File>
     <File Include="Content/middle-js/controller/home.controller.js">
-      <publishTime>09/22/2016 14:19:14</publishTime>
+      <publishTime>09/26/2016 17:31:34</publishTime>
     </File>
     <File Include="Content/middle-js/controller/main.controller.js">
       <publishTime>06/17/2016 04:01:50</publishTime>
@@ -1151,7 +1151,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/23/2016 02:03:14</publishTime>
     </File>
     <File Include="Content/middle-js/controller/owner.controller.js">
-      <publishTime>09/16/2016 10:01:33</publishTime>
+      <publishTime>09/26/2016 14:01:46</publishTime>
     </File>
     <File Include="Content/middle-js/order.js">
       <publishTime>09/16/2016 18:25:51</publishTime>
@@ -1162,11 +1162,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/middle-js/Plugin/addressAutoComplete.nzpost.js">
       <publishTime>09/13/2016 13:58:10</publishTime>
     </File>
+    <File Include="Content/middle-js/Utilities.js">
+      <publishTime>09/26/2016 17:01:39</publishTime>
+    </File>
     <File Include="Global.asax">
       <publishTime>05/17/2016 23:40:17</publishTime>
     </File>
     <File Include="gulpfile.js">
-      <publishTime>09/16/2016 16:58:09</publishTime>
+      <publishTime>09/27/2016 18:00:17</publishTime>
     </File>
     <File Include="package.json">
       <publishTime>09/13/2016 13:58:10</publishTime>
@@ -1175,7 +1178,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/22/2016 10:11:31</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>09/22/2016 16:33:33</publishTime>
+      <publishTime>09/27/2016 18:00:36</publishTime>
     </File>
     <File Include="shop/Index.html">
       <publishTime>05/18/2016 10:07:35</publishTime>
@@ -1184,10 +1187,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/18/2016 17:49:43</publishTime>
     </File>
     <File Include="Static/css/stall.min.css">
-      <publishTime>09/22/2016 16:33:19</publishTime>
+      <publishTime>09/27/2016 18:00:30</publishTime>
+    </File>
+    <File Include="Static/html/homemade/index.html">
+      <publishTime>09/26/2016 17:59:14</publishTime>
+    </File>
+    <File Include="Static/html/Index.html">
+      <publishTime>09/26/2016 01:49:33</publishTime>
     </File>
     <File Include="Static/html/SelectArea.tmpl.html">
       <publishTime>09/13/2016 13:58:11</publishTime>
+    </File>
+    <File Include="Static/html/takeaway/index.html">
+      <publishTime>09/26/2016 18:05:02</publishTime>
     </File>
     <File Include="Static/img/background.jpg">
       <publishTime>09/13/2016 13:58:11</publishTime>
@@ -1196,13 +1208,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2016 13:58:11</publishTime>
     </File>
     <File Include="Static/img/favicon.png">
-      <publishTime>09/13/2016 13:58:11</publishTime>
+      <publishTime>09/23/2016 12:43:29</publishTime>
     </File>
     <File Include="Static/img/homemade.jpg">
       <publishTime>09/14/2016 09:51:40</publishTime>
     </File>
     <File Include="Static/img/icon/core-icons.svg">
-      <publishTime>09/13/2016 13:58:11</publishTime>
+      <publishTime>09/25/2016 15:46:28</publishTime>
     </File>
     <File Include="Static/img/loading.gif">
       <publishTime>09/15/2016 15:16:48</publishTime>
@@ -1210,11 +1222,17 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Static/img/logo.png">
       <publishTime>09/13/2016 13:58:11</publishTime>
     </File>
+    <File Include="Static/img/logo_darkgrey_96.png">
+      <publishTime>09/25/2016 17:47:31</publishTime>
+    </File>
     <File Include="Static/img/logo_grey.png">
       <publishTime>09/13/2016 13:58:11</publishTime>
     </File>
     <File Include="Static/img/logo_grey_96.png">
       <publishTime>01/01/0001 00:00:00</publishTime>
+    </File>
+    <File Include="Static/img/logo_receipt.png">
+      <publishTime>09/21/2016 00:51:21</publishTime>
     </File>
     <File Include="Static/img/logo_white.png">
       <publishTime>09/13/2016 13:58:11</publishTime>
@@ -1226,7 +1244,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/14/2016 09:51:40</publishTime>
     </File>
     <File Include="Static/js/stall.min.js">
-      <publishTime>09/22/2016 16:33:19</publishTime>
+      <publishTime>09/27/2016 18:00:30</publishTime>
     </File>
     <File Include="Static/lib/angular-animate/.bower.json">
       <publishTime>09/13/2016 13:58:11</publishTime>
@@ -3830,7 +3848,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2016 13:58:15</publishTime>
     </File>
     <File Include="Views/Customer/Cart.cshtml">
-      <publishTime>09/16/2016 19:25:06</publishTime>
+      <publishTime>09/25/2016 18:06:20</publishTime>
     </File>
     <File Include="Views/Customer/Checkout.cshtml">
       <publishTime>09/16/2016 19:14:23</publishTime>
@@ -3856,8 +3874,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Manage/Stall.cshtml">
       <publishTime>09/13/2016 13:58:15</publishTime>
     </File>
+    <File Include="Views/Owner/Apply.cshtml">
+      <publishTime>09/26/2016 13:57:30</publishTime>
+    </File>
     <File Include="Views/Owner/Index.cshtml">
-      <publishTime>09/13/2016 13:58:15</publishTime>
+      <publishTime>09/26/2016 14:09:53</publishTime>
     </File>
     <File Include="Views/Owner/InitStall.cshtml">
       <publishTime>09/13/2016 13:58:15</publishTime>
@@ -3871,11 +3892,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Product/detail.cshtml">
       <publishTime>09/22/2016 16:06:26</publishTime>
     </File>
+    <File Include="Views/Product/Index.cshtml">
+      <publishTime>09/26/2016 17:47:26</publishTime>
+    </File>
     <File Include="Views/Shared/error.cshtml">
       <publishTime>09/13/2016 13:58:15</publishTime>
     </File>
     <File Include="Views/Shared/_CustomerLayout.cshtml">
-      <publishTime>09/13/2016 13:58:15</publishTime>
+      <publishTime>09/26/2016 01:15:46</publishTime>
     </File>
     <File Include="Views/Shared/_HomeLayout.cshtml">
       <publishTime>06/22/2016 22:11:24</publishTime>
@@ -3884,13 +3908,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/18/2016 17:35:42</publishTime>
     </File>
     <File Include="Views/Shared/_OwnerLayout.cshtml">
-      <publishTime>09/13/2016 13:58:15</publishTime>
+      <publishTime>09/26/2016 13:55:27</publishTime>
     </File>
     <File Include="Views/Stall/Detail.cshtml">
       <publishTime>06/17/2016 04:47:10</publishTime>
     </File>
     <File Include="Views/Stall/Index.cshtml">
-      <publishTime>09/22/2016 11:07:37</publishTime>
+      <publishTime>09/26/2016 17:45:24</publishTime>
     </File>
     <File Include="Views/Test/Distance.cshtml">
       <publishTime>06/22/2016 19:54:04</publishTime>
@@ -3905,7 +3929,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/17/2016 18:36:43</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/22/2016 11:57:58</publishTime>
+      <publishTime>09/27/2016 18:00:35</publishTime>
     </File>
   </ItemGroup>
 </Project>

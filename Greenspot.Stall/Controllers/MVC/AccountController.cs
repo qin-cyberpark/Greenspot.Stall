@@ -55,12 +55,12 @@ namespace Greenspot.Stall.Controllers.MVC
         }
 
         // GET: Auth
-        public ActionResult Index()
-        {
-            Session["code"] = Request["code"];
-            Session["state"] = Request["state"];
-            return RedirectToAction("Orders", "Customer");
-        }
+        //public ActionResult Index()
+        //{
+        //    Session["code"] = Request["code"];
+        //    Session["state"] = Request["state"];
+        //    return RedirectToAction("Orders", "Customer");
+        //}
 
         //[AllowAnonymous]
         //public ActionResult Login(string returnUrl)

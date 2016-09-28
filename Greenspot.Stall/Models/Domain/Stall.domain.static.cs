@@ -102,18 +102,18 @@ namespace Greenspot.Stall.Models
             {
                 result.Message = string.Format("铺名不能为空", prefix);
             }
-            else if (string.IsNullOrEmpty(prefix))
-            {
-                result.Message = "Vend前缀不能为空";
-            }
+            //else if (string.IsNullOrEmpty(prefix))
+            //{
+            //    result.Message = "Vend前缀不能为空";
+            //}
             else if (Stall.FindByName(name, db) != null)
             {
                 result.Message = string.Format("铺名 {0} 已占用", name);
             }
-            else if (Stall.FindByVendPrefix(prefix, db) != null)
-            {
-                result.Message = string.Format("{0}.vendhq.com 已注册", prefix);
-            }
+            //else if (Stall.FindByVendPrefix(prefix, db) != null)
+            //{
+            //    result.Message = string.Format("{0}.vendhq.com 已注册", prefix);
+            //}
             else
             {
                 var stall = new Stall() { UserId = userId, StallName = name, Prefix = prefix };

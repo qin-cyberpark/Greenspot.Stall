@@ -32,19 +32,21 @@ md-divider {
 }
 /* global component */
 #main-content {
-  position: fixed;
+  position: absolute;
   width: 100%;
-  max-width: 720px;
-  top: 40px;
+  top: 0px;
   bottom: 0px;
   overflow-x: hidden;
   overflow-y: auto;
 }
-#bottom-step {
-  height: 40px;
+#main-content.with-bottom-bar {
+  bottom: 40px;
+}
+#main-content.with-topsearch-bar {
+  top: 35px;
 }
 #bottom-toolbar {
-  position: fixed;
+  position: absolute;
   bottom: 0px;
   height: 40px;
   width: 100%;
@@ -52,12 +54,6 @@ md-divider {
   color: #0097A7;
   background-color: #E0E0E0;
   font-size: 1.2rem;
-  display: -webkit-flex;
-  -webkit-flex-flow: row;
-  flex-flow: row;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 #bottom-toolbar .selectAll {
   margin: 0px 0px 0px 10px;
@@ -113,24 +109,31 @@ md-divider {
   margin-left: 0px;
   margin-right: 10px;
 }
-#loading-circle {
+#loading-circle.screen-center {
   width: 100%;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  text-align: center;
 }
-#loading-circle > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
+#loading-circle.screen-center > img {
+  margin-top: 150px;
 }
 #loading-circle.big > img {
   width: 100px;
+}
+#empty-content {
+  padding-top: 50px;
+  text-align: center;
+  font-size: 2rem;
+  color: #9E9E9E;
+}
+#empty-content:after {
+  content: url('/Static/img/logo_darkgrey_96.png');
+  margin: 10px;
+  display: block;
 }
 .ProductList {
   height: 100%;
@@ -145,6 +148,7 @@ md-divider {
 }
 .ProductList .item .left {
   flex: 1;
+  -webkit-flex: 1;
   height: 100%;
   text-align: center;
 }
@@ -153,6 +157,7 @@ md-divider {
 }
 .ProductList .item .right {
   flex: 1;
+  -webkit-flex: 1;
   height: 100%;
   display: -webkit-flex;
   display: flex;

@@ -12,5 +12,10 @@ namespace Greenspot.Stall.Console
         {
             //Greenspot.Stall.Utilities.DistanceMatrix.InitDB();
         }
+
+        public void PullWechatUserInfo()
+        {
+            
+        }
     }
 }

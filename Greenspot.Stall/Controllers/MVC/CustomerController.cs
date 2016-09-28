@@ -127,7 +127,6 @@ namespace Greenspot.Stall.Controllers.MVC
                 addr.State = "";
                 addr.CountryId = "NZ";
                 addr.Postcode = clntObj.AddressObject.Postcode;
-                addr.FullAddress = (string.IsNullOrEmpty(addr.Address2) ? "" : addr.Address2 + ", ") + clntObj.AddressObject.FullAddress;
                 addr.Area = clntObj.Area;
 
                 addr.Save(_db);
@@ -233,7 +232,7 @@ namespace Greenspot.Stall.Controllers.MVC
                 //delivery
                 if (!orderVM.DeliveryOption.IsPickUp)
                 {
-                    var devAddr = DeliveryAddress.FindById(int.Parse(orderVM.DeliveryAddress.Id), _db);
+                    var devAddr = DeliveryAddress.FindByCode(CurrentUser.Id, orderVM.DeliveryAddress.Code, _db);
                     order.Receiver = string.Format("{0} {1}", devAddr.Name, devAddr.Mobile);
                     order.DeliveryAddress = devAddr.FullAddress;
                 }

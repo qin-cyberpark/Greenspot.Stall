@@ -16,6 +16,7 @@ namespace Greenspot.Stall.Models
     {
         public class StallStatus
         {
+            public const string Applied = "APPLIED";
             public const string Offline = "OFFLINE";
             public const string Online = "ONLINE";
         }
@@ -394,8 +395,7 @@ namespace Greenspot.Stall.Models
                 return 0;
             }
 
-            return Utilities.DistanceMatrix.GetSuburbDistaince(CountryId, City, Suburb,
-                destCountryCode, destCity, destSuburb);
+            return SuburbDistance.GetDistance(CountryId, City, Suburb, destCountryCode, destCity, destSuburb);
         }
 
         //public IList<DeliverySchedule.DeliveryScheduleItem> GetSchedule(string countryId, string city, string area,

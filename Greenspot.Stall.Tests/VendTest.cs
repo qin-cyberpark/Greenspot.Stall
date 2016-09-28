@@ -40,9 +40,9 @@ namespace Greenspot.Stall.Tests
         public async Task DeleteWebHookTest()
         {
             var result = await SDK.Vend.VendWebhook.GetWebhooksAsync("qincyber", "5OtjwgBqfHJZgkkjCrzrP:fCnfop7yJDuFys9x52");
-            if(result != null)
+            if (result != null)
             {
-                foreach(var hook in result)
+                foreach (var hook in result)
                 {
                     var status = await SDK.Vend.VendWebhook.DeleteWebhookAsync("qincyber", hook.Id, "5OtjwgBqfHJZgkkjCrzrP:fCnfop7yJDuFys9x52");
                 }
@@ -52,7 +52,7 @@ namespace Greenspot.Stall.Tests
         [TestMethod]
         public void DistanceTest()
         {
-            var result = Greenspot.Stall.Utilities.DistanceMatrix.GetSuburbDistaince("NZ","Auckland", "New Windsor", "nz", "Auckland","Mt Raskial");
+            var result = SuburbDistance.GetDistance("NZ", "Auckland", "New Windsor", "nz", "Auckland", "Mt Roskil");
             Assert.IsNotNull(result);
         }
     }

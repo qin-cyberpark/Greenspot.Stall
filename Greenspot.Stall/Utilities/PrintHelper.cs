@@ -11,7 +11,8 @@ namespace Greenspot.Stall.Utilities
 {
     public class PrintHelper
     {
-        private static MemoBirdClient _client = new MemoBirdClient(GreenspotConfiguration.AppSettings["PrinterAccessKey"].Value);
+        private static readonly log4net.ILog _sysLogger = log4net.LogManager.GetLogger("SysLogger");
+        private static MemoBirdClient _client = new MemoBirdClient(GreenspotConfiguration.AppSettings["PrinterAccessKey"].Value, _sysLogger);
         private static object _locker = new object();
         public static async Task<bool> PrintOrderAsync(Order order)
         {
@@ -25,6 +26,7 @@ namespace Greenspot.Stall.Utilities
             }
             else
             {
+                _sysLogger.ErrorFormat("print error:{0}", rep.ToString());
                 return false;
             }
             //}

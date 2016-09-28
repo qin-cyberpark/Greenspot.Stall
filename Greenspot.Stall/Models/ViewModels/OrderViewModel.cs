@@ -87,8 +87,8 @@ namespace Greenspot.Stall.Models.ViewModels
 
         public class DeliveryAddressViewModel
         {
-            [JsonProperty(PropertyName = "Id")]
-            public string Id { get; set; }
+            [JsonProperty(PropertyName = "Code")]
+            public string Code { get; set; }
         }
     }
 }

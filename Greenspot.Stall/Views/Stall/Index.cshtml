@@ -1,48 +1,49 @@
 ﻿@{
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
     var _stallId = (int)ViewBag.StallId;
+    Page.Controller = "CustomerController";
     Page.Title = "久等了";
 }
 
-<div ng-init="custCtrl.loadStallProducts(@_stallId)"></div>
-<div ng-if="custCtrl.currentStall">
-    <div id="stall-header">
-        <img ng-src="/Static/img/stall/{{custCtrl.currentStall.Id}}.jpg" />
-        <div class="info">
-            <div>{{custCtrl.currentStall.Name}}</div>
-            <button>运费 | 营业时间 | 其他信息</button>
-        </div>
-    </div>
-    <div class="ProductList">
-        <div class="item" ng-repeat="product in custCtrl.currentStall.Products track by product.Id">
-            <div class="left">
-                <img src="{{product.Image}}" ng-click="gotoUrl('/product/' + product.Id)" />
+<div id="main-content" class="with-bottom-bar" ng-init="ctrl.loadStallProducts(@_stallId)">
+    <div ng-if="ctrl.currentStall">
+        <div id="stall-header">
+            <img ng-src="/stalls/{{ctrl.currentStall.Id}}/avatar.png" />
+            <div class="info">
+                <div>{{ctrl.currentStall.Name}}</div>
+                <button>运费 | 营业时间 | 其他信息</button>
             </div>
-            <div class="right">
-                <div class="product-name" ng-click="gotoUrl('/product/' + product.Id)">{{product.Name}}</div>
-                <div class="price-quantity">
-                    <span>{{product.Price|currency:$}}</span>
-                    <select ng-model="product.Quantity">
-                        <option value="1">×1</option>
-                        <option value="2">×2</option>
-                        <option value="3">×3</option>
-                        <option value="4">×4</option>
-                        <option value="5">×5</option>
-                    </select>
+        </div>
+        <div class="ProductList">
+            <div class="item" ng-repeat="product in ctrl.currentStall.Products track by product.Id">
+                <div class="left">
+                    <img src="/Static/img/logo_grey_96.png" ng-src="{{product.Image}}" ng-click="gotoUrl('/product/' + product.Id)" />
                 </div>
-                <div class="operation">
-                    <button ng-click="custCtrl.cart.add({stallId:product.StallId, stallName:product.StallName,
+                <div class="right">
+                    <div class="product-name" ng-click="gotoUrl('/product/' + product.Id)">{{product.Name}}</div>
+                    <div class="price-quantity">
+                        <span>{{product.Price|currency:$}}</span>
+                        <select ng-model="product.Quantity">
+                            <option ng-repeat="n in product.QuantityOptions track by $index" value="{{$index+1}}">
+                                ×{{$index+1}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="operation">
+                        <button ng-click="ctrl.cart.add({stallId:product.StallId, stallName:product.StallName,
                                                 id:product.Id, name:product.Name,price:product.Price, variant:''}, product.Quantity)">
-                        加入购物车
-                    </button>
+                            加入购物车
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="load-more-bar">
+            <span>没有更多商品了</span>
+        </div>
     </div>
-    <div class="load-more-bar">
-        <span>没有更多商品了</span>
+    <div id="empty-content" ng-if="ctrl.currentStall===null">
+        店铺不存在
     </div>
 </div>
-<div id="empty-content" ng-if="!custCtrl.currentStall">
-    店铺不存在
-</div>
+

@@ -10,10 +10,13 @@
     [Table("customer_delivery_addresses")]
     public partial class DeliveryAddress
     {
-        public int Id { get; set; }
-
+        [Key, Column(Order = 0)]
         [StringLength(50)]
         public string UserId { get; set; }
+
+        [Key, Column(Order = 1)]
+        [StringLength(50)]
+        public string Code { get; set; } = Guid.NewGuid().ToString();
 
         [StringLength(50)]
         public string Name { get; set; }
@@ -48,9 +51,6 @@
 
         [StringLength(50)]
         public string Suburb { get; set; }
-
-        [StringLength(200)]
-        public string FullAddress { get; set; }
 
         [ForeignKey("UserId")]
         [JsonIgnore]
