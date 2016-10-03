@@ -71,7 +71,7 @@ namespace Greenspot.Stall.Controllers.API
                 var vPI = JsonConvert.DeserializeObject<VendInventory>(jsonStr);
                 using (var db = new StallEntities())
                 {
-                    Models.Product.SetInventoryById(vPI.ProductId, vPI.Count, db);
+                    Models.Product.SetInventoryById(vPI.ProductId, Convert.ToInt32(vPI.Count), db);
                 }
 
                 _sysLogger.Info(data);

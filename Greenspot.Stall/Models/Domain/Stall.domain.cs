@@ -86,7 +86,7 @@ namespace Greenspot.Stall.Models
             PaymentTypeId = null;
             foreach (var pt in paytypeResult.PaymentTypes)
             {
-                if (pt.Name.ToUpper().Equals("GS PAY"))
+                if (pt.Name.ToUpper().Equals("JDL PAY"))
                 {
                     PaymentTypeId = pt.Id;
                     break;
@@ -95,7 +95,7 @@ namespace Greenspot.Stall.Models
 
             if (string.IsNullOrEmpty(PaymentTypeId))
             {
-                result.Message = "无法获取名为GS PAY的VEND PAYMENT TYPE";
+                result.Message = "无法获取名为JDL PAY的VEND PAYMENT TYPE";
                 return result;
             }
 
@@ -330,7 +330,7 @@ namespace Greenspot.Stall.Models
 
                 return GetProducts(delegate (Product x)
                 {
-                    return string.IsNullOrEmpty(x.VariantParentId) && x.Active == true && x.Stock > 0;
+                    return string.IsNullOrEmpty(x.VariantParentId) && x.Active == true && x.Stock > 0 && x.Price > 0;
                 }).ToList();
             }
         }

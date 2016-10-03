@@ -13,13 +13,15 @@
 
     <link rel="shortcut icon" href="/static/img/favicon.png">
     <!-- 3rd party stylesheet -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.css">
     <!-- owner stylesheet -->
+    <!-- 3rd party stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.min.css" />
 
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
         <link rel="stylesheet/less" href="/Content/less/global.less">
-        <link rel="stylesheet/less" href="/Content/less/owner.less">
+        <link rel="stylesheet/less" href="/Content/less/customer.less">
+        <link rel="stylesheet/less" href="/Content/less/home.less">
     }
     else
     {
@@ -44,23 +46,23 @@
     <div id="loading-circle" class="big screen-center" ng-if="loadingCircle">
         <img src="/Static/img/loading.gif" />
     </div>
-    <!-- 3rd party libraries -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <!-- 3rd party stylesheet -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-aria.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-messages.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.2/js.cookie.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.5.8/angular-messages.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.min.js"></script>
 
-    <!-- owner scripts -->
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
         <script type="text/javascript" src="/static/lib/less/dist/less.min.js"></script>
         <script type="text/javascript" src="/Content/middle-js/app.js"></script>
         <script type="text/javascript" src="/Content/middle-js/cart.js"></script>
-        <script type="text/javascript" src="/Content/middle-js/controller/owner.controller.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/order.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/Utilities.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/controller/customer.controller.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/controller/home.controller.js"></script>
     }
     else
     {
@@ -68,5 +70,17 @@
     }
 
     @RenderSection("ScriptSection", false)
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-84935019-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
 </body>
 </html>

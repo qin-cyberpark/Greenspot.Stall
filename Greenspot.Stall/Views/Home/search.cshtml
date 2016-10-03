@@ -1,17 +1,21 @@
 ﻿@{
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
     Page.Controller = "HomeController";
-    Page.Title = string.Format("{0} | 久等了", "H".Equals(Request["c"]) ? "私房自助" : "餐厅外卖");
+    var _isTakeaway = "T".Equals(Request["c"]);
+    Page.Title = string.Format("{0} | 久等了", _isTakeaway ? "餐厅外卖" : "私房自助");
 }
 <form id="search-bar" ng-submit="ctrl.search(10,10)">
     <select ng-model="ctrl.searchCondition.area" ng-change="ctrl.loadRecommendStalls()">
-        <option value="NZ-Auckland" selected>奥克兰</option>
-        <option value="NZ-Auckland-Auckland City">奥克兰City</option>
-        <option value="NZ-Auckland-Central Auckland">奥克兰中区</option>
-        <option value="NZ-Auckland-North Shore">奥克兰北岸</option>
-        <option value="NZ-Auckland-East Auckland">奥克兰东区</option>
-        <option value="NZ-Auckland-West Auckland">奥克兰西区</option>
-        <option value="NZ-Auckland-South Auckland">奥克兰南区</option>
+        <option value="nz:auckland" selected>奥克兰</option>
+        @if (_isTakeaway)
+        {
+            <option value="nz:auckland:auckland-city">奥克兰City </option>
+            <option value="nz:auckland:central-auckland">奥克兰中区</option>
+            <option value="nz:auckland:north-shore">奥克兰北岸 </option>
+            <option value="nz:auckland:east-auckland">奥克兰东区</option>
+            <option value="nz:auckland:west-auckland"> 奥克兰西区 </option>
+            <option value="nz:auckland:south-auckland">奥克兰南区</option>
+        }
     </select>
     <input class="search-text" type="text" placeholder="搜索" ng-model="ctrl.searchCondition.keyword">
     <md-button type="submit" class="btn-search" aria-label="Search">
@@ -26,14 +30,15 @@
         <md-card ng-repeat="stall in ctrl.recommendStalls.items" ng-click="gotoUrl('/stall/' + stall.Id)">
             <md-card-title>
                 <md-card-title-text layout-align="space-between center">
-                    <span class="md-headline">{{stall.Name}}</span>
+                    <span class="md-headline">
+                        {{stall.Name}}</span>
                     <span class="md-subhead" ng-repeat="product in stall.Products">
                         {{product.Name}}
                     </span>
                 </md-card-title-text>
                 <md-card-title-media>
                     <div class="md-media-md card-media">
-                        <img src="/Static/img/logo_grey_96.png" ng-src="/stalls/{{stall.Id}}/avatar.png" />
+                        <img src="/Static/img/logo_grey_96.png" ng-src="/stalls/{{stall.Id}}/avatar.jpg" />
                     </div>
                 </md-card-title-media>
             </md-card-title>
@@ -47,7 +52,7 @@
             <div class="ProductList">
                 <div class="item" ng-repeat="product in ctrl.matchedProducts.items track by product.Id">
                     <div class="left">
-                        <img src="/Static/img/logo_grey_96.png" ng-src="{{product.Image}}" ng-click="gotoUrl('/product/' + product.Id)" />
+                        <img src="/Static/img/no_image_s.png" ng-src="{{product.Image}}" ng-click="gotoUrl('/product/' + product.Id)" />
                     </div>
                     <div class="right">
                         <div class="product-name" ng-click="gotoUrl('/product/' + product.Id)">{{product.Name}}</div>
@@ -81,7 +86,7 @@
         <md-tab label="店铺" ng-if="ctrl.matchedStalls.items">
             <md-list flex ng-if="ctrl.matchedStalls.items.length">
                 <md-list-item class="md-2-line" ng-repeat="stall in ctrl.matchedStalls.items track by stall.Id" ng-click="gotoUrl('/stall/' + stall.Id)">
-                    <img src="/Static/img/logo_grey_96.png" ng-src="/stalls/{{stall.Id}}/avatar.png" class="md-avatar" alt="{{stall.Name}}" />
+                    <img src="/Static/img/logo_grey_96.png" ng-src="/stalls/{{stall.Id}}/avatar.jpg" class="md-avatar" alt="{{stall.Name}}" />
                     <div class="md-list-item-text">
                         <h3>{{stall.Name}}</h3>
                     </div>

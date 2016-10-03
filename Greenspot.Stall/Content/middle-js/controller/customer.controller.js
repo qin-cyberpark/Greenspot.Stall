@@ -110,7 +110,7 @@
             vm.loadDeliveryAddress();
             vm.orders = [];
             var simpleOrder = vm.cart.getOrders();
-            $.each(simpleOrder.orders, function (orderIdx, order) {
+            angular.forEach(simpleOrder.orders, function (order, orderIdx) {
                 vm.orders.push(new Greenspot.Order(order, $http));
             });
         }
@@ -139,7 +139,7 @@
 
         //select delivery address
         vm.deliveryAddressChanged = function () {
-            $.each(vm.orders, function (orderIdx, order) {
+            angular.forEach(vm.orders, function (order, orderIdx) {
                 order.setDeliveryAddress(vm.selectedDeliveryAddress);
             });
         }
@@ -162,7 +162,7 @@
             //clear unnecessary data
             vm.error = {}
             var orders = angular.copy(vm.orders);
-            $.each(orders, function (orderIdx, order) {
+            angular.forEach(orders, function (order,orderIdx) {
                 delete order.deliveryOptionCollections;
                 delete order.pickUpOptionCollections;
                 delete order.optionCollections;

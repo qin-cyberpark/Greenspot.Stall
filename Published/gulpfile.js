@@ -15,7 +15,7 @@ var staticPath = "./Static/";
 
 var lessGroups = [{ src: "less/*.less", dest: "middle-css" }];
 var jsGroups = [{ src: "middle-js/**/*.js", exclude: "middle-js/*/*.min.js", dest: "js/stall.min.js" },
-                { src: "semantic-components/**/*.js", exclude: "", dest: "js/semantic-components.min.js" }];
+                { src: "lib-js/**/*.js", exclude: "", dest: "js/lib.min.js" }];
 
 var cssGroups = [{ src: "middle-css/*.css", exclude: "middle-css/*.min.css", dest: "css/stall.min.css" },
                   { src: "semantic-components/*.css", exclude: "", dest: "css/semantic-components.min.css" }];
@@ -44,7 +44,7 @@ gulp.task("min:js", function () {
     for (var i = 0; i < jsGroups.length; i++) {
         gulp.src([contentPath + jsGroups[i].src, "!" + contentPath + jsGroups[i].exclude])
                 .pipe(concat(staticPath + jsGroups[i].dest))
-                //.pipe(uglify())
+                .pipe(uglify())
                 .pipe(gulp.dest("."));
     }
 });

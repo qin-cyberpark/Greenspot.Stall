@@ -46,7 +46,7 @@ namespace Greenspot.SDK.Vend
         public string OutletName { get; set; }
 
         [JsonProperty("count")]
-        public int Count { get; set; }
+        public float Count { get; set; }
 
         [JsonProperty("reorder_point")]
         public string ReorderPoint { get; set; }

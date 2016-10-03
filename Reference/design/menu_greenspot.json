@@ -1,61 +1,74 @@
 {
-
-        "button": [
-            {
-                "type": "view", 
-                "name": "网上商城", 
-                "url": "http://www.clicktrade.co.nz/"
-            }, 
-            {
-                "name": "话费充值", 
-                "sub_button": [
-                    {
-                        "type": "view", 
-                        "name": "Spark", 
-                        "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4965c136969ac3bd&redirect_uri=http://voucher.greenspot.net.nz/pub?brand=SPARK&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect"
-                    }, 
-                    {
-                        "type": "view", 
-                        "name": "Vodafone", 
-                        "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4965c136969ac3bd&redirect_uri=http://voucher.greenspot.net.nz/pub?brand=VODAFONE&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect"
-                    }, 
-                    {
-                        "type": "view", 
-                        "name": "2 Degrees", 
-                        "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4965c136969ac3bd&redirect_uri=http://voucher.greenspot.net.nz/pub?brand=2DEGREES&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect"
-                    }, 
-                    {
-                        "type": "view", 
-                        "name": "Skinny", 
-                        "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4965c136969ac3bd&redirect_uri=http://voucher.greenspot.net.nz/pub?brand=SKINNY&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect"
-                    }, 
-                    {
-                        "type": "view", 
-                        "name": "My Voucher", 
-                        "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4965c136969ac3bd&redirect_uri=http://voucher.greenspot.net.nz/pub/topup/myvoucher&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect"
-                    }
-                ]
-            }, 
-            {
-                "name": "绿点WiFi", 
-                "sub_button": [
-                    {
-                        "type": "view", 
-                        "name": "官方网站", 
-                        "url": "http://www.greenspot.net.nz"
-                    }, 
-                    {
-                        "type": "view", 
-                        "name": "技术支持", 
-                        "url": "http://www.greenspot.net.nz/support_center"
-                    }, 
-                    {
-                        "type": "view", 
-                        "name": "产品介绍", 
-                        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI0NjA3NQ==mid=209007659idx=1sn=bd54ed9935af78d947c5495a54aba33ascene=18#rd"
-                    }
-                ]
-            }
-        ]
-
+    "button": [
+        {
+            "name": "久等了🍴",
+            "sub_button": [
+                {
+                    "type": "view", 
+                    "name": "订餐首页", 
+                    "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4965c136969ac3bd&redirect_uri=http://shanghu.kiwinetcom.com/auth/Z9S6&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+                }, 
+                {
+                    "type": "view", 
+                    "name": "我的订单", 
+                    "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4965c136969ac3bd&redirect_uri=http://shanghu.kiwinetcom.com/auth/Z9S6/customer/orders&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+                }, 
+                {
+                    "type": "view", 
+                    "name": "我的店铺", 
+                    "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4965c136969ac3bd&redirect_uri=http://shanghu.kiwinetcom.com/auth/Z9S6/owner&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+                }
+            ]
+        }, 
+        {
+            "name": "话费充值", 
+            "sub_button": [
+                {
+                    "type": "view", 
+                    "name": "Spark", 
+                    "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4965c136969ac3bd&redirect_uri=http://shanghu.kiwinetcom.com/auth/V2C3?brand=SPARK&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+                }, 
+                {
+                    "type": "view", 
+                    "name": "Vodafone", 
+                    "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4965c136969ac3bd&redirect_uri=http://shanghu.kiwinetcom.com/auth/V2C3?brand=VODAFONE&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+                }, 
+                {
+                    "type": "view", 
+                    "name": "2 Degrees", 
+                    "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4965c136969ac3bd&redirect_uri=http://shanghu.kiwinetcom.com/auth/V2C3?brand=2DEGREES&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+                }, 
+                {
+                    "type": "view", 
+                    "name": "Skinny", 
+                    "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4965c136969ac3bd&redirect_uri=http://shanghu.kiwinetcom.com/auth/V2C3?brand=SKINNY&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+                }, 
+                {
+                    "type": "view", 
+                    "name": "My Voucher", 
+                    "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4965c136969ac3bd&redirect_uri=http://shanghu.kiwinetcom.com/auth/V2C3/topup/myvoucher&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+                }
+            ]
+        }, 
+        {
+            "name": "绿点WiFi", 
+            "sub_button": [
+                {
+                    "type": "view", 
+                    "name": "官方网站", 
+                    "url": "http://www.greenspot.net.nz"
+                }, 
+                {
+                    "type": "view", 
+                    "name": "技术支持", 
+                    "url": "http://www.greenspot.net.nz/support_center"
+                }, 
+                {
+                    "type": "view", 
+                    "name": "产品介绍", 
+                    "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI0NjA3NQ==mid=209007659idx=1sn=bd54ed9935af78d947c5495a54aba33ascene=18#rd"
+                }
+            ]
+        }
+    ]
 }

@@ -3,7 +3,6 @@
 
     Greenspot.CartStallItem = function (stallId, stallName) {
         var self = this;
-
         self.i = stallId;
         self.n = stallName;
         self.qty = 0;
@@ -14,7 +13,7 @@
             self.qty += qty;
 
             var itemAdded = false;
-            $.each(self.itms, function (idxItem, item) {
+            angular.forEach(self.itms, function (item, idxItem) {
                 //existing item
                 if (item.i == nwItem.id) {
                     item.q += qty;
@@ -31,7 +30,7 @@
 
         self.remove = function (itemId) {
             var removedQty = 0;
-            $.each(self.itms, function (idxItem, item) {
+            angular.forEach(self.itms, function (item, idxItem) {
                 if (item.i == itemId) {
                     var delIdx = self.itms.indexOf(item);
                     if (delIdx > -1) {
@@ -49,20 +48,20 @@
         self.isChecked = function () {
             var hasSelected = false;
             var hasUnselected = false;
-            $.each(self.itms, function (idxItem, item) {
+            angular.forEach(self.itms, function (item, idxItem) {
                 hasSelected = hasSelected || item.slctd;
                 hasUnselected = hasUnselected || !item.slctd;
-            })
+            });
             return hasSelected && !hasUnselected;
         };
 
         self.isIndeterminate = function () {
             var hasSelected = false;
             var hasUnselected = false;
-            $.each(self.itms, function (idxItem, item) {
+            angular.forEach(self.itms, function (item, idxItem) {
                 hasSelected = hasSelected || item.slctd;
                 hasUnselected = hasUnselected || !item.slctd;
-            })
+            });
             return hasSelected && hasUnselected;
         }
 
@@ -72,13 +71,13 @@
 
         self.toggleAll = function () {
             var checked = self.isIndeterminate() || !self.isChecked();
-            $.each(self.itms, function (idxItem, item) {
+            angular.forEach(self.itms, function (item, idxItem) {
                 item.slctd = checked;
-            })
+            });
         }
 
         self.plusOne = function (itemId) {
-            $.each(self.itms, function (idxItem, item) {
+            angular.forEach(self.itms, function (item, idxItem) {
                 if (item.i == itemId && item.q < 99) {
                     item.q++;
                     self.qty++;
@@ -87,7 +86,7 @@
         }
 
         self.minusOne = function (itemId) {
-            $.each(self.itms, function (idxItem, item) {
+            angular.forEach(self.itms, function (item, idxItem) {
                 if (item.i == itemId && item.q > 0) {
                     item.q--;
                     self.qty--;
@@ -110,16 +109,17 @@
                     break;
                 }
             }
-            self.writeToCookie();
+            self.save();
         };
 
         //add item
         self.add = function (nwItem, qty) {
+            console.log(nwItem);
             qty = qty ? parseInt(qty) : 1;
             self.qty += qty;
 
             var isExist = false;
-            $.each(self.stls, function (idxStall, stall) {
+            angular.forEach(self.stls, function (stall, idxStall) {
                 if (stall.i == nwItem.stallId) {
                     //existing stl
                     isExist = true;
@@ -135,15 +135,7 @@
             }
 
             //new item
-            self.writeToCookie();
-        };
-
-
-        //clear
-        self.empty = function () {
-            self.stls = [];
-            self.qty = 0;
-            Cookies.remove("cart");
+            self.save();
         };
 
         //remove item
@@ -157,37 +149,51 @@
                 }
             }
 
-            self.writeToCookie();
+            self.save();
         };
 
-        //this
+        //clear
+        self.empty = function () {
+            self.stls = [];
+            self.qty = 0;
+            Cookies.remove("cart");
+        };
+
+        //item qty+1
         self.plusOne = function (stall, itemId) {
             stall.plusOne(itemId);
             self.qty++;
 
-            self.writeToCookie();
+            self.save();
         };
 
-        //
+        //item qty-1
         self.minusOne = function (stall, itemId) {
             stall.minusOne(itemId);
             self.qty--;
 
-            self.writeToCookie();
+            self.save();
         };
 
-
-        self.loadFromCookie = function () {
-            var str = Cookies.get('cart');
+        //load stored cart
+        self.load = function () {
+            //var str = Cookies.get('cart');
+            var str = window.localStorage["jdl_cart"];
 
             if (!str) {
                 return;
             }
-            var c = $.parseJSON(str);
+
+            var c = angular.fromJson(str);
+            var timeSpan = Date.now() - c.savedTime;
+            if (timeSpan > 604800000) {
+                return;
+            }
+
             self.stls = [];
 
             //all stall
-            $.each(c.stls, function (idxStall, stall) {
+            angular.forEach(c.stls, function (stall, idxStall) {
                 var stallItem = new Greenspot.CartStallItem(stall.i, stall.n);
                 stallItem.qty = stall.qty;
                 stallItem.amt = stall.amt;
@@ -199,41 +205,58 @@
 
         };
 
-        self.writeToCookie = function () {
-            Cookies.set("cart", self, { expires: 14 });
-        };
+        //store cart
+        self.save = function () {
+            //Cookies.set("cart", self, { expires: 14 });
+            self.savedTime = Date.now();
+            window.localStorage.setItem("jdl_cart", JSON.stringify(self));
+        }
 
+        //is all items selected
         self.isChecked = function () {
             var hasChecked = false;
             var hasUnchecked = false;
-            $.each(self.stls, function (idxStall, stall) {
+            angular.forEach(self.stls, function (stall, idxStall) {
                 hasChecked = hasChecked || stall.isChecked();
                 hasUnchecked = hasUnchecked || !stall.isChecked();
             })
             return hasChecked && !hasUnchecked;
-        };
+        }
 
+        //select or unselect all items
         self.toggleAll = function () {
             var checked = !self.isChecked();
-            $.each(self.stls, function (idxStall, stall) {
-                $.each(stall.itms, function (idxItem, item) {
+            angular.forEach(self.stls, function (stall, idxStall) {
+                angular.forEach(stall.itms, function (item, idxItem) {
                     item.slctd = checked;
                 })
             });
         }
 
-        self.totalAmount = function () {
-            var orders = self.getOrders();
-            return orders.amt;
+        //get total selected items amount
+        self.totalAmount = function (selectedOnly) {
+            selectedOnly = selectedOnly || false;
+            var amount = 0;
+            angular.forEach(self.stls, function (stall, idxStall) {
+
+                //new order
+                angular.forEach(stall.itms, function (item, idxItem) {
+                    if (!selectedOnly || item.slctd) {
+                        amount += (item.p * item.q);
+                    }
+                })
+            });
+            return amount;
         }
 
+        //convert selected items to order
         self.getOrders = function () {
-            var orders = new Greenspot.SimpleOrderCollection();
-            $.each(self.stls, function (idxStall, stall) {
+            var orders = new Greenspot.CartOrderCollection();
+            angular.forEach(self.stls, function (stall, idxStall) {
                 //new order
-                var order = new Greenspot.SimpleOrder(stall.i, stall.n);
+                var order = new Greenspot.CartOrder(stall.i, stall.n);
 
-                $.each(stall.itms, function (idxItem, item) {
+                angular.forEach(stall.itms, function (item, idxItem) {
                     if (item.slctd) {
                         order.AddItem(item);
                     }
@@ -246,9 +269,28 @@
 
             return orders;
         }
+
+        //remove selected items
+        self.removeSelected = function () {
+            var orders = new Greenspot.CartOrderCollection();
+            angular.forEach(self.stls, function (stall, idxStall) {
+
+                if (stall.isChecked()) {
+                    self.removeStall(stall.i);
+                } else {
+                    angular.forEach(stall.itms, function (item, idxItem) {
+                        if (item && item.slctd) {
+                            self.remove(stall, item.i);
+                        }
+                    })
+                }
+            });
+
+            self.save();
+        }
     };
 
-    Greenspot.SimpleOrder = function (stallId, stallName) {
+    Greenspot.CartOrder = function (stallId, stallName) {
         var self = this;
         self.i = stallId;
         self.n = stallName;
@@ -263,11 +305,11 @@
         }
     }
 
-    Greenspot.SimpleOrderCollection = function () {
+    Greenspot.CartOrderCollection = function () {
         var self = this;
         self.orders = [];
         self.amt = 0;
-
+        self.qty = 0;
         self.AddOrder = function (order) {
             self.orders.push(order);
             self.qty += order.qty;

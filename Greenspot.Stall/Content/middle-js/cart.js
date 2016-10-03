@@ -3,7 +3,6 @@
 
     Greenspot.CartStallItem = function (stallId, stallName) {
         var self = this;
-
         self.i = stallId;
         self.n = stallName;
         self.qty = 0;
@@ -14,7 +13,7 @@
             self.qty += qty;
 
             var itemAdded = false;
-            $.each(self.itms, function (idxItem, item) {
+            angular.forEach(self.itms, function (item, idxItem) {
                 //existing item
                 if (item.i == nwItem.id) {
                     item.q += qty;
@@ -31,7 +30,7 @@
 
         self.remove = function (itemId) {
             var removedQty = 0;
-            $.each(self.itms, function (idxItem, item) {
+            angular.forEach(self.itms, function (item, idxItem) {
                 if (item.i == itemId) {
                     var delIdx = self.itms.indexOf(item);
                     if (delIdx > -1) {
@@ -49,20 +48,20 @@
         self.isChecked = function () {
             var hasSelected = false;
             var hasUnselected = false;
-            $.each(self.itms, function (idxItem, item) {
+            angular.forEach(self.itms, function (item, idxItem) {
                 hasSelected = hasSelected || item.slctd;
                 hasUnselected = hasUnselected || !item.slctd;
-            })
+            });
             return hasSelected && !hasUnselected;
         };
 
         self.isIndeterminate = function () {
             var hasSelected = false;
             var hasUnselected = false;
-            $.each(self.itms, function (idxItem, item) {
+            angular.forEach(self.itms, function (item, idxItem) {
                 hasSelected = hasSelected || item.slctd;
                 hasUnselected = hasUnselected || !item.slctd;
-            })
+            });
             return hasSelected && hasUnselected;
         }
 
@@ -72,13 +71,13 @@
 
         self.toggleAll = function () {
             var checked = self.isIndeterminate() || !self.isChecked();
-            $.each(self.itms, function (idxItem, item) {
+            angular.forEach(self.itms, function (item, idxItem) {
                 item.slctd = checked;
-            })
+            });
         }
 
         self.plusOne = function (itemId) {
-            $.each(self.itms, function (idxItem, item) {
+            angular.forEach(self.itms, function (item, idxItem) {
                 if (item.i == itemId && item.q < 99) {
                     item.q++;
                     self.qty++;
@@ -87,7 +86,7 @@
         }
 
         self.minusOne = function (itemId) {
-            $.each(self.itms, function (idxItem, item) {
+            angular.forEach(self.itms, function (item, idxItem) {
                 if (item.i == itemId && item.q > 0) {
                     item.q--;
                     self.qty--;
@@ -115,11 +114,12 @@
 
         //add item
         self.add = function (nwItem, qty) {
+            console.log(nwItem);
             qty = qty ? parseInt(qty) : 1;
             self.qty += qty;
 
             var isExist = false;
-            $.each(self.stls, function (idxStall, stall) {
+            angular.forEach(self.stls, function (stall, idxStall) {
                 if (stall.i == nwItem.stallId) {
                     //existing stl
                     isExist = true;
@@ -184,7 +184,7 @@
                 return;
             }
 
-            var c = $.parseJSON(str);
+            var c = angular.fromJson(str);
             var timeSpan = Date.now() - c.savedTime;
             if (timeSpan > 604800000) {
                 return;
@@ -193,7 +193,7 @@
             self.stls = [];
 
             //all stall
-            $.each(c.stls, function (idxStall, stall) {
+            angular.forEach(c.stls, function (stall, idxStall) {
                 var stallItem = new Greenspot.CartStallItem(stall.i, stall.n);
                 stallItem.qty = stall.qty;
                 stallItem.amt = stall.amt;
@@ -216,7 +216,7 @@
         self.isChecked = function () {
             var hasChecked = false;
             var hasUnchecked = false;
-            $.each(self.stls, function (idxStall, stall) {
+            angular.forEach(self.stls, function (stall, idxStall) {
                 hasChecked = hasChecked || stall.isChecked();
                 hasUnchecked = hasUnchecked || !stall.isChecked();
             })
@@ -226,8 +226,8 @@
         //select or unselect all items
         self.toggleAll = function () {
             var checked = !self.isChecked();
-            $.each(self.stls, function (idxStall, stall) {
-                $.each(stall.itms, function (idxItem, item) {
+            angular.forEach(self.stls, function (stall, idxStall) {
+                angular.forEach(stall.itms, function (item, idxItem) {
                     item.slctd = checked;
                 })
             });
@@ -237,9 +237,10 @@
         self.totalAmount = function (selectedOnly) {
             selectedOnly = selectedOnly || false;
             var amount = 0;
-            $.each(self.stls, function (idxStall, stall) {
+            angular.forEach(self.stls, function (stall, idxStall) {
+
                 //new order
-                $.each(stall.itms, function (idxItem, item) {
+                angular.forEach(stall.itms, function (item, idxItem) {
                     if (!selectedOnly || item.slctd) {
                         amount += (item.p * item.q);
                     }
@@ -251,11 +252,11 @@
         //convert selected items to order
         self.getOrders = function () {
             var orders = new Greenspot.CartOrderCollection();
-            $.each(self.stls, function (idxStall, stall) {
+            angular.forEach(self.stls, function (stall, idxStall) {
                 //new order
                 var order = new Greenspot.CartOrder(stall.i, stall.n);
 
-                $.each(stall.itms, function (idxItem, item) {
+                angular.forEach(stall.itms, function (item, idxItem) {
                     if (item.slctd) {
                         order.AddItem(item);
                     }
@@ -272,12 +273,12 @@
         //remove selected items
         self.removeSelected = function () {
             var orders = new Greenspot.CartOrderCollection();
-            $.each(self.stls, function (idxStall, stall) {
+            angular.forEach(self.stls, function (stall, idxStall) {
 
                 if (stall.isChecked()) {
                     self.removeStall(stall.i);
                 } else {
-                    $.each(stall.itms, function (idxItem, item) {
+                    angular.forEach(stall.itms, function (item, idxItem) {
                         if (item && item.slctd) {
                             self.remove(stall, item.i);
                         }

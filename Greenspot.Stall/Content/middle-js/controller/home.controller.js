@@ -14,7 +14,7 @@
             vm.searchCondition = {
                 isRecommend: true,
                 category: "T",
-                area: "NZ-Auckland",
+                area: "nz:auckland",
                 keyword: "",
                 init: function () {
                     var params = $location.search();

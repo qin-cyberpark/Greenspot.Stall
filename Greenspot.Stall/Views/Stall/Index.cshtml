@@ -8,16 +8,16 @@
 <div id="main-content" class="with-bottom-bar" ng-init="ctrl.loadStallProducts(@_stallId)">
     <div ng-if="ctrl.currentStall">
         <div id="stall-header">
-            <img ng-src="/stalls/{{ctrl.currentStall.Id}}/avatar.png" />
+            <img ng-src="/stalls/{{ctrl.currentStall.Id}}/avatar.jpg"/>
             <div class="info">
                 <div>{{ctrl.currentStall.Name}}</div>
-                <button>运费 | 营业时间 | 其他信息</button>
+                <button>运费 | 营业时间 | 其他</button>
             </div>
         </div>
         <div class="ProductList">
             <div class="item" ng-repeat="product in ctrl.currentStall.Products track by product.Id">
                 <div class="left">
-                    <img src="/Static/img/logo_grey_96.png" ng-src="{{product.Image}}" ng-click="gotoUrl('/product/' + product.Id)" />
+                    <img src="/Static/img/no_image_s.png" ng-src="{{product.Image}}" ng-click="gotoUrl('/product/' + product.Id)" />
                 </div>
                 <div class="right">
                     <div class="product-name" ng-click="gotoUrl('/product/' + product.Id)">{{product.Name}}</div>

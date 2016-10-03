@@ -5,25 +5,26 @@
 <html lang="en" ng-app="greenspotStall" ng-cloak ng-strict-di>
 <head>
     <meta charset="utf-8">
-    <meta name="description" content="Stall@Greenspot">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="keywords" content="新西兰 美食 外卖 Takeaway Homemade">
+    <meta name="author" content="久等了">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <base href="/">
     <title>管理地址</title>
 
     <link rel="shortcut icon" href="/static/img/favicon.png">
 
     <!-- 3rd party stylesheet -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.css">
-    <!-- platform stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.min.css" />
 
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
         <link rel="stylesheet/less" href="/Content/less/global.less">
         <link rel="stylesheet/less" href="/Content/less/customer.less">
+        <link rel="stylesheet/less" href="/Content/less/home.less">
     }
     else
     {
-        <link rel="stylesheet" href="/Static/css/stall.min.css">
+        <link rel="stylesheet" href="/static/css/stall.min.css">
     }
 </head>
 <body ng-controller="CustomerAddressController as custCtrl" ng-init="custCtrl.init_address()">
@@ -88,23 +89,23 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-aria.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-messages.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.2/js.cookie.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.5.8/angular-messages.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.min.js"></script>
     <script type="text/javascript" src="https://address.nzpost.co.nz/assets/checker.js"></script>
 
-    <!-- owner scripts -->
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
-        <script type="text/javascript" src="/Static/lib/less/dist/less.min.js"></script>
+        <script type="text/javascript" src="/static/lib/less/dist/less.min.js"></script>
         <script type="text/javascript" src="/Content/middle-js/app.js"></script>
-        <script type="text/javascript" src="~/Content/middle-js/cart.js"></script>
-        <script type="text/javascript" src="/Content/middle-js/controller/customer-address.controller.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/cart.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/order.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/Utilities.js"></script>
         <script type="text/javascript" src="/Content/middle-js/plugin/addressAutoComplete.nzpost.js"></script>
+        <script type="text/javascript" src="/Content/middle-js/controller/customer-address.controller.js"></script>
     }
     else
     {
-        <script type="text/javascript" src="/Static/js/stall.min.js"></script>
+        <script type="text/javascript" src="/static/js/stall.min.js"></script>
     }
 </body>
 </html>

@@ -10,18 +10,13 @@
         vm.init = function () {
             /*cart*/
             vm.cart = new Greenspot.Cart();
-            vm.cart.loadFromCookie();
-        }
-
-        vm.removeStallCookie = function (stallId) {
-            vm.cart.loadFromCookie();
-            vm.cart.removeStall(stallId);
+            vm.cart.load();
         }
 
         ///**********************************
         //stall home page
         //***********************************
-        /*stall home page */
+
         vm.init_stallHome = function (stallId) {
             vm.init();
             vm.loadStallProducts(stallId);
@@ -88,29 +83,36 @@
         //***********************************
         /* checkout */
         vm.checkOut = function () {
+            //console.log(vm.cart);
+            vm.cart.save();
+            window.location.href = "/customer/Checkout";
             //load items
-            $http.post('/customer/CheckStock', vm.cart.getOrders()).success(function (result) {
-                if (result.Succeeded) {
-                    //redirect to vent page
-                    window.location.href = "/customer/Checkout";
-                }
-                else {
-                    console.log(result.Message);
-                }
-            }).error(function (error) {
-                console.log(error);
-            });
+            //$http.post('/customer/Checkout', vm.cart.getOrders()).success(function (result) {
+            //    commSrv.showLoading();
+            //    if (result.Succeeded) {
+            //        vm.cart.save();
+            //        console.log(result);
+            //        //redirect to vent page
+            //        window.location.href = "/customer/Checkout";
+            //    }
+            //    else {
+            //        console.log(result.Message);
+            //    }
+            //}).error(function (error) {
+            //    console.log(error);
+            //});
         }
 
 
         /* checkout init */
-        vm.init_checkout = function (orderJson) {
+        vm.init_checkout = function () {
+            vm.init();
+            vm.loadDeliveryAddress();
             vm.orders = [];
-            $.each(orderJson.orders, function (orderIdx, order) {
+            var simpleOrder = vm.cart.getOrders();
+            angular.forEach(simpleOrder.orders, function (order, orderIdx) {
                 vm.orders.push(new Greenspot.Order(order, $http));
             });
-
-            vm.loadDeliveryAddress();
         }
 
         ///**********************************
@@ -137,7 +139,7 @@
 
         //select delivery address
         vm.deliveryAddressChanged = function () {
-            $.each(vm.orders, function (orderIdx, order) {
+            angular.forEach(vm.orders, function (order, orderIdx) {
                 order.setDeliveryAddress(vm.selectedDeliveryAddress);
             });
         }
@@ -153,28 +155,52 @@
             return true;
         }
 
-
         /* pay */
         vm.pay = function () {
-            $.each(vm.orders, function (orderIdx, order) {
-                order.deliveryOptionCollections = null;
-                order.pickUpOptionCollections = null;
-                order.optionCollections = null;
-                order.selectedOptionCollection = null;
+            commSrv.showLoading();
+
+            //clear unnecessary data
+            vm.error = {}
+            var orders = angular.copy(vm.orders);
+            angular.forEach(orders, function (order,orderIdx) {
+                delete order.deliveryOptionCollections;
+                delete order.pickUpOptionCollections;
+                delete order.optionCollections;
+                delete order.selectedOptionCollection;
             });
 
-            //load items
+            //post order
             $http.post('/customer/Pay', vm.orders).success(function (result) {
                 if (result.Succeeded) {
-                    //redirect to vent page
+                    //clear error
+                    delete vm.error;
+                    //redirect to payment page
                     window.location.href = result.Data;
                 }
-                else {
-                    console.log(result.Message);
+                else if (result.ErrorType === 'OutOfStock') {
+                    vm.error.outOfStock = true
+                    vm.error.outOfStockData = $.parseJSON(result.Data);
+                } else {
+                    vm.error.other = true;
+                    vm.error.message = result.Data;
                 }
             }).error(function (error) {
-                console.log(error);
+                vm.error.other = true;
+                vm.error.message = error;
             });
+        }
+
+        ///**********************************
+        //orders
+        //***********************************
+        //orders init
+        vm.init_orders = function (isPaid) {
+
+            vm.init();
+
+            if (isPaid) {
+                vm.cart.removeSelected();
+            }
         }
     }]);
 })();

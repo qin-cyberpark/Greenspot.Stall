@@ -11,7 +11,6 @@
             },
 
             link: function (scope, element, attrs, model) {
-
                 var checker_options = {
                     max_results: 3,
                     search_type: "Physical",

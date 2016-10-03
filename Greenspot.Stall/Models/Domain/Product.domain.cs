@@ -145,7 +145,7 @@ namespace Greenspot.Stall.Models
                 AccountCodePurchase = p.AccountCodePurchase,
                 AccountCodeSales = p.AccountCodeSales,
                 TrackInventory = p.TrackInventory,
-                Stock = (p.TrackInventory && p.Inventory.Count > 0) ? p.Inventory[0].Count : 0,
+                Stock = (p.TrackInventory && p.Inventory.Count > 0) ? Convert.ToInt32(p.Inventory[0].Count) : 0,
                 Price = p.Price,
                 Tax = p.Tax,
                 TaxId = p.TaxId,
