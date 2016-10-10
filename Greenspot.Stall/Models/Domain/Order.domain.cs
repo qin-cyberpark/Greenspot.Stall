@@ -136,21 +136,13 @@ namespace Greenspot.Stall.Models
             }
         }
 
-        public async Task<bool> SendToWechat(string openId)
+        public async Task<bool> SendToWechat(IList<string> openids)
         {
             try
             {
                 //send message
-                if (!string.IsNullOrEmpty(openId))
-                {
-                    var msg = string.Format("店铺[{0}]有一个新订单\r{1}", Stall.StallName, Summary);
-                    return await WeChatHelper.SendMessageAsync(openId, msg);
-                }
-                else
-                {
-                    StallApplication.SysError("[MSG]failed to send message");
-                    return false;
-                }
+                var msg = OwnerAlertMessage;
+                return await WeChatHelper.SendMessageAsync(openids, msg);
             }
             catch (Exception ex)
             {
@@ -160,7 +152,7 @@ namespace Greenspot.Stall.Models
         }
 
 
-        public async Task Notify(StallEntities db, string openId)
+        public async Task Notify(StallEntities db, IList<string> openids)
         {
             //vend
             if (!HasSendToVend)
@@ -171,7 +163,7 @@ namespace Greenspot.Stall.Models
             if (!HasSendToWechat)
             {
                 //wechat
-                HasSendToWechat = await SendToWechat(openId);
+                HasSendToWechat = await SendToWechat(openids);
             }
 
             if (IsPrintOrder && !HasSendToPrinter)
@@ -224,19 +216,32 @@ namespace Greenspot.Stall.Models
             return CalcTotal() - StallDiscount - PlatformDiscount + PlatformDelivery;
         }
 
-        public string Summary
+        public string OwnerAlertMessage
         {
             get
             {
                 StringBuilder sb = new StringBuilder();
-                sb.AppendFormat("单号:{0}\r时间:{1:H:mm:ss dd/MM/yyyy}\r金额:{2}\r", Id, CreateTime, StallAmount);
+                //store name, order id, order time
+                sb.Append($"{Stall.StallName} #{Id}\r{CreateTime:H:mm:ss dd/MMM/yyyy}\r\r");
+                //delivery
+                sb.Append($"{Receiver}\r{DeliveryAddress}\r");
+                //delivery time
+                if (DeliveryTimeStart != null && DeliveryTimeEnd != null)
+                {
+                    sb.Append($"{DeliveryTimeStart:ddd, ddMMM HH:mm}-{DeliveryTimeEnd:HH:mm}\r");
+                }
+                //items
+                sb.Append("\r");
                 foreach (var item in Items)
                 {
-                    sb.AppendFormat("{0}@{1:0.00}x{2}\r", item.Name, item.PriceIncTax, item.Quantity);
+                    sb.Append($"{item.Name}@{item.PriceIncTax:$0.00}x{item.Quantity}\r");
                 }
-                if (string.IsNullOrEmpty(Note))
+                //total
+                sb.Append($"总计:{StallAmount}");
+                //note
+                if (!string.IsNullOrEmpty(Note))
                 {
-                    sb.Append(Note);
+                    sb.Append($"\r\r备注:{Note}");
                 }
 
                 return sb.ToString();

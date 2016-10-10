@@ -24,5 +24,8 @@ namespace Greenspot.Stall.Models
         public string InfoKey { get; set; }
 
         public string InfoValue { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; }
     }
 }

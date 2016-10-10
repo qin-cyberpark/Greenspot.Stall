@@ -133,7 +133,13 @@ namespace Greenspot.Stall.Models
         private const int MAX_WIDTH = 384;
 
         private IList<ReceiptRow> _rows = new List<ReceiptRow>();
-        public void AddRow(string text, Font font)
+
+        private void AddSeparator(char c)
+        {
+            AddRow("".PadRight(ReceiptFont.CharsInRow(ReceiptFont.Font16), c), ReceiptFont.Font16);
+        }
+
+        private void AddRow(string text, Font font)
         {
             var rows = ReceiptRow.CreateRows(text, font);
             foreach (var r in rows)
@@ -146,14 +152,14 @@ namespace Greenspot.Stall.Models
         {
             //logo
 
-            //order number
+            //store name + order number
             AddRow(string.Format("{0} #{1}", order.Stall.StallName, order.Id), ReceiptFont.Font20);
 
             //order time
             AddRow(string.Format("{0:HH:mm:ss ddMMM, yyyy}", order.CreateTime), ReceiptFont.Font16);
 
             //separator
-            AddRow("".PadRight(ReceiptFont.CharsInRow(ReceiptFont.Font24), '-'), ReceiptFont.Font24);
+            AddSeparator('-');
 
             //receiver
             AddRow(order.Receiver, ReceiptFont.Font16);
@@ -164,32 +170,38 @@ namespace Greenspot.Stall.Models
             }
 
             //separator
-            AddRow("".PadRight(ReceiptFont.CharsInRow(ReceiptFont.Font24), '-'), ReceiptFont.Font24);
+            AddSeparator('-');
 
             //detail
             foreach (var item in order.Items)
             {
-                AddRow(item.Name, ReceiptFont.Font24);
+                AddRow(item.Name, ReceiptFont.Font20);
                 AddRow(string.Format("{1:$0.00}×{0}", item.Quantity, item.PriceIncTax * item.Quantity), ReceiptFont.Font20);
             }
 
+            //platform delivery
+            if (order.PlatformDelivery > 0)
+            {
+                AddRow("运费", ReceiptFont.Font20);
+                AddRow($"{order.PlatformDelivery:$0.00}", ReceiptFont.Font20);
+            }
+
             //separator
-            AddRow("".PadRight(ReceiptFont.CharsInRow(ReceiptFont.Font24), '-'), ReceiptFont.Font24);
+            AddSeparator('-');
 
             //total
-            AddRow(string.Format("总计:{0:$0.00}", order.StallAmount), ReceiptFont.Font24);
-
-            //separator
-            AddRow("".PadRight(ReceiptFont.CharsInRow(ReceiptFont.Font16), ' '), ReceiptFont.Font16);
+            AddRow(string.Format("总计:{0:$0.00}", order.StallAmount), ReceiptFont.Font20);
 
             //note
             if (!string.IsNullOrEmpty(order.Note))
             {
+                            //separator
+            AddSeparator(' ');
                 AddRow("备注:" + order.Note, ReceiptFont.Font16);
             }
 
             //separator
-            AddRow("".PadRight(ReceiptFont.CharsInRow(ReceiptFont.Font16), ' '), ReceiptFont.Font16);
+            AddSeparator(' ');
 
             //slogan
             AddRow("------久等了点餐 让您久等了------", ReceiptFont.Font16);
@@ -215,9 +227,11 @@ namespace Greenspot.Stall.Models
             {
                 float currY = 0;
                 int logoHeight = 120;
-                Bitmap bmp = new Bitmap(MAX_WIDTH, (int)Height + logoHeight);
+                int receiptSpan = 100;
+                Bitmap receipt = new Bitmap(MAX_WIDTH, (int)Height + logoHeight);
+
                 var logo = Bitmap.FromFile(Greenspot.Configuration.GreenspotConfiguration.AppSettings["ReceiptLogoPath"].Value);
-                using (Graphics g = Graphics.FromImage(bmp))
+                using (Graphics g = Graphics.FromImage(receipt))
                 {
                     g.Clear(Color.White);
                     //draw logo
@@ -230,6 +244,15 @@ namespace Greenspot.Stall.Models
                         g.DrawString(r.Text, r.Font, Brushes.Black, 0, currY);
                         currY += r.Height + r.Padding.Bottom;
                     }
+                }
+
+                //duplicate
+                Bitmap bmp = new Bitmap(receipt.Width, receipt.Height * 2 + receiptSpan);
+                using (var g = Graphics.FromImage(bmp))
+                {
+                    g.Clear(Color.White);
+                    g.DrawImage(receipt, 0, 0);
+                    g.DrawImage(receipt, 0, receipt.Height + receiptSpan);
                 }
 
                 return bmp;

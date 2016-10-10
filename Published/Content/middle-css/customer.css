@@ -111,6 +111,10 @@
   font-weight: bold;
   margin-top: 5px;
   margin-bottom: 3px;
+  font-size: 1.2rem;
+}
+#checkout-content .checkout-section .message {
+  color: #EF6C00;
 }
 #checkout-content .checkout-section .pickup-address {
   line-height: 12px;

@@ -49,13 +49,12 @@
             </div>
 
             <!-- delivery -->
-            <div class="checkout-section" ng-if="!order.hasDeliveryOption() && !order.hasPickUpOption()">
-                <div class="caption">该店铺没有适合的配送计划</div>
-            </div>
+            <div class="message" ng-if="!order.hasDeliveryOption() && !order.hasPickUpOption()">当前地址最近没有配送计划</div>
+            <div class="message" ng-if="!order.hasDeliveryOption() && order.hasPickUpOption()">该店铺目前仅限自提</div>
             <div layout="row" layout-align="space-between center" ng-if="order.hasDeliveryOption() || order.hasPickUpOption()">
                 <div>
                     <span ng-if="order.hasDeliveryOption() && !order.hasPickUpOption()">配送</span>
-                    <span ng-if="order.hasPickUpOption() && !order.hasDeliveryOption()">自提</span>
+                    <span ng-if="!order.hasDeliveryOption() && order.hasPickUpOption()">自提</span>
                     <div class="switcher" ng-if="order.hasDeliveryOption() && order.hasPickUpOption()">
                         <div class="switcher-item" ng-class="{'switch-on': !order.isPickup}" ng-click="order.setIsPickup(false)">配送</div>
                         <div class="switcher-item" ng-class="{'switch-on': order.isPickup}" ng-click="order.setIsPickup(true)">自提</div>
@@ -93,13 +92,15 @@
                     {{order.selectedOption.Fee|currency:$}}
                 </div>
             </div>
+
             <!-- total -->
             <div class="checkout-item" layout="row" layout-align="space-between center">
-                <div class="item-name">合计</div>
+                <div class="item-name">合计(含GST)</div>
                 <div class="item-price-qty">
                     {{order.totalAmount()|currency:$}}
                 </div>
             </div>
+
             <!-- note -->
             <div class="checkout-item" layout="row" layout-align="space-between center">
                 <div class="item-name" flex="10">留言</div>
@@ -130,7 +131,7 @@
     <!-- 3rd party stylesheet -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-aria.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-aria.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.5.8/angular-messages.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.min.js"></script>
@@ -150,15 +151,15 @@
         <script type="text/javascript" src="/static/js/stall.min.js"></script>
     }
     <script>
-    (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date(); a = s.createElement(o),
-        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-    ga('create', 'UA-84935019-1', 'auto');
-    ga('send', 'pageview');
+        ga('create', 'UA-84935019-1', 'auto');
+        ga('send', 'pageview');
 
     </script>
 </body>

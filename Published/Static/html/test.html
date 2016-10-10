@@ -1,0 +1,28 @@
+<html ng-app="greenspotStall">
+<head>
+    <meta name="keywords" content="新西兰 美食 外卖 Takeaway Homemade">
+    <meta name="author" content="久等了">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.css">
+</head>
+<body>
+    <input id="address1" name="address1" required ng-maxlength="200" placeholder=""
+           address-checker place-on-select="custCtrl.addressSelected()" address-object="custCtrl.editAddress.AddressObject">
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-aria.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-messages.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.js"></script>
+    <script type="text/javascript" src="https://address.nzpost.co.nz/assets/checker.js"></script>
+    <script type="text/javascript">
+        (function () {
+            'use strict';
+            var myApp = angular.module('greenspotStall', ['ngMaterial', 'ngMessages']);
+        })();
+    </script>
+    <script type="text/javascript" src="/Content/middle-js/plugin/addressAutoComplete.nzpost.js"></script>
+    <script type="text/javascript" src="/Content/middle-js/controller/customer-address.controller.js"></script>
+</body>
+</html>

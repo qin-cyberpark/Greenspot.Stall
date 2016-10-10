@@ -16,6 +16,7 @@ namespace Greenspot.Stall.Models
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Stall> Stalls { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<VendAccessToken> VendAccessTokens { get; set; }
         public virtual DbSet<VendWebhook> VendWebhooks { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
@@ -27,6 +28,16 @@ namespace Greenspot.Stall.Models
         public virtual DbSet<Payment> Payments { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>()
+                .HasMany<Role>(u => u.Roles)
+                .WithMany(r => r.Users)
+                .Map(ur =>
+                {
+                    ur.MapLeftKey("UserId");
+                    ur.MapRightKey("RoleId");
+                    ur.ToTable("greenspot_user_roles");
+                });
+
         }
     }
 }

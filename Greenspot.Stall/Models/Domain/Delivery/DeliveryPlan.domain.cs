@@ -127,8 +127,8 @@ namespace Greenspot.Stall.Models
                         {
                             blockedTime = tmpPeriod.FirstOrDefault(x =>
                                             (x.From <= currPair.From && x.To > currPair.From)
-                                            || (x.From <= currPair.To && x.To >= currPair.To)
-                                            || (x.From >= currPair.From && x.To < currPair.To));
+                                            || (x.From < currPair.To && x.To >= currPair.To)
+                                            || (x.From > currPair.From && x.To < currPair.To));
                             if (blockedTime != null)
                             {
                                 if (currPair.From >= blockedTime.From && currPair.From < blockedTime.To)
@@ -154,6 +154,10 @@ namespace Greenspot.Stall.Models
                                     //trim right
                                     currPair.To = blockedTime.From;
                                 }
+                                else if (currPair.From == currPair.To)
+                                {
+                                    break;
+                                }
                             }
                             if (newPair != null)
                             {
@@ -172,17 +176,20 @@ namespace Greenspot.Stall.Models
                             }
                         } while (blockedTime != null);
 
-                        result.Add(new DeliveryOption()
+                        if (currPair.From != currPair.To)
                         {
-                            From = currPair.From,
-                            To = currPair.To,
-                            IsTimeDivisible = period.IsTimeDivisible,
-                            OptionDivideMinutes = period.OptionDivideMinutes > 0 ? period.OptionDivideMinutes : OptionDivideMinutes,
-                            PickUpAddress = planItem.PickUpAddress,
-                            IsPickUp = planItem.IsPickUp,
-                            Areas = planItem.Areas,
-                            Fee = fee
-                        });
+                            result.Add(new DeliveryOption()
+                            {
+                                From = currPair.From,
+                                To = currPair.To,
+                                IsTimeDivisible = period.IsTimeDivisible,
+                                OptionDivideMinutes = period.OptionDivideMinutes > 0 ? period.OptionDivideMinutes : OptionDivideMinutes,
+                                PickUpAddress = planItem.PickUpAddress,
+                                IsPickUp = planItem.IsPickUp,
+                                Areas = planItem.Areas,
+                                Fee = fee
+                            });
+                        }
                     }
                 }
             }

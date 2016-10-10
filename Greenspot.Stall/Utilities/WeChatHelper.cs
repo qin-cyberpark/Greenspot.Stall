@@ -42,5 +42,22 @@ namespace Greenspot.Stall.Utilities
                 return false;
             }
         }
+
+        public static async Task<bool> SendMessageAsync(IList<string> openids, string message, int maxAttamptTime = 3)
+        {
+            if (openids == null)
+            {
+                return false;
+            }
+
+            bool succeed = true;
+            openids = openids.Distinct().ToList();
+            foreach (var openid in openids)
+            {
+                succeed = succeed && await SendMessageAsync(openid, message, maxAttamptTime);
+            }
+
+            return succeed;
+        }
     }
 }

@@ -16,37 +16,33 @@
 
                    //location
                    $locationProvider.html5Mode(true);
-               }]);
+               }])
+      .service('CommonService', ['$rootScope', function ($rootScope) {
+          var self = this;
 
-    angular.module('greenspotStall')
-        .service('CommonService', function ($rootScope) {
-            var self = this;
-
-            /* redirect */
-            $rootScope.gotoUrl = function (url) {
-                self.showLoading();
-                window.location.href = url;
-            }
+          /* redirect */
+          $rootScope.gotoUrl = function (url) {
+              self.showLoading();
+              window.location.href = url;
+          }
 
 
-            $rootScope.loadingCircle = false;
-            self.showLoading = function () {
-                $rootScope.loadingCircle = true;
-            }
+          $rootScope.loadingCircle = false;
+          self.showLoading = function () {
+              $rootScope.loadingCircle = true;
+          }
 
-            self.hideLoading = function () {
-                $rootScope.loadingCircle = false;
-            }
+          self.hideLoading = function () {
+              $rootScope.loadingCircle = false;
+          }
 
-            self.isLoading = function () {
-                return $rootScope.loadingCircle;
-            }
-        });
-
-    angular.module('greenspotStall')
-        .filter("trust", ['$sce', function ($sce) {
-            return function (htmlCode) {
-                return $sce.trustAsHtml(htmlCode);
-            }
-        }]);
+          self.isLoading = function () {
+              return $rootScope.loadingCircle;
+          }
+      }])
+      .filter("trust", ['$sce', function ($sce) {
+          return function (htmlCode) {
+              return $sce.trustAsHtml(htmlCode);
+          }
+      }]);
 })();

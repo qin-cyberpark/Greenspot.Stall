@@ -114,7 +114,6 @@
 
         //add item
         self.add = function (nwItem, qty) {
-            console.log(nwItem);
             qty = qty ? parseInt(qty) : 1;
             self.qty += qty;
 

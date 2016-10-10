@@ -4,6 +4,9 @@ using Greenspot.Stall.Models;
 using Greenspot.Stall.Utilities;
 using Senparc.Weixin.MP.Containers;
 using Greenspot.Configuration;
+using System.Threading.Tasks;
+using System.Linq;
+
 namespace Greenspot.Stall.Storefont.Tests
 {
     [TestClass]
@@ -28,15 +31,19 @@ namespace Greenspot.Stall.Storefont.Tests
 
 
         [TestMethod]
-        public async void PrintOrder()
+        public void PrintOrder()
         {
             //load order
-            var order = Order.FindById(7, _db);
-            var result = await PrintHelper.PrintOrderAsync(order);
+            Task.Run(async () =>
+            {
+                var order = Order.FindById(107729, _db);
+                var result = await PrintHelper.PrintOrderAsync(order);
+            }).GetAwaiter().GetResult();
+
         }
 
         [TestMethod]
-        public async void PrintSampleOrder()
+        public void PrintSampleOrder()
         {
             var order = new Order()
             {
@@ -66,7 +73,16 @@ namespace Greenspot.Stall.Storefont.Tests
             order.Items.Add(new OrderItem() { Name = "一A二B", Price = 20.01M, Quantity = 10 });
             order.Items.Add(new OrderItem() { Name = "一A二B三C四D五E一A二B三C四D五E一A二B三C四D五EA二B三C四D五E", Price = 101.01M, Quantity = 9 });
 
-            var result = await PrintHelper.PrintOrderAsync(order);
+            var result = PrintHelper.PrintOrderAsync(order).Result;
+        }
+
+
+        [TestMethod]
+        public void GetAllDelivery()
+        {
+            var role = _db.Roles.FirstOrDefault(r => "DeliveryMan".Equals(r.Name));
+            var user = role.Users.ToList();
+            var a = user;
         }
     }
 }

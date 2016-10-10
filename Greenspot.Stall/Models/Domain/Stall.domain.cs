@@ -140,7 +140,7 @@ namespace Greenspot.Stall.Models
                 {
                     p.Active = false;
                 }
-                else if (p.Handle.ToLower().Equals("gs-delivery"))
+                else if (p.Handle.ToLower().Equals("jdl-delivery"))
                 {
                     DeliveryProductId = p.Id;
                     p.Active = false;

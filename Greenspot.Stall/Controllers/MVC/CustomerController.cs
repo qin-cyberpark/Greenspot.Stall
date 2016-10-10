@@ -451,10 +451,24 @@ namespace Greenspot.Stall.Controllers.MVC
                             _db.SaveChanges();
 
                             //notify
+                            var openIds = new List<string>();
+                            //owner
                             var owner = UserManager.FindById(order.Stall.UserId);
-                            var openId = owner?.SnsInfos[WeChatClaimTypes.OpenId].InfoValue;
+                            var ownerId = owner?.SnsInfos[WeChatClaimTypes.OpenId].InfoValue;
+                            openIds.Add(ownerId);
+                            //delivery man
+                            var deliveryMen = Models.User.GetByRole(_db, "DeliveryMan");
+                            foreach (var d in deliveryMen)
+                            {
+                                var dId = d.SnsInfos.FirstOrDefault(x => WeChatClaimTypes.OpenId.Equals(x.InfoKey))?.InfoValue;
+                                if (!string.IsNullOrEmpty(dId))
+                                {
+                                    openIds.Add(dId);
+                                }
+                            }
+
                             //await order.Notify(_db, openId);
-                            HostingEnvironment.QueueBackgroundWorkItem(x => order.Notify(_db, openId));
+                            HostingEnvironment.QueueBackgroundWorkItem(x => order.Notify(_db, openIds));
                         }
                         catch (Exception ex)
                         {

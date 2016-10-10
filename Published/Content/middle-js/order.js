@@ -41,10 +41,10 @@
             self.$http.get(url).success(function (result) {
                 if (result.Succeeded) {
                     self.deliveryOptionCollections = result.Data;
-                    if (self.deliveryOptionCollections.length > 0) {
-                        self.optionCollections = self.deliveryOptionCollections;
-                        self.selectedOptionCollection = self.optionCollections[0];
-                        self.optionCollectionChanged();
+                    if (self.hasDeliveryOption()) {
+                        self.setIsPickup(false);
+                    } else if (self.hasPickUpOption()) {
+                        self.setIsPickup(true);
                     }
                 }
                 else {
@@ -58,6 +58,7 @@
 
         /*get pickup option*/
         self.loadPickUpOptions = function () {
+
             //clear
             self.pickUpOptionCollections = [];
 
@@ -67,6 +68,9 @@
             $http.get(url).success(function (result) {
                 if (result.Succeeded) {
                     self.pickUpOptionCollections = result.Data;
+                    if (self.hasPickUpOption()) {
+                        self.setIsPickup(true);
+                    }
                 }
                 else {
                     //$window.alert(result.Message);
