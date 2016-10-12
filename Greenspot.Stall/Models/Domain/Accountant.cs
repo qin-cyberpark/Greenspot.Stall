@@ -59,12 +59,12 @@ namespace Greenspot.Stall.Models
         }
 
         #endregion
-        public static string GeneratePayURL(Payment Payment, string urlFail, string urlSuccess)
+        public static string GeneratePayURL(Payment payment, string urlFail, string urlSuccess)
         {
             string payUrl = null;
-            string refStr = string.Format("GSPAY {0}", Payment.Id);
-            string tranIdStr = string.Format("{0}-{1:HHmmssfff}", Payment.Id, DateTime.Now);
-            payUrl = GeneratePxPayRequestURL(Payment.Amount, refStr, tranIdStr, urlFail, urlSuccess);
+            string refStr = string.Format("Joodoon {0}", payment.Id);
+            string tranIdStr = string.Format("{0}-{1:fff}", payment.Id, DateTime.Now);
+            payUrl = GeneratePxPayRequestURL(payment.Amount, refStr, tranIdStr, payment.OrderIds, urlFail, urlSuccess);
             return payUrl;
         }
 

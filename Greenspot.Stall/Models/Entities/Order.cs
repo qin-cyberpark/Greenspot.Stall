@@ -41,6 +41,7 @@ namespace Greenspot.Stall.Models
         public string VendSaleId { get; set; }
 
         public int StallId { get; set; }
+        public string StallName { get; set; }
 
         [StringLength(50)]
         public string UserId { get; set; }

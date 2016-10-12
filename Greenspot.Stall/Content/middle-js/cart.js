@@ -271,6 +271,7 @@
 
         //remove selected items
         self.removeSelected = function () {
+            console.log("remove");
             var orders = new Greenspot.CartOrderCollection();
             angular.forEach(self.stls, function (stall, idxStall) {
 

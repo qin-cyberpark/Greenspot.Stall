@@ -33,15 +33,15 @@ namespace Greenspot.SDK.Vend
             }
             catch
             {
-                return JsonConvert.DeserializeObject<T>(null);
+                return default(T);
             }
         }
 
         //POST URL ENCODED FORM
         public static async Task<T> PostUrlencodedFormAsync<T>(string requestUri, string accessToken, KeyValuePair<string, string>[] data)
         {
-            return await PostUrlencodedFormAsync<T>(requestUri, data, 
-                                                    new KeyValuePair <string, string>[] {
+            return await PostUrlencodedFormAsync<T>(requestUri, data,
+                                                    new KeyValuePair<string, string>[] {
                                                         new KeyValuePair<string, string>("Authorization",
                                                         string.Format("Bearer {0}",accessToken))});
         }

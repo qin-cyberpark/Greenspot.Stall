@@ -215,6 +215,7 @@ namespace Greenspot.Stall.Controllers.MVC
             {
                 var order = new Order();
                 order.StallId = orderVM.StallId;
+                order.StallName = orderVM.StallName;
                 order.Stall = Models.Stall.FindById(orderVM.StallId, _db);
                 order.UserId = CurrentUser.Id;
 

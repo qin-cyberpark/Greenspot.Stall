@@ -56,7 +56,7 @@ namespace Greenspot.Stall.Models
                 var vendSale = new VendRegisterSaleRequest();
                 vendSale.InvoiceNumber = Id.ToString();
                 vendSale.RegisterId = Stall.RegisterId;
-                vendSale.SaleDate = CreateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                vendSale.SaleDate = CreateTime.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss");
                 vendSale.Status = OrderStatus.CLOSED;
                 vendSale.TotalPrice = (double)CalcTotalPriceExcludeTax();
                 vendSale.TotalTax = (double)CalcTotalTax();
@@ -88,7 +88,7 @@ namespace Greenspot.Stall.Models
                 vendSale.RegisterSalePayments.Add(new VendRegisterSaleRequest.RegisterSalePayment()
                 {
                     RetailerPaymentTypeId = Stall.PaymentTypeId,
-                    PaymentDate = string.Format("{0:yyyy-MM-dd HH:mm:ss}", Payment.ResponseTime),
+                    PaymentDate = string.Format("{0:yyyy-MM-dd HH:mm:ss}", Payment.ResponseTime?.ToUniversalTime()),
                     Amount = (double)StallAmount
                 });
 
