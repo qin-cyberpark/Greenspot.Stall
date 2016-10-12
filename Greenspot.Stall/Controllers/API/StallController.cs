@@ -18,6 +18,7 @@ namespace Greenspot.Stall.Controllers.API
 
         // GET api/<controller>
         [HttpGet]
+        [Route("api/stall/recommend")]
         public OperationResult<IList<StallViewModel>> Recommend([FromUri(Name = "c")]string category, [FromUri(Name = "a")]string area)
         {
             var result = new OperationResult<IList<StallViewModel>>(true);
@@ -29,13 +30,13 @@ namespace Greenspot.Stall.Controllers.API
                 {
                     Id = s.Id,
                     Name = s.StallName,
-                    Products = new List<StallProductViewModel>()
+                    InitialProducts = new List<StallProductViewModel>()
                 };
 
                 var products = s.SellingProducts.Take(3);
                 foreach (var p in products)
                 {
-                    stallVm.Products.Add(new StallProductViewModel()
+                    stallVm.InitialProducts.Add(new StallProductViewModel()
                     {
                         Id = p.Id,
                         Name = p.BaseName
@@ -50,6 +51,7 @@ namespace Greenspot.Stall.Controllers.API
         }
 
         [HttpGet]
+        [Route("api/stall/search")]
         public OperationResult<IList<StallViewModel>> Search([FromUri(Name = "c")]string category, [FromUri(Name = "a")]string area, [FromUri(Name = "k")]string keyword,
                                                             [FromUri(Name = "p")]int page = 0, [FromUri(Name = "ps")]int pageSize = 10)
         {
@@ -72,6 +74,7 @@ namespace Greenspot.Stall.Controllers.API
         }
 
         [HttpGet]
+        [Route("api/stall/{id}/GetDeliveryOptions")]
         public OperationResult<IList<DeliveryOptionCollectionViewModel>> GetDeliveryOptions(int id,
             [FromUri]string country, [FromUri]string city, [FromUri]string suburb, [FromUri]string area)
         {
@@ -210,6 +213,7 @@ namespace Greenspot.Stall.Controllers.API
         }
 
         [HttpGet]
+        [Route("api/stall/{id}/GetPickUpOptions")]
         public OperationResult<IList<DeliveryOptionCollectionViewModel>> GetPickUpOptions(int id)
         {
             var result = new OperationResult<IList<DeliveryOptionCollectionViewModel>>(true);
@@ -292,7 +296,8 @@ namespace Greenspot.Stall.Controllers.API
         }
 
         [HttpGet]
-        public OperationResult<StallViewModel> GetStallProducts(int id)
+        [Route("api/stall/{id}")]
+        public OperationResult<StallViewModel> Get(int id)
         {
             var result = new OperationResult<StallViewModel>(true);
 
@@ -313,15 +318,25 @@ namespace Greenspot.Stall.Controllers.API
                 {
                     Id = stall.Id,
                     Name = stall.StallName,
-                    Products = new List<StallProductViewModel>()
+                    Categories = stall.Categories,
+                    ShowCategory = stall.ShowCategory,
+                    InitialProducts = new List<StallProductViewModel>()
                 };
             }
 
-            foreach (var p in stall.SellingProducts)
+            //initial products
+            var initProducts = stall.SellingProducts;
+            if (stall.ShowCategory)
+            {
+                //recommend
+                initProducts = initProducts.Take(stall.RecommendNumber).ToList();
+            }
+
+            foreach (var p in initProducts)
             {
                 if (p.Active == true && p.Stock > 0 && p.Price != null)
                 {
-                    stallVM.Products.Add(new StallProductViewModel()
+                    stallVM.InitialProducts.Add(new StallProductViewModel()
                     {
                         Id = p.Id,
                         Name = p.BaseName,
@@ -337,6 +352,78 @@ namespace Greenspot.Stall.Controllers.API
             }
 
             result.Data = stallVM;
+            return result;
+        }
+
+        [HttpGet]
+        [Route("api/stall/{id}/category/{cateIdx?}")]
+        public OperationResult<IList<StallProductViewModel>> ProductsByCategory(int id, int cateIdx = 0)
+        {
+            var result = new OperationResult<IList<StallProductViewModel>>(true)
+            {
+                Data = new List<StallProductViewModel>()
+            };
+
+            //get stall 
+            Models.Stall stall = null;
+            using (var db = new StallEntities())
+            {
+                stall = Models.Stall.FindById(id, db);
+                if (stall == null)
+                {
+                    result.Succeeded = false;
+                    result.Message = "Can not load products for stall " + id;
+                    return result;
+                }
+            }
+
+
+
+            IList<Product> products;
+            if (Category.Recommend.Index == cateIdx)
+            {
+                products = stall.SellingProducts.Take(stall.RecommendNumber).ToList();
+            }
+            else
+            {
+                string category = null;
+                if (Category.Others.Index == cateIdx)
+                {
+                    category = Category.Others.Identifier;
+                }
+                else
+                {
+                    foreach (var c in stall.Categories)
+                    {
+                        if (c.Index == cateIdx)
+                        {
+                            category = c.Identifier;
+                            break;
+                        }
+                    }
+                }
+
+                products = stall.GetProductsByCategory(category);
+            }
+            foreach (var p in products)
+            {
+                if (p.Active == true && p.Stock > 0 && p.Price != null)
+                {
+                    result.Data.Add(new StallProductViewModel()
+                    {
+                        Id = p.Id,
+                        Name = p.BaseName,
+                        Image = p.Image,
+                        Price = p.PriceIncTax,
+                        StallId = p.StallId,
+                        StallName = p.Stall.StallName,
+                        Description = p.Description,
+                        Stock = p.Stock,
+                        TrackInventory = p.TrackInventory
+                    });
+                }
+            }
+
             return result;
         }
     }

@@ -2,8 +2,8 @@
     'use strict';
     var module = angular.module('greenspotStall');
     module.controller('CustomerController',
-        ['$scope', '$http', 'CommonService',
-    function ($scope, $http, commSrv) {
+        ['$window', '$scope', '$http', 'CommonService',
+    function ($window, $scope, $http, commSrv) {
         var vm = this;
 
         /* init */
@@ -16,21 +16,28 @@
         ///**********************************
         //stall home page
         //***********************************
-
-        vm.init_stallHome = function (stallId) {
-            vm.init();
-            vm.loadStallProducts(stallId);
-        }
-
-        /* load stall products */
-        vm.loadStallProducts = function (stallId) {
+        /* init stall */
+        vm.initStall = function (stallId) {
             commSrv.showLoading();
 
+            //reload
+            if (vm.restoreStall(stallId)) {
+                //restored
+                document.title = vm.currentStall.Name;
+                commSrv.hideLoading();
+                return;
+            }
+
             //load stall products
-            $http.get('/api/stall/GetStallProducts/' + stallId).success(function (result) {
+            $http.get('/api/stall/' + stallId).success(function (result) {
                 if (result.Succeeded) {
                     vm.currentStall = result.Data;
+                    vm.currentStall[0] = result.Data.InitialProducts;
+                    vm.currentStall.selectedCateIdx = 0;
+                    vm.currentStall.selectedCategoryProducts = result.Data.InitialProducts;
                     document.title = vm.currentStall.Name;
+                    //store
+                    vm.storeStall(vm.currentStall);
                 }
                 else {
                     console.log(result.Message);
@@ -43,6 +50,64 @@
                     vm.currentStall = null;
                 };
             });
+        }
+
+        vm.changeCategory = function (stallId, cateIdx) {
+            commSrv.showLoading();
+            var cateProducts = vm.currentStall[cateIdx];
+
+            if (cateProducts && cateProducts.length > 0) {
+
+                vm.currentStall.selectedCateIdx = cateIdx;
+                vm.currentStall.selectedCategoryProducts = cateProducts;
+                //store
+                vm.storeStall(vm.currentStall);
+
+                commSrv.hideLoading();
+            }
+
+            //load stall products
+            $http.get('/api/stall/' + stallId + '/category/' + cateIdx).success(function (result) {
+                if (result.Succeeded) {
+                    vm.currentStall[cateIdx] = result.Data;
+                    vm.currentStall.selectedCateIdx = cateIdx;
+                    vm.currentStall.selectedCategoryProducts = vm.currentStall[cateIdx];
+                    //store
+                    vm.storeStall(vm.currentStall);
+                }
+                else {
+                    console.log(result.Message);
+                }
+            }).error(function (error) {
+                console.log(error);
+            }).finally(function () {
+                commSrv.hideLoading();
+            });
+        }
+
+        vm.storeStall = function (stall) {
+            //store stall
+            if ($window.localStorage && stall) {
+                $window.localStorage.setItem("pre_stall", JSON.stringify(stall));
+            }
+        }
+
+        //restore result
+        vm.restoreStall = function (stallId) {
+            if (!$window.localStorage || !$window.localStorage["pre_stall"]) {
+                //no stored stall
+                return false;
+            }
+
+            var storedStall = JSON.parse($window.localStorage["pre_stall"]);
+            if (storedStall.Id != stallId) {
+                //stored stall not match
+                return false;
+            }
+
+            vm.currentStall = storedStall;
+
+            return true;
         }
 
 
@@ -162,7 +227,7 @@
             //clear unnecessary data
             vm.error = {}
             var orders = angular.copy(vm.orders);
-            angular.forEach(orders, function (order,orderIdx) {
+            angular.forEach(orders, function (order, orderIdx) {
                 delete order.deliveryOptionCollections;
                 delete order.pickUpOptionCollections;
                 delete order.optionCollections;

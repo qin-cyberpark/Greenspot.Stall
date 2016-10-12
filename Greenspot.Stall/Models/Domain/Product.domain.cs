@@ -73,17 +73,30 @@ namespace Greenspot.Stall.Models
         //    return GetProducts(condition, db).Take(50).ToList();
         //}
 
-        public static IList<Product> Search(StallEntities db, string category, string area, string keyworkd, int page = 0, int pageSize = 10)
+        public static IList<Product> Search(StallEntities db, string stallType, string area, string keyworkd, int page = 0, int pageSize = 10)
         {
-            Func<Product, bool> condition = delegate (Product p)
+            var products = db.Products.Include(x => x.Stall)
+                            .Where(x => Stall.StallStatus.Online.Equals(x.Stall.Status)
+                                    && x.Active && string.IsNullOrEmpty(x.VariantParentId));
+
+            if (!string.IsNullOrEmpty(stallType))
             {
-                return (p.Active == true && string.IsNullOrEmpty(p.VariantParentId)
-                            && (string.IsNullOrEmpty(category) || p.Stall.StallType.Equals(category))
-                            && (string.IsNullOrEmpty(area) || p.Stall.Area.StartsWith(area))
-                            && (string.IsNullOrEmpty(keyworkd) || p.BaseName.ToLower().Contains(keyworkd.ToLower())));
-            };
-            return GetProducts(condition, db).Skip(pageSize * page).Take(pageSize).ToList();
+                products = products.Where(x => x.Stall.StallType.Equals(stallType));
+            }
+
+            if (!string.IsNullOrEmpty(area))
+            {
+                products = products.Where(x => x.Stall.Area.StartsWith(area));
+            }
+
+            if (!string.IsNullOrEmpty(keyworkd))
+            {
+                products = products.Where(x => x.BaseName.ToLower().Contains(keyworkd.ToLower()));
+            }
+
+            return products.OrderBy(p => p.RecommendIndex).Skip(pageSize * page).Take(pageSize).ToList();
         }
+
 
         public static Product FindById(string id, StallEntities db)
         {
@@ -106,10 +119,10 @@ namespace Greenspot.Stall.Models
             return db.SaveChanges() > 0;
         }
 
-        private static IEnumerable<Product> GetProducts(Func<Product, bool> condition, StallEntities db)
-        {
-            return db.Products.Include(x => x.Stall).Where(x => Stall.StallStatus.Online.Equals(x.Stall.Status)).Where(condition);
-        }
+        //private static IEnumerable<Product> GetProducts(Func<Product, bool> condition, StallEntities db)
+        //{
+        //    return db.Products.Include(x => x.Stall).Where(x => Stall.StallStatus.Online.Equals(x.Stall.Status)).Where(condition);
+        //}
 
         public static Product ConvertFrom(VendProduct p, int stallId)
         {

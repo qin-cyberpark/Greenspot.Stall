@@ -104,6 +104,8 @@ namespace Greenspot.Stall.Models
 
         public int RecommendIndex { get; set; }
         public string Status { get; set; }
+        public bool ShowCategory { get; set; }
+        public int RecommendNumber { get; set; }
 
         [Column(TypeName = "text")]
         public string DeliveryPlanJsonString { get; set; }
@@ -114,6 +116,7 @@ namespace Greenspot.Stall.Models
         public virtual ICollection<Product> Products { get; set; }
 
         public virtual ICollection<VendWebhook> Webhooks { get; set; }
+
 
         //public virtual ICollection<StallContact> Contacts { get; set; }
 

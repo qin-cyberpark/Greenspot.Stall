@@ -2,30 +2,58 @@
 
 /* Stall Home Page */
 #stall-header {
-    padding: 10px;
+    padding: 5px;
     background-color: @color-primary;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row;
+    flex-flow: row;
 
     & > img {
         display: inline-block;
-        width: 40%;
+        height: 80px;
     }
 
     & .info {
-        float: right;
-        width: 60%;
-        text-align: center;
+        margin-left: 5px;
+        -webkit-flex: auto;
+        flex: auto;
 
         & > div {
             color: @color-grey-100;
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: bold;
         }
+    }
+}
 
-        & > button {
-            border: none;
-            color: @color-grey-300;
-            background-color: @color-primary;
-            font-size: 1rem;
+#stall-category {
+    padding: 5px;
+    background-color: @color-primary;
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+
+    & > div {
+        padding: 1px 10px 1px 10px;
+        margin: 2px;
+        background-color: @color-grey-300;
+        border-radius:10px;
+        font-size: 1.1rem;
+        text-align: center;
+        -webkit-flex: auto;
+        flex: auto;
+
+        &.selected {
+            background-color: @color-accent;
+            color: white;
+        }
+
+        &:last-child {
+            flex-grow: 99;
+            -webkit-flex-grow: 99;
+            background-color: transparent;
         }
     }
 }

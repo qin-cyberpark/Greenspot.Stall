@@ -50,7 +50,7 @@
 
             <!-- delivery -->
             <div class="message" ng-if="!order.hasDeliveryOption() && !order.hasPickUpOption()">当前地址最近没有配送计划</div>
-            <div class="message" ng-if="!order.hasDeliveryOption() && order.hasPickUpOption()">该店铺目前仅限自提</div>
+            <div class="message" ng-if="!order.hasDeliveryOption() && order.hasPickUpOption()">当前地址最近没有配送计划，仅限自提</div>
             <div layout="row" layout-align="space-between center" ng-if="order.hasDeliveryOption() || order.hasPickUpOption()">
                 <div>
                     <span ng-if="order.hasDeliveryOption() && !order.hasPickUpOption()">配送</span>

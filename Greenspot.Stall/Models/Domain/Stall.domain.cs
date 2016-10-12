@@ -20,6 +20,33 @@ namespace Greenspot.Stall.Models
             public const string Offline = "OFFLINE";
             public const string Online = "ONLINE";
         }
+
+        [NotMapped]
+        private IList<Category> _categories = null;
+
+        [NotMapped]
+        public IList<Category> Categories
+        {
+            get
+            {
+                if (_categories == null)
+                {
+                    _categories = new List<Category>();
+                    _categories.Add(Category.Recommend);
+                    var categories = SellingProducts.Select(x => x.Type).Distinct().ToList();
+                    foreach (var c in categories)
+                    {
+                        var cate = Category.Parse(c);
+                        if (cate != null)
+                        {
+                            _categories.Add(cate);
+                        }
+                    }
+                }
+                _categories = _categories.OrderBy(x => x.Index).ToList();
+                return _categories;
+            }
+        }
         public async Task<OperationResult<bool>> Init()
         {
             var result = new OperationResult(false);
@@ -317,6 +344,11 @@ namespace Greenspot.Stall.Models
 
         }
 
+        public IList<Product> GetProductsByCategory(string category)
+        {
+            return SellingProducts.Where(x => x.Type.Trim().Equals(category)).ToList();
+        }
+
         #region extend properties
         [NotMapped]
         public IList<Product> SellingProducts
@@ -328,12 +360,20 @@ namespace Greenspot.Stall.Models
                     return new List<Product>();
                 }
 
-                return GetProducts(delegate (Product x)
-                {
-                    return string.IsNullOrEmpty(x.VariantParentId) && x.Active == true && x.Stock > 0 && x.Price > 0;
-                }).ToList();
+                return Products.Where(x => string.IsNullOrEmpty(x.VariantParentId) && x.Active == true && x.Stock > 0 && x.Price > 0)
+                                .OrderBy(x => x.RecommendIndex).ToList();
             }
         }
+
+        //[NotMapped]
+        //public IList<Product> RecommendProducts
+        //{
+        //    get
+        //    {
+        //        return SellingProducts.Take(10).ToList();
+        //    }
+        //}
+
 
         [NotMapped]
         private DeliveryPlan _deliveryPlan = null;
@@ -368,14 +408,14 @@ namespace Greenspot.Stall.Models
         #endregion
 
         #region operation
-        private IEnumerable<Product> GetProducts(Func<Product, bool> condition)
-        {
-            if (Products == null)
-            {
-                return null;
-            }
-            return Products.Where(condition);
-        }
+        //private IEnumerable<Product> GetProducts(Func<Product, bool> condition)
+        //{
+        //    if (Products == null)
+        //    {
+        //        return null;
+        //    }
+        //    return Products.Where(condition);
+        //}
 
         public int? GetDistance(string destCountryCode, string destCity, string destSuburb)
         {

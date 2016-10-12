@@ -1,27 +1,52 @@
 /* Stall Home Page */
 #stall-header {
-  padding: 10px;
+  padding: 5px;
   background-color: #0097A7;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row;
+  flex-flow: row;
 }
 #stall-header > img {
   display: inline-block;
-  width: 40%;
+  height: 80px;
 }
 #stall-header .info {
-  float: right;
-  width: 60%;
-  text-align: center;
+  margin-left: 5px;
+  -webkit-flex: auto;
+  flex: auto;
 }
 #stall-header .info > div {
   color: #F5F5F5;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
 }
-#stall-header .info > button {
-  border: none;
-  color: #E0E0E0;
+#stall-category {
+  padding: 5px;
   background-color: #0097A7;
-  font-size: 1rem;
+  display: -webkit-flex;
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+}
+#stall-category > div {
+  padding: 1px 10px 1px 10px;
+  margin: 2px;
+  background-color: #E0E0E0;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  text-align: center;
+  -webkit-flex: auto;
+  flex: auto;
+}
+#stall-category > div.selected {
+  background-color: #EF6C00;
+  color: white;
+}
+#stall-category > div:last-child {
+  flex-grow: 99;
+  -webkit-flex-grow: 99;
+  background-color: transparent;
 }
 /* Product Page*/
 #product-content {

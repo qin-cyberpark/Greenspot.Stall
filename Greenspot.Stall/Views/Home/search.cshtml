@@ -11,10 +11,10 @@
         {
             <option value="nz:auckland:auckland-city">奥克兰City </option>
             <option value="nz:auckland:central-auckland">奥克兰中区</option>
-            <option value="nz:auckland:north-shore">奥克兰北岸 </option>
+            @*<option value="nz:auckland:north-shore">奥克兰北岸 </option>
             <option value="nz:auckland:east-auckland">奥克兰东区</option>
             <option value="nz:auckland:west-auckland"> 奥克兰西区 </option>
-            <option value="nz:auckland:south-auckland">奥克兰南区</option>
+            <option value="nz:auckland:south-auckland">奥克兰南区</option>*@
         }
     </select>
     <input class="search-text" type="text" placeholder="搜索" ng-model="ctrl.searchCondition.keyword">
@@ -27,12 +27,12 @@
     <!-- recommend stall -->
     <div ng-if="ctrl.searchCondition.isRecommend && ctrl.recommendStalls.hasRecord">
         <div class="section-caption">最新 | 推荐</div>
-        <md-card ng-repeat="stall in ctrl.recommendStalls.items" ng-click="gotoUrl('/stall/' + stall.Id)">
+        <md-card ng-repeat="stall in ctrl.recommendStalls.items" ng-click="ctrl.gotoStall(stall.Id)">
             <md-card-title>
                 <md-card-title-text layout-align="space-between center">
                     <span class="md-headline">
                         {{stall.Name}}</span>
-                    <span class="md-subhead" ng-repeat="product in stall.Products">
+                    <span class="md-subhead" ng-repeat="product in stall.InitialProducts">
                         {{product.Name}}
                     </span>
                 </md-card-title-text>

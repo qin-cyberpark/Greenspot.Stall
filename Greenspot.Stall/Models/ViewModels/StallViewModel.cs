@@ -10,7 +10,9 @@ namespace Greenspot.Stall.Models.ViewModels
         public int Id { get; set; }
         public string Name { get; set; }
         public string Image { get; set; }
-        public IList<StallProductViewModel> Products { get; set; }
+        public bool ShowCategory { get; set; }
+        public IList<StallProductViewModel> InitialProducts { get; set; }
+        public IList<Category> Categories { get; set; }
     }
 
     public class StallProductViewModel

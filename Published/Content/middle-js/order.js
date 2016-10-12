@@ -33,7 +33,7 @@
             }
 
             //get delivery options
-            var url = '/api/stall/GetDeliveryOptions/' + self.i + "?country=" + self.deliveryAddress.CountryId;
+            var url = '/api/stall/' + self.i + '/GetDeliveryOptions?country=' + self.deliveryAddress.CountryId;
             url += "&city=" + self.deliveryAddress.City;
             url += "&suburb=" + self.deliveryAddress.Suburb;
             url += "&area=" + self.deliveryAddress.Area;
@@ -63,7 +63,7 @@
             self.pickUpOptionCollections = [];
 
             //get pick up option
-            var url = '/api/stall/GetPickUpOptions/' + self.i;
+            var url = '/api/stall/' + self.i + '/GetPickUpOptions';
 
             $http.get(url).success(function (result) {
                 if (result.Succeeded) {

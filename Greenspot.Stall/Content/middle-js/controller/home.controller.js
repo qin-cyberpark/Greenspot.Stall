@@ -1,8 +1,8 @@
 ﻿(function () {
     'use strict';
     var module = angular.module('greenspotStall');
-    module.controller('HomeController', ['$window', '$location', '$http', 'CommonService',
-        function ($window, $location, $http, comSrv) {
+    module.controller('HomeController', ['$window', '$scope', '$location', '$http', 'CommonService',
+        function ($window, $scope, $location, $http, comSrv) {
             var vm = this;
 
             //loading
@@ -180,6 +180,12 @@
 
                 $location.search(vm.searchCondition.queryObject());
 
+            }
+
+            //
+            vm.gotoStall = function (stallId) {
+                $window.localStorage.removeItem("pre_stall");
+                $scope.gotoUrl('/stall/' + stallId);
             }
 
             //restore result

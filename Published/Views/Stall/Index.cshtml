@@ -5,17 +5,23 @@
     Page.Title = "久等了";
 }
 
-<div id="main-content" class="with-bottom-bar" ng-init="ctrl.loadStallProducts(@_stallId)">
+<div id="main-content" class="with-bottom-bar" ng-init="ctrl.initStall(@_stallId)">
     <div ng-if="ctrl.currentStall">
         <div id="stall-header">
-            <img ng-src="/stalls/{{ctrl.currentStall.Id}}/avatar.jpg"/>
+            <img ng-src="/stalls/{{ctrl.currentStall.Id}}/avatar.jpg" />
             <div class="info">
                 <div>{{ctrl.currentStall.Name}}</div>
-                <button>运费 | 营业时间 | 其他</button>
             </div>
         </div>
+        <div id="stall-category" ng-if="ctrl.currentStall.ShowCategory">
+            <div ng-repeat="cate in ctrl.currentStall.Categories" ng-click="ctrl.changeCategory(ctrl.currentStall.Id, cate.Index)"
+                 ng-class="{'selected':ctrl.currentStall.selectedCateIdx==cate.Index}">
+                {{cate.Chinese}}
+            </div>
+            <div></div>
+        </div>
         <div class="ProductList">
-            <div class="item" ng-repeat="product in ctrl.currentStall.Products track by product.Id">
+            <div class="item" ng-repeat="product in ctrl.currentStall.selectedCategoryProducts track by product.Id">
                 <div class="left">
                     <img src="/Static/img/no_image_s.png" ng-src="{{product.Image}}" ng-click="gotoUrl('/product/' + product.Id)" />
                 </div>

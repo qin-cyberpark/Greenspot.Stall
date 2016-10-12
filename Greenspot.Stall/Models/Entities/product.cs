@@ -59,7 +59,7 @@ namespace Greenspot.Stall.Models
         public string VariantOptionThreeValue { get; set; }
 
         [Column(TypeName = "bit")]
-        public bool? Active { get; set; }
+        public bool Active { get; set; }
 
         [StringLength(100)]
         public string Name { get; set; }
@@ -125,6 +125,8 @@ namespace Greenspot.Stall.Models
         public DateTime? UpdatedAt { get; set; }
 
         public DateTime? DeletedAt { get; set; }
+
+        public int RecommendIndex { get; set; }
 
         [NotMapped]
         public string LineNote { get; set; }

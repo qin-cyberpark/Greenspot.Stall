@@ -26,7 +26,7 @@ namespace Greenspot.Stall.Storefont.Tests
         {
             //load order
             var order = Order.FindById(8, _db);
-            order.Notify(_db, "opDxls3kxQNdVPqkKW4c8DAfDGX8").Wait();
+            //order.Notify(_db, "opDxls3kxQNdVPqkKW4c8DAfDGX8").Wait();
         }
 
 
