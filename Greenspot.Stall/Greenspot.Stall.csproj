@@ -227,6 +227,12 @@
     <Compile Include="Models\Domain\Receipt.cs" />
     <Compile Include="Models\Domain\Stall.domain.cs" />
     <Compile Include="Models\Domain\Common\Suburb.domain.cs" />
+    <Compile Include="Models\Domain\Stall.domain.multi.cs">
+      <DependentUpon>Stall.domain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Domain\Stall.domain.static.cs">
+      <DependentUpon>Stall.domain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\Category.cs" />
     <Compile Include="Models\Entities\CreditCard.cs" />
     <Compile Include="Models\Entities\DeliveryAddress.cs" />
@@ -253,14 +259,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Domain\Stall.domain.static.cs" />
     <Compile Include="Models\Domain\User.domain.cs" />
     <Compile Include="Models\Entities\Product.cs" />
     <Compile Include="Models\Entities\Stall.cs" />
     <Compile Include="Models\Entities\StallEntities.cs" />
     <Compile Include="Models\Entities\Comm\SuburbDistance.cs" />
     <Compile Include="Models\Entities\Identity\User.cs" />
-    <Compile Include="Models\Entities\VendWebhook.cs" />
     <Compile Include="Models\StallApplication.Log.cs" />
     <Compile Include="Models\StallApplication.Operating.cs" />
     <Compile Include="Models\StallApplication.VendToken.cs" />

@@ -17,16 +17,12 @@ namespace Greenspot.Stall.Controllers.MVC
         private StallEntities _db = new StallEntities();
 
         // GET: Manage
-        public ActionResult Stall(string id)
+        public ActionResult Stall(int id)
         {
-            var stall = Models.Stall.FindByVendPrefix(id, _db);
+            var stall = Models.Stall.FindById(id, _db);
             if (stall == null)
             {
                 stall = new Models.Stall();
-            }
-            else
-            {
-                _db.Entry(stall).Collection(x => x.Webhooks).Load();
             }
             return View(stall);
         }
@@ -48,6 +44,19 @@ namespace Greenspot.Stall.Controllers.MVC
             }
 
             return Content("stall id=" + id + "不存在");
+        }
+
+        public async Task<ActionResult> MultiInit(int id)
+        {
+            var result = await Models.Stall.InitMultiStall(id, _db);
+            if (!result.Succeeded)
+            {
+                return Content(result.Message);
+            }
+            else
+            {
+                return Content("done");
+            }
         }
 
         #region UpdateUserWechatInfo

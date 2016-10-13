@@ -64,6 +64,11 @@
     <Compile Include="Models\Domain\VendRegister.domain.cs" />
     <Compile Include="Models\Domain\VendRegisterSale.domain.cs" />
     <Compile Include="Models\Domain\VendWebhook.domain.cs" />
+    <Compile Include="Models\Entities\BaseApiResult.cs" />
+    <Compile Include="Models\Entities\Supplier.cs" />
+    <Compile Include="Models\Entities\Supplier.domain.cs">
+      <DependentUpon>Supplier.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities\VendPaymentType.cs" />
     <Compile Include="Models\Entities\VendProduct.cs" />
     <Compile Include="Models\Entities\VendRegister.cs" />

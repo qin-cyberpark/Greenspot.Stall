@@ -22,7 +22,7 @@ namespace Greenspot.Stall.Controllers.API
         public OperationResult<IList<StallViewModel>> Recommend([FromUri(Name = "c")]string category, [FromUri(Name = "a")]string area)
         {
             var result = new OperationResult<IList<StallViewModel>>(true);
-            var oriStalls = Models.Stall.GetRecommend(category, area, _db, 5);
+            var oriStalls = Models.Stall.GetRecommend(category, area, _db, 20);
             IList<StallViewModel> stalls = new List<StallViewModel>();
             foreach (var s in oriStalls)
             {

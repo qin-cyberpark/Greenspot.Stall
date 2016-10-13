@@ -60,6 +60,7 @@ namespace Greenspot.Stall.Controllers.MVC
 
             return View();
         }
+
         #region Register
         //Step 1
         public ActionResult Apply()
@@ -127,15 +128,14 @@ namespace Greenspot.Stall.Controllers.MVC
         }
 
         [HttpPost]
-        public async Task<ActionResult> InitStall()
+        public async Task<ActionResult> InitStall(int id)
         {
             try
             {
-                var prefex = Request["prefix"];
-                var stall = Models.Stall.FindByVendPrefix(prefex, _db);
+                var stall = Models.Stall.FindById(id, _db);
                 if (stall == null)
                 {
-                    StallApplication.BizErrorFormat("stall {0} not exist", prefex);
+                    StallApplication.BizErrorFormat("stall {0} not exist", id);
                     return View("Error");
                 }
 

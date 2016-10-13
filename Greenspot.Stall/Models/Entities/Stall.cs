@@ -13,7 +13,6 @@ namespace Greenspot.Stall.Models
         {
             //Contacts = new HashSet<StallContact>();
             Products = new HashSet<Product>();
-            Webhooks = new HashSet<VendWebhook>();
         }
 
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
@@ -88,6 +87,9 @@ namespace Greenspot.Stall.Models
         public string DeliveryProductId { get; set; }
 
         [StringLength(50)]
+        public string DiscountProductId { get; set; }
+
+        [StringLength(50)]
         public string PaymentTypeId { get; set; }
 
         [StringLength(250)]
@@ -107,6 +109,8 @@ namespace Greenspot.Stall.Models
         public bool ShowCategory { get; set; }
         public int RecommendNumber { get; set; }
 
+        public bool IsUnion { get; set;}
+
         [Column(TypeName = "text")]
         public string DeliveryPlanJsonString { get; set; }
 
@@ -115,7 +119,7 @@ namespace Greenspot.Stall.Models
 
         public virtual ICollection<Product> Products { get; set; }
 
-        public virtual ICollection<VendWebhook> Webhooks { get; set; }
+        //public virtual ICollection<VendWebhook> Webhooks { get; set; }
 
 
         //public virtual ICollection<StallContact> Contacts { get; set; }

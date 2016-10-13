@@ -19,7 +19,6 @@ namespace Greenspot.Stall.Models
             public const string Applied = "APPLIED";
             public const string Offline = "OFFLINE";
             public const string Online = "ONLINE";
-            public const string UnionMain = "UNION_MAIN";
         }
 
         [NotMapped]

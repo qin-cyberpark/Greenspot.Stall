@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 namespace Greenspot.SDK.Vend
 {
     public static class HttpUtility
@@ -126,9 +128,21 @@ namespace Greenspot.SDK.Vend
                                     string.Format("Bearer {0}",accessToken))});
         }
 
-        public static string GetRequestUri(string prefix, string requestUri)
+        public static string GetRequestUri(string prefix, string requestUri, SortedList<string,string> query = null)
         {
-            return string.Format("https://{0}.vendhq.com/api/{1}", prefix, requestUri);
+            var url = $"https://{prefix}.vendhq.com/api/{requestUri}";
+            if (query != null && query.Keys.Count > 0)
+            {
+                var key = query.Keys[0];
+                url += $"?{key}={query[key]}";
+                for (var i = 1; i < query.Count; i++)
+                {
+                    key = query.Keys[i];
+                    url += $"&{key}={query[key]}";
+                }
+            }
+
+            return url;
         }
     }
 }

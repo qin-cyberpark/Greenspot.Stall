@@ -262,7 +262,7 @@
         vm.init_orders = function (isPaid) {
 
             vm.init();
-
+            console.log("ispaid:", isPaid);
             if (isPaid) {
                 vm.cart.removeSelected();
             }

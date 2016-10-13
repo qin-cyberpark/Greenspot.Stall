@@ -128,6 +128,9 @@ namespace Greenspot.SDK.Vend
         public string TaxId { get; set; }
     }
 
+
+
+
     public partial class VendProduct
     {
         [JsonProperty("id")]
@@ -214,6 +217,9 @@ namespace Greenspot.SDK.Vend
         [JsonProperty("supply_price")]
         public decimal SupplyPrice { get; set; }
 
+        [JsonProperty("supplier")]
+        public Supplier Supplier { get; set; }
+
         [JsonProperty("account_code_purchase")]
         public string AccountCodePurchase { get; set; }
 
@@ -257,7 +263,7 @@ namespace Greenspot.SDK.Vend
         public DateTime? DeletedAt { get; set; }
     }
 
-    public class VendProductApiResult
+    public class VendProductApiResult : BaseApiResult
     {
         [JsonProperty("products")]
         public IList<VendProduct> Products { get; set; }

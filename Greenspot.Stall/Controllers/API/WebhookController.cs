@@ -39,7 +39,7 @@ namespace Greenspot.Stall.Controllers.API
                     else
                     {
                         //new or update
-                        var stall = Models.Stall.FindByRetailerId(vP.RetailerId, db);
+                        var stall = Models.Stall.FindByRetailerIdAndSuppilerName(vP.RetailerId, vP.Supplier?.Name ?? vP.SupplierName, db);
                         if (stall != null)
                         {
                             await stall.UpdateProductById(vP.Id, db);

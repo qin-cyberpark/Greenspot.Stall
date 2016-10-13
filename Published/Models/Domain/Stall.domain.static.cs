@@ -54,36 +54,6 @@ namespace Greenspot.Stall.Models
             return db.Stalls.Include(x => x.Products).FirstOrDefault(x => x.RetailerId.Equals(id));
         }
 
-        public static Stall FindByRetailerIdAndSuppilerName(string retailerId, string supplierName, StallEntities db)
-        {
-            if (string.IsNullOrEmpty(retailerId))
-            {
-                return null;
-            }
-
-            var stalls = db.Stalls.Include(x => x.Products).Where(x => retailerId.Equals(x.RetailerId));
-            var isUnion = stalls.Any(x => x.IsUnion);
-            if (!isUnion)
-            {
-                //normal stall
-                return stalls.FirstOrDefault();
-            }
-            else
-            {
-                //is union
-                var baseStall = stalls.FirstOrDefault(x => StallStatus.UnionMain.Equals(x.Status) && x.IsUnion);
-                if (string.IsNullOrEmpty(supplierName))
-                {
-                    //not supplier infor
-                    return baseStall;
-                }
-
-                //got stall
-                var stall = stalls.FirstOrDefault(x => supplierName.Equals(x.StallName) && x.IsUnion);
-                return stall ?? baseStall;
-            }
-        }
-
         /// <summary>
         /// 
         /// </summary>
@@ -97,17 +67,17 @@ namespace Greenspot.Stall.Models
         public static IList<Stall> Search(StallEntities db, string category, string area, string keyword, int page = 0, int pageSize = 10)
         {
             var result = db.Stalls.Include(x => x.Products).Where(x => StallStatus.Online.Equals(x.Status));
-            if (!string.IsNullOrEmpty(area))
+            if (string.IsNullOrEmpty(area))
             {
                 result = result.Where(x => x.Area.StartsWith(area));
             }
 
-            if (!string.IsNullOrEmpty(keyword))
+            if (string.IsNullOrEmpty(keyword))
             {
                 result = result.Where(x => x.StallName.ToLower().Contains(keyword.ToLower()));
             }
 
-            if (!string.IsNullOrEmpty(category))
+            if (string.IsNullOrEmpty(category))
             {
                 result = result.Where(x => x.StallType.Equals(category));
             }
@@ -126,12 +96,12 @@ namespace Greenspot.Stall.Models
         public static IList<Stall> GetRecommend(string category, string area, StallEntities db, int takeAmount = 50)
         {
             var result = db.Stalls.Include(x => x.Products).Where(x => StallStatus.Online.Equals(x.Status));
-            if (!string.IsNullOrEmpty(area))
+            if (string.IsNullOrEmpty(area))
             {
                 result = result.Where(x => x.Area.StartsWith(area));
             }
 
-            if (!string.IsNullOrEmpty(category))
+            if (string.IsNullOrEmpty(category))
             {
                 result = result.Where(x => x.StallType.Equals(category));
             }
