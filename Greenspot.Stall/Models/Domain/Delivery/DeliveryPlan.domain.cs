@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Greenspot.Stall.Models.Settings;
 namespace Greenspot.Stall.Models
 {
     public partial class DeliveryPlan
@@ -35,7 +35,7 @@ namespace Greenspot.Stall.Models
                         if (planItem.Calculators != null && planItem.Calculators.Count > 0)
                         {
                             //get fee
-                            fee = planItem.Calculators[0].Calculate(distanceInMeter);
+                            fee = planItem.Calculators[0].Calculate(DateTime.Now, null, null, null, distanceInMeter);
                         }
 
                         if (fee == null)
@@ -54,8 +54,8 @@ namespace Greenspot.Stall.Models
                         {
                             From = period.From,
                             To = period.To,
-                            IsTimeDivisible = period.IsTimeDivisible,
-                            OptionDivideMinutes = period.OptionDivideMinutes > 0 ? period.OptionDivideMinutes : OptionDivideMinutes,
+                            //IsTimeDivisible = period.IsTimeDivisible,
+                            //OptionDivideMinutes = period.OptionDivideMinutes > 0 ? period.OptionDivideMinutes : OptionDivideMinutes,
                             PickUpAddress = planItem.PickUpAddress,
                             IsPickUp = planItem.IsPickUp,
                             Areas = planItem.Areas,
@@ -107,7 +107,7 @@ namespace Greenspot.Stall.Models
                     if (planItem.Calculators != null && planItem.Calculators.Count > 0)
                     {
                         //get fee
-                        fee = planItem.Calculators[0].Calculate(distanceInMeter);
+                        fee = planItem.Calculators[0].Calculate(DateTime.Now, null, null, null, distanceInMeter);
                     }
 
                     if (fee == null)
@@ -165,8 +165,8 @@ namespace Greenspot.Stall.Models
                                 {
                                     From = newPair.From,
                                     To = newPair.To,
-                                    IsTimeDivisible = period.IsTimeDivisible,
-                                    OptionDivideMinutes = period.OptionDivideMinutes > 0 ? period.OptionDivideMinutes : OptionDivideMinutes,
+                                    //IsTimeDivisible = period.IsTimeDivisible,
+                                    //OptionDivideMinutes = period.OptionDivideMinutes > 0 ? period.OptionDivideMinutes : OptionDivideMinutes,
                                     PickUpAddress = planItem.PickUpAddress,
                                     IsPickUp = planItem.IsPickUp,
                                     Areas = planItem.Areas,
@@ -182,8 +182,8 @@ namespace Greenspot.Stall.Models
                             {
                                 From = currPair.From,
                                 To = currPair.To,
-                                IsTimeDivisible = period.IsTimeDivisible,
-                                OptionDivideMinutes = period.OptionDivideMinutes > 0 ? period.OptionDivideMinutes : OptionDivideMinutes,
+                                //IsTimeDivisible = period.IsTimeDivisible,
+                                //OptionDivideMinutes = period.OptionDivideMinutes > 0 ? period.OptionDivideMinutes : OptionDivideMinutes,
                                 PickUpAddress = planItem.PickUpAddress,
                                 IsPickUp = planItem.IsPickUp,
                                 Areas = planItem.Areas,
@@ -239,7 +239,7 @@ namespace Greenspot.Stall.Models
                         if (planItem.Calculators != null && planItem.Calculators.Count > 0)
                         {
                             //get fee
-                            fee = planItem.Calculators[0].Calculate(null);
+                            fee = planItem.Calculators[0].Calculate(DateTime.Now, null, null, null, null);
                         }
 
                         if (fee == null)
@@ -251,8 +251,8 @@ namespace Greenspot.Stall.Models
                         {
                             From = period.From,
                             To = period.To,
-                            IsTimeDivisible = period.IsTimeDivisible,
-                            OptionDivideMinutes = period.OptionDivideMinutes > 0 ? period.OptionDivideMinutes : OptionDivideMinutes,
+                            //IsTimeDivisible = period.IsTimeDivisible,
+                            //OptionDivideMinutes = period.OptionDivideMinutes > 0 ? period.OptionDivideMinutes : OptionDivideMinutes,
                             PickUpAddress = planItem.PickUpAddress,
                             IsPickUp = planItem.IsPickUp,
                             Areas = planItem.Areas,
@@ -281,7 +281,7 @@ namespace Greenspot.Stall.Models
                     if (planItem.Calculators != null && planItem.Calculators.Count > 0)
                     {
                         //get fee
-                        fee = planItem.Calculators[0].Calculate(null);
+                        fee = planItem.Calculators[0].Calculate(DateTime.Now, null, null, null, null);
                     }
 
                     if (fee == null)
@@ -335,8 +335,8 @@ namespace Greenspot.Stall.Models
                                 {
                                     From = newPair.From,
                                     To = newPair.To,
-                                    IsTimeDivisible = period.IsTimeDivisible,
-                                    OptionDivideMinutes = period.OptionDivideMinutes > 0 ? period.OptionDivideMinutes : OptionDivideMinutes,
+                                    //IsTimeDivisible = period.IsTimeDivisible,
+                                    //OptionDivideMinutes = period.OptionDivideMinutes > 0 ? period.OptionDivideMinutes : OptionDivideMinutes,
                                     PickUpAddress = planItem.PickUpAddress,
                                     IsPickUp = planItem.IsPickUp,
                                     Areas = planItem.Areas,
@@ -350,8 +350,8 @@ namespace Greenspot.Stall.Models
                         {
                             From = currPair.From,
                             To = currPair.To,
-                            IsTimeDivisible = period.IsTimeDivisible,
-                            OptionDivideMinutes = period.OptionDivideMinutes > 0 ? period.OptionDivideMinutes : OptionDivideMinutes,
+                            //IsTimeDivisible = period.IsTimeDivisible,
+                            //OptionDivideMinutes = period.OptionDivideMinutes > 0 ? period.OptionDivideMinutes : OptionDivideMinutes,
                             PickUpAddress = planItem.PickUpAddress,
                             IsPickUp = planItem.IsPickUp,
                             Areas = planItem.Areas,

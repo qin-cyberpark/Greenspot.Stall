@@ -204,7 +204,7 @@ namespace Greenspot.Stall.Models
             AddSeparator(' ');
 
             //slogan
-            AddRow("------久等了点餐 让您久等了------", ReceiptFont.Font16);
+            AddRow("------ 久等啦点餐 让您久等啦 ------", ReceiptFont.Font16);
         }
 
         public float Height

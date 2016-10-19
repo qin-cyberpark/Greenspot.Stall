@@ -125,8 +125,8 @@ namespace Greenspot.Stall.Controllers.MVC
                 addr.Address2 = clntObj.Address2;
                 addr.Suburb = clntObj.AddressObject.Suburb;
                 addr.City = clntObj.AddressObject.CityTown;
-                addr.State = "";
-                addr.CountryId = "NZ";
+                addr.StateOrRegion = "";
+                addr.CountryCode = "NZ";
                 addr.Postcode = clntObj.AddressObject.Postcode;
                 addr.Area = clntObj.Area;
 

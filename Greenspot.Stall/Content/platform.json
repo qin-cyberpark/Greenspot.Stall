@@ -1,0 +1,71 @@
+{
+    "MaxAdvancedOrderDays": 5,
+    "MinOrderAdvancedMinutes": 30,
+    "Delivery": {
+        "MinOrderAmount": 25,
+        "FreeDeliveryOrderAmount": 50,
+        "FeeCalculators": [
+            {
+                "$type": "Greenspot.Stall.Models.FixedFeeCalculator, Greenspot.Stall",
+                "Area": [
+                    "NZ-Auckland-Auckland City"
+                ],
+                "Fee": 10.00
+            }
+        ],
+        "Default": [
+            {
+                "Periods": [
+                    {
+                        "DaysOfMonth": [],
+                        "DaysOfWeek": [],
+                        "Dates": [],
+                        "Times": [
+                            "11:00-21:00"
+                        ],
+                        "IsTimeDivisible": false,
+                        "DivideMinutes": 30
+                    }
+                ],
+                "Areas": [
+                    "NZ-Auckland-Central Auckland",
+                    "NZ-Auckland-Auckland City"
+                ],
+                "FeeCalculators": [
+                    {
+                        "$type": "Greenspot.Stall.Models.FixedFeeCalculator, Greenspot.Stall",
+                        "Fee": 5.00
+                    }
+                ]
+            }
+        ],
+        "Temporary": [
+            {
+                "Periods": [
+                    {
+                        "DaysOfMonth": [],
+                        "DaysOfWeek": [],
+                        "Dates": [
+                            "11/10/2016"
+                        ],
+                        "Times": [
+                            "15:00-18:00"
+                        ],
+                        "IsTimeDivisible": false,
+                        "OptionDivideMinutes": 30
+                    }
+                ],
+                "Areas": [
+                    "NZ-Auckland-Central Auckland",
+                    "NZ-Auckland-Auckland City"
+                ],
+                "FeeCalculators": [
+                    {
+                        "$type": "Greenspot.Stall.Models.FixedFeeCalculator, Greenspot.Stall",
+                        "Fee": 5.00
+                    }
+                ]
+            }
+        ]
+    }
+}

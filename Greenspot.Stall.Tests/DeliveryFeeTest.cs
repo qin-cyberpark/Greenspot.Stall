@@ -4,7 +4,7 @@ using Greenspot.Stall.Models;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
-
+using Greenspot.Stall.Models.Settings;
 namespace Greenspot.Stall.Tests
 {
     [TestClass]
@@ -97,23 +97,23 @@ namespace Greenspot.Stall.Tests
                         },
                         Calculators = new List<DeliveryFeeCalculator>
                         {
-                            new ByRangeCalculator()
+                            new ByDistanceRangeCalculator()
                             {
-                                Ranges = new List<ByRangeCalculator.DistanceRange>
+                                Ranges = new List<ByDistanceRangeCalculator.DistanceRange>
                                 {
-                                    new ByRangeCalculator.DistanceRange ()
+                                    new ByDistanceRangeCalculator.DistanceRange ()
                                     {
                                         From = 0,
                                         To = 10,
                                         Fee = 5
                                     },
-                                    new ByRangeCalculator.DistanceRange ()
+                                    new ByDistanceRangeCalculator.DistanceRange ()
                                     {
                                         From = 10,
                                         To = 20,
                                         Fee = 10
                                     },
-                                    new ByRangeCalculator.DistanceRange ()
+                                    new ByDistanceRangeCalculator.DistanceRange ()
                                     {
                                         From = 20,
                                         To = 30,

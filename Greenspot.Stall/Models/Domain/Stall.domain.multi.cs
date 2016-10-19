@@ -102,7 +102,7 @@ namespace Greenspot.Stall.Models
                         City = supplier.Contact.PhysicalCity,
                         CountryId = supplier.Contact.PhysicalCountryId,
                         Postcode = supplier.Contact.PhysicalPostcode,
-                        State = supplier.Contact.PhysicalState,
+                        StateOrRegion = supplier.Contact.PhysicalState,
                         Suburb = supplier.Contact.PhysicalSuburb,
                         TimeZone = baseStall.TimeZone,
                         Status = StallStatus.Offline

@@ -65,7 +65,7 @@ namespace Greenspot.Stall.Models
         public string Postcode { get; set; }
 
         [StringLength(50)]
-        public string State { get; set; }
+        public string StateOrRegion { get; set; }
 
         [StringLength(50)]
         public string Suburb { get; set; }
@@ -112,10 +112,7 @@ namespace Greenspot.Stall.Models
         public bool IsUnion { get; set;}
 
         [Column(TypeName = "text")]
-        public string DeliveryPlanJsonString { get; set; }
-
-        [Column(TypeName = "text")]
-        public string OpenTimeJsonString { get; set; }
+        public string SettingJson { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
 

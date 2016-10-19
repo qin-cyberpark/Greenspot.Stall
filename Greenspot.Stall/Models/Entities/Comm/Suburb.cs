@@ -18,7 +18,7 @@ namespace Greenspot.Stall.Models
         public string  CountryCode { get; set; }
 
         [StringLength(50)]
-        public string State { get; set; }
+        public string StateOrRegion { get; set; }
 
         [StringLength(100)]
         public string City { get; set; }

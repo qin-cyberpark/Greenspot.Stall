@@ -14,6 +14,9 @@ namespace Greenspot.Stall.Models
         [StringLength(3)]
         public string DepartureCountryCode { get; set; }
 
+        [StringLength(50)]
+        public string DepartureStateOrRegion { get; set; }
+
         [StringLength(100)]
         public string DepartureCity { get; set; }
 
@@ -25,6 +28,9 @@ namespace Greenspot.Stall.Models
 
         [StringLength(3)]
         public string DestinationCountryCode { get; set; }
+
+        [StringLength(50)]
+        public string DestinationStateOrRegion { get; set; }
 
         [StringLength(100)]
         public string DestinationCity { get; set; }

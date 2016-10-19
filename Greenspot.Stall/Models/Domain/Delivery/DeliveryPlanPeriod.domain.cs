@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Greenspot.Stall.Models.Settings;
 
 namespace Greenspot.Stall.Models
 {
@@ -82,9 +83,9 @@ namespace Greenspot.Stall.Models
                     {
                         //add date time
                         From = new DateTime(dtStart.Year, dtStart.Month, dtStart.Day, timePair[0].Hour, timePair[0].Minute, 0),
-                        To = new DateTime(dtStart.Year, dtStart.Month, dtStart.Day, timePair[1].Hour, timePair[1].Minute, 0),
-                        IsTimeDivisible = IsTimeDivisible,
-                        OptionDivideMinutes = OptionDivideMinutes
+                        To = new DateTime(dtStart.Year, dtStart.Month, dtStart.Day, timePair[1].Hour, timePair[1].Minute, 0)
+                        //IsTimeDivisible = IsTimeDivisible,
+                        //OptionDivideMinutes = OptionDivideMinutes
                     };
                     if (newPair.To < newPair.From)
                     {

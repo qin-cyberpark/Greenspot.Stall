@@ -98,7 +98,7 @@ namespace Greenspot.Stall.Models
             City = outlet.PhysicalCity;
             CountryId = outlet.PhysicalCountryId;
             Postcode = outlet.PhysicalPostcode;
-            State = outlet.PhysicalState;
+            StateOrRegion = outlet.PhysicalState;
             Suburb = outlet.PhysicalSuburb;
             TimeZone = outlet.TimeZone;
 
@@ -336,21 +336,30 @@ namespace Greenspot.Stall.Models
 
 
         [NotMapped]
-        private DeliveryPlan _deliveryPlan = null;
         public DeliveryPlan DeliveryPlan
         {
             get
             {
-                if (_deliveryPlan == null)
+                return new DeliveryPlan();
+            }
+        }
+
+        [NotMapped]
+        private Setting _setting = null;
+        public Setting Setting
+        {
+            get
+            {
+                if (_setting == null)
                 {
-                    if (string.IsNullOrEmpty(DeliveryPlanJsonString))
+                    if (string.IsNullOrEmpty(SettingJson))
                     {
-                        return new DeliveryPlan();
+                        return new Setting();
                     }
 
                     try
                     {
-                        _deliveryPlan = JsonConvert.DeserializeObject<DeliveryPlan>(DeliveryPlanJsonString,
+                        _setting = JsonConvert.DeserializeObject<Setting>(SettingJson,
                             new JsonSerializerSettings
                             {
                                 TypeNameHandling = TypeNameHandling.Auto
@@ -358,11 +367,11 @@ namespace Greenspot.Stall.Models
                     }
                     catch (Exception ex)
                     {
-                        return new DeliveryPlan();
+                        return new Setting();
                     }
                 }
 
-                return _deliveryPlan;
+                return _setting;
             }
         }
         #endregion

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Greenspot.Stall.Models.Settings;
 namespace Greenspot.Stall.Models
 {
     public partial class DeliveryPlanItem
