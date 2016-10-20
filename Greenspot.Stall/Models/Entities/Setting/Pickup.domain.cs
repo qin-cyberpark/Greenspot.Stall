@@ -11,7 +11,7 @@ namespace Greenspot.Stall.Models.Settings
         {
             var result = new List<PickupOption>();
 
-            if (!Enabled)
+            if (!Available)
             {
                 return result;
             }
@@ -40,9 +40,9 @@ namespace Greenspot.Stall.Models.Settings
             {
                 pairs = openingHours.GetDateTimePairs(startDate, nextDays);
             }
-            else if (Hours != null)
+            else if (DateTimes != null)
             {
-                pairs = Hours.GetDateTimePairs(startDate, nextDays);
+                pairs = DateTimes.GetDateTimePairs(startDate, nextDays);
             }
             else
             {

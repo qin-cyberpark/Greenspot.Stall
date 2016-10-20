@@ -31,9 +31,9 @@ namespace Greenspot.Stall.Models.Settings
             var result = new List<DeliveryOption>();
 
             IList<DateTimePair> pairs;
-            if (Hours != null)
+            if (DateTimes != null)
             {
-                pairs = Hours.GetDateTimePairs(startDate, nextDays);
+                pairs = DateTimes.GetDateTimePairs(startDate, nextDays);
             }
             else
             {
@@ -49,7 +49,7 @@ namespace Greenspot.Stall.Models.Settings
                     DivisionType = p.DivisionType,
                     DivisionMinutes = p.DivisionMinutes,
                     Areas = Areas,
-                    Calculators = Calculators
+                    Calculator = Calculator
                 });
             }
 

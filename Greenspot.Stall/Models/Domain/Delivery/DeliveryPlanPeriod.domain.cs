@@ -12,91 +12,91 @@ namespace Greenspot.Stall.Models
         public IList<DateTimePair> GetDateTimePairs(DateTime initDate, int nextDays)
         {
             var result = new List<DateTimePair>();
-            if (nextDays <= 0)
-            {
-                return result;
-            }
+            //if (nextDays <= 0)
+            //{
+            //    return result;
+            //}
 
-            //parse time
-            var availTimes = ParseTimes(Times);
-            if (availTimes == null || availTimes.Count == 0)
-            {
-                //time is necessary
-                return result;
-            }
+            ////parse time
+            //var availTimes = ParseTimes(Times);
+            //if (availTimes == null || availTimes.Count == 0)
+            //{
+            //    //time is necessary
+            //    return result;
+            //}
 
-            //parse day of month
-            var availDaysOfMonth = ParseDays(DaysOfMonth);
-            if (availDaysOfMonth == null)
-            {
-                //daysOfMonth parse error
-                return result;
-            }
+            ////parse day of month
+            //var availDaysOfMonth = ParseDays(DaysOfMonth);
+            //if (availDaysOfMonth == null)
+            //{
+            //    //daysOfMonth parse error
+            //    return result;
+            //}
 
-            //parse day of week
-            var availDaysOfWeek = ParseDays(DaysOfWeek);
-            if (availDaysOfWeek == null)
-            {
-                //daysOfMonth parse error
-                return result;
-            }
-
-
-            //parse date
-            var availDates = ParseDates(Dates);
-            if (availDates == null)
-            {
-                //daysOfMonth parse error
-                return result;
-            }
-
-            //calc
-            var dtStart = initDate.Date;
-            var dtTo = dtStart.AddDays(nextDays);
-            while (dtStart <= dtTo)
-            {
-                //check day of month
-                if (availDaysOfMonth.Count > 0 && !availDaysOfMonth.Contains(dtStart.Day))
-                {
-                    dtStart = dtStart.AddDays(1);
-                    continue;
-                }
-
-                //check day of week
-                if (availDaysOfWeek.Count > 0 && !availDaysOfWeek.Contains((int)dtStart.DayOfWeek))
-                {
-                    dtStart = dtStart.AddDays(1);
-                    continue;
-                }
-
-                //check dates
-                if (availDates.Count > 0 && !availDates.Contains(dtStart))
-                {
-                    dtStart = dtStart.AddDays(1);
-                    continue;
-                }
+            ////parse day of week
+            //var availDaysOfWeek = ParseDays(DaysOfWeek);
+            //if (availDaysOfWeek == null)
+            //{
+            //    //daysOfMonth parse error
+            //    return result;
+            //}
 
 
-                foreach (var timePair in availTimes)
-                {
-                    var newPair = new DateTimePair()
-                    {
-                        //add date time
-                        From = new DateTime(dtStart.Year, dtStart.Month, dtStart.Day, timePair[0].Hour, timePair[0].Minute, 0),
-                        To = new DateTime(dtStart.Year, dtStart.Month, dtStart.Day, timePair[1].Hour, timePair[1].Minute, 0)
-                        //IsTimeDivisible = IsTimeDivisible,
-                        //OptionDivideMinutes = OptionDivideMinutes
-                    };
-                    if (newPair.To < newPair.From)
-                    {
-                        newPair.To = newPair.To.AddDays(1);
-                    }
+            ////parse date
+            //var availDates = ParseDates(Dates);
+            //if (availDates == null)
+            //{
+            //    //daysOfMonth parse error
+            //    return result;
+            //}
 
-                    result.Add(newPair);
-                }
+            ////calc
+            //var dtStart = initDate.Date;
+            //var dtTo = dtStart.AddDays(nextDays);
+            //while (dtStart <= dtTo)
+            //{
+            //    //check day of month
+            //    if (availDaysOfMonth.Count > 0 && !availDaysOfMonth.Contains(dtStart.Day))
+            //    {
+            //        dtStart = dtStart.AddDays(1);
+            //        continue;
+            //    }
 
-                dtStart = dtStart.AddDays(1);
-            }
+            //    //check day of week
+            //    if (availDaysOfWeek.Count > 0 && !availDaysOfWeek.Contains((int)dtStart.DayOfWeek))
+            //    {
+            //        dtStart = dtStart.AddDays(1);
+            //        continue;
+            //    }
+
+            //    //check dates
+            //    if (availDates.Count > 0 && !availDates.Contains(dtStart))
+            //    {
+            //        dtStart = dtStart.AddDays(1);
+            //        continue;
+            //    }
+
+
+            //    foreach (var timePair in availTimes)
+            //    {
+            //        var newPair = new DateTimePair()
+            //        {
+            //            //add date time
+            //            From = new DateTime(dtStart.Year, dtStart.Month, dtStart.Day, timePair[0].Hour, timePair[0].Minute, 0),
+            //            To = new DateTime(dtStart.Year, dtStart.Month, dtStart.Day, timePair[1].Hour, timePair[1].Minute, 0)
+            //            //IsTimeDivisible = IsTimeDivisible,
+            //            //OptionDivideMinutes = OptionDivideMinutes
+            //        };
+            //        if (newPair.To < newPair.From)
+            //        {
+            //            newPair.To = newPair.To.AddDays(1);
+            //        }
+
+            //        result.Add(newPair);
+            //    }
+
+            //    dtStart = dtStart.AddDays(1);
+            //}
 
             return result;
         }

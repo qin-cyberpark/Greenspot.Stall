@@ -11,9 +11,9 @@ namespace Greenspot.Stall.Models.ViewModels
         public DateTime Date { get; set; }
 
         [JsonProperty(PropertyName = "ApplicableOpts")]
-        public IList<DeliveryOption> ApplicableOptions { get; set; } = new List<DeliveryOption>();
+        public IList<DeliveryOrPickupOption> ApplicableOptions { get; set; } = new List<DeliveryOrPickupOption>();
 
         [JsonProperty(PropertyName = "OtherOpts")]
-        public IList<DeliveryOption> OtherOptions { get; set; } = new List<DeliveryOption>();
+        public IList<DeliveryOrPickupOption> OtherOptions { get; set; } = new List<DeliveryOrPickupOption>();
     }
 }

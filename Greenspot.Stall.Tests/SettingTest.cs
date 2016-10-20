@@ -218,7 +218,7 @@ namespace Greenspot.Stall.Tests
             //definition
             var definition = new PickupDefinition()
             {
-                Enabled = true,
+                Available = true,
                 Rules = new List<PickupRule>()
             };
 
@@ -226,7 +226,7 @@ namespace Greenspot.Stall.Tests
             definition.Rules.Add(new PickupRule()
             {
                 Addresses = { "Address A", "Address B" },
-                Hours = new DateTimeTerm()
+                DateTimes = new DateTimeTerm()
                 {
                     Inclusive = new List<DateTimePeriod> { new DateTimePeriod { Times = { "10:00-17:00" }, Dates = { "2016/10/20" } } }
                 }
@@ -234,7 +234,7 @@ namespace Greenspot.Stall.Tests
             definition.Rules.Add(new PickupRule()
             {
                 Addresses = { "Address C", "Address D" },
-                Hours = new DateTimeTerm()
+                DateTimes = new DateTimeTerm()
                 {
                     Inclusive = new List<DateTimePeriod> { new DateTimePeriod { Times = { "12:00-18:00" }, Dates = { "2016/10/21" } } }
                 }
@@ -263,9 +263,15 @@ namespace Greenspot.Stall.Tests
             {
                 MinOrderAmount = 25,
                 FreeDeliveryOrderAmount = 50,
-                DefaultCalculators = new List<DeliveryFeeCalculator>
+                DefaultCalculator = new DeliveryFeeCalculator()
                 {
-                    new FixedFeeCalculator() { Fee = 10}
+                    Rules = new List<IDeliveryFeeRule>()
+                        {
+                            new BasicDeliveryFeeRule()
+                            {
+                                Fee = 10
+                            }
+                        }
                 },
                 Rules = new List<DeliveryRule>(),
             };
@@ -273,38 +279,55 @@ namespace Greenspot.Stall.Tests
             definition.Rules.Add(new DeliveryRule()
             {
                 Areas = { "Area A", "Area B" },
-                Hours = new DateTimeTerm()
+                DateTimes = new DateTimeTerm()
                 {
                     DivisionType = TimeDivisionTypes.DivideToPeriod,
                     DivisionMinutes = 45,
                     Inclusive = new List<DateTimePeriod> { new DateTimePeriod { Times = { "11:00-13:00" }, DaysOfWeek = { "5" } } ,
-                    new DateTimePeriod { Times = { "14:00-18:00" }, DaysOfMonth = { "20" } }},
+                                                            new DateTimePeriod { Times = { "14:00-18:00" }, DaysOfMonth = { "20" } }},
                 },
-                Calculators = new List<DeliveryFeeCalculator>
+                Calculator = new DeliveryFeeCalculator()
                 {
-                    new FixedFeeCalculator() { Fee = 5}
+                    Rules = new List<IDeliveryFeeRule>()
+                    {
+                        new BasicDeliveryFeeRule()
+                        {
+                            Fee = 10
+                        }
+                    }
                 }
             });
 
             definition.Rules.Add(new DeliveryRule()
             {
                 Areas = { "Area C", "Area D" },
-                Hours = new DateTimeTerm()
+                DateTimes = new DateTimeTerm()
                 {
                     DivisionType = TimeDivisionTypes.DivideToTime,
                     DivisionMinutes = 1,
                     Inclusive = new List<DateTimePeriod> { new DateTimePeriod { Times = { "11:00-21:00" } } },
                     Exclusive = new List<DateTimePeriod> { new DateTimePeriod { Times = { "11:00-21:00" }, DaysOfWeek = { "4-5" } } },
                 },
-                Calculators = new List<DeliveryFeeCalculator>
+                Calculator = new DeliveryFeeCalculator
                 {
-                    new FixedFeeCalculator() { Fee = 6}
-    }
+                    Rules = new List<IDeliveryFeeRule>()
+                    {
+                        new BasicDeliveryFeeRule()
+                        {
+                            Fee = 6
+                        }
+                    }
+                }
             });
 
             //result
             var opts = definition.GetOptions(new DateTime(2016, 10, 19), 3);
             Assert.AreEqual(4, opts.Count);
+            Assert.AreEqual("Area C", opts[0].Areas[0]);
+            Assert.AreEqual(new DateTime(2016, 10, 19, 21, 0, 0), opts[0].To);
+
+            Assert.AreEqual("Area B", opts[1].Areas[1]);
+            Assert.AreEqual(new DateTime(2016, 10, 20, 18, 0, 0), opts[1].To);
         }
 
         [TestMethod]

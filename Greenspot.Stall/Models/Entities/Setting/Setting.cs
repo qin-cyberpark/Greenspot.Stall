@@ -8,7 +8,7 @@ namespace Greenspot.Stall.Models
     public partial class Setting
     {
         [JsonProperty("MaxAdvancedOrderDays")]
-        public decimal MaxAdvancedOrderDays { get; set; }
+        public int MaxAdvancedOrderDays { get; set; }
 
         [JsonProperty("MinOrderAdvancedMinutes")]
         public decimal MinOrderAdvancedMinutes { get; set; }

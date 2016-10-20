@@ -213,7 +213,7 @@
     <Compile Include="Models\Domain\Common\Area.domain.cs" />
     <Compile Include="Models\Domain\DeliveryAddress.domain.cs" />
     <Compile Include="Models\Domain\Delivery\ByRangeCalculator.domain.cs" />
-    <Compile Include="Models\Domain\Delivery\DeliveryOption.domain.cs" />
+    <Compile Include="Models\Domain\Delivery\DeliveryOrPickupOption.domain.cs" />
     <Compile Include="Models\Domain\Delivery\DeliveryPlanItem.domain.cs" />
     <Compile Include="Models\Domain\Delivery\DeliveryPlanPeriod.domain.cs" />
     <Compile Include="Models\Domain\Identity\Role.domain.cs" />
@@ -226,6 +226,9 @@
     <Compile Include="Models\Domain\Receipt.cs" />
     <Compile Include="Models\Domain\Stall.domain.cs" />
     <Compile Include="Models\Domain\Common\Suburb.domain.cs" />
+    <Compile Include="Models\Domain\Stall.domain.delivery.cs">
+      <DependentUpon>Stall.domain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Domain\Stall.domain.multi.cs">
       <DependentUpon>Stall.domain.cs</DependentUpon>
     </Compile>
@@ -240,10 +243,8 @@
     <Compile Include="Models\Entities\Setting\Delivery.domain.cs">
       <DependentUpon>Delivery.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Setting\DeliveryFeeCalculator.cs" />
-    <Compile Include="Models\Entities\Delivery\DeliveryPlan.cs" />
-    <Compile Include="Models\Entities\Delivery\DeliveryOption.cs" />
-    <Compile Include="Models\Entities\Delivery\DeliveryPlanItem.cs" />
+    <Compile Include="Models\Entities\Delivery\DeliveryFeeCalculator.cs" />
+    <Compile Include="Models\Entities\Delivery\DeliveryOrPickupOption.cs" />
     <Compile Include="Models\Entities\Identity\IdentityEntities.cs" />
     <Compile Include="Models\Entities\Identity\Role.cs" />
     <Compile Include="Models\Entities\Identity\UserSnsInfo.cs" />
@@ -273,9 +274,7 @@
       <DependentUpon>DateTimeTerm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Setting\Delivery.cs" />
-    <Compile Include="Models\Entities\Setting\DeliveryFeeCalculator.domain.cs">
-      <DependentUpon>DeliveryFeeCalculator.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Entities\Delivery\BasicDeliveryFeeRule.cs" />
     <Compile Include="Models\Entities\Setting\Pickup.cs" />
     <Compile Include="Models\Entities\Setting\Pickup.domain.cs">
       <DependentUpon>Pickup.cs</DependentUpon>
@@ -324,7 +323,6 @@
     <Content Include="Content\middle-js\controller\customer.controller.js" />
     <Content Include="Content\middle-js\controller\owner.controller.js" />
     <Content Include="Global.asax" />
-    <Compile Include="Models\Entities\Delivery\DeliveryPlanPeriod.cs" />
     <Content Include="gulpfile.js" />
     <Content Include="Static\css\stall.min.css" />
     <Content Include="Static\html\PayFaild.html" />

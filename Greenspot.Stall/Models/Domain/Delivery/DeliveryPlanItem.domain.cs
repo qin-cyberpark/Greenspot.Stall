@@ -11,7 +11,7 @@ namespace Greenspot.Stall.Models
         {
             get
             {
-                return !string.IsNullOrEmpty(PickUpAddress);
+                return !string.IsNullOrEmpty("PickUpAddress");
             }
         }
         #endregion
@@ -19,20 +19,20 @@ namespace Greenspot.Stall.Models
         public IList<DateTimePair> GetDateTimePairs(DateTime initDate, int nextDays, bool ignoreExclusiveExtension = true)
         {
             var result = new List<DateTimePair>();
-            foreach (var p in Periods)
-            {
-                result.AddRange(p.GetDateTimePairs(initDate, nextDays));
-            }
+            //foreach (var p in Periods)
+            //{
+            //    result.AddRange(p.GetDateTimePairs(initDate, nextDays));
+            //}
 
-            if (!ignoreExclusiveExtension && IsExclusive && ExclusiveExtension != null)
-            {
-                //add exclusive extension
-                result.ForEach(x =>
-                {
-                    x.From = x.From.AddMinutes(-ExclusiveExtension.Before);
-                    x.To = x.To.AddMinutes(ExclusiveExtension.After);
-                });
-            }
+            //if (!ignoreExclusiveExtension && IsExclusive && ExclusiveExtension != null)
+            //{
+            //    //add exclusive extension
+            //    result.ForEach(x =>
+            //    {
+            //        x.From = x.From.AddMinutes(-ExclusiveExtension.Before);
+            //        x.To = x.To.AddMinutes(ExclusiveExtension.After);
+            //    });
+            //}
 
             return result;
         }

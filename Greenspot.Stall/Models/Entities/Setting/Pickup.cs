@@ -7,8 +7,8 @@ namespace Greenspot.Stall.Models.Settings
 
     public partial class PickupDefinition
     {
-        [JsonProperty("Enabled")]
-        public bool Enabled { get; set; } = false;
+        [JsonProperty("Available")]
+        public bool Available { get; set; } = false;
 
         [JsonProperty("Rules")]
         public IList<PickupRule> Rules { get; set; }
@@ -22,8 +22,8 @@ namespace Greenspot.Stall.Models.Settings
         [JsonProperty("SameAsOpeningHours")]
         public bool SameAsOpeningHours { get; set; }
 
-        [JsonProperty("Hours")]
-        public DateTimeTerm Hours { get; set; }
+        [JsonProperty("DateTimes")]
+        public DateTimeTerm DateTimes { get; set; }
     }
 
 

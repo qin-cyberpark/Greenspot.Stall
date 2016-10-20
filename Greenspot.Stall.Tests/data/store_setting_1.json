@@ -1,0 +1,173 @@
+{
+    "MaxAdvancedOrderDays": 3,
+    "MinOrderAdvancedMinutes": 45,
+    //Opening Hours
+    "OpeningHours": {
+        "DivisionType": 0,
+        //Opening
+        "Inclusive": [
+            {
+                //"5","7","17-20"
+                "DaysOfMonth": [],
+                //"1-6" = Monday to Saturday
+                "DaysOfWeek": [
+                    "1-6"
+                ],
+                //"2016/10/1","2016/10/5-2016/11/3"
+                "Dates": [],
+                //"9:00-15:00","18:00-2:00" = over night
+                "Times": [
+                    "10:00-22:00"
+                ]
+            },
+            {
+                //"5","7","17-20"
+                "DaysOfMonth": [],
+                //"1-6" = Monday to Saturday
+                "DaysOfWeek": [
+                    "0"
+                ],
+                //"2016/10/1","2016/10/5-2016/11/3"
+                "Dates": [],
+                //"9:00-15:00","18:00-2:00" = over night
+                "Times": [
+                    "17:00-22:00"
+                ]
+            }
+        ],
+        //Closing
+        "Exclusive": [
+            {
+                "DaysOfMonth": [],
+                "DaysOfWeek": [],
+                "Dates": [
+                    "2016/10/20"
+                ],
+                "Times": [
+                    "10:00-17:00"
+                ]
+            }
+        ]
+    },
+    "Pickup": {
+        "Enabled": true,
+        "Rules": [
+            {
+                "Addresses": [
+                    "ABC New North Road, Mount Albert, Auckland 1025"
+                ],
+                "SameAsOpeningHours": false,
+                "Hours": {
+                    //0-Undivisible, 1-DivideToPeriod,2-DivideToTime
+                    "DivisionType": "DivideToPeriod",
+                    "DivisionMinutes": 60,
+                    "Inclusive": [
+                        {
+                            //"5","7","17-20"
+                            "DaysOfMonth": [],
+                            //"1-6" = Monday to Saturday
+                            "DaysOfWeek": [
+                                "3"
+                            ],
+                            //"2016/10/1","2016/10/5-2016/11/3"
+                            "Dates": [],
+                            //"9:00-15:00","18:00-2:00" = over night
+                            "Times": [
+                                "14:00-18:00"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "Addresses": [
+                    "1103 New North Road, Mount Albert, Auckland 1025"
+                ],
+                "SameAsOpeningHours": true
+            }
+        ]
+    },
+    "Delivery": {
+        "MinOrderAmount": 25,
+        "FreeDeliveryOrderAmount": 50,
+        "DefaultCalculators": [
+            {
+                "$type": "Greenspot.Stall.Models.FixedFeeCalculator, Greenspot.Stall",
+                "Fee": 10.00
+            }
+        ],
+        "Rules": [
+            {
+                "Hours": {
+                    "DivisionType": 2,
+                    "DivisionMinutes": 1,
+                    "Inclusive": [
+                        {
+                            //"5","7","17-20"
+                            "DaysOfMonth": [],
+                            //"1-6" = Monday to Saturday
+                            "DaysOfWeek": [
+                                "3"
+                            ],
+                            //"2016/10/1","2016/10/5-2016/11/3"
+                            "Dates": [],
+                            //"9:00-15:00","18:00-2:00" = over night
+                            "Times": [
+                                "11:00-14:00"
+                            ]
+                        }
+                    ]
+                },
+                "Areas": [
+                    "nz:auckland:auckland:central-auckland",
+                    "nz:auckland:auckland:auckland-city"
+                ],
+                "Calculators": [
+                    {
+                        "$type": "Greenspot.Stall.Models.ByAreaCalculator, Greenspot.Stall",
+                        "Definition": [
+                          {
+                            "Area": "nz:auckland:auckland:auckland-city",
+                            "Fee": 5.00
+                          },
+                            {
+                                "Area": "nz:auckland:auckland:central-auckland",
+                                "Fee": 6.00
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "Hours": {
+                    "DivisionType": 1,
+                    "DivisionMinutes": 60,
+                    "Inclusive": [
+                        {
+                            //"5","7","17-20"
+                            "DaysOfMonth": [],
+                            //"1-6" = Monday to Saturday
+                            "DaysOfWeek": [],
+                            //"2016/10/1","2016/10/5-2016/11/3"
+                            "Dates": [],
+                            //"9:00-15:00","18:00-2:00" = over night
+                            "Times": [
+                                "11:00-21:00"
+                            ]
+                        }
+                    ]
+                },
+                "Areas": [
+                    "nz:auckland:auckland:central-auckland",
+                    "nz:auckland:auckland:auckland-city"
+                ],
+                "Calculators": [
+                    {
+                        "$type": "Greenspot.Stall.Models.FixedFeeCalculator, Greenspot.Stall",
+                        "Fee": 6.00
+                    }
+                ]
+            }
+        ]
+    }
+}
