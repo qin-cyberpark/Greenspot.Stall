@@ -215,7 +215,6 @@
     <Compile Include="Models\Domain\Delivery\ByRangeCalculator.domain.cs" />
     <Compile Include="Models\Domain\Delivery\DeliveryOrPickupOption.domain.cs" />
     <Compile Include="Models\Domain\Delivery\DeliveryPlanItem.domain.cs" />
-    <Compile Include="Models\Domain\Delivery\DeliveryPlanPeriod.domain.cs" />
     <Compile Include="Models\Domain\Identity\Role.domain.cs" />
     <Compile Include="Models\Domain\Identity\User.domain.cs" />
     <Compile Include="Models\Domain\Order.domain.cs" />
@@ -284,6 +283,7 @@
     <Compile Include="Models\Entities\StallEntities.cs" />
     <Compile Include="Models\Entities\Comm\SuburbDistance.cs" />
     <Compile Include="Models\Entities\Identity\User.cs" />
+    <Compile Include="Models\StallApplication.Delivery.cs" />
     <Compile Include="Models\StallApplication.Log.cs" />
     <Compile Include="Models\StallApplication.Operating.cs" />
     <Compile Include="Models\StallApplication.VendToken.cs" />
@@ -328,6 +328,10 @@
     <Content Include="Static\html\PayFaild.html" />
     <Content Include="Static\html\SelectArea.tmpl.html" />
     <Content Include="Static\html\test.html" />
+    <Content Include="Static\img\logo.png" />
+    <Content Include="Static\img\logo_black.png" />
+    <Content Include="Static\img\logo_darkgrey_96.png" />
+    <Content Include="Static\img\logo_white_96.png" />
     <Content Include="Static\img\no_image_s.png" />
     <Content Include="Static\img\no_image_l.png" />
     <Content Include="Static\img\404.png" />
@@ -338,7 +342,6 @@
     </Content>
     <Content Include="Static\img\loading.gif" />
     <Content Include="Static\img\favicon.png" />
-    <Content Include="Static\img\logo_grey_96.png" />
     <Content Include="Static\img\logo_receipt.png" />
     <Content Include="Static\img\takeaway.jpg" />
     <Content Include="Static\html\Index.html" />
@@ -1000,8 +1003,9 @@
     <None Include="Content\less\home.less" />
     <Content Include="Content\less\product.less" />
     <Compile Include="Models\Domain\Delivery\DeliveryPlan.domain.cs" />
-    <Content Include="Content\platform.json" />
-    <Content Include="Content\store.json" />
+    <Content Include="platform.setting.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>

@@ -7,7 +7,7 @@ namespace Greenspot.Stall.Models.Settings
 {
     public partial class DateTimePeriod
     {
-        public IList<DateTimePair> GetDateTimePairs(DateTime startDate, int nextDays,
+        public IList<DateTimePair> GetDateTimePairs(DateTime dtDate, int nextDays,
                                                     TimeDivisionTypes divisionType = TimeDivisionTypes.Undivisible, int divisionMinutes = 0)
         {
             var result = new List<DateTimePair>();
@@ -50,7 +50,7 @@ namespace Greenspot.Stall.Models.Settings
             }
 
             //calc
-            var dtStart = startDate.Date;
+            var dtStart = dtDate.Date;
             var dtTo = dtStart.AddDays(nextDays);
             while (dtStart <= dtTo)
             {
@@ -93,7 +93,11 @@ namespace Greenspot.Stall.Models.Settings
                         newPair.To = newPair.To.AddDays(1);
                     }
 
-                    result.Add(newPair);
+                    if (newPair.To > dtDate)
+                    {
+                        //ignore passed pair
+                        result.Add(newPair);
+                    }
                 }
 
                 //next date

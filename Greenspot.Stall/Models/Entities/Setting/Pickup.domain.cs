@@ -7,7 +7,7 @@ namespace Greenspot.Stall.Models.Settings
 {
     public partial class PickupDefinition
     {
-        public IList<PickupOption> GetOptions(DateTime startDate, int nextDays, DateTimeTerm openingHours)
+        public IList<PickupOption> GetOptions(DateTime dtDate, int nextDays, DateTimeTerm openingHours)
         {
             var result = new List<PickupOption>();
 
@@ -18,7 +18,7 @@ namespace Greenspot.Stall.Models.Settings
 
             foreach (var r in Rules)
             {
-                var opts = r.GetOptions(startDate, nextDays, openingHours);
+                var opts = r.GetOptions(dtDate, nextDays, openingHours);
 
                 //exclude previous rules
                 result.AddRange(opts.Subtract(result));
@@ -31,18 +31,18 @@ namespace Greenspot.Stall.Models.Settings
 
     public partial class PickupRule
     {
-        public IList<PickupOption> GetOptions(DateTime startDate, int nextDays, DateTimeTerm openingHours)
+        public IList<PickupOption> GetOptions(DateTime dtDate, int nextDays, DateTimeTerm openingHours)
         {
             var result = new List<PickupOption>();
 
             IList<DateTimePair> pairs;
             if (SameAsOpeningHours)
             {
-                pairs = openingHours.GetDateTimePairs(startDate, nextDays);
+                pairs = openingHours.GetDateTimePairs(dtDate, nextDays);
             }
             else if (DateTimes != null)
             {
-                pairs = DateTimes.GetDateTimePairs(startDate, nextDays);
+                pairs = DateTimes.GetDateTimePairs(dtDate, nextDays);
             }
             else
             {

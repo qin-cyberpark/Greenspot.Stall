@@ -74,7 +74,7 @@ namespace Greenspot.Stall.Controllers.MVC
         public ActionResult WeChatMpLogin(string returnUrl)
         {
             ControllerContext.HttpContext.Session.RemoveAll();
-#if DEBUG
+#if !DEBUG
                         // Request a redirect to the external login provider
                         return new ChallengeResult(WeChatAuthenticationTypes.MP, Url.Action("WeChatMpLoginCallback", "Account", new { ReturnUrl = returnUrl }));
 #else

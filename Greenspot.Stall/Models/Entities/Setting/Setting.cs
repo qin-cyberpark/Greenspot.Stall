@@ -8,10 +8,13 @@ namespace Greenspot.Stall.Models
     public partial class Setting
     {
         [JsonProperty("MaxAdvancedOrderDays")]
-        public int MaxAdvancedOrderDays { get; set; }
+        public int MaxAdvancedOrderDays { get; set; } = 3;
 
-        [JsonProperty("MinOrderAdvancedMinutes")]
-        public decimal MinOrderAdvancedMinutes { get; set; }
+        [JsonProperty("MinPickupAdvancedMinutes")]
+        public int MinPickupAdvancedMinutes { get; set; } = 60;
+
+        [JsonProperty("MinDeliveryAdvancedMinutes")]
+        public int MinDeliveryAdvancedMinutes { get; set; } = 90;
 
         [JsonProperty("OpeningHours")]
         public DateTimeTerm OpeningHours { get; set; }

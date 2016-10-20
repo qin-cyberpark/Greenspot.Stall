@@ -7,21 +7,19 @@ namespace Greenspot.Stall.Models
 {
     public interface IDeliveryFeeRule
     {
-        decimal? Calculate(DateTime dateTime, string countryCode, string city, string suburb,
-                                                int? distanceInMeters, decimal? orderAmount);
+        decimal? Calculate(DateTime dateTime, string area, int? distanceInMeters, decimal? orderAmount);
     }
 
     public class DeliveryFeeCalculator
     {
         [JsonProperty("Rules")]
-        public List<IDeliveryFeeRule> Rules { get; set; }
+        public List<IDeliveryFeeRule> Rules { get; set; } = new List<IDeliveryFeeRule>();
 
-        public decimal? Calculate(DateTime dateTime, string countryCode, string city, string suburb,
-                                int? distanceInMeters = null, decimal? orderAmount = null)
+        public decimal? Calculate(DateTime dateTime, string area, int? distanceInMeters = null, decimal? orderAmount = null)
         {
             foreach (var r in Rules)
             {
-                var fee = r.Calculate(dateTime, countryCode, city, suburb, distanceInMeters, orderAmount);
+                var fee = r.Calculate(dateTime, area, distanceInMeters, orderAmount);
                 if (fee != null)
                 {
                     return fee;

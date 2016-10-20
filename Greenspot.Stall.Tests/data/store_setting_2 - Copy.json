@@ -1,0 +1,48 @@
+{
+  "DefaultFee": 25.00,
+  "FreeDeliveryOrderAmount": 9999,
+  "MaxAdvancedOrderDays": 2,
+  "OptionDivideMinutes": 60,
+  "DefaultPlans": [
+   {
+      "Periods": [
+        {
+          "DaysOfMonth": [ ],
+          "DaysOfWeek": ["1-5"],
+          "Dates": [],
+          "Times": ["11:00-21:30"],
+          "IsTimeDivisible": true
+        }
+      ],
+      "FilterByArea": true,
+      "Areas": [ "NZ-Auckland-Auckland City"],
+      "IsExclusive": false,
+      "FeeCalculators": [
+        {
+          "$type": "Greenspot.Stall.Models.FixedFeeCalculator, Greenspot.Stall",
+          "Fee": 6.00
+        }
+      ]
+    },
+    {
+      "Periods": [
+        {
+          "DaysOfMonth": [],
+          "DaysOfWeek": [ "6" ],
+          "Dates": [],
+          "Times": [ "16:30-21:30" ],
+          "IsTimeDivisible": true
+        }
+      ],
+      "FilterByArea": true,
+      "Areas": [ "NZ-Auckland-Auckland City" ],
+      "IsExclusive": false,
+      "FeeCalculators": [
+        {
+          "$type": "Greenspot.Stall.Models.FixedFeeCalculator, Greenspot.Stall",
+          "Fee": 6.00
+        }
+      ]
+    }
+  ]
+}

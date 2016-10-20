@@ -33,10 +33,12 @@
             }
 
             //get delivery options
-            var url = '/api/stall/' + self.i + '/GetDeliveryOptions?country=' + self.deliveryAddress.CountryId;
-            url += "&city=" + self.deliveryAddress.City;
-            url += "&suburb=" + self.deliveryAddress.Suburb;
-            url += "&area=" + self.deliveryAddress.Area;
+            //var url = '/api/stall/' + self.i + '/GetDeliveryOptions?country=' + self.deliveryAddress.CountryId;
+            //url += "&city=" + self.deliveryAddress.City;
+            //url += "&suburb=" + self.deliveryAddress.Suburb;
+            //url += "&area=" + self.deliveryAddress.Area;
+            var url = '/api/stall/' + self.i + '/GetDeliveryOptions?area=' + self.deliveryAddress.Area;
+            url += "&orderAmount=" + self.amt;
 
             self.$http.get(url).success(function (result) {
                 if (result.Succeeded) {
@@ -86,7 +88,7 @@
         }
 
         self.hasPickUpOption = function () {
-            return self.deliveryOptionCollections && self.pickUpOptionCollections.length > 0;
+            return self.pickUpOptionCollections && self.pickUpOptionCollections.length > 0;
         }
 
 

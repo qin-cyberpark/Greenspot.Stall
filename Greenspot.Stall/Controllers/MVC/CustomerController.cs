@@ -235,6 +235,8 @@ namespace Greenspot.Stall.Controllers.MVC
                 }
 
                 //delivery
+                order.DeliveryTimeStart = orderVM.DeliveryOption.From;
+                order.DeliveryTimeEnd = orderVM.DeliveryOption.To;
                 if (!orderVM.DeliveryOption.IsPickUp)
                 {
                     var devAddr = DeliveryAddress.FindByCode(CurrentUser.Id, orderVM.DeliveryAddress.Code, _db);
@@ -244,7 +246,7 @@ namespace Greenspot.Stall.Controllers.MVC
                 else
                 {
                     order.Receiver = "PICK-UP";
-                    order.DeliveryAddress = order.Stall.Address1 + " " + order.Stall.Address2;
+                    order.DeliveryAddress = orderVM.DeliveryOption.PickUpAddress;
                 }
 
                 if (order.Stall.HasDelivery)

@@ -29,6 +29,9 @@ namespace Greenspot.Stall.Models.Settings
         [JsonProperty("DateTimes")]
         public DateTimeTerm DateTimes { get; set; }
 
+        [JsonProperty("SameAsOpeningHours")]
+        public bool SameAsOpeningHours { get; set; }
+
         [JsonProperty("Areas")]
         public IList<string> Areas { get; set; } = new List<string>();
 

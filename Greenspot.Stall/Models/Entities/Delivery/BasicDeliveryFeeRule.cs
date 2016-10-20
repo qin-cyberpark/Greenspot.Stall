@@ -8,7 +8,7 @@ namespace Greenspot.Stall.Models
     {
         //area
         [JsonProperty("Areas")]
-        public IList<string> Areas { get; set; }
+        public IList<string> Areas { get; set; } = new List<string>();
 
         //hours
         [JsonProperty("DateTimes")]
@@ -30,9 +30,67 @@ namespace Greenspot.Stall.Models
         [JsonProperty("Fee")]
         public decimal Fee { get; set; }
 
-        public decimal? Calculate(DateTime dateTime, string countryCode, string city, string suburb, int? distanceInMeters, decimal? orderAmount)
+        public decimal? Calculate(DateTime dateTime, string area, int? distanceInMeters, decimal? orderAmount)
         {
-            return 99;
+            //date time rule has not been implemented
+
+            //Area
+            if (Areas != null && Areas.Count > 0)
+            {
+                if (string.IsNullOrEmpty(area))
+                {
+                    return null;
+                }
+
+                bool matched = false;
+                foreach (var a in Areas)
+                {
+                    if (area.StartsWith(a))
+                    {
+                        matched = true;
+                        break;
+                    }
+                }
+
+                if (!matched)
+                {
+                    return null;
+                }
+            }
+
+            //distance
+            if ((DistanceFrom != null || DistanceTo != null) && distanceInMeters == null)
+            {
+                return null;
+            }
+
+            if (DistanceFrom != null && distanceInMeters.Value < DistanceFrom.Value)
+            {
+                return null;
+            }
+
+            if (DistanceTo != null && distanceInMeters.Value > DistanceTo.Value)
+            {
+                return null;
+            }
+
+            //order amount
+            if ((OrderAmountFrom != null || OrderAmountTo != null) && orderAmount == null)
+            {
+                return null;
+            }
+
+            if (OrderAmountFrom != null && orderAmount.Value < OrderAmountFrom.Value)
+            {
+                return null;
+            }
+
+            if (OrderAmountTo != null && orderAmount.Value > OrderAmountTo.Value)
+            {
+                return null;
+            }
+
+            return Fee;
         }
     }
 }

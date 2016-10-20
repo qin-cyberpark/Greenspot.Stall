@@ -1,0 +1,93 @@
+{
+  "MaxAdvancedOrderDays": 7,
+  "MinPickupAdvancedMinutes": 30,
+  "MinDeliveryAdvancedMinutes": 60,
+  //Opening Hours
+  "OpeningHours": {
+    "DivisionType": 0,
+    //Opening
+    "Inclusive": [
+      {
+        //"5","7","17-20"
+        "DaysOfMonth": [],
+        //"1-6" = Monday to Saturday
+        "DaysOfWeek": [],
+        //"2016/10/1","2016/10/5-2016/11/3"
+        "Dates": [],
+        //"9:00-15:00","18:00-2:00" = over night
+        "Times": [
+          "11:00-21:30"
+        ]
+      }
+    ]
+  },
+  "Pickup": {
+    "Available": false,
+    "Rules": [
+      {
+        "Addresses": [
+          "ABC New North Road, Mount Albert, Auckland 1025"
+        ],
+        "SameAsOpeningHours": false,
+        "DateTimes": {
+          //0-Undivisible, 1-DivideToPeriod,2-DivideToTime
+          "DivisionType": 1,
+          "DivisionMinutes": 60,
+          "Inclusive": [
+            {
+              //"5","7","17-20"
+              "DaysOfMonth": [],
+              //"1-6" = Monday to Saturday
+              "DaysOfWeek": [],
+              //"2016/10/1","2016/10/5-2016/11/3"
+              "Dates": [],
+              //"9:00-15:00","18:00-2:00" = over night
+              "Times": [
+                "14:00-18:00"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "Delivery": {
+    "DeliveryType": 1,
+    "MinOrderAmount": 0,
+    "FreeDeliveryOrderAmount": 200,
+    "DefaultCalculator": {
+      "$type": "Greenspot.Stall.Models.DeliveryFeeCalculator, Greenspot.Stall",
+      "Rules": [
+        {
+          "$type": "Greenspot.Stall.Models.BasicDeliveryFeeRule, Greenspot.Stall",
+          "Fee": 6
+        }
+      ]
+    },
+    "Rules": [
+      {
+        "DateTimes": {
+          "DivisionType": 1,
+          "DivisionMinutes": 60,
+          "Inclusive": [
+            {
+              //"5","7","17-20"
+              "DaysOfMonth": [],
+              //"1-6" = Monday to Saturday
+              "DaysOfWeek": [],
+              //"2016/10/1","2016/10/5-2016/11/3"
+              "Dates": [],
+              //"9:00-15:00","18:00-2:00" = over night
+              "Times": [
+                "11:00-21:30"
+              ]
+            }
+          ]
+        },
+        "Areas": [
+          "nz:auckland:auckland:auckland-city"
+        ]
+      }
+    ]
+  }
+}

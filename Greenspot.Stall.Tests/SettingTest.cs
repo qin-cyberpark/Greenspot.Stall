@@ -18,6 +18,37 @@ namespace Greenspot.Stall.Tests
         }
 
         [TestMethod]
+        public void TestDateTimePairIntersect()
+        {
+            IList<DateTimePair> ori = new List<DateTimePair>()
+            {
+                new DateTimePair() {From = new DateTime(2016,10,20, 9,0,0), To = new DateTime(2016,10,20, 15,0,0) },
+                new DateTimePair() {From = new DateTime(2016,10,20, 17,0,0), To = new DateTime(2016,10,20, 23,0,0) }
+            };
+
+            IList<DateTimePair> inc = new List<DateTimePair>()
+            {
+                new DateTimePair() {From = new DateTime(2016,10,20, 8,0,0), To = new DateTime(2016,10,20, 12,0,0) },
+                new DateTimePair() {From = new DateTime(2016,10,20, 14,0,0), To = new DateTime(2016,10,20, 18,0,0) },
+                new DateTimePair() {From = new DateTime(2016,10,20, 20,0,0), To = new DateTime(2016,10,20, 22,0,0) }
+            };
+
+            var result = ori.Intersect(inc);
+            Assert.AreEqual(4, result.Count);
+            Assert.AreEqual(new DateTime(2016, 10, 20, 9, 0, 0), result[0].From);
+            Assert.AreEqual(new DateTime(2016, 10, 20, 12, 0, 0), result[0].To);
+
+            Assert.AreEqual(new DateTime(2016, 10, 20, 14, 0, 0), result[1].From);
+            Assert.AreEqual(new DateTime(2016, 10, 20, 15, 0, 0), result[1].To);
+
+            Assert.AreEqual(new DateTime(2016, 10, 20, 17, 0, 0), result[2].From);
+            Assert.AreEqual(new DateTime(2016, 10, 20, 18, 0, 0), result[2].To);
+
+            Assert.AreEqual(new DateTime(2016, 10, 20, 20, 0, 0), result[3].From);
+            Assert.AreEqual(new DateTime(2016, 10, 20, 22, 0, 0), result[3].To);
+        }
+
+        [TestMethod]
         public void TestDateTimePeriod()
         {
             //time only
@@ -163,7 +194,6 @@ namespace Greenspot.Stall.Tests
                 DivisionType = TimeDivisionTypes.DivideToPeriod,
                 DivisionMinutes = 60
             };
-
 
             //trim left
             var result = term.GetDateTimePairs(new DateTime(2016, 10, 19), 3);
@@ -321,13 +351,100 @@ namespace Greenspot.Stall.Tests
             });
 
             //result
-            var opts = definition.GetOptions(new DateTime(2016, 10, 19), 3);
+            var opts = definition.GetOptions(new DateTime(2016, 10, 19), 3, null);
             Assert.AreEqual(4, opts.Count);
             Assert.AreEqual("Area C", opts[0].Areas[0]);
             Assert.AreEqual(new DateTime(2016, 10, 19, 21, 0, 0), opts[0].To);
 
             Assert.AreEqual("Area B", opts[1].Areas[1]);
             Assert.AreEqual(new DateTime(2016, 10, 20, 18, 0, 0), opts[1].To);
+        }
+
+        [TestMethod]
+        public void TestDeliveryFeeCalculator()
+        {
+            var calc = new DeliveryFeeCalculator();
+
+            //combine
+            calc.Rules.Add(new BasicDeliveryFeeRule()
+            {
+                Areas = { "nz:auckland:auckland:auckland-city" },
+                DistanceTo = 20,
+                OrderAmountFrom = 50,
+                Fee = 50
+            });
+            calc.Rules.Add(new BasicDeliveryFeeRule()
+            {
+                Areas = { "nz:auckland:auckland:north-shore" },
+                DistanceTo = 30,
+                OrderAmountFrom = 70,
+                Fee = 51
+            });
+            //with order amount
+            calc.Rules.Add(new BasicDeliveryFeeRule()
+            {
+                OrderAmountFrom = 30,
+                OrderAmountTo = 60,
+                Fee = 42
+            });
+            calc.Rules.Add(new BasicDeliveryFeeRule()
+            {
+                OrderAmountTo = 60,
+                Fee = 41
+            });
+            calc.Rules.Add(new BasicDeliveryFeeRule()
+            {
+                OrderAmountFrom = 30,
+                Fee = 40
+            });
+            //with distance
+            calc.Rules.Add(new BasicDeliveryFeeRule()
+            {
+                DistanceFrom = 2000,
+                DistanceTo = 3000,
+                Fee = 32
+            });
+            calc.Rules.Add(new BasicDeliveryFeeRule()
+            {
+                DistanceTo = 3000,
+                Fee = 31
+            });
+            calc.Rules.Add(new BasicDeliveryFeeRule()
+            {
+                DistanceFrom = 2000,
+                Fee = 30
+            });
+            //area
+            calc.Rules.Add(new BasicDeliveryFeeRule()
+            {
+                Areas = { "nz:auckland:auckland:auckland-city" },
+                Fee = 21
+            });
+            calc.Rules.Add(new BasicDeliveryFeeRule()
+            {
+                Areas = { "nz:auckland:auckland" },
+                Fee = 20
+            });
+            //fixed
+            calc.Rules.Add(new BasicDeliveryFeeRule()
+            {
+                Fee = 10
+            });
+
+
+            Assert.AreEqual(10, calc.Calculate(DateTime.Now, null, null, null));
+            Assert.AreEqual(20, calc.Calculate(DateTime.Now, "nz:auckland:auckland:central-auckland", null, null));
+            Assert.AreEqual(21, calc.Calculate(DateTime.Now, "nz:auckland:auckland:auckland-city", null, null));
+            Assert.AreEqual(30, calc.Calculate(DateTime.Now, null, 3001, null));
+            Assert.AreEqual(31, calc.Calculate(DateTime.Now, null, 1999, null));
+            Assert.AreEqual(32, calc.Calculate(DateTime.Now, null, 2000, null));
+            Assert.AreEqual(32, calc.Calculate(DateTime.Now, null, 3000, null));
+            Assert.AreEqual(40, calc.Calculate(DateTime.Now, null, null, 61));
+            Assert.AreEqual(41, calc.Calculate(DateTime.Now, null, null, 29));
+            Assert.AreEqual(42, calc.Calculate(DateTime.Now, null, null, 30));
+            Assert.AreEqual(42, calc.Calculate(DateTime.Now, null, null, 60));
+            Assert.AreEqual(50, calc.Calculate(DateTime.Now, "nz:auckland:auckland:auckland-city", 19, 51));
+            Assert.AreEqual(51, calc.Calculate(DateTime.Now, "nz:auckland:auckland:north-shore", 29, 71));
         }
 
         [TestMethod]

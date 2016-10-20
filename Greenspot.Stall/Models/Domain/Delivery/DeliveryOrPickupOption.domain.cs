@@ -13,17 +13,35 @@ namespace Greenspot.Stall.Models
             {
                 From = opt.From,
                 To = opt.To,
-                DivisionTypes = opt.DivisionType,
+                DivisionType = opt.DivisionType,
                 DivisionMinutes = opt.DivisionMinutes,
                 IsPickUp = true,
-                PickUpAddresses = opt.Addresses,
-                Fee = 0
+                PickUpAddresses = opt.Addresses
             };
         }
+
+        public static DeliveryOrPickupOption Parse(Settings.DeliveryOption opt)
+        {
+            return new DeliveryOrPickupOption()
+            {
+                From = opt.From,
+                To = opt.To,
+                DivisionType = opt.DivisionType,
+                DivisionMinutes = opt.DivisionMinutes,
+                IsPickUp = false,
+                Areas = opt.Areas
+            };
+        }
+
         public string AreaString
         {
             get
             {
+                if (Areas == null)
+                {
+                    return "";
+                }
+
                 var len = Areas.Count;
                 var arr = new string[len];
                 for (int i = 0; i < len; i++)
@@ -52,78 +70,83 @@ namespace Greenspot.Stall.Models
             return false;
         }
 
-        //public IList<DeliveryOrPickupOption> Divide()
-        //{
-        //    var result = new List<DeliveryOrPickupOption>();
-        //    var f = From;
-        //    var t = f.AddMinutes(DivideMinutes);
-        //    t = t < To ? t : To;
+        public IList<DeliveryOrPickupOption> Divide()
+        {
+            var result = new List<DeliveryOrPickupOption>();
+            var f = From;
+            var t = f.AddMinutes(DivisionMinutes);
+            t = t < To ? t : To;
 
-        //    if (!IsTimeDivisible)
-        //    {
-        //        return DivideOverNight(this);
-        //    }
+            if (DivisionType == Settings.TimeDivisionTypes.Undivisible)
+            {
+                return DivideOverNight(this);
+            }
 
-        //    while (t < To)
-        //    {
-        //        result.AddRange(DivideOverNight(new DeliveryOption()
-        //        {
-        //            From = f,
-        //            To = t,
-        //            IsTimeDivisible = IsTimeDivisible,
-        //            Areas = Areas,
-        //            IsPickUp = IsPickUp,
-        //            PickUpAddress = PickUpAddress,
-        //            Fee = Fee
-        //        }));
+            while (t < To)
+            {
+                result.AddRange(DivideOverNight(new DeliveryOrPickupOption()
+                {
+                    From = f,
+                    To = t,
+                    DivisionType = DivisionType,
+                    DivisionMinutes = DivisionMinutes,
+                    Areas = Areas,
+                    IsPickUp = IsPickUp,
+                    PickUpAddresses = PickUpAddresses,
+                    IsStoreDelivery = IsStoreDelivery,
+                    Fee = Fee
+                }));
 
-        //        f = t;
-        //        t = t.AddMinutes(OptionDivideMinutes);
-        //        t = t < To ? t : To;
-        //    }
+                f = t;
+                t = t.AddMinutes(DivisionMinutes);
+                t = t < To ? t : To;
+            }
 
-        //    result.AddRange(DivideOverNight(new DeliveryOption()
-        //    {
-        //        From = f,
-        //        To = t,
-        //        IsTimeDivisible = IsTimeDivisible,
-        //        Areas = Areas,
-        //        IsPickUp = IsPickUp,
-        //        PickUpAddress = PickUpAddress,
-        //        Fee = Fee
-        //    }));
+            result.AddRange(DivideOverNight(new DeliveryOrPickupOption()
+            {
+                From = f,
+                To = t,
+                DivisionType = DivisionType,
+                DivisionMinutes = DivisionMinutes,
+                Areas = Areas,
+                IsPickUp = IsPickUp,
+                PickUpAddresses = PickUpAddresses,
+                IsStoreDelivery = IsStoreDelivery,
+                Fee = Fee
+            }));
 
-        //    return result;
-        //}
+            return result;
+        }
 
-        //private IList<DeliveryOrPickupOption> DivideOverNight(DeliveryOrPickupOption option)
-        //{
-        //    var result = new List<DeliveryOrPickupOption>();
+        private IList<DeliveryOrPickupOption> DivideOverNight(DeliveryOrPickupOption option)
+        {
+            var result = new List<DeliveryOrPickupOption>();
 
-        //    //overnight
-        //    while (option.From.Date < option.To.Date)
-        //    {
-        //        var newTo = new DateTime(option.From.Year, option.From.Month, option.From.Day, 0, 0, 0).AddDays(1);
-        //        var newOpt = new DeliveryOrPickupOption()
-        //        {
-        //            From = option.From,
-        //            To = newTo,
-        //            IsTimeDivisible = option.IsTimeDivisible,
-        //            Areas = option.Areas,
-        //            IsPickUp = option.IsPickUp,
-        //            PickUpAddress = option.PickUpAddress,
-        //            Fee = option.Fee
-        //        };
+            //overnight
+            while (option.From.Date < option.To.Date)
+            {
+                var newTo = new DateTime(option.From.Year, option.From.Month, option.From.Day, 0, 0, 0).AddDays(1);
+                var newOpt = new DeliveryOrPickupOption()
+                {
+                    From = option.From,
+                    To = newTo,
+                    DivisionType = option.DivisionType,
+                    Areas = option.Areas,
+                    IsPickUp = option.IsPickUp,
+                    PickUpAddresses = PickUpAddresses,
+                    IsStoreDelivery = IsStoreDelivery,
+                    Fee = option.Fee
+                };
 
-        //        result.Add(newOpt);
-        //        option.From = newTo;
-        //    };
+                result.Add(newOpt);
+                option.From = newTo;
+            };
 
-        //    if (option.From != option.To)
-        //    {
-        //        result.Add(option);
-        //    }
-        //    return result;
-        //}
+            if (option.From != option.To)
+            {
+                result.Add(option);
+            }
+            return result;
+        }
     }
 }

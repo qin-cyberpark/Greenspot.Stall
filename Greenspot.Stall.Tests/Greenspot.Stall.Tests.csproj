@@ -121,7 +121,9 @@
     <Compile Include="DeliveryFeeTest.cs" />
     <Compile Include="OrderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingTest.cs" />
+    <Compile Include="SettingTest.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="VendTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -129,7 +131,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\store_setting_1.json" />
+    <Content Include="data\store_setting_2.json" />
+    <Content Include="data\store_setting_2 - Copy.json" />
     <None Include="packages.config" />
+    <Content Include="platform.setting.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Greenspot.Common\Greenspot.Common\Greenspot.Common.csproj">

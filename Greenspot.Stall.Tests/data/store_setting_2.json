@@ -1,0 +1,168 @@
+{
+  "MaxAdvancedOrderDays": 4,
+  "MinPickupAdvancedMinutes": 30,
+  "MinDeliveryAdvancedMinutes": 60,
+  //Opening Hours
+  "OpeningHours": {
+    "DivisionType": 0,
+    //Opening
+    "Inclusive": [
+      {
+        //"5","7","17-20"
+        "DaysOfMonth": [],
+        //"1-6" = Monday to Saturday
+        "DaysOfWeek": [
+          "1-5"
+        ],
+        //"2016/10/1","2016/10/5-2016/11/3"
+        "Dates": [],
+        //"9:00-15:00","18:00-2:00" = over night
+        "Times": [
+          "10:30-21:00"
+        ]
+      },
+      {
+        //"5","7","17-20"
+        "DaysOfMonth": [],
+        //"1-6" = Monday to Saturday
+        "DaysOfWeek": [
+          "0",
+          "6"
+        ],
+        //"2016/10/1","2016/10/5-2016/11/3"
+        "Dates": [],
+        //"9:00-15:00","18:00-2:00" = over night
+        "Times": [
+          "17:00-21:00"
+        ]
+      }
+    ],
+    //Closing
+    "Exclusive": [
+      {
+        "DaysOfMonth": [],
+        "DaysOfWeek": [],
+        "Dates": [
+          "2016/10/19"
+        ],
+        "Times": [
+          "10:00-18:00"
+        ]
+      }
+    ]
+  },
+  "Pickup": {
+    "Available": true,
+    "Rules": [
+      {
+        "Addresses": [
+          "ABC New North Road, Mount Albert, Auckland 1025"
+        ],
+        "SameAsOpeningHours": false,
+        "DateTimes": {
+          //0-Undivisible, 1-DivideToPeriod,2-DivideToTime
+          "DivisionType": "DivideToPeriod",
+          "DivisionMinutes": 60,
+          "Inclusive": [
+            {
+              //"5","7","17-20"
+              "DaysOfMonth": [],
+              //"1-6" = Monday to Saturday
+              "DaysOfWeek": [
+                "5"
+              ],
+              //"2016/10/1","2016/10/5-2016/11/3"
+              "Dates": [],
+              //"9:00-15:00","18:00-2:00" = over night
+              "Times": [
+                "14:00-18:00"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "Addresses": [
+          "1103 New North Road, Mount Albert, Auckland 1025"
+        ],
+        "SameAsOpeningHours": true
+      }
+    ]
+  },
+  "Delivery": {
+    "DeliveryType": 1,
+    "MinOrderAmount": 25,
+    "FreeDeliveryOrderAmount": 50,
+    "DefaultCalculator": {
+      "$type": "Greenspot.Stall.Models.DeliveryFeeCalculator, Greenspot.Stall",
+      "Rules": [
+        {
+          "$type": "Greenspot.Stall.Models.BasicDeliveryFeeRule, Greenspot.Stall",
+          "Fee": 5
+        }
+      ]
+    },
+    "Rules": [
+      {
+        "DateTimes": {
+          "DivisionType": 2,
+          "DivisionMinutes": 1,
+          "Inclusive": [
+            {
+              //"5","7","17-20"
+              "DaysOfMonth": [],
+              //"1-6" = Monday to Saturday
+              "DaysOfWeek": [
+                "1-5"
+              ],
+              //"2016/10/1","2016/10/5-2016/11/3"
+              "Dates": [],
+              //"9:00-15:00","18:00-2:00" = over night
+              "Times": [
+                "10:30-11:30"
+              ]
+            }
+          ]
+        },
+        "Areas": [
+          "nz:auckland:auckland:central-auckland",
+          "nz:auckland:auckland:auckland-city"
+        ]
+      },
+      {
+        "DateTimes": {
+          "DivisionType": 1,
+          "DivisionMinutes": 60,
+          "Inclusive": [
+            {
+              //"5","7","17-20"
+              "DaysOfMonth": [],
+              //"1-6" = Monday to Saturday
+              "DaysOfWeek": [],
+              //"2016/10/1","2016/10/5-2016/11/3"
+              "Dates": [],
+              //"9:00-15:00","18:00-2:00" = over night
+              "Times": [
+                "19:00-20:30"
+              ]
+            }
+          ]
+        },
+        "Areas": [
+          "nz:auckland:auckland:central-auckland",
+          "nz:auckland:auckland:auckland-city"
+        ],
+        "Calculator": {
+          "$type": "Greenspot.Stall.Models.DeliveryFeeCalculator, Greenspot.Stall",
+          "Rules": [
+            {
+              "$type": "Greenspot.Stall.Models.BasicDeliveryFeeRule, Greenspot.Stall",
+              "Area": "nz:auckland:auckland:auckland-city",
+              "Fee": 8
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

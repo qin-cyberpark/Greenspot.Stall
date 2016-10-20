@@ -12,14 +12,15 @@ namespace Greenspot.Stall.Models
     {
         public static bool IsApplicable(string areaDefine, string area)
         {
-            if (string.IsNullOrEmpty(area))
-            {
-                return false;
-            }
 
             if (string.IsNullOrEmpty(areaDefine))
             {
                 return true;
+            }
+
+            if (string.IsNullOrEmpty(area))
+            {
+                return false;
             }
 
             var defArr = areaDefine.ToUpper().Split('-');
@@ -36,6 +37,29 @@ namespace Greenspot.Stall.Models
                 {
                     return false;
                 }
+            }
+
+            return true;
+        }
+
+        public static bool Contains(IList<string> areas, string area)
+        {
+            if (areas != null && areas.Count > 0)
+            {
+                if (string.IsNullOrEmpty(area))
+                {
+                    return false;
+                }
+
+                foreach (var a in areas)
+                {
+                    if (area.StartsWith(a))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
             }
 
             return true;

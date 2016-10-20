@@ -233,7 +233,7 @@
                 delete order.optionCollections;
                 delete order.selectedOptionCollection;
             });
-
+            console.log(vm.orders);
             //post order
             $http.post('/customer/Pay', vm.orders).success(function (result) {
                 if (result.Succeeded) {

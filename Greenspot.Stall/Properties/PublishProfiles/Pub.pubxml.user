@@ -17,10 +17,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2016 13:58:10</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>10/14/2016 04:29:13</publishTime>
+      <publishTime>10/21/2016 08:29:58</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>10/14/2016 04:29:13</publishTime>
+      <publishTime>10/21/2016 08:29:58</publishTime>
     </File>
     <File Include="bin/Common.Logging.Core.dll">
       <publishTime>11/14/2015 13:35:30</publishTime>
@@ -65,16 +65,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/10/2016 13:12:36</publishTime>
     </File>
     <File Include="bin/Greenspot.SDK.Vend.dll">
-      <publishTime>10/14/2016 04:18:54</publishTime>
+      <publishTime>10/21/2016 06:59:46</publishTime>
     </File>
     <File Include="bin/Greenspot.SDK.Vend.pdb">
-      <publishTime>10/14/2016 04:18:54</publishTime>
+      <publishTime>10/21/2016 06:59:46</publishTime>
     </File>
     <File Include="bin/Greenspot.Stall.dll">
-      <publishTime>10/14/2016 04:29:06</publishTime>
+      <publishTime>10/21/2016 08:29:49</publishTime>
     </File>
     <File Include="bin/Greenspot.Stall.pdb">
-      <publishTime>10/14/2016 04:29:06</publishTime>
+      <publishTime>10/21/2016 08:29:49</publishTime>
     </File>
     <File Include="bin/log4net.dll">
       <publishTime>12/10/2015 16:55:06</publishTime>
@@ -120,6 +120,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="bin/Owin.dll">
       <publishTime>11/13/2012 12:19:34</publishTime>
+    </File>
+    <File Include="bin/platform.setting.json">
+      <publishTime>10/21/2016 08:29:30</publishTime>
     </File>
     <File Include="bin/Quartz.dll">
       <publishTime>08/24/2016 05:42:28</publishTime>
@@ -209,13 +212,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/13/2016 23:32:26</publishTime>
     </File>
     <File Include="bin/Senparc.Weixin.MP.dll">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>08/13/2016 17:20:00</publishTime>
     </File>
     <File Include="bin/Static/img/icon/core-icons.svg">
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/Static/js/stall.min.js">
-      <publishTime>10/14/2016 04:29:01</publishTime>
+      <publishTime>10/21/2016 08:29:45</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>01/28/2015 04:02:42</publishTime>
@@ -251,7 +254,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/17/2013 17:03:52</publishTime>
     </File>
     <File Include="bower.json">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Config/103_delivery_plan.json">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -1103,22 +1106,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Content/middle-css/customer.css">
-      <publishTime>10/14/2016 04:28:59</publishTime>
+      <publishTime>10/21/2016 08:29:42</publishTime>
     </File>
     <File Include="Content/middle-css/global.css">
-      <publishTime>10/14/2016 04:28:59</publishTime>
+      <publishTime>10/21/2016 08:29:42</publishTime>
     </File>
     <File Include="Content/middle-css/home.css">
-      <publishTime>10/14/2016 04:28:59</publishTime>
+      <publishTime>10/21/2016 08:29:42</publishTime>
     </File>
     <File Include="Content/middle-css/owner.css">
-      <publishTime>10/14/2016 04:28:59</publishTime>
+      <publishTime>10/21/2016 08:29:42</publishTime>
     </File>
     <File Include="Content/middle-css/product.css">
-      <publishTime>10/14/2016 04:28:59</publishTime>
+      <publishTime>10/21/2016 08:29:42</publishTime>
     </File>
     <File Include="Content/middle-css/_variables.css">
-      <publishTime>10/14/2016 04:28:59</publishTime>
+      <publishTime>10/21/2016 08:29:42</publishTime>
     </File>
     <File Include="Content/middle-js/addressAutoComplete.google.js">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -1127,7 +1130,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/08/2016 07:04:40</publishTime>
     </File>
     <File Include="Content/middle-js/app.js">
-      <publishTime>04/10/2016 12:44:06</publishTime>
+      <publishTime>10/04/2016 12:44:06</publishTime>
     </File>
     <File Include="Content/middle-js/autoCompleteAddress.js">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -1136,7 +1139,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/13/2016 00:18:09</publishTime>
     </File>
     <File Include="Content/middle-js/controller/customer-address.controller.js">
-      <publishTime>04/10/2016 12:34:15</publishTime>
+      <publishTime>10/04/2016 12:34:15</publishTime>
     </File>
     <File Include="Content/middle-js/controller/customer.controller.js">
       <publishTime>10/13/2016 00:17:40</publishTime>
@@ -1157,13 +1160,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/26/2016 14:01:46</publishTime>
     </File>
     <File Include="Content/middle-js/order.js">
-      <publishTime>10/12/2016 04:55:55</publishTime>
+      <publishTime>10/21/2016 06:56:52</publishTime>
     </File>
     <File Include="Content/middle-js/Plugin/addressAutoComplete.google.js">
       <publishTime>09/13/2016 13:58:10</publishTime>
     </File>
     <File Include="Content/middle-js/Plugin/addressAutoComplete.nzpost.js">
-      <publishTime>04/10/2016 12:33:47</publishTime>
+      <publishTime>10/04/2016 12:33:47</publishTime>
     </File>
     <File Include="Content/middle-js/Utilities.js">
       <publishTime>09/28/2016 18:18:25</publishTime>
@@ -1189,8 +1192,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="packages.config">
       <publishTime>09/22/2016 10:11:31</publishTime>
     </File>
+    <File Include="platform.setting.json">
+      <publishTime>10/21/2016 08:29:30</publishTime>
+    </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>10/14/2016 04:29:08</publishTime>
+      <publishTime>10/21/2016 08:29:52</publishTime>
     </File>
     <File Include="shop/Index.html">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -1199,13 +1205,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Static/css/stall.min.css">
-      <publishTime>10/14/2016 04:29:01</publishTime>
+      <publishTime>10/21/2016 08:29:44</publishTime>
     </File>
     <File Include="Static/html/homemade/index.html">
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Static/html/Index.html">
-      <publishTime>09/29/2016 14:16:37</publishTime>
+      <publishTime>10/20/2016 02:48:27</publishTime>
     </File>
     <File Include="Static/html/PayFaild.html">
       <publishTime>09/29/2016 00:48:53</publishTime>
@@ -1217,7 +1223,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Static/html/test.html">
-      <publishTime>04/10/2016 12:28:14</publishTime>
+      <publishTime>10/04/2016 12:28:14</publishTime>
     </File>
     <File Include="Static/img/404.png">
       <publishTime>09/29/2016 00:55:32</publishTime>
@@ -1229,7 +1235,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2016 13:58:11</publishTime>
     </File>
     <File Include="Static/img/favicon.png">
-      <publishTime>09/23/2016 12:43:29</publishTime>
+      <publishTime>10/18/2016 17:46:34</publishTime>
     </File>
     <File Include="Static/img/homemade.jpg">
       <publishTime>09/14/2016 09:51:40</publishTime>
@@ -1241,10 +1247,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/15/2016 15:16:48</publishTime>
     </File>
     <File Include="Static/img/logo.png">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/18/2016 17:46:15</publishTime>
+    </File>
+    <File Include="Static/img/logo_black.png">
+      <publishTime>10/18/2016 17:40:14</publishTime>
     </File>
     <File Include="Static/img/logo_darkgrey_96.png">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/18/2016 17:53:41</publishTime>
     </File>
     <File Include="Static/img/logo_grey.png">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -1256,16 +1265,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Static/img/logo_receipt.png">
-      <publishTime>09/21/2016 00:51:21</publishTime>
+      <publishTime>10/18/2016 17:45:11</publishTime>
     </File>
     <File Include="Static/img/logo_white.png">
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
+    <File Include="Static/img/logo_white_96.png">
+      <publishTime>10/18/2016 17:47:31</publishTime>
+    </File>
     <File Include="Static/img/no_image_l.png">
-      <publishTime>09/29/2016 18:27:09</publishTime>
+      <publishTime>10/19/2016 22:19:01</publishTime>
     </File>
     <File Include="Static/img/no_image_s.png">
-      <publishTime>09/29/2016 18:27:09</publishTime>
+      <publishTime>10/19/2016 22:20:16</publishTime>
     </File>
     <File Include="Static/img/stall-logo.png">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -1274,7 +1286,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/14/2016 09:51:40</publishTime>
     </File>
     <File Include="Static/js/stall.min.js">
-      <publishTime>10/14/2016 04:29:01</publishTime>
+      <publishTime>10/21/2016 08:29:45</publishTime>
     </File>
     <File Include="Static/lib/angular-animate/.bower.json">
       <publishTime>09/13/2016 13:58:11</publishTime>
@@ -1331,7 +1343,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2016 13:58:11</publishTime>
     </File>
     <File Include="Static/lib/angular-material/.bower.json">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/.gitignore">
       <publishTime>10/12/2016 04:36:55</publishTime>
@@ -2750,265 +2762,265 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/12/2016 04:36:59</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/select/select.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/select/select.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/select/select.min.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/showHide/bower.json">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/showHide/showHide.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/showHide/showHide.min.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/sidenav/bower.json">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/sidenav/sidenav-default-theme.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/sidenav/sidenav-default-theme.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/sidenav/sidenav.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/sidenav/sidenav.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/sidenav/sidenav.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/sidenav/sidenav.min.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/slider/bower.json">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/slider/slider-default-theme.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/slider/slider-default-theme.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/slider/slider.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/slider/slider.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/slider/slider.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/slider/slider.min.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/sticky/bower.json">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/sticky/sticky.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/sticky/sticky.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/sticky/sticky.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/sticky/sticky.min.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/subheader/bower.json">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/subheader/subheader-default-theme.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/subheader/subheader-default-theme.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/subheader/subheader.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/subheader/subheader.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/subheader/subheader.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/subheader/subheader.min.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/swipe/bower.json">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/swipe/swipe.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/swipe/swipe.min.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/switch/bower.json">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/switch/switch-default-theme.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/switch/switch-default-theme.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/switch/switch.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/switch/switch.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/switch/switch.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/switch/switch.min.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/tabs/bower.json">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/tabs/tabs-default-theme.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/tabs/tabs-default-theme.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/tabs/tabs.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/tabs/tabs.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/tabs/tabs.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/tabs/tabs.min.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/textField/bower.json">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/textField/textField-default-theme.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/textField/textField-default-theme.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/textField/textField.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/textField/textField.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/textField/textField.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/textField/textField.min.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/toast/bower.json">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/toast/toast-default-theme.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/toast/toast-default-theme.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/toast/toast.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/toast/toast.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/toast/toast.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/toast/toast.min.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/toolbar/bower.json">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/toolbar/toolbar-default-theme.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/toolbar/toolbar-default-theme.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/toolbar/toolbar.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/toolbar/toolbar.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/toolbar/toolbar.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/toolbar/toolbar.min.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/tooltip/bower.json">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/tooltip/tooltip-default-theme.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/tooltip/tooltip-default-theme.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/tooltip/tooltip.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/tooltip/tooltip.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/tooltip/tooltip.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/tooltip/tooltip.min.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/virtualRepeat/bower.json">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/virtualRepeat/virtualRepeat.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/virtualRepeat/virtualRepeat.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/virtualRepeat/virtualRepeat.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/virtualRepeat/virtualRepeat.min.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/whiteframe/bower.json">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/whiteframe/whiteframe.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/whiteframe/whiteframe.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/whiteframe/whiteframe.min.css">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/js/whiteframe/whiteframe.min.js">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>10/12/2016 04:37:00</publishTime>
     </File>
     <File Include="Static/lib/angular-material/modules/layouts/angular-material.layout-attributes.css">
       <publishTime>10/12/2016 04:37:00</publishTime>
@@ -4019,13 +4031,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Customer/Addresses.cshtml">
-      <publishTime>04/10/2016 12:47:32</publishTime>
+      <publishTime>10/04/2016 12:47:32</publishTime>
     </File>
     <File Include="Views/Customer/Cart.cshtml">
-      <publishTime>04/10/2016 12:46:34</publishTime>
+      <publishTime>10/04/2016 12:46:34</publishTime>
     </File>
     <File Include="Views/Customer/Checkout.cshtml">
-      <publishTime>10/10/2016 17:29:24</publishTime>
+      <publishTime>10/21/2016 06:56:28</publishTime>
     </File>
     <File Include="Views/Customer/Index.cshtml">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -4034,7 +4046,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/10/2016 11:01:40</publishTime>
     </File>
     <File Include="Views/Customer/Orders.cshtml">
-      <publishTime>04/10/2016 12:47:55</publishTime>
+      <publishTime>10/04/2016 12:47:55</publishTime>
     </File>
     <File Include="Views/Home/index.cshtml">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -4073,7 +4085,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/29/2016 01:24:47</publishTime>
     </File>
     <File Include="Views/Shared/_CustomerLayout.cshtml">
-      <publishTime>05/10/2016 11:08:45</publishTime>
+      <publishTime>10/05/2016 11:08:45</publishTime>
     </File>
     <File Include="Views/Shared/_HomeLayout.cshtml">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -4082,7 +4094,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Views/Shared/_OwnerLayout.cshtml">
-      <publishTime>06/10/2016 21:23:23</publishTime>
+      <publishTime>10/06/2016 21:23:23</publishTime>
     </File>
     <File Include="Views/Stall/Detail.cshtml">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -4103,7 +4115,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/14/2016 00:15:13</publishTime>
+      <publishTime>10/21/2016 08:29:51</publishTime>
     </File>
     <File Include="webpack.config.js">
       <publishTime>10/11/2016 20:50:37</publishTime>

@@ -39,18 +39,18 @@ namespace Greenspot.Stall.Models
 
         public bool IsApplicableToArea(string area)
         {
-            if (Areas == null || Areas.Length == 0)
-            {
-                return true;
-            }
+            //if (Areas == null || Areas.Length == 0)
+            //{
+            //    return true;
+            //}
 
-            foreach (var def in Areas)
-            {
-                if (Area.IsApplicable(def, area))
-                {
-                    return true;
-                }
-            }
+            //foreach (var def in Areas)
+            //{
+            //    if (Area.IsApplicable(def, area))
+            //    {
+            //        return true;
+            //    }
+            //}
 
             return false;
         }

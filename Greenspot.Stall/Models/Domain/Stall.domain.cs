@@ -335,14 +335,14 @@ namespace Greenspot.Stall.Models
         //}
 
 
-        [NotMapped]
-        public DeliveryPlan DeliveryPlan
-        {
-            get
-            {
-                return new DeliveryPlan();
-            }
-        }
+        //[NotMapped]
+        //public DeliveryPlan DeliveryPlan
+        //{
+        //    get
+        //    {
+        //        return new DeliveryPlan();
+        //    }
+        //}
 
         [NotMapped]
         private Setting _setting = null;

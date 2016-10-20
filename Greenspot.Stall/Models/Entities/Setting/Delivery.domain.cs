@@ -7,13 +7,13 @@ namespace Greenspot.Stall.Models.Settings
 {
     public partial class DeliveryDefinition
     {
-        public IList<DeliveryOption> GetOptions(DateTime startDate, int nextDays)
+        public IList<DeliveryOption> GetOptions(DateTime dtStart, int nextDays, DateTimeTerm openingHours)
         {
             var result = new List<DeliveryOption>();
 
             foreach (var r in Rules)
             {
-                IList<DeliveryOption> opts = r.GetOptions(startDate, nextDays);
+                IList<DeliveryOption> opts = r.GetOptions(dtStart, nextDays, DefaultCalculator, openingHours);
 
                 //exclude previous rules
                 result.AddRange(opts.Subtract(result));
@@ -26,14 +26,24 @@ namespace Greenspot.Stall.Models.Settings
 
     public partial class DeliveryRule
     {
-        public IList<DeliveryOption> GetOptions(DateTime startDate, int nextDays)
+        public IList<DeliveryOption> GetOptions(DateTime dtStart, int nextDays, DeliveryFeeCalculator defaultCalc, DateTimeTerm openingHours)
         {
             var result = new List<DeliveryOption>();
 
-            IList<DateTimePair> pairs;
-            if (DateTimes != null)
+            var calc = Calculator ?? defaultCalc;
+            if (calc == null)
             {
-                pairs = DateTimes.GetDateTimePairs(startDate, nextDays);
+                return result;
+            }
+
+            IList<DateTimePair> pairs;
+            if (SameAsOpeningHours)
+            {
+                pairs = openingHours.GetDateTimePairs(dtStart, nextDays);
+            }
+            else if (DateTimes != null)
+            {
+                pairs = DateTimes.GetDateTimePairs(dtStart, nextDays);
             }
             else
             {
@@ -49,7 +59,7 @@ namespace Greenspot.Stall.Models.Settings
                     DivisionType = p.DivisionType,
                     DivisionMinutes = p.DivisionMinutes,
                     Areas = Areas,
-                    Calculator = Calculator
+                    Calculator = calc
                 });
             }
 
