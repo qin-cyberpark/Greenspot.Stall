@@ -246,7 +246,7 @@ namespace Greenspot.Stall.Controllers.MVC
                 else
                 {
                     order.Receiver = "PICK-UP";
-                    order.DeliveryAddress = orderVM.DeliveryOption.PickUpAddress;
+                    order.DeliveryAddress = orderVM.DeliveryOption.PickUpAddresses[0];
                 }
 
                 if (order.Stall.HasDelivery)

@@ -1,48 +1,93 @@
 {
-  "DefaultFee": 25.00,
-  "FreeDeliveryOrderAmount": 9999,
-  "MaxAdvancedOrderDays": 2,
-  "OptionDivideMinutes": 60,
-  "DefaultPlans": [
-   {
-      "Periods": [
+  "MaxAdvancedOrderDays": 6,
+  "MinPickupAdvancedMinutes": 240,
+  "MinDeliveryAdvancedMinutes": 240,
+  //Opening Hours
+  "OpeningHours": {
+    //0-Undivisible, 1-DivideToPeriod,2-DivideToTime
+    "DivisionType": 0,
+    "DivisionMinutes": 60,
+    "Inclusive": [
+      {
+        //"5","7","17-20"
+        "DaysOfMonth": [],
+        //"1-6" = Monday to Saturday
+        "DaysOfWeek": [
+          "5"
+        ],
+        //"2016/10/1","2016/10/5-2016/11/3"
+        "Dates": [],
+        //"9:00-15:00","18:00-2:00" = over night
+        "Times": [
+          "18:00-22:00"
+        ]
+      },
+      {
+        //"5","7","17-20"
+        "DaysOfMonth": [],
+        //"1-6" = Monday to Saturday
+        "DaysOfWeek": [
+          "6"
+        ],
+        //"2016/10/1","2016/10/5-2016/11/3"
+        "Dates": [],
+        //"9:00-15:00","18:00-2:00" = over night
+        "Times": [
+          "9:00-14:00"
+        ]
+      }
+    ]
+  },
+  "Pickup": {
+    "Available": true,
+    "Rules": [
+      {
+        "Addresses": [
+          "11 Breenagh Place, Massey, Auckland"
+        ],
+        "SameAsOpeningHours": true
+      }
+    ]
+  },
+  "Delivery": {
+    "DeliveryType": 1,
+    "MinOrderAmount": 25,
+    "FreeDeliveryOrderAmount": 50,
+    "DefaultCalculator": {
+      "$type": "Greenspot.Stall.Models.DeliveryFeeCalculator, Greenspot.Stall",
+      "Rules": [
         {
-          "DaysOfMonth": [ ],
-          "DaysOfWeek": ["1-5"],
-          "Dates": [],
-          "Times": ["11:00-21:30"],
-          "IsTimeDivisible": true
-        }
-      ],
-      "FilterByArea": true,
-      "Areas": [ "NZ-Auckland-Auckland City"],
-      "IsExclusive": false,
-      "FeeCalculators": [
-        {
-          "$type": "Greenspot.Stall.Models.FixedFeeCalculator, Greenspot.Stall",
-          "Fee": 6.00
+          "$type": "Greenspot.Stall.Models.BasicDeliveryFeeRule, Greenspot.Stall",
+          "Fee": 0
         }
       ]
     },
-    {
-      "Periods": [
-        {
-          "DaysOfMonth": [],
-          "DaysOfWeek": [ "6" ],
-          "Dates": [],
-          "Times": [ "16:30-21:30" ],
-          "IsTimeDivisible": true
+    "Rules": [
+      {
+        "SameAsOpeningHours": true,
+        "Areas": [
+          "nz:auckland:auckland:auckland-city",
+          "nz:auckland:auckland:central-auckland",
+          "nz:auckland:auckland:north-shore",
+          "nz:auckland:auckland:west-auckland",
+          "nz:auckland:auckland:east-auckland"
+        ],
+        "Calculator": {
+          "$type": "Greenspot.Stall.Models.DeliveryFeeCalculator, Greenspot.Stall",
+          "Rules": [
+            {
+              "$type": "Greenspot.Stall.Models.BasicDeliveryFeeRule, Greenspot.Stall",
+              "OrderAmountFrom": 50,
+              "Fee": 0
+            },
+            {
+              "$type": "Greenspot.Stall.Models.BasicDeliveryFeeRule, Greenspot.Stall",
+              "OrderAmountFrom": 70,
+              "Fee": 0
+            }
+          ]
         }
-      ],
-      "FilterByArea": true,
-      "Areas": [ "NZ-Auckland-Auckland City" ],
-      "IsExclusive": false,
-      "FeeCalculators": [
-        {
-          "$type": "Greenspot.Stall.Models.FixedFeeCalculator, Greenspot.Stall",
-          "Fee": 6.00
-        }
-      ]
-    }
-  ]
+      }
+    ]
+  }
 }

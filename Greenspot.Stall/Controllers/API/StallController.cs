@@ -118,13 +118,13 @@ namespace Greenspot.Stall.Controllers.API
             if (stall.Setting.Delivery.DeliveryType == Models.Settings.DeliveryTypes.StoreOnly)
             {
                 //get store delivery
-                deliveryOpts = stall.GetDeliveryOptions(DateTime.Now.AddMinutes(advMins), advDays, areaStr, null, orderAmount)
+                deliveryOpts = stall.GetDeliveryOptions(DateTime.Now, advDays, areaStr, null, orderAmount)
                     .OrderBy(x => x.From).ToList();
             }
             else
             {
                 //get platform
-                deliveryOpts = StallApplication.GetDeliveryOptions(stall, DateTime.Now.AddMinutes(advMins), advDays, areaStr, null, orderAmount)
+                deliveryOpts = StallApplication.GetDeliveryOptions(stall, DateTime.Now, advDays, areaStr, null, orderAmount)
                                     .OrderBy(x => x.From).ToList();
             }
 
@@ -188,7 +188,7 @@ namespace Greenspot.Stall.Controllers.API
                 var n = new DeliveryOptionCollectionViewModel()
                 {
                     Date = dt,
-                    ApplicableOptions = c.ApplicableOptions.OrderBy(x => x.Fee).OrderBy(x => x.From).ToList(),
+                    ApplicableOptions = c.ApplicableOptions.Where(x => x.To > DateTime.Now.AddMinutes(advMins)).OrderBy(x => x.Fee).OrderBy(x => x.From).ToList(),
                     OtherOptions = c.OtherOptions.OrderBy(x => x.Fee).OrderBy(x => x.From).ToList()
                 };
 
@@ -234,7 +234,7 @@ namespace Greenspot.Stall.Controllers.API
                             StallApplication.Setting.MinPickupAdvancedMinutes : stall.Setting.MinPickupAdvancedMinutes;
 
             //get pickup delivery
-            var pickupOptions = stall.GetPickupOptions(DateTime.Now.AddMinutes(advMins), advDays).OrderBy(x => x.From).ToList();
+            var pickupOptions = stall.GetPickupOptions(DateTime.Now, advDays).OrderBy(x => x.From).ToList();
 
             DeliveryOptionCollectionViewModel collection = null;
 
@@ -278,7 +278,7 @@ namespace Greenspot.Stall.Controllers.API
                 var n = new DeliveryOptionCollectionViewModel()
                 {
                     Date = dt,
-                    ApplicableOptions = c.ApplicableOptions.OrderBy(x => x.From).OrderBy(x => x.Fee).ToList()
+                    ApplicableOptions = c.ApplicableOptions.Where(x => x.To > DateTime.Now.AddMinutes(advMins)).OrderBy(x => x.From).OrderBy(x => x.Fee).ToList()
                 };
 
                 if (n.ApplicableOptions.Count > 0)

@@ -93,11 +93,7 @@ namespace Greenspot.Stall.Models.Settings
                         newPair.To = newPair.To.AddDays(1);
                     }
 
-                    if (newPair.To > dtDate)
-                    {
-                        //ignore passed pair
-                        result.Add(newPair);
-                    }
+                    result.Add(newPair);
                 }
 
                 //next date

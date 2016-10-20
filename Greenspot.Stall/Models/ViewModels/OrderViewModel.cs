@@ -66,8 +66,8 @@ namespace Greenspot.Stall.Models.ViewModels
             [JsonProperty(PropertyName = "IsPickUp")]
             public bool IsPickUp { get; set; }
 
-            [JsonProperty(PropertyName = "PickUpAddress")]
-            public string PickUpAddress { get; set; }
+            [JsonProperty(PropertyName = "PickUpAddresses")]
+            public IList<string> PickUpAddresses { get; set; }
 
             [JsonProperty(PropertyName = "Fee")]
             public decimal Fee { get; set; }
@@ -76,7 +76,7 @@ namespace Greenspot.Stall.Models.ViewModels
             {
                 if (IsPickUp)
                 {
-                    return string.Format("Pickup {0:ddd dMMM h:mmtt}-{1:h:mmtt} {2}", From, To, PickUpAddress);
+                    return string.Format("Pickup {0:ddd dMMM h:mmtt}-{1:h:mmtt} {2}", From, To, PickUpAddresses[0]);
                 }
                 else
                 {

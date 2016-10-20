@@ -65,6 +65,10 @@ namespace Greenspot.Stall.Models
         public static IList<ReceiptRow> CreateRows(string text, Font font)
         {
             var rows = new List<ReceiptRow>();
+            if (string.IsNullOrEmpty(text))
+            {
+                return rows;
+            }
             var textArr = text.Split('\n');
             var rowLength = ReceiptFont.CharsInRow(font);
             foreach (var str in textArr)
@@ -195,8 +199,8 @@ namespace Greenspot.Stall.Models
             //note
             if (!string.IsNullOrEmpty(order.Note))
             {
-                            //separator
-            AddSeparator(' ');
+                //separator
+                AddSeparator(' ');
                 AddRow("备注:" + order.Note, ReceiptFont.Font16);
             }
 
