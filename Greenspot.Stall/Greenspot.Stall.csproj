@@ -1003,9 +1003,7 @@
     <None Include="Content\less\home.less" />
     <Content Include="Content\less\product.less" />
     <Compile Include="Models\Domain\Delivery\DeliveryPlan.domain.cs" />
-    <Content Include="platform.setting.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="platform.setting.json" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>

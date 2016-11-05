@@ -68,7 +68,7 @@
               "DaysOfMonth": [],
               //"1-6" = Monday to Saturday
               "DaysOfWeek": [
-                "5"
+                "1-5"
               ],
               //"2016/10/1","2016/10/5-2016/11/3"
               "Dates": [],

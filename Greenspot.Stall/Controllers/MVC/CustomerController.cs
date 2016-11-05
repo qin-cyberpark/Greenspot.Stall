@@ -149,35 +149,6 @@ namespace Greenspot.Stall.Controllers.MVC
         [HttpGet]
         public ActionResult Checkout()
         {
-            //var orderCollection = (OrderCollectionViewModel)Session["CURRENT_ORDERS"];
-            //if (orderCollection == null)
-            //{
-            //    return View("Cart");
-            //}
-            //var stockMsgs = new List<string>();
-
-            ////check stock
-            //foreach (var order in orderCollection.Orders)
-            //{
-            //    foreach (var item in order.Items)
-            //    {
-            //        var pdt = Product.FindById(item.Id, _db);
-            //        if (pdt.Stock < item.Quantity)
-            //        {
-            //            stockMsgs.Add(string.Format("{0}仅剩{1}件(份)", pdt.Name, pdt.Stock));
-            //        }
-            //    }
-            //}
-            //if (stockMsgs.Count > 0)
-            //{
-            //    ViewBag.StockMsgs = stockMsgs;
-            //    return View("Cart");
-            //}
-            //else
-            //{
-            //    ViewBag.Orders = orderCollection;
-            //    return View();
-            //}
             return View();
         }
 
@@ -235,9 +206,9 @@ namespace Greenspot.Stall.Controllers.MVC
                 }
 
                 //delivery
-                order.DeliveryTimeStart = orderVM.DeliveryOption.From;
-                order.DeliveryTimeEnd = orderVM.DeliveryOption.To;
-                if (!orderVM.DeliveryOption.IsPickUp)
+                order.DeliveryTimeStart = orderVM.DeliveryOrPickupOption.From;
+                order.DeliveryTimeEnd = orderVM.DeliveryOrPickupOption.To;
+                if (!orderVM.DeliveryOrPickupOption.IsPickUp)
                 {
                     var devAddr = DeliveryAddress.FindByCode(CurrentUser.Id, orderVM.DeliveryAddress.Code, _db);
                     order.Receiver = string.Format("{0} {1}", devAddr.Name, devAddr.Mobile);
@@ -246,16 +217,16 @@ namespace Greenspot.Stall.Controllers.MVC
                 else
                 {
                     order.Receiver = "PICK-UP";
-                    order.DeliveryAddress = orderVM.DeliveryOption.PickUpAddresses[0];
+                    order.DeliveryAddress = orderVM.DeliveryOrPickupOption.PickUpAddresses;
                 }
 
-                if (order.Stall.HasDelivery)
+                if (orderVM.DeliveryOrPickupOption.IsStoreDelivery)
                 {
                     //owner delivery
                     var deliveryProduct = Product.FindById(order.Stall.DeliveryProductId, _db);
 
-                    deliveryProduct.LineNote = orderVM.DeliveryOption.ToString() + "\n" + order.Receiver + "\n" + order.DeliveryAddress;
-                    deliveryProduct.Price = orderVM.DeliveryOption.Fee;
+                    deliveryProduct.LineNote = orderVM.DeliveryOrPickupOption.ToString() + "\n" + order.Receiver + "\n" + order.DeliveryAddress;
+                    deliveryProduct.Price = orderVM.DeliveryOrPickupOption.Fee;
 
                     order.Items.Add(new OrderItem(deliveryProduct)
                     {
@@ -265,7 +236,7 @@ namespace Greenspot.Stall.Controllers.MVC
                 else
                 {
                     //platform delivery
-                    order.PlatformDelivery = orderVM.DeliveryOption.Fee;
+                    order.PlatformDelivery = orderVM.DeliveryOrPickupOption.Fee;
                 }
 
                 //note
@@ -459,6 +430,7 @@ namespace Greenspot.Stall.Controllers.MVC
                             var owner = UserManager.FindById(order.Stall.UserId);
                             var ownerId = owner?.SnsInfos[WeChatClaimTypes.OpenId].InfoValue;
                             openIds.Add(ownerId);
+
                             //delivery man
                             var deliveryMen = Models.User.GetByRole(_db, "DeliveryMan");
                             foreach (var d in deliveryMen)
@@ -475,7 +447,7 @@ namespace Greenspot.Stall.Controllers.MVC
                         }
                         catch (Exception ex)
                         {
-                            StallApplication.SysError("[MSG]failed to save orders", ex);
+                            StallApplication.SysError($"[MSG]failed to save order {order.Id}", ex);
                         }
                     }
                 }

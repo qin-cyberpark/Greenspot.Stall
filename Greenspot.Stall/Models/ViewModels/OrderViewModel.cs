@@ -29,8 +29,8 @@ namespace Greenspot.Stall.Models.ViewModels
         [JsonProperty(PropertyName = "itms")]
         public IList<OrdeItemViewModel> Items { get; set; }
 
-        [JsonProperty(PropertyName = "selectedOption")]
-        public DeliveryOptionViewModel DeliveryOption { get; set; }
+        [JsonProperty(PropertyName = "selectedDeliveryOrPickupOption")]
+        public DeliveryOptionViewModel DeliveryOrPickupOption { get; set; }
 
         [JsonProperty(PropertyName = "deliveryAddress")]
         public DeliveryAddressViewModel DeliveryAddress { get; set; }
@@ -66,8 +66,11 @@ namespace Greenspot.Stall.Models.ViewModels
             [JsonProperty(PropertyName = "IsPickUp")]
             public bool IsPickUp { get; set; }
 
-            [JsonProperty(PropertyName = "PickUpAddresses")]
-            public IList<string> PickUpAddresses { get; set; }
+            [JsonProperty(PropertyName = "IsStoreDelivery")]
+            public bool IsStoreDelivery { get; set; }
+
+            [JsonProperty(PropertyName = "PickUpAddress")]
+            public string PickUpAddresses { get; set; }
 
             [JsonProperty(PropertyName = "Fee")]
             public decimal Fee { get; set; }

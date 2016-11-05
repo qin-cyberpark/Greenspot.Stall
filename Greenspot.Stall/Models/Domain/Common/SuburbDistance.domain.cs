@@ -43,6 +43,7 @@ namespace Greenspot.Stall.Models
                     GreenspotConfiguration.AccessAccounts["google.map"].Secret);
                 if (glResult == null)
                 {
+                    StallApplication.SysError($"[GOOGLE DISTANCE]failed to get distance {depCountry},{depCity},{depSuburb} to {destCountry},{destCity},{destSuburb}");
                     return null;
                 }
                 else

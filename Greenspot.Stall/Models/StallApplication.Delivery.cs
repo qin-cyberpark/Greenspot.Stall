@@ -62,7 +62,7 @@ namespace Greenspot.Stall
             var result = new List<DeliveryOrPickupOption>();
             foreach (var opt in options)
             {
-                if (!Models.Area.Contains(opt.Areas, area))
+                if (!Models.Area.IsApplicable(opt.Areas, area))
                 {
                     continue;
                 }

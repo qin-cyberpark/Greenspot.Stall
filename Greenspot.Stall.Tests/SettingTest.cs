@@ -242,7 +242,7 @@ namespace Greenspot.Stall.Tests
                 Inclusive = new List<DateTimePeriod> { new DateTimePeriod { Times = { "10:00-2:00" } } },
                 Exclusive = new List<DateTimePeriod> {
                     new DateTimePeriod { Times = { "10:00-2:00" }, Dates = { "2016/10/20" }},
-                     new DateTimePeriod { Times = { "10:00-2:00" }, Dates = { "2016/10/21" }}}
+                     new DateTimePeriod { Times = { "13:00-18:00" }, Dates = { "2016/10/21" }}}
             };
 
             //definition
@@ -255,34 +255,35 @@ namespace Greenspot.Stall.Tests
 
             definition.Rules.Add(new PickupRule()
             {
-                Addresses = { "Address A", "Address B" },
+                Addresses = { "Address A", "Address D" },
                 DateTimes = new DateTimeTerm()
                 {
-                    Inclusive = new List<DateTimePeriod> { new DateTimePeriod { Times = { "10:00-17:00" }, Dates = { "2016/10/20" } } }
+                    Inclusive = new List<DateTimePeriod> { new DateTimePeriod { Times = { "10:00-17:00" }, DaysOfWeek = {"3","4"} } }
                 }
             });
             definition.Rules.Add(new PickupRule()
             {
-                Addresses = { "Address C", "Address D" },
+                Addresses = { "Address B", "Address E" },
                 DateTimes = new DateTimeTerm()
                 {
-                    Inclusive = new List<DateTimePeriod> { new DateTimePeriod { Times = { "12:00-18:00" }, Dates = { "2016/10/21" } } }
+                    Inclusive = new List<DateTimePeriod> { new DateTimePeriod { Times = { "12:00-18:00" }, DaysOfWeek = { "2", "4" } } }
                 }
             });
             definition.Rules.Add(new PickupRule()
             {
                 SameAsOpeningHours = true,
-                Addresses = { "Address E" }
+                Addresses = { "Address C" }
             });
 
 
             //result
-            var opts = definition.GetOptions(new DateTime(2016, 10, 19), 3, openingHours);
-            Assert.AreEqual(4, opts.Count);
-            Assert.AreEqual("Address E", opts[0].Addresses[0]);
-            Assert.AreEqual("Address A", opts[1].Addresses[0]);
-            Assert.AreEqual("Address D", opts[2].Addresses[1]);
-            Assert.AreEqual("Address E", opts[3].Addresses[0]);
+            var opts = definition.GetOptions(new DateTime(2016, 10, 19), 6, openingHours);
+            Assert.AreEqual(15, opts.Count);
+            Assert.AreEqual("Address A", opts[0].Address);
+            Assert.AreEqual("Address B", opts[2].Address);
+            Assert.AreEqual("Address C", opts[4].Address);
+            Assert.AreEqual("Address D", opts[11].Address);
+            Assert.AreEqual("Address E", opts[13].Address);
         }
 
         [TestMethod]

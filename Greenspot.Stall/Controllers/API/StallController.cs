@@ -13,8 +13,6 @@ namespace Greenspot.Stall.Controllers.API
     public class StallController : ApiController
     {
         private StallEntities _db = new StallEntities();
-        private static readonly log4net.ILog _sysLogger = log4net.LogManager.GetLogger("SysLogger");
-        private static readonly log4net.ILog _bizLogger = log4net.LogManager.GetLogger("BizLogger");
 
         // GET api/<controller>
         [HttpGet]
@@ -75,10 +73,15 @@ namespace Greenspot.Stall.Controllers.API
 
         [HttpGet]
         [Route("api/stall/{id}/GetDeliveryOptions")]
-        public OperationResult<IList<DeliveryOptionCollectionViewModel>> GetDeliveryOptions(int id, [FromUri]string area, [FromUri]decimal orderAmount)
+        public OperationResult<IList<DeliveryOptionCollectionViewModel>> GetDeliveryOptions(int id, 
+            [FromUri]string country, [FromUri]string city, [FromUri]string suburb, [FromUri]string area, [FromUri]decimal orderAmount)
         {
-            string areaStr = $"nz:auckland:auckland:{area.ToLower().Replace(' ', '-')}";
-            var result = new OperationResult<IList<DeliveryOptionCollectionViewModel>>(true);
+            string areaStr = $"{country}:{city}:{area.Replace(' ', '-')}".ToLower();
+            var result = new OperationResult<IList<DeliveryOptionCollectionViewModel>>(true)
+            {
+                Data = new List<DeliveryOptionCollectionViewModel>()
+            };
+
             Models.Stall stall = null;
 
             //get stall 
@@ -109,28 +112,26 @@ namespace Greenspot.Stall.Controllers.API
 
 
             //get distance
-            //var distance = stall.GetDistance(country, city, suburb);
+            var distance = stall.GetDistance(country, city, suburb);
 
-            //
-            var collections = new SortedList<DateTime, DeliveryOptionCollectionViewModel>();
 
             IList<DeliveryOrPickupOption> deliveryOpts;
             if (stall.Setting.Delivery.DeliveryType == Models.Settings.DeliveryTypes.StoreOnly)
             {
                 //get store delivery
-                deliveryOpts = stall.GetDeliveryOptions(DateTime.Now, advDays, areaStr, null, orderAmount)
+                deliveryOpts = stall.GetDeliveryOptions(DateTime.Now, advDays, areaStr, distance, orderAmount)
                     .OrderBy(x => x.From).ToList();
             }
             else
             {
                 //get platform
-                deliveryOpts = StallApplication.GetDeliveryOptions(stall, DateTime.Now, advDays, areaStr, null, orderAmount)
+                deliveryOpts = StallApplication.GetDeliveryOptions(stall, DateTime.Now, advDays, areaStr, distance, orderAmount)
                                     .OrderBy(x => x.From).ToList();
             }
 
 
             DeliveryOptionCollectionViewModel collection = null;
-            IList<DeliveryOrPickupOption> destList = null;
+            DateTime currDate = DateTime.MinValue.Date;
 
             foreach (var opt in deliveryOpts)
             {
@@ -145,68 +146,36 @@ namespace Greenspot.Stall.Controllers.API
 
                 foreach (var optObj in optObjs)
                 {
-                    //got collection by date
-                    if (collections.ContainsKey(optObj.From.Date))
-                    {
-                        collection = collections[optObj.From.Date];
-                    }
-                    else
-                    {
-                        collection = new DeliveryOptionCollectionViewModel()
-                        {
-                            Date = optObj.From.Date
-                        };
-                        collections[optObj.From.Date] = collection;
-                    }
-
-                    //destination list
-                    if (optObj.IsApplicableToArea(areaStr))
+                    if (!optObj.IsApplicableToArea(areaStr))
                     {
                         //has suitable area = available
-                        destList = collection.ApplicableOptions;
+                        continue;
                     }
-                    else
+
+                    if (opt.From.Date != currDate)
                     {
-                        //other
-                        destList = collection.OtherOptions;
+                        //new date group
+                        collection = new DeliveryOptionCollectionViewModel();
+                        result.Data.Add(collection);
+                        currDate = opt.From.Date;
                     }
 
                     //add
-                    destList.Add(optObj);
-                }
-            }
-
-            //resort result
-            result.Data = new List<DeliveryOptionCollectionViewModel>();
-            foreach (var dt in collections.Keys)
-            {
-                var c = collections[dt];
-                if (c.ApplicableOptions.Count == 0)
-                {
-                    continue;
-                }
-                var n = new DeliveryOptionCollectionViewModel()
-                {
-                    Date = dt,
-                    ApplicableOptions = c.ApplicableOptions.Where(x => x.To > DateTime.Now.AddMinutes(advMins)).OrderBy(x => x.Fee).OrderBy(x => x.From).ToList(),
-                    OtherOptions = c.OtherOptions.OrderBy(x => x.Fee).OrderBy(x => x.From).ToList()
-                };
-
-                if (n.ApplicableOptions.Count > 0)
-                {
-                    result.Data.Add(n);
+                    collection.Options.Add(optObj);
                 }
             }
 
             return result;
-
         }
 
         [HttpGet]
         [Route("api/stall/{id}/GetPickUpOptions")]
-        public OperationResult<IList<DeliveryOptionCollectionViewModel>> GetPickUpOptions(int id)
+        public OperationResult<IList<PickupOptionGroupViewModel>> GetPickUpOptions(int id)
         {
-            var result = new OperationResult<IList<DeliveryOptionCollectionViewModel>>(true);
+            var result = new OperationResult<IList<PickupOptionGroupViewModel>>(true)
+            {
+                Data = new List<PickupOptionGroupViewModel>()
+            };
 
             Models.Stall stall = null;
 
@@ -222,10 +191,7 @@ namespace Greenspot.Stall.Controllers.API
                 }
             }
 
-            //var earliestOrderTime = DateTime.Now.AddMinutes(stall.DeliveryPlan.MinOrderAcvancedMinutes);
 
-            //
-            var collections = new SortedList<DateTime, DeliveryOptionCollectionViewModel>();
 
             var advDays = stall.Setting.MaxAdvancedOrderDays > StallApplication.Setting.MaxAdvancedOrderDays ?
                             StallApplication.Setting.MaxAdvancedOrderDays : stall.Setting.MaxAdvancedOrderDays;
@@ -234,56 +200,43 @@ namespace Greenspot.Stall.Controllers.API
                             StallApplication.Setting.MinPickupAdvancedMinutes : stall.Setting.MinPickupAdvancedMinutes;
 
             //get pickup delivery
-            var pickupOptions = stall.GetPickupOptions(DateTime.Now, advDays).OrderBy(x => x.From).ToList();
+            var pickupOptions = stall.GetPickupOptions(DateTime.Now.AddMinutes(advMins), advDays);
 
-            DeliveryOptionCollectionViewModel collection = null;
+            PickupOptionGroupViewModel addrGrp = null;
+            PickupOptionGroupViewModel dateGrp = null;
+            string currAddr = null;
+            DateTime currDate = DateTime.MinValue.Date;
 
             foreach (var opt in pickupOptions)
             {
-                //got collection by date
-                if (collections.ContainsKey(opt.From.Date))
+                if (!opt.PickUpAddress.Equals(currAddr))
                 {
-                    collection = collections[opt.From.Date];
-                }
-                else
-                {
-                    collection = new DeliveryOptionCollectionViewModel()
+                    //new address
+                    addrGrp = new PickupOptionGroupViewModel()
                     {
-                        Date = opt.From.Date
+                        Groups = new List<PickupOptionGroupViewModel>()
                     };
-                    collections[opt.From.Date] = collection;
+                    result.Data.Add(addrGrp);
+                    currAddr = opt.PickUpAddress;
+                    currDate = DateTime.MinValue.Date;
                 }
 
-                //add
+                if (opt.From.Date != currDate)
+                {
+                    //new date group
+                    dateGrp = new PickupOptionGroupViewModel();
+                    addrGrp.Groups.Add(dateGrp);
+                    currDate = opt.From.Date;
+                }
+
+                //add options
                 if (opt.DivisionType == Models.Settings.TimeDivisionTypes.Undivisible)
                 {
-                    collection.ApplicableOptions.Add(opt);
+                    dateGrp.Options.Add(opt);
                 }
                 else
                 {
-                    ((List<DeliveryOrPickupOption>)collection.ApplicableOptions).AddRange(opt.Divide());
-                }
-            }
-
-            //resort result
-            result.Data = new List<DeliveryOptionCollectionViewModel>();
-            foreach (var dt in collections.Keys)
-            {
-                var c = collections[dt];
-                if (c.ApplicableOptions.Count == 0)
-                {
-                    continue;
-                }
-
-                var n = new DeliveryOptionCollectionViewModel()
-                {
-                    Date = dt,
-                    ApplicableOptions = c.ApplicableOptions.Where(x => x.To > DateTime.Now.AddMinutes(advMins)).OrderBy(x => x.From).OrderBy(x => x.Fee).ToList()
-                };
-
-                if (n.ApplicableOptions.Count > 0)
-                {
-                    result.Data.Add(n);
+                    ((List<DeliveryOrPickupOption>)dateGrp.Options).AddRange(opt.Divide());
                 }
             }
 

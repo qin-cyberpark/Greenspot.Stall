@@ -19,13 +19,11 @@ namespace Greenspot.Stall.Models.Settings
             foreach (var r in Rules)
             {
                 var opts = r.GetOptions(dtDate, nextDays, openingHours);
-
-                //exclude previous rules
-                result.AddRange(opts.Subtract(result));
+                result.AddRange(opts);
             }
 
             //
-            return result.OrderBy(x => x.From).ToList();
+            return result.OrderBy(x => x.Address).ThenBy(x => x.From).ToList();
         }
     }
 
@@ -51,14 +49,17 @@ namespace Greenspot.Stall.Models.Settings
 
             foreach (var p in pairs)
             {
-                result.Add(new PickupOption()
+                foreach (var addr in Addresses)
                 {
-                    From = p.From,
-                    To = p.To,
-                    DivisionType = p.DivisionType,
-                    DivisionMinutes = p.DivisionMinutes,
-                    Addresses = Addresses
-                });
+                    result.Add(new PickupOption()
+                    {
+                        From = p.From,
+                        To = p.To,
+                        DivisionType = p.DivisionType,
+                        DivisionMinutes = p.DivisionMinutes,
+                        Address = addr
+                    });
+                }
             }
 
             return result;

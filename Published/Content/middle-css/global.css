@@ -1,4 +1,8 @@
 /* global */
+[ng-cloak],
+.ng-cloak {
+  display: none !important;
+}
 /* global elements*/
 html,
 body {

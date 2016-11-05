@@ -100,7 +100,7 @@
             }
 
             var storedStall = JSON.parse($window.localStorage["pre_stall"]);
-            if (storedStall.Id != stallId) {
+            if (storedStall.Id !== stallId) {
                 //stored stall not match
                 return false;
             }
@@ -213,7 +213,7 @@
         vm.allDeliverySelected = function () {
             var len = vm.orders.length;
             for (var i = 0; i < len; i++) {
-                if (!vm.orders[i].selectedOption) {
+                if (!vm.orders[i].selectedDeliveryOrPickupOption) {
                     return false;
                 }
             }
@@ -230,12 +230,14 @@
             angular.forEach(orders, function (order, orderIdx) {
                 delete order.deliveryOptionCollections;
                 delete order.pickUpOptionCollections;
-                delete order.optionCollections;
-                delete order.selectedOptionCollection;
+                delete order.selectedPickupAddressOptions;
+                delete order.dateOptionCollections;
+                delete order.selectedDateOptions;
             });
-            console.log(vm.orders);
+            console.log(orders);
+
             //post order
-            $http.post('/customer/Pay', vm.orders).success(function (result) {
+            $http.post('/customer/Pay', orders).success(function (result) {
                 if (result.Succeeded) {
                     //clear error
                     delete vm.error;

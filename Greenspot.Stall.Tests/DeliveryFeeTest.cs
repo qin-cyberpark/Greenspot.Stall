@@ -31,19 +31,17 @@ namespace Greenspot.Stall.Storefont.Tests
             var stall = new Models.Stall();
             stall.SettingJson = json;
 
-            var pickup = stall.GetPickupOptions(new DateTime(2016, 10, 20, 16, 30, 0), 7);
-            Assert.AreEqual(5, pickup.Count);
-            Assert.IsTrue(pickup[0].PickUpAddresses[0].StartsWith("1103"));
-            Assert.IsTrue(pickup[1].PickUpAddresses[0].StartsWith("ABC"));
-            Assert.IsTrue(pickup[2].PickUpAddresses[0].StartsWith("1103"));
-
-            pickup = stall.GetPickupOptions(new DateTime(2016, 10, 20, 16, 29, 0), 7);
-            Assert.AreEqual(6, pickup.Count);
+            var pickup = stall.GetPickupOptions(new DateTime(2016, 10, 20), 6);
+            Assert.AreEqual(11, pickup.Count);
+            Assert.IsTrue(pickup[0].PickUpAddress.StartsWith("1103"));
+            Assert.IsTrue(pickup[6].PickUpAddress.StartsWith("ABC"));
             Assert.AreEqual(new DateTime(2016, 10, 20, 17, 0, 0), pickup[0].To);
             Assert.AreEqual(new DateTime(2016, 10, 21, 10, 0, 0), pickup[1].From);
-            Assert.AreEqual(new DateTime(2016, 10, 21, 18, 0, 0), pickup[2].To);
-            Assert.AreEqual(new DateTime(2016, 10, 21, 18, 0, 0), pickup[3].From);
-            Assert.AreEqual(new DateTime(2016, 10, 24, 22, 0, 0), pickup[5].To);
+            Assert.AreEqual(new DateTime(2016, 10, 22, 22, 0, 0), pickup[2].To);
+            Assert.AreEqual(new DateTime(2016, 10, 24, 10, 0, 0), pickup[3].From);
+            Assert.AreEqual(new DateTime(2016, 10, 26, 22, 0, 0), pickup[5].To);
+            Assert.AreEqual(new DateTime(2016, 10, 20, 14, 0, 0), pickup[6].From);
+            Assert.AreEqual(new DateTime(2016, 10, 26, 18, 0, 0), pickup[10].To);
         }
 
 

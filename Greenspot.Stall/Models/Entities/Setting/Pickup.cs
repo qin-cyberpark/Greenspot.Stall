@@ -29,14 +29,14 @@ namespace Greenspot.Stall.Models.Settings
 
     public partial class PickupOption : DateTimePair
     {
-        public IList<string> Addresses { get; set; }
+        public string Address { get; set; }
 
         public override T Create<T>(DateTime from, DateTime to)
         {
             var obj = base.Create<T>(from, to) as PickupOption;
             if (obj != null)
             {
-                obj.Addresses = Addresses;
+                obj.Address = Address;
             }
             return obj as T;
         }

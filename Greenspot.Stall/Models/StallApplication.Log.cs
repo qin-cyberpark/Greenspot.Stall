@@ -15,6 +15,10 @@ namespace Greenspot.Stall
         {
             _sysLogger.InfoFormat(format, args);
         }
+        public static void SysInfo(string message)
+        {
+            _sysLogger.InfoFormat(message);
+        }
         public static void SysErrorFormat(string format, params object[] args)
         {
             _sysLogger.ErrorFormat(format, args);

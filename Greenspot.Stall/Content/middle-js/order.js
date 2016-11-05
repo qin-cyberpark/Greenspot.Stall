@@ -10,18 +10,18 @@
         self.itms = data.itms;
         self.deliveryOptionCollections = [];
         self.pickUpOptionCollections = [];
-        self.optionCollections = [];
-        self.selectedOptionCollection = null;
-        self.selectedOption = null;
+        self.selectedPickupAddressOptions = [];
+        self.dateOptionCollections = [];
+        self.selectedDateOptions = [];
+        self.selectedDeliveryOrPickupOption = null;
 
         /* set delivery address */
         self.setDeliveryAddress = function (address) {
             self.deliveryAddress = address;
-            self.optionCollections = [];
-            self.selectedOptionCollection = null;
-            self.selectedOption = null;
             self.loadDeliveryOptions();
         }
+
+
 
         /* get delivery option*/
         self.loadDeliveryOptions = function () {
@@ -33,20 +33,20 @@
             }
 
             //get delivery options
-            //var url = '/api/stall/' + self.i + '/GetDeliveryOptions?country=' + self.deliveryAddress.CountryId;
-            //url += "&city=" + self.deliveryAddress.City;
-            //url += "&suburb=" + self.deliveryAddress.Suburb;
-            //url += "&area=" + self.deliveryAddress.Area;
-            var url = '/api/stall/' + self.i + '/GetDeliveryOptions?area=' + self.deliveryAddress.Area;
+            var url = '/api/stall/' + self.i + '/GetDeliveryOptions?country=' + self.deliveryAddress.CountryCode;
+            url += "&city=" + self.deliveryAddress.City;
+            url += "&suburb=" + self.deliveryAddress.Suburb;
+            url += "&area=" + self.deliveryAddress.Area;
+            //var url = '/api/stall/' + self.i + '/GetDeliveryOptions?area=' + self.deliveryAddress.Area;
             url += "&orderAmount=" + self.amt;
 
             self.$http.get(url).success(function (result) {
                 if (result.Succeeded) {
                     self.deliveryOptionCollections = result.Data;
                     if (self.hasDeliveryOption()) {
-                        self.setIsPickup(false);
+                        self.deliveryOrPickupChanged(false);
                     } else if (self.hasPickUpOption()) {
-                        self.setIsPickup(true);
+                        self.deliveryOrPickupChanged(true);
                     }
                 }
                 else {
@@ -71,7 +71,7 @@
                 if (result.Succeeded) {
                     self.pickUpOptionCollections = result.Data;
                     if (self.hasPickUpOption()) {
-                        self.setIsPickup(true);
+                        self.deliveryOrPickupChanged(true);
                     }
                 }
                 else {
@@ -91,28 +91,37 @@
             return self.pickUpOptionCollections && self.pickUpOptionCollections.length > 0;
         }
 
-
-        /* select delivery option collection*/
-        self.optionCollectionChanged = function () {
-            self.selectedOption = self.selectedOptionCollection.ApplicableOpts[0];
-            //self.optionChanged();
+        //pick up address changed
+        self.pickupAddressChanged = function () {
+            self.dateOptionCollections = self.selectedPickupAddressOptions.Groups;
+            self.selectedDateOptions = self.dateOptionCollections[0];
+            self.dateOptionCollectionChanged();
         }
 
-        /* select delivery option*/
-        self.optionChanged = function () {
-            //console.log(self.selectedOption);
+        //* swtich between delivery and pickup
+        self.deliveryOrPickupChanged = function (isPickup) {
+            self.isPickup = isPickup;
+            if (!isPickup) {
+                //delivery
+                self.dateOptionCollections = self.deliveryOptionCollections;
+                self.selectedDateOptions = self.dateOptionCollections[0];
+                self.dateOptionCollectionChanged();
+            } else {
+                //pickup
+                self.isPickup = true;
+                self.selectedPickupAddressOptions = self.pickUpOptionCollections[0];
+                self.pickupAddressChanged();
+            }
+        }
+
+        /* select date options collection*/
+        self.dateOptionCollectionChanged = function () {
+            self.selectedDeliveryOrPickupOption = self.selectedDateOptions.Options[0];
         }
 
         /* total amount*/
         self.totalAmount = function () {
-            return self.amt + (self.selectedOption ? self.selectedOption.Fee : 0);
-        }
-
-        self.setIsPickup = function (isPickup) {
-            self.isPickup = isPickup;
-            self.optionCollections = isPickup ? self.pickUpOptionCollections : self.deliveryOptionCollections;
-            self.selectedOptionCollection = self.optionCollections[0];
-            self.optionCollectionChanged();
+            return self.amt + (self.selectedDeliveryOrPickupOption ? self.selectedDeliveryOrPickupOption.Fee : 0);
         }
 
         self.loadPickUpOptions();

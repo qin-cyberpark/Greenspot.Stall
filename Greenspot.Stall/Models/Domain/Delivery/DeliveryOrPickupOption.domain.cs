@@ -16,7 +16,7 @@ namespace Greenspot.Stall.Models
                 DivisionType = opt.DivisionType,
                 DivisionMinutes = opt.DivisionMinutes,
                 IsPickUp = true,
-                PickUpAddresses = opt.Addresses
+                PickUpAddress = opt.Address
             };
         }
 
@@ -92,7 +92,7 @@ namespace Greenspot.Stall.Models
                     DivisionMinutes = DivisionMinutes,
                     Areas = Areas,
                     IsPickUp = IsPickUp,
-                    PickUpAddresses = PickUpAddresses,
+                    PickUpAddress = PickUpAddress,
                     IsStoreDelivery = IsStoreDelivery,
                     Fee = Fee
                 }));
@@ -110,7 +110,7 @@ namespace Greenspot.Stall.Models
                 DivisionMinutes = DivisionMinutes,
                 Areas = Areas,
                 IsPickUp = IsPickUp,
-                PickUpAddresses = PickUpAddresses,
+                PickUpAddress = PickUpAddress,
                 IsStoreDelivery = IsStoreDelivery,
                 Fee = Fee
             }));
@@ -133,7 +133,7 @@ namespace Greenspot.Stall.Models
                     DivisionType = option.DivisionType,
                     Areas = option.Areas,
                     IsPickUp = option.IsPickUp,
-                    PickUpAddresses = PickUpAddresses,
+                    PickUpAddress = PickUpAddress,
                     IsStoreDelivery = IsStoreDelivery,
                     Fee = option.Fee
                 };

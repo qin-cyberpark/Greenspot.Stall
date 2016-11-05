@@ -136,7 +136,7 @@
   font-weight: bold;
   margin-top: 5px;
   margin-bottom: 3px;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 #checkout-content .checkout-section .message {
   color: #EF6C00;
@@ -157,8 +157,14 @@
   margin-top: 5px;
   vertical-align: middle;
 }
-#checkout-content .checkout-section .checkout-item .item-price-qty {
+#checkout-content .checkout-section .checkout-item .item-name.block {
+  display: block;
+}
+#checkout-content .checkout-section .checkout-item .item-content {
   text-align: right;
+}
+#checkout-content .checkout-section .checkout-item .item-content select {
+  background-color: #F5F5F5;
 }
 #checkout-content .checkout-section .checkout-note textarea {
   width: 100%;
@@ -167,9 +173,11 @@
 #checkout-content .checkout-section .switcher {
   display: inline-block;
   border: 1px solid #E0E0E0;
+  font-weight: normal;
+  font-size: 1rem;
 }
 #checkout-content .checkout-section .switcher .switcher-item {
-  padding: 2px 8px 2px 8px;
+  padding: 2px 10px 2px 10px;
   display: inline-block;
 }
 #checkout-content .checkout-section .switcher .switcher-item.switch-on {

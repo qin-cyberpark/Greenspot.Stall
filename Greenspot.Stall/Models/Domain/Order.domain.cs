@@ -140,9 +140,20 @@ namespace Greenspot.Stall.Models
         {
             try
             {
+                StallApplication.SysInfoFormat($"[MSG]start sending order {Id} to wechat");
+
                 //send message
                 var msg = OwnerAlertMessage;
-                return await WeChatHelper.SendMessageAsync(openids, msg);
+                var result =  await WeChatHelper.SendMessageAsync(openids, msg);
+                if (result)
+                {
+                    StallApplication.SysInfoFormat($"[MSG]succeed sending order {Id} to wechat");
+                }else
+                {
+                    StallApplication.SysInfoFormat($"[MSG]failed sending order {Id} to wechat");
+                }
+                return result;
+
             }
             catch (Exception ex)
             {
@@ -222,21 +233,23 @@ namespace Greenspot.Stall.Models
             {
                 StringBuilder sb = new StringBuilder();
                 //store name, order id, order time
-                sb.Append($"{Stall.StallName} #{Id}\r{CreateTime:H:mm:ss dd/MMM/yyyy}\r\r");
-                //delivery
-                sb.Append($"{Receiver}\r{DeliveryAddress}\r");
+                sb.Append($"{Stall.StallName} #{Id}\r{CreateTime:H:mm:ss ddMMM, yyyy}\r\r");
                 //delivery time
                 if (DeliveryTimeStart != null && DeliveryTimeEnd != null)
                 {
                     sb.Append($"{DeliveryTimeStart:ddd, ddMMM HH:mm}-{DeliveryTimeEnd:HH:mm}\r");
                 }
+                //delivery address
+                sb.Append($"{Receiver}\r{DeliveryAddress}\r");
                 //items
                 sb.Append("\r");
                 foreach (var item in Items)
                 {
                     sb.Append($"{item.Name}@{item.PriceIncTax:$0.00}x{item.Quantity}\r");
                 }
+
                 //total
+                sb.Append("\r");
                 sb.Append($"总计:{StallAmount}");
                 //note
                 if (!string.IsNullOrEmpty(Note))

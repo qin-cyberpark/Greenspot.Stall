@@ -30,7 +30,7 @@
     <!-- address -->
     <md-content id="checkout-content">
         <div class="checkout-section">
-            <div class="caption">配送地址 <a href="/customer/addresses" md-colors="{color: 'accent'}">添加</a></div>
+            <div class="caption">配送地址</div>
             <md-radio-group ng-model="custCtrl.selectedDeliveryAddress" ng-change="custCtrl.deliveryAddressChanged()">
                 <div ng-repeat='addr in custCtrl.deliveryAddresses' class="row">
                     <md-radio-button flex ng-value="addr" class="md-primary delivery-address">
@@ -39,64 +39,69 @@
                     </md-radio-button>
                 </div>
             </md-radio-group>
+            <div style="text-align:center;width:100%"><a href="/customer/addresses" md-colors="{color: 'accent'}">添加地址</a></div>
         </div>
 
         <!-- stalls -->
         <div class="checkout-section" checkout-stall" ng-repeat="order in custCtrl.orders">
             <!-- name -->
-            <div class="caption">
-                {{order.n}}
+            <div class="checkout-item" layout="row" layout-align="space-between center">
+                <div class="caption">
+                    {{order.n}}
+                </div>
+                <!-- delivery option -->
+                <div class="checkout-item switcher">
+                    <div class="switcher-item" ng-if="order.hasDeliveryOption()" ng-class="{'switch-on': !order.isPickup}" ng-click="order.deliveryOrPickupChanged(false)">配送</div>
+                    <div class="switcher-item" ng-if="order.hasPickUpOption()" ng-class="{'switch-on': order.isPickup}" ng-click="order.deliveryOrPickupChanged(true)">自提</div>
+                </div>
             </div>
 
-            <!-- delivery -->
+            <!-- delivery message -->
             <div class="message" ng-if="!order.hasDeliveryOption() && !order.hasPickUpOption()">当前地址最近没有配送计划</div>
             <div class="message" ng-if="!order.hasDeliveryOption() && order.hasPickUpOption()">当前地址最近没有配送计划，仅限自提</div>
-            <div layout="row" layout-align="space-between center" ng-if="order.hasDeliveryOption() || order.hasPickUpOption()">
-                <div>
-                    <span ng-if="order.hasDeliveryOption() && !order.hasPickUpOption()">配送</span>
-                    <span ng-if="!order.hasDeliveryOption() && order.hasPickUpOption()">自提</span>
-                    <div class="switcher" ng-if="order.hasDeliveryOption() && order.hasPickUpOption()">
-                        <div class="switcher-item" ng-class="{'switch-on': !order.isPickup}" ng-click="order.setIsPickup(false)">配送</div>
-                        <div class="switcher-item" ng-class="{'switch-on': order.isPickup}" ng-click="order.setIsPickup(true)">自提</div>
-                    </div>
-                </div>
-                <div>
-                    <!--date-->
-                    <select ng-options="(collection.Date|date:'EEE dMMM') for collection in order.optionCollections"
-                            ng-model="order.selectedOptionCollection" ng-change="order.optionCollectionChanged()"></select>
-                    <!--time-->
-                    <select ng-options="((opt.From|date:'HH:mm')+'-'+(opt.To|date:'HH:mm')+' '+(opt.Fee|currency:$)) for opt in order.selectedOptionCollection.ApplicableOpts"
-                            ng-model="order.selectedOption" ng-change="order.optionChanged()"></select>
+
+
+            <!-- pickup address -->
+            <div ng-if="order.hasPickUpOption()" class="checkout-item" layout="row" layout-align="space-between center">
+                <div class="item-name">地址</div>
+                <div class="item-content">
+                    <select ng-options="(addrGrp.Groups[0].Options[0].PickUpAddress) for addrGrp in order.pickUpOptionCollections"
+                            ng-model="order.selectedPickupAddressOptions" ng-change="order.pickupAddressChanged()"></select>
                 </div>
             </div>
 
-            <!-- pickup address -->
-            <div class="checkout-item" layout="row" layout-align="space-between center" ng-if="order.isPickup">
-                <div class="item-name">自提地址</div>
-                <div class="item-price-qty">
-                    {{order.selectedOption.PickUpAddresses[0]}}
+            <!-- date / time -->
+            <div ng-if="order.hasDeliveryOption() || order.hasPickUpOption()" class="checkout-item" layout="row" layout-align="space-between center">
+                <div class="item-name">时间</div>
+                <div class="item-content">
+                    <!--date-->
+                    <select ng-options="(collection.Options[0].From|date:'EEE dMMM') for collection in order.dateOptionCollections"
+                            ng-model="order.selectedDateOptions" ng-change="order.dateOptionCollectionChanged()"></select>
+                    <!--time-->
+                    <select ng-options="((opt.From|date:'HH:mm')+'-'+(opt.To|date:'HH:mm')+' '+(opt.Fee|currency:$)) for opt in order.selectedDateOptions.Options"
+                            ng-model="order.selectedDeliveryOrPickupOption"></select>
                 </div>
             </div>
 
             <!-- items -->
             <div class="checkout-item" ng-repeat="item in order.itms track by item.i" layout="row" layout-align="space-between center">
                 <div class="item-name">{{item.n}}</div>
-                <div class="item-price-qty">
+                <div class="item-content">
                     {{item.p|currency:$}} x{{item.q}}
                 </div>
             </div>
             <!-- delivery -->
-            <div class="checkout-item" ng-if="order.selectedOption" layout="row" layout-align="space-between center">
+            <div class="checkout-item" ng-if="order.selectedDeliveryOrPickupOption" layout="row" layout-align="space-between center">
                 <div class="item-name">运费</div>
-                <div class="item-price-qty">
-                    {{order.selectedOption.Fee|currency:$}}
+                <div class="item-content">
+                    {{order.selectedDeliveryOrPickupOption.Fee|currency:$}}
                 </div>
             </div>
 
             <!-- total -->
             <div class="checkout-item" layout="row" layout-align="space-between center">
                 <div class="item-name">合计(含GST)</div>
-                <div class="item-price-qty">
+                <div class="item-content">
                     {{order.totalAmount()|currency:$}}
                 </div>
             </div>

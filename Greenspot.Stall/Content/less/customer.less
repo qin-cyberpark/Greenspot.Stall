@@ -39,7 +39,7 @@
         padding: 1px 10px 1px 10px;
         margin: 2px;
         background-color: @color-grey-300;
-        border-radius:10px;
+        border-radius: 10px;
         font-size: 1.1rem;
         text-align: center;
         -webkit-flex: auto;
@@ -176,7 +176,7 @@
             font-weight: bold;
             margin-top: 5px;
             margin-bottom: 3px;
-            font-size: 1.2rem;
+            font-size: 1rem;
         }
 
         & .message {
@@ -203,10 +203,16 @@
             vertical-align: middle;
 
             & .item-name {
+                &.block {
+                    display: block;
+                }
             }
 
-            & .item-price-qty {
+            & .item-content {
                 text-align: right;
+                & select{
+                     background-color: @color-grey-100;
+                }
             }
         }
 
@@ -220,9 +226,11 @@
         & .switcher {
             display: inline-block;
             border: 1px solid @color-grey-300;
+            font-weight: normal;
+            font-size: 1rem;
 
             & .switcher-item {
-                padding: 2px 8px 2px 8px;
+                padding: 2px 10px 2px 10px;
                 display: inline-block;
 
                 &.switch-on {

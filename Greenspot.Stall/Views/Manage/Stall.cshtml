@@ -22,19 +22,10 @@
         gs-delivery ID：@Model.DeliveryProductId
     </p>
     <p>
-        配送|运费:@Model.DeliveryPlanJsonString
-    </p>
-    <p>
         GS PAY ID：@Model.PaymentTypeId
     </p>
     <p>
-        Webhooks:
-        @foreach(var hook in Model.Webhooks)
-        {
-            <div>
-                @hook.Type, @hook.Url, @hook.Active
-            </div>
-        }
+        setting:@Model.SettingJson
     </p>
 </body>
 </html>

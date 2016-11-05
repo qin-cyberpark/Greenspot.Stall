@@ -1,6 +1,11 @@
 ﻿/* global */
 @import "_variables.less";
 
+[ng-cloak],
+.ng-cloak {
+    display: none !important;
+}
+
 /* global elements*/
 html, body {
     margin: 0px auto;
@@ -19,13 +24,13 @@ html, body {
 }
 
 
-& input {
+input {
     border: none;
     border-bottom: 1px solid @color-grey-300;
     background-color: @color-grey-100;
 }
 
-& select {
+select {
     border: none;
     border-radius: 0px;
     border-bottom: 1px solid @color-grey-300;

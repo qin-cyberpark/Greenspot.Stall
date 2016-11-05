@@ -11,7 +11,7 @@ namespace Greenspot.Stall.Models.Settings
                                                     TimeDivisionTypes divisionType = TimeDivisionTypes.Undivisible, int divisionMinutes = 0)
         {
             var result = new List<DateTimePair>();
-            if (nextDays <= 0)
+            if (nextDays < 0)
             {
                 return result;
             }

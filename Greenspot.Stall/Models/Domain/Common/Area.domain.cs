@@ -12,7 +12,6 @@ namespace Greenspot.Stall.Models
     {
         public static bool IsApplicable(string areaDefine, string area)
         {
-
             if (string.IsNullOrEmpty(areaDefine))
             {
                 return true;
@@ -23,46 +22,30 @@ namespace Greenspot.Stall.Models
                 return false;
             }
 
-            var defArr = areaDefine.ToUpper().Split('-');
-            var areaArr = area.ToUpper().Split('-');
-
-            if (areaArr.Length < defArr.Length)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < defArr.Length; i++)
-            {
-                if (!defArr[i].Equals(areaArr[i]))
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return area.ToUpper().StartsWith(areaDefine.ToUpper());
         }
 
-        public static bool Contains(IList<string> areas, string area)
+        public static bool IsApplicable(IList<string> areaDefines, string area)
         {
-            if (areas != null && areas.Count > 0)
+            if (areaDefines == null || areaDefines.Count == 0)
             {
-                if (string.IsNullOrEmpty(area))
-                {
-                    return false;
-                }
+                return true;
+            }
 
-                foreach (var a in areas)
-                {
-                    if (area.StartsWith(a))
-                    {
-                        return true;
-                    }
-                }
-
+            if (string.IsNullOrEmpty(area))
+            {
                 return false;
             }
 
-            return true;
+            foreach (var def in areaDefines)
+            {
+                if (IsApplicable(def, area))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

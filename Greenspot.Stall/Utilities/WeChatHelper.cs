@@ -31,14 +31,17 @@ namespace Greenspot.Stall.Utilities
                         break;
                     }
                 }
+
                 if (sendRst == null || sendRst.errcode != 0)
                 {
+                    StallApplication.SysError($"[MSG]failed sending to wechat {openid}:{sendRst.errcode},{sendRst.errmsg}");
                     return false;
                 }
                 return true;
             }
             catch (Exception ex)
             {
+                StallApplication.SysError($"[MSG]failed sending to wechat {openid}:", ex);
                 return false;
             }
         }

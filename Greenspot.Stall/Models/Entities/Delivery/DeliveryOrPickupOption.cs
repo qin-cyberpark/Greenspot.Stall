@@ -13,7 +13,7 @@ namespace Greenspot.Stall.Models
         public TimeDivisionTypes DivisionType { get; set; }
         public int DivisionMinutes { get; set; }
         public bool IsPickUp { get; set; }
-        public IList<string> PickUpAddresses { get; set; }
+        public string PickUpAddress { get; set; }
         public bool IsStoreDelivery { get; set; }
         public IList<string> Areas { get; set; }
         public decimal? Fee { get; set; }

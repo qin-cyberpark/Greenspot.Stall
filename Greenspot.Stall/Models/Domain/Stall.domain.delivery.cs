@@ -12,7 +12,7 @@ namespace Greenspot.Stall.Models
     {
         public IList<DeliveryOrPickupOption> GetPickupOptions(DateTime dtStart, int nextDays)
         {
-            if (nextDays <= 0)
+            if (nextDays < 0 || nextDays > Setting.MaxAdvancedOrderDays)
             {
                 //stall advanced order days
                 nextDays = Setting.MaxAdvancedOrderDays;
@@ -28,13 +28,13 @@ namespace Greenspot.Stall.Models
                 result.Add(newOpt);
             }
 
-            return result.OrderBy(x => x.From).ToList();
+            return result.Where(x => x.From > dtStart).OrderBy(x => x.PickUpAddress).ThenBy(x => x.From).ToList();
         }
 
         public IList<DeliveryOrPickupOption> GetDeliveryOptions(DateTime dtStart, int nextDays,
                                                 string area, int? distanceInMeters = null, decimal? orderAmount = null)
         {
-            if (nextDays <= 0)
+            if (nextDays < 0 || nextDays > Setting.MaxAdvancedOrderDays)
             {
                 //stall advanced order days
                 nextDays = Setting.MaxAdvancedOrderDays;
@@ -44,7 +44,7 @@ namespace Greenspot.Stall.Models
             var result = new List<DeliveryOrPickupOption>();
             foreach (var opt in options)
             {
-                if (!Models.Area.Contains(opt.Areas, area))
+                if (!Models.Area.IsApplicable(opt.Areas, area))
                 {
                     continue;
                 }
