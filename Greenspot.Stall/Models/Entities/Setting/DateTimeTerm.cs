@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 namespace Greenspot.Stall.Models.Settings
 {
     public enum TimeDivisionTypes : int { Undivisible = 0, DivideToPeriod, DivideToTime }
+    public enum ReferenceTimePonitTypes : int { ByFrom = 0, ByTo }
 
     public partial class DateTimeTerm
     {
@@ -13,6 +14,9 @@ namespace Greenspot.Stall.Models.Settings
 
         [JsonProperty("Exclusive")]
         public IList<DateTimePeriod> Exclusive { get; set; } = new List<DateTimePeriod>();
+
+        [JsonProperty("ReferenceTimePonitType")]
+        public ReferenceTimePonitTypes ReferenceTimePonitType { get; set; } = ReferenceTimePonitTypes.ByTo;
 
         [JsonProperty("DivisionType")]
         public TimeDivisionTypes DivisionType { get; set; }

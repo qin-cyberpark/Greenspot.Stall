@@ -13,6 +13,7 @@ namespace Greenspot.Stall.Models
             {
                 From = opt.From,
                 To = opt.To,
+                ReferenceTimePonit = opt.ReferenceTimePonit,
                 DivisionType = opt.DivisionType,
                 DivisionMinutes = opt.DivisionMinutes,
                 IsPickUp = true,
@@ -26,6 +27,7 @@ namespace Greenspot.Stall.Models
             {
                 From = opt.From,
                 To = opt.To,
+                ReferenceTimePonit = opt.ReferenceTimePonit,
                 DivisionType = opt.DivisionType,
                 DivisionMinutes = opt.DivisionMinutes,
                 IsPickUp = false,
@@ -88,6 +90,7 @@ namespace Greenspot.Stall.Models
                 {
                     From = f,
                     To = t,
+                    ReferenceTimePonit = ReferenceTimePonit,
                     DivisionType = DivisionType,
                     DivisionMinutes = DivisionMinutes,
                     Areas = Areas,
@@ -106,6 +109,7 @@ namespace Greenspot.Stall.Models
             {
                 From = f,
                 To = t,
+                ReferenceTimePonit = ReferenceTimePonit,
                 DivisionType = DivisionType,
                 DivisionMinutes = DivisionMinutes,
                 Areas = Areas,
@@ -130,6 +134,7 @@ namespace Greenspot.Stall.Models
                 {
                     From = option.From,
                     To = newTo,
+                    ReferenceTimePonit = ReferenceTimePonit,
                     DivisionType = option.DivisionType,
                     Areas = option.Areas,
                     IsPickUp = option.IsPickUp,

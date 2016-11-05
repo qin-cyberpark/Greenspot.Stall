@@ -1,5 +1,5 @@
 {
-  "MaxAdvancedOrderDays": 7,
+  "MaxAdvancedOrderDays": 14,
   "MinPickupAdvancedMinutes": 30,
   "MinDeliveryAdvancedMinutes": 60,
   //Opening Hours

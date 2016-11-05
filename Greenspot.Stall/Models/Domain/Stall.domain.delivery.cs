@@ -28,7 +28,7 @@ namespace Greenspot.Stall.Models
                 result.Add(newOpt);
             }
 
-            return result.Where(x => x.From > dtStart).OrderBy(x => x.PickUpAddress).ThenBy(x => x.From).ToList();
+            return result.Where(x => x.ReferenceTimePonit > dtStart).OrderBy(x => x.PickUpAddress).ThenBy(x => x.From).ToList();
         }
 
         public IList<DeliveryOrPickupOption> GetDeliveryOptions(DateTime dtStart, int nextDays,
@@ -40,7 +40,7 @@ namespace Greenspot.Stall.Models
                 nextDays = Setting.MaxAdvancedOrderDays;
             }
 
-            var options = Setting.Delivery.GetOptions(dtStart, Setting.MaxAdvancedOrderDays, Setting.OpeningHours);
+            var options = Setting.Delivery.GetOptions(dtStart, nextDays, Setting.OpeningHours);
             var result = new List<DeliveryOrPickupOption>();
             foreach (var opt in options)
             {
@@ -58,7 +58,7 @@ namespace Greenspot.Stall.Models
                 }
             }
 
-            return result.OrderBy(x => x.From).ToList();
+            return result.Where(x => x.ReferenceTimePonit > dtStart).OrderBy(x => x.From).ToList();
         }
     }
 }

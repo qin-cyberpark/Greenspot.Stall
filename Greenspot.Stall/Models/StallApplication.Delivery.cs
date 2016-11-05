@@ -76,7 +76,7 @@ namespace Greenspot.Stall
                 }
             }
 
-            return result.OrderBy(x => x.From).ToList();
+            return result.Where(x => x.ReferenceTimePonit > dtStart).OrderBy(x => x.From).ToList();
         }
     }
 }

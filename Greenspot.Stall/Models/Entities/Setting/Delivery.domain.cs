@@ -56,6 +56,7 @@ namespace Greenspot.Stall.Models.Settings
                 {
                     From = p.From,
                     To = p.To,
+                    ReferenceTimePonitType = p.ReferenceTimePonitType,
                     DivisionType = p.DivisionType,
                     DivisionMinutes = p.DivisionMinutes,
                     Areas = Areas,

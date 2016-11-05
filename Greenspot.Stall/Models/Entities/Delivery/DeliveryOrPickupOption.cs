@@ -10,6 +10,7 @@ namespace Greenspot.Stall.Models
     {
         public DateTime From { get; set; }
         public DateTime To { get; set; }
+        public DateTime ReferenceTimePonit { get; set; }
         public TimeDivisionTypes DivisionType { get; set; }
         public int DivisionMinutes { get; set; }
         public bool IsPickUp { get; set; }

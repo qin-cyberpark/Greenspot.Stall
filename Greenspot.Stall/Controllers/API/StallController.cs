@@ -107,8 +107,8 @@ namespace Greenspot.Stall.Controllers.API
             var advDays = stall.Setting.MaxAdvancedOrderDays > StallApplication.Setting.MaxAdvancedOrderDays ?
                                       StallApplication.Setting.MaxAdvancedOrderDays : stall.Setting.MaxAdvancedOrderDays;
 
-            var advMins = stall.Setting.MinPickupAdvancedMinutes < StallApplication.Setting.MinPickupAdvancedMinutes ?
-                            StallApplication.Setting.MinPickupAdvancedMinutes : stall.Setting.MinPickupAdvancedMinutes;
+            var advMins = stall.Setting.MinDeliveryAdvancedMinutes < StallApplication.Setting.MinDeliveryAdvancedMinutes ?
+                            StallApplication.Setting.MinDeliveryAdvancedMinutes : stall.Setting.MinDeliveryAdvancedMinutes;
 
 
             //get distance
@@ -119,14 +119,12 @@ namespace Greenspot.Stall.Controllers.API
             if (stall.Setting.Delivery.DeliveryType == Models.Settings.DeliveryTypes.StoreOnly)
             {
                 //get store delivery
-                deliveryOpts = stall.GetDeliveryOptions(DateTime.Now, advDays, areaStr, distance, orderAmount)
-                    .OrderBy(x => x.From).ToList();
+                deliveryOpts = stall.GetDeliveryOptions(DateTime.Now.AddMinutes(advMins), advDays, areaStr, distance, orderAmount);
             }
             else
             {
                 //get platform
-                deliveryOpts = StallApplication.GetDeliveryOptions(stall, DateTime.Now, advDays, areaStr, distance, orderAmount)
-                                    .OrderBy(x => x.From).ToList();
+                deliveryOpts = StallApplication.GetDeliveryOptions(stall, DateTime.Now.AddMinutes(advMins), advDays, areaStr, distance, orderAmount);
             }
 
 
