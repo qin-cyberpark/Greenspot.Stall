@@ -4,7 +4,7 @@
 //var _isAdmin = User.IsInRole("Admin");
 }
 <!DOCTYPE html>
-<html lang="en" ng-app="greenspotStall" ng-cloak>
+<html lang="en" ng-app="greenspotStall">
 <head>
     <meta charset="utf-8">
     <meta name="description" content="Stall@Greenspot">
@@ -26,7 +26,7 @@
         <link rel="stylesheet" href="/static/css/stall.min.css">
     }
 </head>
-<body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init_checkout()">
+<body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init_checkout()" ng-cloak>
     <!-- address -->
     <md-content id="checkout-content">
         <div class="checkout-section">

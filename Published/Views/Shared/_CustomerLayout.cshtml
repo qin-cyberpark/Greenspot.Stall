@@ -1,10 +1,10 @@
 ﻿<!DOCTYPE html>
-<html lang="en" ng-app="greenspotStall" ng-cloak>
+<html lang="en" ng-app="greenspotStall">
 <head>
     <meta charset="utf-8">
     <meta name="description" content="@Page.Description">
     <meta name="keywords" content="新西兰 美食 外卖 Takeaway Homemade">
-    <meta name="author" content="久等了">
+    <meta name="author" content="久等啦">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <base href="/">
     <title>@Page.Title</title>
@@ -24,7 +24,7 @@
     }
 
 </head>
-<body ng-controller="@Page.Controller as ctrl" ng-init="ctrl.init()">
+<body ng-controller="@Page.Controller as ctrl" ng-init="ctrl.init()"  ng-cloak>
     @RenderBody()
     <div id="bottom-step"></div>
     <!--bottom tool bar-->

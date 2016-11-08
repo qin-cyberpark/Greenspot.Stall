@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
     Page.Controller = "HomeController";
     var _isTakeaway = "T".Equals(Request["c"]);
-    Page.Title = string.Format("{0} | 久等了", _isTakeaway ? "餐厅外卖" : "私房自助");
+    Page.Title = string.Format("{0} | 久等啦", _isTakeaway ? "餐厅外卖" : "私房自助");
 }
 <form id="search-bar" ng-submit="ctrl.search(10,10)">
     <select ng-model="ctrl.searchCondition.area" ng-change="ctrl.loadRecommendStalls()">

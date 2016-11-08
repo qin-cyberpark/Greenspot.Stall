@@ -3,7 +3,7 @@
 }
 <!DOCTYPE html>
 
-<html lang="en" ng-app="greenspotStall" ng-cloak>
+<html lang="en" ng-app="greenspotStall">
 <head>
     <meta charset="utf-8">
     <meta name="description" content="外卖 Takeaway Homemade">
@@ -27,7 +27,7 @@
         <link rel="stylesheet" href="/static/css/stall.min.css">
     }
 </head>
-<body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init()">
+<body ng-controller="CustomerController as custCtrl" ng-init="custCtrl.init()" ng-cloak>
     <md-content id="cart-content">
         <div id="empty-content" ng-if="custCtrl.cart.qty<=0">
             空的购物车

@@ -2,11 +2,11 @@
 }
 <!DOCTYPE html>
 
-<html lang="en" ng-app="greenspotStall" ng-cloak ng-strict-di>
+<html lang="en" ng-app="greenspotStall" g-strict-di>
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="新西兰 美食 外卖 Takeaway Homemade">
-    <meta name="author" content="久等了">
+    <meta name="author" content="久等啦">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <base href="/">
     <title>管理地址</title>
@@ -72,7 +72,7 @@
                 <md-button type="submit" class="md-raised md-primary" ng-disabled="!formEditAddress.$valid">添加</md-button>
             </div>
         </form>
-        <div class="delivery-info">
+        <div class="delivery-info" ng-cloak>
             <div class="address-option" ng-repeat="addr in custCtrl.deliveryAddresses">
                 <md-divider></md-divider>
                 <div class="address-text">

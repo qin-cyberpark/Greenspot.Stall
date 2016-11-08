@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
     var _productId = (string)ViewBag.ProductId;
     Page.Controller = "CustomerController";
-    Page.Title = "久等了";
+    Page.Title = "久等啦";
 }
 <div id="main-content" class="with-bottom-bar" ng-init="ctrl.init_productHome('@_productId')">
     <div id="product-content" ng-if="ctrl.currentProduct">
