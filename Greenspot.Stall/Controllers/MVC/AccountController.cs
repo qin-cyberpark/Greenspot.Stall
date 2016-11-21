@@ -78,7 +78,7 @@ namespace Greenspot.Stall.Controllers.MVC
             // Request a redirect to the external login provider
             return new ChallengeResult(WeChatAuthenticationTypes.MP, Url.Action("WeChatMpLoginCallback", "Account", new { ReturnUrl = returnUrl }));
 #else
-            UserManager.AddPassword("4c3c8aaf-7192-483c-a390-91f6172e5e3b", "testtest");
+            //UserManager.AddPassword("dbede64d-5042-41ce-b467-05f7a4f27d71", "testtest");
             var stattus = SignInManager.PasswordSignIn("test", "testtest", false, false);
             return RedirectToLocal(returnUrl);
 #endif

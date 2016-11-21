@@ -13,7 +13,7 @@
     <meta name="description" content="Stall@Greenspot">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <base href="/">
-    <title>订单</title>
+    <title>我的订单</title>
     <link rel="shortcut icon" href="/static/img/favicon.png">
 
     <!-- 3rd party stylesheet -->
@@ -35,39 +35,42 @@
     <md-content id="order-content">
         @if (_orders == null || _orders.Count == 0)
         {
-            <div>
-                <h4>没有订单</h4>
+            <div id="empty-content">
+                没有订单
             </div>
         }
         else
         {
-            <table class="order-list">
-                <thead>
-                    <tr>
-                        <td>订单号</td>
-                        <td>日期</td>
-                        <td>商铺</td>
-                        <td>金额</td>
-                        <td></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var o in _orders)
-                    {
-                        <tr>
-                            <td>@o.Id</td>
-                            <td>@string.Format("{0:HH:mm ddMMM}", o.CreateTime)</td>
-                            <td>@(o.Stall?.StallName)</td>
-                            <td>@o.ChargeAmount.ToString("$0.00")</td>
-                            <td><a href="/customer/order/@o.Id">查看</a></td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            <div class="order-list">
+                @foreach (var o in _orders)
+                {
+                    <div class="order-item" ng-click="gotoUrl('/customer/order/@o.Id')">
+                        <div class="row1">
+                            <div class="order-id">
+                                @o.Id
+                                <span class="stall-name">
+                                    @o.StallName
+                                </span>
+                            </div>
+                            <div class="order-state">
+                                <a href="/customer/order/@o.Id">详情</a>
+                            </div>
+                        </div>
+                        <div class="row2">
+                            <div>
+                                @o.Payment.ResponseTime.Value.ToString("dd-MM-yyyy HH:mm")
+                            </div>
+                            <div>
+                                $@o.ChargeAmount
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         }
     </md-content>
     <center>
-        <a href="/">返回首页</a>
+        <a href="/">返回</a>
     </center>
     <!-- 3rd party libraries -->
     <!-- 3rd party stylesheet -->

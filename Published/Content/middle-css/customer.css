@@ -194,14 +194,87 @@
 #checkout-content .out-of-stock-error .stock {
   color: #EF6C00;
 }
-#order-content {
-  font-size: 0.9rem;
+#order-content .order-list {
+  margin: 5px;
 }
-#order-content table {
-  width: 100%;
+#order-content .order-list .order-item {
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  border-bottom: dashed 1px #E0E0E0;
 }
-#order-content table thead {
+#order-content .order-list .order-item .row1 {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  -webkit-flex-flow: row;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+}
+#order-content .order-list .order-item .row1 .order-id {
+  font-size: 1.2rem;
   font-weight: bold;
+}
+#order-content .order-list .order-item .row1 .order-id .stall-name {
+  font-weight: normal;
+  font-size: 1rem;
+}
+#order-content .order-list .order-item .row1 .order-state > a {
+  text-decoration: none;
+  color: #EF6C00;
+}
+#order-content .order-list .order-item .row2 {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  -webkit-flex-flow: row;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  font-size: 1rem;
+  color: #9E9E9E;
+}
+#order-receipt {
+  width: 85%;
+  margin: 5px auto;
+  border: 1px solid black;
+  box-shadow: #9E9E9E 2px 2px;
+  text-align: center;
+  padding: 15px 15px 30px 15px;
+}
+#order-receipt .stall-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+#order-receipt .order-info {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  -webkit-flex-flow: row;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  margin-bottom: 3px;
+}
+#order-receipt .order-info .qty:before {
+  content: "x";
+}
+#order-receipt .order-info > div:first-child {
+  text-align: left;
+}
+#order-receipt .order-info > div:nth-child(2) {
+  word-wrap: break-word;
+  text-align: right;
+}
+#order-receipt .item-info {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  -webkit-flex-flow: row;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  margin-bottom: 3px;
+}
+#order-receipt > hr {
+  border: dashed 1px #9E9E9E;
 }
 #formNewAddress input {
   font-size: 11px;
